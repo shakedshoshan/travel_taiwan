@@ -386,12 +386,7 @@ export function CityDrawer() {
               </div>
             ) : (
               filteredHotels.map((hotel) => (
-                <PlaceCard
-                  key={hotel.id}
-                  place={hotel}
-                  compact
-                  showHotelBudgetAction
-                />
+                <PlaceCard key={hotel.id} place={hotel} compact />
               ))
             )}
           </>

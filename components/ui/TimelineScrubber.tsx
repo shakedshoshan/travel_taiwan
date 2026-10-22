@@ -1,15 +1,12 @@
 "use client";
 
 import {
-  Play,
-  Pause,
   SkipBack,
   SkipForward,
   Compass,
   Calendar,
   ChevronUp,
   ChevronDown,
-  X,
 } from "lucide-react";
 import { getRouteLegs, getTimelineDays } from "@/lib/data/selectors";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
@@ -37,7 +34,6 @@ export function TimelineScrubber() {
   const handleLegClick = (legOrder: number) => {
     const firstDayOfLeg = days.find((d) => d.legOrder === legOrder);
     if (firstDayOfLeg) {
-      tripActions.setIsPlaying(false);
       tripActions.setCurrentDayIndex(firstDayOfLeg.dayIndex);
     }
   };
@@ -50,23 +46,6 @@ export function TimelineScrubber() {
           dir="rtl"
           className="glass-panel pointer-events-auto mx-auto flex h-16 max-w-md items-center justify-between gap-2 rounded-full px-2.5 shadow-xl"
         >
-          {/* Play/Pause Button (>=44x44px) */}
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              tripActions.togglePlaying();
-            }}
-            aria-label={store.isPlaying ? "השהה מסלול" : "נגן מסלול"}
-            className="toy-button flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md"
-          >
-            {store.isPlaying ? (
-              <Pause className="h-4 w-4" />
-            ) : (
-              <Play className="h-4 w-4 fill-current" />
-            )}
-          </button>
-
           {/* Main Tap Area -> Expands into Timeline Sheet */}
           <button
             type="button"
@@ -81,7 +60,6 @@ export function TimelineScrubber() {
               <span className="truncate text-orange-600 dark:text-amber-300">
                 {currentDay.cityNameHe}
               </span>
-              <span className="text-xs text-slate-400">▶</span>
             </div>
             {/* Mini RTL progress bar starting from right */}
             <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-slate-900/10 dark:bg-white/15">
@@ -121,26 +99,11 @@ export function TimelineScrubber() {
             {/* Grab Handle */}
             <div className="mx-auto mb-2 h-1.5 w-12 rounded-full bg-slate-300 dark:bg-slate-700" />
 
-            {/* Top Row: Play + Prev/Next + Day Header + Close */}
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-1.5">
                 <button
                   type="button"
-                  onClick={() => tripActions.togglePlaying()}
-                  aria-label={store.isPlaying ? "השהה מסלול" : "נגן מסלול"}
-                  className="toy-button flex min-h-[44px] min-w-[44px] items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-rose-500 text-white shadow-md"
-                >
-                  {store.isPlaying ? (
-                    <Pause className="h-5 w-5" />
-                  ) : (
-                    <Play className="h-5 w-5 fill-current" />
-                  )}
-                </button>
-
-                <button
-                  type="button"
                   onClick={() => {
-                    tripActions.setIsPlaying(false);
                     tripActions.setCurrentDayIndex(
                       Math.max(0, store.currentDayIndex - 1)
                     );
@@ -154,7 +117,6 @@ export function TimelineScrubber() {
                 <button
                   type="button"
                   onClick={() => {
-                    tripActions.setIsPlaying(false);
                     tripActions.setCurrentDayIndex(
                       Math.min(days.length - 1, store.currentDayIndex + 1)
                     );
@@ -222,7 +184,6 @@ export function TimelineScrubber() {
                 max={days.length - 1}
                 value={store.currentDayIndex}
                 onChange={(e) => {
-                  tripActions.setIsPlaying(false);
                   tripActions.setCurrentDayIndex(Number(e.target.value));
                 }}
                 style={{

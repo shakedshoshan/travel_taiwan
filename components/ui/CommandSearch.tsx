@@ -3,12 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Search, X, Heart, CheckCircle2, ArrowLeft } from "lucide-react";
-import {
-  getAllPlaces,
-  getPlaceById,
-  searchEverything,
-} from "@/lib/data/selectors";
+import { Search, X, ArrowLeft } from "lucide-react";
+import { getPlaceById, searchEverything } from "@/lib/data/selectors";
 import {
   getCityPrimaryImage,
   getPlaceImage,
@@ -20,7 +16,6 @@ export function CommandSearch() {
   const router = useRouter();
   const store = useTripStore();
   const [query, setQuery] = useState("");
-  const [mode, setMode] = useState<"search" | "favorites" | "done">("search");
 
   // Global Cmd+K / Ctrl+K listener
   useEffect(() => {
@@ -36,35 +31,7 @@ export function CommandSearch() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [store.isSearchOpen]);
 
-  const searchResults = useMemo(() => {
-    if (mode === "favorites") {
-      return getAllPlaces()
-        .filter((p) => store.favorites.includes(p.id))
-        .map((p) => ({
-          id: p.id,
-          kind: p.kind,
-          titleHe: p.name,
-          subtitle: `${p.cityNameHe} • ${p.description}`,
-          badgeHe: "מועדף ♥",
-          cityId: p.cityId,
-          href: `/place/${p.id}`,
-        }));
-    }
-    if (mode === "done") {
-      return getAllPlaces()
-        .filter((p) => store.donePlaces.includes(p.id))
-        .map((p) => ({
-          id: p.id,
-          kind: p.kind,
-          titleHe: p.name,
-          subtitle: `${p.cityNameHe} • ${p.description}`,
-          badgeHe: "בוצע ✓",
-          cityId: p.cityId,
-          href: `/place/${p.id}`,
-        }));
-    }
-    return searchEverything(query);
-  }, [query, mode, store.favorites, store.donePlaces]);
+  const searchResults = useMemo(() => searchEverything(query), [query]);
 
   if (!store.isSearchOpen) return null;
 
@@ -85,10 +52,7 @@ export function CommandSearch() {
             type="text"
             autoFocus
             value={query}
-            onChange={(e) => {
-              setMode("search");
-              setQuery(e.target.value);
-            }}
+            onChange={(e) => setQuery(e.target.value)}
             placeholder="חפשו עיר, אטרקציה, שוק לילה, מישלן, מלון (בעברית או אנגלית)..."
             className="flex-1 bg-transparent text-sm font-medium text-slate-900 outline-none placeholder:text-slate-400 dark:text-white"
           />
@@ -98,45 +62,6 @@ export function CommandSearch() {
             className="rounded-xl bg-slate-900/5 p-1.5 text-slate-500 hover:bg-slate-900/10 dark:bg-white/10 dark:text-slate-300"
           >
             <X className="h-4 w-4" />
-          </button>
-        </div>
-
-        {/* Mode Switcher: All / Favorites / Done */}
-        <div className="flex items-center gap-2 border-b border-slate-900/5 bg-slate-900/5 px-4 py-2 text-xs dark:border-white/5 dark:bg-white/5">
-          <button
-            type="button"
-            onClick={() => setMode("search")}
-            className={`rounded-xl px-3 py-1 font-bold ${
-              mode === "search"
-                ? "bg-slate-900 text-white dark:bg-amber-400 dark:text-slate-950"
-                : "text-slate-600 dark:text-slate-300"
-            }`}
-          >
-            חיפוש הכל
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode("favorites")}
-            className={`flex items-center gap-1 rounded-xl px-3 py-1 font-bold ${
-              mode === "favorites"
-                ? "bg-rose-500 text-white"
-                : "text-slate-600 dark:text-slate-300"
-            }`}
-          >
-            <Heart className="h-3.5 w-3.5" />
-            <span>מועדפים ({store.favorites.length})</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode("done")}
-            className={`flex items-center gap-1 rounded-xl px-3 py-1 font-bold ${
-              mode === "done"
-                ? "bg-emerald-600 text-white"
-                : "text-slate-600 dark:text-slate-300"
-            }`}
-          >
-            <CheckCircle2 className="h-3.5 w-3.5" />
-            <span>בוצעו ({store.donePlaces.length})</span>
           </button>
         </div>
 

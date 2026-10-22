@@ -2,7 +2,6 @@
 
 import { useSyncExternalStore } from "react";
 import type { CityId } from "@/data/types";
-import { getAllCities, getHotels } from "@/lib/data/selectors";
 
 export interface LayerToggles {
   attractions: boolean;
@@ -30,11 +29,7 @@ export type CameraCommandType =
   | "reset";
 
 export interface TripStoreState {
-  // Persisted to localStorage
-  favorites: string[];
-  donePlaces: string[];
-  selectedHotels: Partial<Record<CityId, string>>;
-  dailyFoodBudget: number;
+  // Persisted display preference
   isNightMode: boolean;
 
   // Interactive session state
@@ -45,11 +40,9 @@ export interface TripStoreState {
   isLayersSheetOpen: boolean;
   isCityZoomMapOpen: boolean;
   currentDayIndex: number; // 0..32 (6.11 -> 8.12)
-  isPlaying: boolean;
   use2DFallback: boolean;
   prefersReducedMotion: boolean;
   isSearchOpen: boolean;
-  isBudgetOpen: boolean;
   mapDragMode: MapDragMode;
   cameraCommand: { type: CameraCommandType; seq: number } | null;
   map2DView: { x: number; y: number; zoom: number };
@@ -58,27 +51,7 @@ export interface TripStoreState {
 
 const STORAGE_KEY = "taiwan_3d_trip_state_v1";
 
-function buildDefaultSelectedHotels(): Partial<Record<CityId, string>> {
-  const cities = getAllCities();
-  const hotels = getHotels();
-  const defaults: Partial<Record<CityId, string>> = {};
-
-  for (const city of cities) {
-    const cityHotels = hotels.filter((h) => h.cityId === city.id);
-    if (cityHotels.length > 0) {
-      const preferred =
-        cityHotels.find((h) => h.tier === "quality") ?? cityHotels[0];
-      defaults[city.id] = preferred.id;
-    }
-  }
-  return defaults;
-}
-
 const DEFAULT_STATE: TripStoreState = {
-  favorites: [],
-  donePlaces: [],
-  selectedHotels: buildDefaultSelectedHotels(),
-  dailyFoodBudget: 850,
   isNightMode: false,
 
   selectedCityId: null,
@@ -88,11 +61,9 @@ const DEFAULT_STATE: TripStoreState = {
   isLayersSheetOpen: false,
   isCityZoomMapOpen: false,
   currentDayIndex: 0,
-  isPlaying: false,
   use2DFallback: false,
   prefersReducedMotion: false,
   isSearchOpen: false,
-  isBudgetOpen: false,
   mapDragMode: "pan",
   cameraCommand: null,
   map2DView: { x: 0, y: 0, zoom: 1 },
@@ -121,10 +92,6 @@ function persistToStorage(next: TripStoreState) {
   if (typeof window === "undefined") return;
   try {
     const payload = {
-      favorites: next.favorites,
-      donePlaces: next.donePlaces,
-      selectedHotels: next.selectedHotels,
-      dailyFoodBudget: next.dailyFoodBudget,
       isNightMode: next.isNightMode,
     };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -142,21 +109,6 @@ function hydrateOnce() {
       const parsed = JSON.parse(raw) as Partial<TripStoreState>;
       state = {
         ...state,
-        favorites: Array.isArray(parsed.favorites)
-          ? parsed.favorites
-          : state.favorites,
-        donePlaces: Array.isArray(parsed.donePlaces)
-          ? parsed.donePlaces
-          : state.donePlaces,
-        selectedHotels:
-          parsed.selectedHotels && typeof parsed.selectedHotels === "object"
-            ? { ...state.selectedHotels, ...parsed.selectedHotels }
-            : state.selectedHotels,
-        dailyFoodBudget:
-          typeof parsed.dailyFoodBudget === "number" &&
-          parsed.dailyFoodBudget >= 0
-            ? parsed.dailyFoodBudget
-            : state.dailyFoodBudget,
         isNightMode:
           typeof parsed.isNightMode === "boolean"
             ? parsed.isNightMode
@@ -198,47 +150,6 @@ export const tripActions = {
     if (before !== state) {
       emitChange();
     }
-  },
-
-  toggleFavorite(placeId: string) {
-    setState((prev) => {
-      const exists = prev.favorites.includes(placeId);
-      return {
-        favorites: exists
-          ? prev.favorites.filter((id) => id !== placeId)
-          : [...prev.favorites, placeId],
-      };
-    }, true);
-  },
-
-  toggleDone(placeId: string) {
-    setState((prev) => {
-      const exists = prev.donePlaces.includes(placeId);
-      return {
-        donePlaces: exists
-          ? prev.donePlaces.filter((id) => id !== placeId)
-          : [...prev.donePlaces, placeId],
-      };
-    }, true);
-  },
-
-  selectHotelForCity(cityId: CityId, hotelId: string) {
-    setState(
-      (prev) => ({
-        selectedHotels: {
-          ...prev.selectedHotels,
-          [cityId]: hotelId,
-        },
-      }),
-      true
-    );
-  },
-
-  setDailyFoodBudget(amount: number) {
-    setState(
-      { dailyFoodBudget: Math.max(0, Math.round(amount || 0)) },
-      true
-    );
   },
 
   toggleNightMode() {
@@ -322,24 +233,12 @@ export const tripActions = {
     });
   },
 
-  setIsPlaying(isPlaying: boolean) {
-    setState({ isPlaying });
-  },
-
-  togglePlaying() {
-    setState((prev) => ({ isPlaying: !prev.isPlaying }));
-  },
-
   setUse2DFallback(use2DFallback: boolean) {
     setState({ use2DFallback });
   },
 
   setSearchOpen(isSearchOpen: boolean) {
     setState({ isSearchOpen });
-  },
-
-  setBudgetOpen(isBudgetOpen: boolean) {
-    setState({ isBudgetOpen });
   },
 
   setMapDragMode(mapDragMode: MapDragMode) {

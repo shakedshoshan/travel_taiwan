@@ -3,7 +3,6 @@ import { Heebo, Rubik } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/ui/Navbar";
 import { CommandSearch } from "@/components/ui/CommandSearch";
-import { BudgetWidget } from "@/components/ui/BudgetWidget";
 import { PwaRegister } from "@/components/ui/PwaRegister";
 
 const heebo = Heebo({
@@ -60,7 +59,6 @@ export default function RootLayout({
         <PwaRegister />
         <Navbar />
         <CommandSearch />
-        <BudgetWidget />
         <main className="flex-1">{children}</main>
       </body>
     </html>

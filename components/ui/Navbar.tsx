@@ -10,8 +10,6 @@ import {
   BedDouble,
   Lightbulb,
   Search,
-  Wallet,
-  Heart,
   Sun,
   Moon,
 } from "lucide-react";
@@ -81,7 +79,7 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Action Buttons: Search (no Cmd+K on touch), Budget, Favorites, Day/Night */}
+          {/* Action Buttons: Search and Day/Night */}
           <div className="flex shrink-0 items-center gap-1">
             <button
               type="button"
@@ -95,29 +93,6 @@ export function Navbar() {
                 ⌘K
               </kbd>
             </button>
-
-            <button
-              type="button"
-              onClick={() => tripActions.setBudgetOpen(true)}
-              aria-label="מחשבון תקציב"
-              className="toy-button flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 rounded-xl px-2.5 text-xs font-bold text-emerald-700 hover:bg-emerald-500/15 dark:text-emerald-300"
-            >
-              <Wallet className="h-4 w-4" />
-              <span className="hidden sm:inline">תקציב</span>
-            </button>
-
-            {store.favorites.length > 0 && (
-              <button
-                type="button"
-                onClick={() => tripActions.setSearchOpen(true)}
-                aria-label="מועדפים"
-                title="מועדפים ששמרתם"
-                className="toy-button flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 rounded-xl px-2 text-xs font-bold text-rose-600 hover:bg-rose-500/15 dark:text-rose-300"
-              >
-                <Heart className="h-4 w-4 fill-current" />
-                <span>{store.favorites.length}</span>
-              </button>
-            )}
 
             <button
               type="button"

@@ -14,8 +14,6 @@ import { computeCityMapNodes } from "./CityDestination3DMap";
 interface CameraRigProps {
   selectedCityId: CityId | null;
   focusedPlaceId: string | null;
-  activeTimelineCityId: CityId;
-  isPlaying: boolean;
 }
 
 // Generous bounds around Taiwan + Penghu/Green/Orchid islands
@@ -126,8 +124,6 @@ function clampTargetToBounds(target: THREE.Vector3, camPos?: THREE.Vector3) {
 export function CameraRig({
   selectedCityId,
   focusedPlaceId,
-  activeTimelineCityId,
-  isPlaying,
 }: CameraRigProps) {
   const controlsRef = useRef<OrbitControlsImpl>(null);
   const { camera, gl, size } = useThree();
@@ -324,22 +320,6 @@ export function CameraRig({
     size.width,
     size.height,
   ]);
-
-  // Follow timeline city only while Play is active
-  useEffect(() => {
-    if (!isPlaying) return;
-    const city = getCityById(activeTimelineCityId);
-    if (city) {
-      desiredTarget.current.set(city.worldX, city.worldY + 0.3, city.worldZ);
-      desiredCamPos.current.set(
-        city.worldX - 2.8,
-        city.worldY + 11.5,
-        city.worldZ + 9.5
-      );
-      isTransitioning.current = true;
-      transitionTimer.current = 0.8;
-    }
-  }, [activeTimelineCityId, isPlaying]);
 
   // Handle camera commands (including Recenter FAB)
   useEffect(() => {

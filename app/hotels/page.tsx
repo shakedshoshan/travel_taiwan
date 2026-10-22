@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import {
   BedDouble,
-  Wallet,
   Calendar,
   ShieldCheck,
   ChevronDown,
@@ -16,10 +15,8 @@ import {
 } from "@/lib/data/selectors";
 import { getCityPrimaryImage } from "@/lib/data/placeImages";
 import { PlaceCard } from "@/components/ui/PlaceCard";
-import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 
 export default function HotelsPage() {
-  const store = useTripStore();
   const cities = getAllCities();
   const allHotels = getHotels();
   const [onlyVerified, setOnlyVerified] = useState(false);
@@ -38,21 +35,22 @@ export default function HotelsPage() {
     for (const city of citiesWithHotels) {
       const nights = city.days;
       if (nights <= 0) continue;
-      const chosenId = store.selectedHotels[city.id];
       const cityHotels = allHotels.filter((h) => h.cityId === city.id);
-      const chosen =
-        cityHotels.find((h) => h.id === chosenId) ?? cityHotels[0];
-      if (chosen) {
+      const cheap = cityHotels
+        .filter((h) => h.tier === "cheap")
+        .sort((a, b) => Number(b.verified) - Number(a.verified));
+      const recommended = cheap[0] ?? cityHotels[0];
+      if (recommended) {
         totalNightsWithHotels += nights;
-        const pMin = chosen.priceMin ?? 0;
-        const pMax = chosen.priceMax ?? pMin;
+        const pMin = recommended.priceMin ?? 0;
+        const pMax = recommended.priceMax ?? pMin;
         minTotal += pMin * nights;
         maxTotal += pMax * nights;
       }
     }
 
     return { minTotal, maxTotal, totalNightsWithHotels };
-  }, [citiesWithHotels, allHotels, store.selectedHotels]);
+  }, [citiesWithHotels, allHotels]);
 
   return (
     <div
@@ -89,7 +87,8 @@ export default function HotelsPage() {
             הבחירה הזולה המומלצת ראשונה · איכותי ופינוק בלחיצה
           </h1>
           <div className="mt-1 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-300">
-            סה״כ לינה משוער לטיול: NT${tripStaySummary.minTotal.toLocaleString()}–
+            סה״כ לינה משוער לפי הבחירה הזולה: NT$
+            {tripStaySummary.minTotal.toLocaleString()}–
             {tripStaySummary.maxTotal.toLocaleString()}
           </div>
         </div>
@@ -106,15 +105,6 @@ export default function HotelsPage() {
           >
             <ShieldCheck className="h-4 w-4" />
             <span>רק מאומתים</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => tripActions.setBudgetOpen(true)}
-            className="toy-button flex min-h-[44px] items-center gap-1.5 rounded-2xl bg-slate-900 px-3.5 text-xs font-bold text-white dark:bg-amber-400 dark:text-slate-950"
-          >
-            <Wallet className="h-4 w-4" />
-            <span>מחשבון תקציב</span>
           </button>
         </div>
       </div>
@@ -177,10 +167,7 @@ export default function HotelsPage() {
                     <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
                     <span>הבחירה הזולה המומלצת ב{city.nameHe}:</span>
                   </div>
-                  <PlaceCard
-                    place={bestCheapPick}
-                    showHotelBudgetAction
-                  />
+                  <PlaceCard place={bestCheapPick} />
                 </div>
               )}
 
@@ -195,12 +182,7 @@ export default function HotelsPage() {
                   </summary>
                   <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {otherCheap.map((h) => (
-                      <PlaceCard
-                        key={h.id}
-                        place={h}
-                        compact
-                        showHotelBudgetAction
-                      />
+                      <PlaceCard key={h.id} place={h} compact />
                     ))}
                   </div>
                 </details>
@@ -218,12 +200,7 @@ export default function HotelsPage() {
                   </summary>
                   <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {qualityHotels.map((h) => (
-                      <PlaceCard
-                        key={h.id}
-                        place={h}
-                        compact
-                        showHotelBudgetAction
-                      />
+                      <PlaceCard key={h.id} place={h} compact />
                     ))}
                   </div>
                 </details>
@@ -241,12 +218,7 @@ export default function HotelsPage() {
                   </summary>
                   <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {splurgeHotels.map((h) => (
-                      <PlaceCard
-                        key={h.id}
-                        place={h}
-                        compact
-                        showHotelBudgetAction
-                      />
+                      <PlaceCard key={h.id} place={h} compact />
                     ))}
                   </div>
                 </details>

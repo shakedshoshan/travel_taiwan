@@ -3,13 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Heart,
   Navigation,
   AlertCircle,
   Clock,
   Trees,
   Sparkles,
-  CheckCircle2,
 } from "lucide-react";
 import {
   buildGoogleMapsUrl,
@@ -19,29 +17,20 @@ import {
   type EnrichedPlace,
 } from "@/lib/data/selectors";
 import { getPlaceImage } from "@/lib/data/placeImages";
-import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 
 interface PlaceCardProps {
   place: EnrichedPlace;
   distanceKm?: number | null;
   compact?: boolean;
-  showHotelBudgetAction?: boolean;
 }
 
 export function PlaceCard({
   place,
   distanceKm = null,
   compact = false,
-  showHotelBudgetAction = false,
 }: PlaceCardProps) {
-  const store = useTripStore();
-  const isFav = store.favorites.includes(place.id);
-  const isDone = store.donePlaces.includes(place.id);
   const imageMeta = getPlaceImage(place);
   const googleMapsUrl = buildGoogleMapsUrl(place);
-
-  const isChosenHotel =
-    place.kind === "hotel" && store.selectedHotels[place.cityId] === place.id;
 
   const isUnverified =
     (place.kind === "food" &&
@@ -56,13 +45,7 @@ export function PlaceCard({
   return (
     <article
       dir="rtl"
-      className={`overflow-hidden rounded-3xl border transition-all ${
-        isDone
-          ? "border-emerald-500/40 bg-emerald-500/5 opacity-85"
-          : isChosenHotel
-            ? "border-emerald-500 bg-white shadow-md dark:bg-slate-900"
-            : "border-slate-200/90 bg-white shadow-sm hover:border-orange-400/60 dark:border-slate-800 dark:bg-slate-900"
-      }`}
+      className="overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-sm transition-all hover:border-orange-400/60 dark:border-slate-800 dark:bg-slate-900"
     >
       {/* Photo Banner with Credit Badge */}
       <Link
@@ -163,20 +146,6 @@ export function PlaceCard({
               </div>
             )}
           </div>
-
-          <button
-            type="button"
-            onClick={() => tripActions.toggleDone(place.id)}
-            aria-label={isDone ? "בטל סימון בוצע" : "סמן כבוצע"}
-            title={isDone ? "בוצע" : "סמן כבוצע"}
-            className={`flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl transition-colors ${
-              isDone
-                ? "bg-emerald-500/15 text-emerald-600"
-                : "text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
-            }`}
-          >
-            <CheckCircle2 className="h-4 w-4" />
-          </button>
         </div>
 
         <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-slate-700 dark:text-slate-300">
@@ -208,46 +177,16 @@ export function PlaceCard({
           </div>
         )}
 
-        {/* Primary Two Actions: "נווט" and "♥" (>=44x44px) */}
-        <div className="mt-3 flex items-center gap-2 border-t border-slate-100 pt-2.5 dark:border-slate-800">
+        <div className="mt-3 border-t border-slate-100 pt-2.5 dark:border-slate-800">
           <a
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="toy-button inline-flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-l from-orange-500 to-amber-500 px-4 text-xs font-black text-white shadow-sm"
+            className="toy-button inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-l from-orange-500 to-amber-500 px-4 text-xs font-black text-white shadow-sm"
           >
             <Navigation className="h-4 w-4" />
             <span>נווט</span>
           </a>
-
-          <button
-            type="button"
-            onClick={() => tripActions.toggleFavorite(place.id)}
-            aria-label={isFav ? "הסר ממועדפים" : "שמור למועדפים"}
-            className={`toy-button inline-flex min-h-[44px] min-w-[48px] items-center justify-center rounded-2xl border px-3 text-sm font-black transition-colors ${
-              isFav
-                ? "border-rose-500 bg-rose-500 text-white"
-                : "border-slate-200 bg-slate-50 text-rose-500 hover:bg-rose-50 dark:border-slate-700 dark:bg-slate-800"
-            }`}
-          >
-            <Heart className={`h-4 w-4 ${isFav ? "fill-current" : ""}`} />
-          </button>
-
-          {showHotelBudgetAction && place.kind === "hotel" && (
-            <button
-              type="button"
-              onClick={() =>
-                tripActions.selectHotelForCity(place.cityId, place.id)
-              }
-              className={`min-h-[44px] rounded-2xl px-3 text-xs font-black transition-colors ${
-                isChosenHotel
-                  ? "bg-emerald-600 text-white"
-                  : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200"
-              }`}
-            >
-              {isChosenHotel ? "נבחר לתקציב ✓" : "בחר לתקציב"}
-            </button>
-          )}
         </div>
       </div>
     </article>

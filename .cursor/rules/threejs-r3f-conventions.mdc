@@ -15,5 +15,5 @@ alwaysApply: false
 3. **Map Navigation (`CameraRig.tsx`)**:
    - Keep `screenSpacePanning={false}` and `zoomToCursor={true}` so dragging moves across the horizontal `(x, z)` island plane and scrolling zooms into the cursor target.
    - Clamp `controls.target` within Taiwan's bounding box so the camera never drifts into empty ocean.
-4. **No Route Tube Line**:
-   - Do not render a glowing orange route tube mesh over the island; only render the active day's traveler marker.
+4. **No Route Playback**:
+   - Do not render a route tube, a driving car, or a play button. The map is a static info view.

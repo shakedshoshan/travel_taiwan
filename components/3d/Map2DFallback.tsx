@@ -8,7 +8,6 @@ import {
 import {
   getAllCities,
   getAllPlaces,
-  getCityById,
   type TimelineDay,
 } from "@/lib/data/selectors";
 import type { EnrichedPlace } from "@/lib/data/loaders";
@@ -74,9 +73,6 @@ export function Map2DFallback({
       return layerToggles.hotels;
     });
   }, [layerToggles]);
-
-  const activeCity = getCityById(currentDay.cityId);
-  const travelerSvg = latLngToSvg(activeCity.lat, activeCity.lng);
 
   return (
     <div
@@ -286,30 +282,6 @@ export function Map2DFallback({
             </g>
           );
         })}
-
-        {/* Active Traveler Marker */}
-        <g transform={`translate(${travelerSvg.x}, ${travelerSvg.y - 14})`}>
-          <rect
-            x="-28"
-            y="-18"
-            width="56"
-            height="18"
-            rx="9"
-            fill="#0f172a"
-            stroke="#facc15"
-            strokeWidth="1.5"
-          />
-          <text
-            x="0"
-            y="-6"
-            textAnchor="middle"
-            fill="#fde047"
-            fontSize="9.5"
-            fontWeight="bold"
-          >
-            {`יום ${currentDay.dayNumber} (${currentDay.dateShort})`}
-          </text>
-        </g>
       </svg>
 
       {hoveredPlace && (

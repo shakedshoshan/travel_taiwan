@@ -71,7 +71,35 @@ function distanceToPolygonEdge(
   return Math.sqrt(minDistSq);
 }
 
-const TERRAIN_REVISION = 8;
+const TERRAIN_REVISION = 12;
+
+/** Xueshan → Hehuanshan → Nantou highs → Yushan, in world XZ. */
+const CREST_SPINE: ReadonlyArray<readonly [number, number]> = [
+  [1.74, -5.8],
+  [2.09, -3.95],
+  [0.98, -1.52],
+  [-0.16, 1.14],
+];
+
+function distanceToCrest(x: number, z: number): number {
+  let minSq = Infinity;
+  for (let i = 0; i < CREST_SPINE.length - 1; i++) {
+    const ax = CREST_SPINE[i][0];
+    const az = CREST_SPINE[i][1];
+    const bx = CREST_SPINE[i + 1][0];
+    const bz = CREST_SPINE[i + 1][1];
+    const dx = bx - ax;
+    const dz = bz - az;
+    const lenSq = dx * dx + dz * dz;
+    let t = lenSq > 0 ? ((x - ax) * dx + (z - az) * dz) / lenSq : 0;
+    t = Math.max(0, Math.min(1, t));
+    const px = ax + t * dx;
+    const pz = az + t * dz;
+    const dSq = (x - px) * (x - px) + (z - pz) * (z - pz);
+    if (dSq < minSq) minSq = dSq;
+  }
+  return Math.sqrt(minSq);
+}
 
 const terrainVertexShader = /* glsl */ `
   attribute vec3 color;
@@ -91,6 +119,9 @@ const terrainFragmentShader = /* glsl */ `
     vec3 lightDir = normalize(vec3(0.42, 0.86, 0.28));
     float wrap = dot(normalize(vNormal), lightDir) * 0.5 + 0.5;
     float shade = mix(0.58, 1.0, clamp(wrap, 0.0, 1.0));
+    float luma = dot(vColor, vec3(0.299, 0.587, 0.114));
+    float snowKeep = smoothstep(0.62, 0.86, luma);
+    shade = mix(shade, max(shade, 0.94), snowKeep);
     gl_FragColor = vec4(vColor * shade, 1.0);
   }
 `;
@@ -192,8 +223,8 @@ export function TaiwanIsland({ isNightMode }: TaiwanIslandProps) {
     const dayLow = new THREE.Color("#56bb63");
     const dayMid = new THREE.Color("#268e50");
     const dayHigh = new THREE.Color("#165f39");
-    const dayRock = new THREE.Color("#7c756c");
-    const daySnow = new THREE.Color("#eef5f3");
+    const dayRock = new THREE.Color("#9a9186");
+    const daySnow = new THREE.Color("#fbfaf7");
     const daySubmerged = new THREE.Color("#0c6fa8");
 
     const nightBeach = new THREE.Color("#2a3a52");
@@ -201,8 +232,8 @@ export function TaiwanIsland({ isNightMode }: TaiwanIslandProps) {
     const nightLow = new THREE.Color("#163f3d");
     const nightMid = new THREE.Color("#14524a");
     const nightHigh = new THREE.Color("#1a6156");
-    const nightRock = new THREE.Color("#3e4e5e");
-    const nightSnow = new THREE.Color("#88a0b2");
+    const nightRock = new THREE.Color("#5c7084");
+    const nightSnow = new THREE.Color("#eef4fb");
     const nightSubmerged = new THREE.Color("#071525");
 
     const cBeach = isNightMode ? nightBeach : dayBeach;
@@ -270,30 +301,33 @@ export function TaiwanIsland({ isNightMode }: TaiwanIslandProps) {
           tmpColor.lerp(cRock, smoothstep(0.58, 0.04, edgeDist) * 0.58);
         }
 
-        // Steep mountain slopes expose alpine slate rock
+        // Steep slopes show a little rock, without turning the whole ridge gray
         tmpColor.lerp(
           cRock,
-          smoothstep(0.52, 1.35, slope) * (relH > 0.2 ? 0.72 : 0.14)
+          smoothstep(0.7, 1.5, slope) * (relH > 0.45 ? 0.32 : 0.08)
         );
 
-        // High alpine rock transition (above ~2,800m equivalent)
-        if (relH > 1.25) {
-          tmpColor.lerp(cRock, smoothstep(1.25, 1.75, relH) * 0.65);
+        // Alpine rock band on the high ridge, around the snow line
+        if (relH > 1.0) {
+          tmpColor.lerp(cRock, smoothstep(1.0, 1.38, relH) * 0.94);
         }
 
-        // Subtle light snow only on the very highest summits (Yushan & Xueshan > 1.72)
-        if (relH > 1.72) {
-          const snow =
-            smoothstep(1.72, 1.98, relH) *
-            (1 - smoothstep(0.85, 1.55, slope));
-          tmpColor.lerp(cSnow, snow * 0.68);
-        }
+        // Thin crest ribbon. Painted after shading so it stays pale.
+        const crestDist = distanceToCrest(vx, vz);
+        const onCrest = 1 - smoothstep(0.08, 0.42, crestDist);
+        const snow =
+          relH > 1.16 && onCrest > 0.02
+            ? smoothstep(1.16, 1.4, relH) * onCrest
+            : 0;
 
         const ao =
           (0.82 + 0.18 * smoothstep(0.02, 0.7, relH)) *
           (1 - smoothstep(0.2, 1.1, slope) * 0.06);
         const grain = 0.94 + shadeVariation(vx, vz) * 0.09;
         tmpColor.multiplyScalar(ao * grain);
+        if (snow > 0.04) {
+          tmpColor.lerp(cSnow, Math.min(1, snow));
+        }
       }
 
       colors[i * 3] = tmpColor.r;

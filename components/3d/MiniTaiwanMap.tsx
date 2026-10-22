@@ -6,7 +6,6 @@ import { Canvas } from "@react-three/fiber";
 import { TaiwanIsland } from "./TaiwanIsland";
 import { OceanWater } from "./OceanWater";
 import { CityPins } from "./CityPins";
-import { RouteTubeAndTraveler } from "./RouteTubeAndTraveler";
 import { CameraRig } from "./CameraRig";
 import { Map2DFallback } from "./Map2DFallback";
 import { WorldHtmlHost } from "./WorldHtml";
@@ -71,10 +70,6 @@ export function MiniTaiwanMap({
         <Suspense fallback={null}>
           <TaiwanIsland isNightMode={store.isNightMode} />
           <OceanWater isNightMode={store.isNightMode} />
-          <RouteTubeAndTraveler
-            currentDay={currentDay}
-            isNightMode={store.isNightMode}
-          />
           <CityPins
             selectedCityId={activeCityId}
             activeTimelineCityId={currentDay.cityId}
@@ -86,8 +81,6 @@ export function MiniTaiwanMap({
         <CameraRig
           selectedCityId={activeCityId}
           focusedPlaceId={focusedPlaceId}
-          activeTimelineCityId={currentDay.cityId}
-          isPlaying={false}
         />
       </Canvas>
       <WorldHtmlHost />

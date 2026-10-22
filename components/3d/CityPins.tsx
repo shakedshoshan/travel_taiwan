@@ -32,72 +32,29 @@ interface SingleCityPinProps {
   onSelectCity: (cityId: CityId) => void;
 }
 
-/** Push nearby city names apart so north–south clusters do not stack. */
+/**
+ * Fixed offsets so each name sits in open space beside its pin.
+ * Positive Z is south. Taipei is pulled south, clear of the filter bar.
+ * Sun Moon Lake goes west of the ridge; Alishan goes south of it.
+ * Taitung goes west, clear of Green Island.
+ */
+const LABEL_NUDGE: Record<string, { x: number; z: number }> = {
+  taipei: { x: -1.7, z: 4.35 },
+  taichung: { x: -0.95, z: -0.7 },
+  "sun-moon-lake": { x: -2.25, z: 0.35 },
+  alishan: { x: 0.15, z: 1.55 },
+  tainan: { x: -0.7, z: 0.1 },
+  kaohsiung: { x: -0.95, z: 0.05 },
+  hualien: { x: 1.05, z: 0.05 },
+  taitung: { x: -1.45, z: -0.35 },
+};
+
 function computeLabelNudges(
   cities: readonly EnrichedCity[]
 ): Map<string, { x: number; z: number }> {
-  const labeled = cities.filter((city) => city.onRoute);
   const nudges = new Map<string, { x: number; z: number }>();
   for (const city of cities) {
-    if (!city.onRoute) {
-      nudges.set(city.id, { x: 0, z: 0 });
-      continue;
-    }
-    let px = 0;
-    let pz = 0;
-    for (const other of labeled) {
-      if (other.id === city.id) continue;
-      const dx = city.worldX - other.worldX;
-      const dz = city.worldZ - other.worldZ;
-      const distSq = dx * dx + dz * dz;
-      if (distSq > 19 || distSq < 1e-4) continue;
-      const dist = Math.sqrt(distSq);
-      const push = Math.max(0, 4.4 - dist) / dist;
-      px += dx * push;
-      pz += dz * push;
-    }
-    if (Math.abs(pz) > Math.abs(px)) {
-      const side =
-        Math.abs(px) < 0.3 ? (city.worldZ > 0 ? 1 : -1) : Math.sign(px);
-      px += side * 0.35;
-    }
-    const edge = Math.hypot(city.worldX, city.worldZ);
-    if (edge > 5.5 && city.worldZ < 1) {
-      const pull = Math.min(1, (edge - 5.5) / 5);
-      const zPull = city.worldZ < -6 ? 0.05 : 0.35;
-      px = px * (1 - pull) - (city.worldX / edge) * pull * 0.55;
-      pz = pz * (1 - pull) - (city.worldZ / edge) * pull * zPull;
-    }
-    if (city.worldZ < -8) {
-      px -= 0.4;
-      pz -= 0.25;
-    }
-    if (city.id === "sun-moon-lake") {
-      nudges.set(city.id, { x: -0.55, z: 1.35 });
-      continue;
-    }
-    if (city.id === "alishan") {
-      nudges.set(city.id, { x: -1.55, z: -0.2 });
-      continue;
-    }
-    if (city.id === "tainan") {
-      nudges.set(city.id, { x: -0.45, z: -0.7 });
-      continue;
-    }
-    if (city.id === "kaohsiung") {
-      nudges.set(city.id, { x: -0.35, z: 1.05 });
-      continue;
-    }
-    const len = Math.hypot(px, pz);
-    if (len < 0.04) {
-      nudges.set(city.id, { x: 0.45, z: 0 });
-      continue;
-    }
-    const reach = Math.min(0.95, 0.4 + len * 0.25);
-    nudges.set(city.id, {
-      x: (px / len) * reach,
-      z: (pz / len) * reach * 0.45,
-    });
+    nudges.set(city.id, LABEL_NUDGE[city.id] ?? { x: 0, z: 0 });
   }
   return nudges;
 }
@@ -274,14 +231,6 @@ function SingleCityPin({
             center
             distanceFactor={16}
             zIndexRange={[20, 0]}
-            avoidOverlap
-            overlapDrop={
-              city.id === "sun-moon-lake"
-                ? 78
-                : city.id === "kaohsiung"
-                  ? 36
-                  : 0
-            }
           >
             <div
               dir="rtl"
@@ -289,7 +238,11 @@ function SingleCityPin({
                 e.stopPropagation();
                 onSelectCity(city.id);
               }}
-              className={`relative cursor-pointer select-none whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold shadow-lg after:absolute after:-inset-2.5 after:content-[''] ${
+              className={`relative cursor-pointer select-none rounded-full px-2.5 py-1 text-xs font-bold shadow-lg after:absolute after:-inset-2.5 after:content-[''] ${
+                city.id === "sun-moon-lake"
+                  ? "max-w-[5.4rem] whitespace-normal text-center leading-snug"
+                  : "whitespace-nowrap"
+              } ${
                 isSelected
                   ? "scale-110 bg-amber-400 text-slate-950 ring-2 ring-white"
                   : hovered
@@ -302,17 +255,7 @@ function SingleCityPin({
               }`}
             >
               <div className="flex items-center gap-1.5">
-                {city.routeOrder && (
-                  <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-slate-950/15 px-1 text-[10px] font-extrabold dark:bg-white/20">
-                    {city.routeOrder.join(",")}
-                  </span>
-                )}
                 <span>{city.nameHe}</span>
-                {counts.total > 0 && !hovered && !isSelected && (
-                  <span className="text-[10px] font-semibold opacity-65">
-                    · {counts.total}
-                  </span>
-                )}
               </div>
               {hovered && (
                 <div className="mt-0.5 text-[10px] font-medium opacity-90">
@@ -441,7 +384,11 @@ export function CityPins({
           }}
         >
           <WorldHtml
-            position={[0, 0.22, 0]}
+            position={[
+              isl.id === "xiaoliuqiu" ? -3.15 : isl.id === "orchid-island" ? 0.55 : 0.15,
+              0.22,
+              isl.id === "xiaoliuqiu" ? -1.55 : isl.id === "orchid-island" ? -2.15 : 0.15,
+            ]}
             center
             distanceFactor={18}
             zIndexRange={[14, 0]}

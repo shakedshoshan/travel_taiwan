@@ -10,7 +10,6 @@ import { TaiwanIsland } from "./TaiwanIsland";
 import { OceanWater } from "./OceanWater";
 import { CityPins } from "./CityPins";
 import { CategoryMarkers } from "./CategoryMarkers";
-import { RouteTubeAndTraveler } from "./RouteTubeAndTraveler";
 import { DelightDetails } from "./DelightDetails";
 import {
   CityDestination3DScene,
@@ -76,16 +75,6 @@ export function MapCanvas() {
     const timer = window.setTimeout(() => setIsReady(true), 320);
     return () => window.clearTimeout(timer);
   }, []);
-
-  // Auto-advance timeline when Play is active
-  useEffect(() => {
-    if (!store.isPlaying) return;
-    const interval = window.setInterval(() => {
-      const nextIdx = (store.currentDayIndex + 1) % timelineDays.length;
-      tripActions.setCurrentDayIndex(nextIdx);
-    }, 1350);
-    return () => window.clearInterval(interval);
-  }, [store.isPlaying, store.currentDayIndex, timelineDays.length]);
 
   const handleSelectPlace = (place: EnrichedPlace) => {
     tripActions.focusPlace(place.id, place.cityId);
@@ -217,10 +206,6 @@ export function MapCanvas() {
           ) : (
             <>
               <TaiwanIsland isNightMode={store.isNightMode} />
-              <RouteTubeAndTraveler
-                currentDay={currentDay}
-                isNightMode={store.isNightMode}
-              />
               <CityPins
                 selectedCityId={store.selectedCityId}
                 activeTimelineCityId={currentDay.cityId}
@@ -242,8 +227,6 @@ export function MapCanvas() {
         <CameraRig
           selectedCityId={store.selectedCityId}
           focusedPlaceId={store.focusedPlaceId}
-          activeTimelineCityId={currentDay.cityId}
-          isPlaying={store.isPlaying}
         />
 
         {store.isNightMode && (

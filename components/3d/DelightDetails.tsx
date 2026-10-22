@@ -219,18 +219,41 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
         <mesh
           position={[
             landmarks.smlLake.x,
-            landmarks.smlLake.y + 0.08,
+            landmarks.smlLake.y + 0.52,
             landmarks.smlLake.z,
           ]}
           rotation={[-Math.PI / 2, 0, 0]}
+          renderOrder={3}
         >
-          <circleGeometry args={[0.95, 36]} />
-          <meshStandardMaterial
-            color={isNightMode ? "#67e8f9" : "#19b4d2"}
-            emissive={isNightMode ? "#cffafe" : "#22d3ee"}
-            emissiveIntensity={isNightMode ? 0.9 : 0.12}
-            roughness={0.18}
-            metalness={0.08}
+          <circleGeometry args={[0.88, 40]} />
+          {isNightMode ? (
+            <meshStandardMaterial
+              color="#7ef3ff"
+              emissive="#cffafe"
+              emissiveIntensity={0.85}
+              roughness={0.22}
+              metalness={0.04}
+            />
+          ) : (
+            <meshBasicMaterial color="#1ad4f2" />
+          )}
+        </mesh>
+        <mesh
+          position={[
+            landmarks.smlLake.x,
+            landmarks.smlLake.y + 0.5,
+            landmarks.smlLake.z,
+          ]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          renderOrder={3}
+        >
+          <ringGeometry args={[0.78, 1.02, 40]} />
+          <meshBasicMaterial
+            color={isNightMode ? "#e7fbff" : "#f4fdff"}
+            transparent
+            opacity={0.92}
+            side={THREE.DoubleSide}
+            depthWrite={false}
           />
         </mesh>
 

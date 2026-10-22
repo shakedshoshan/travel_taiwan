@@ -14,12 +14,12 @@ Interactive 3D travel web app for a 33-day trip to Taiwan (`6.11 – 8.12.2026`)
   - `schemas.ts`: Strict Zod schemas derived from `data/types.ts`. Fails build if any `cityId` is invalid.
   - `coordinates.ts` & `taiwanGeo.ts`: Projects `[lat, lng]` to 3D island space (`latLngToXZ`, `latLngToWorld3D`), computes Central Mountain Range elevation (`getElevationAtLatLng`), and calculates deterministic golden-angle spiral offsets (`resolvePlaceCoordinates`).
   - `loaders.ts` & `selectors.ts`: Validated static dataset (`TRIP_DATA`), selectors by city/leg/day/place, and `buildGoogleMapsUrl`.
-- `/lib/store/useTripStore.ts`: Hydration-safe `useSyncExternalStore` + `localStorage` store (`favorites`, `donePlaces`, `selectedHotels`, `dailyFoodBudget`, `isNightMode`, `selectedCityId`, `currentDayIndex`, `layerToggles`).
+- `/lib/store/useTripStore.ts`: Hydration-safe `useSyncExternalStore` + `localStorage` store for display and map session only (`isNightMode`, `selectedCityId`, `currentDayIndex`, `layerToggles`). This is an info app: do not add favorites, visited/done tracking, hotel picks, or a personal budget.
 - `/components/3d`:
   - `MapCanvas.tsx` & `MiniTaiwanMap.tsx`: R3F `<Canvas>` wrappers with `<WorldHtmlHost />`.
   - `CameraRig.tsx`: Map-style camera controller (left-drag pan, right-drag/toggle orbit, `zoomToCursor`, WASD/arrow keys, and on-screen navigation pad).
-  - `TaiwanIsland.tsx`, `OceanWater.tsx`, `CityPins.tsx`, `CategoryMarkers.tsx`, `RouteTubeAndTraveler.tsx`, `DelightDetails.tsx`, `Map2DFallback.tsx`.
-- `/components/ui`: `Navbar.tsx`, `LayerToggles.tsx`, `TimelineScrubber.tsx`, `CityDrawer.tsx`, `CommandSearch.tsx`, `BudgetWidget.tsx`, `PlaceDetailClient.tsx`.
+  - `TaiwanIsland.tsx`, `OceanWater.tsx`, `CityPins.tsx`, `CategoryMarkers.tsx`, `DelightDetails.tsx`, `Map2DFallback.tsx`. Do not add a route tube, driving car, or timeline play button.
+- `/components/ui`: `Navbar.tsx`, `LayerToggles.tsx`, `TimelineScrubber.tsx`, `CityDrawer.tsx`, `CommandSearch.tsx`, `PlaceDetailClient.tsx`.
 - `/app`: `/` (3D map home), `/route` (10 legs synced with mini-map), `/food` (80 spots + cheap must-eats), `/hotels` (37 hotels compared by tier), `/place/[id]` (SSG for all 264 places).
 
 ## Non-Negotiable Data & UI Rules

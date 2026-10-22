@@ -3,8 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Heart,
-  CheckCircle2,
   Navigation,
   AlertCircle,
   ArrowRight,
@@ -25,7 +23,7 @@ import {
 import { getPlaceImage } from "@/lib/data/placeImages";
 import { MiniTaiwanMap } from "@/components/3d/MiniTaiwanMap";
 import { PlaceCard } from "@/components/ui/PlaceCard";
-import { tripActions, useTripStore } from "@/lib/store/useTripStore";
+import { tripActions } from "@/lib/store/useTripStore";
 import type { CityId } from "@/data/types";
 
 interface PlaceDetailClientProps {
@@ -78,10 +76,6 @@ export function PlaceDetailClient({
   place,
   nearbyPlaces,
 }: PlaceDetailClientProps) {
-  const store = useTripStore();
-  const isFav = store.favorites.includes(place.id);
-  const isDone = store.donePlaces.includes(place.id);
-
   const googleMapsUrl = buildGoogleMapsUrl(place);
   const imageMeta = getPlaceImage(place);
   const cleanPrice =
@@ -209,44 +203,16 @@ export function PlaceDetailClient({
           </div>
         </div>
 
-        {/* Primary Action Bar ("נווט" + "♥" + "בוצע") */}
-        <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 p-3.5 dark:border-slate-800">
+        <div className="border-b border-slate-200 p-3.5 dark:border-slate-800">
           <a
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="toy-button inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-2xl bg-gradient-to-l from-orange-500 to-amber-500 px-5 text-sm font-black text-white shadow-md"
+            className="toy-button inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-l from-orange-500 to-amber-500 px-5 text-sm font-black text-white shadow-md"
           >
             <Navigation className="h-4 w-4" />
             <span>נווט למקום</span>
           </a>
-
-          <button
-            type="button"
-            onClick={() => tripActions.toggleFavorite(place.id)}
-            aria-label={isFav ? "הסר ממועדפים" : "שמור למועדפים"}
-            className={`toy-button inline-flex min-h-[48px] min-w-[52px] items-center justify-center gap-1.5 rounded-2xl border px-4 text-xs font-bold ${
-              isFav
-                ? "border-rose-500 bg-rose-500 text-white"
-                : "border-slate-200 bg-slate-50 text-rose-500 dark:border-slate-700 dark:bg-slate-800"
-            }`}
-          >
-            <Heart className={`h-4 w-4 ${isFav ? "fill-current" : ""}`} />
-            <span>♥</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => tripActions.toggleDone(place.id)}
-            className={`toy-button inline-flex min-h-[48px] items-center justify-center gap-1.5 rounded-2xl border px-3.5 text-xs font-bold ${
-              isDone
-                ? "border-emerald-600 bg-emerald-600 text-white"
-                : "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
-            }`}
-          >
-            <CheckCircle2 className="h-4 w-4" />
-            <span>{isDone ? "בוצע ✓" : "סמן כבוצע"}</span>
-          </button>
         </div>
 
         {/* 2. Mini 3D Map of the Exact Spot at the Top */}

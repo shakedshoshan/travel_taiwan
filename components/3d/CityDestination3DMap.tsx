@@ -12,8 +12,6 @@ import {
   Sparkles,
   Trees,
   Flame,
-  Heart,
-  CheckCircle2,
   ExternalLink,
   MapPin,
   AlertCircle,
@@ -201,9 +199,6 @@ export function computeCityMapNodes(cityId: CityId): CityMapNode[] {
 interface SingleDestinationPinProps {
   node: CityMapNode;
   isFocused: boolean;
-  isChosenHotel: boolean;
-  isFavorite: boolean;
-  isDone: boolean;
   isNightMode: boolean;
   showAllLabels: boolean;
   onSelectNode: (node: CityMapNode) => void;
@@ -212,9 +207,6 @@ interface SingleDestinationPinProps {
 function SingleDestinationPin({
   node,
   isFocused,
-  isChosenHotel,
-  isFavorite,
-  isDone,
   isNightMode,
   showAllLabels,
   onSelectNode,
@@ -252,7 +244,6 @@ function SingleDestinationPin({
     showAllLabels ||
     hovered ||
     isFocused ||
-    isChosenHotel ||
     node.importance >= 4 ||
     node.categoryGroup === "hotel";
 
@@ -273,8 +264,7 @@ function SingleDestinationPin({
         />
       </mesh>
 
-      {/* Active/Focused/Chosen pulsing ring */}
-      {(isFocused || hovered || isChosenHotel) && (
+      {(isFocused || hovered) && (
         <mesh
           ref={beaconRef}
           position={[0, node.y + 0.01, 0]}
@@ -282,9 +272,7 @@ function SingleDestinationPin({
         >
           <ringGeometry args={[0.48, 0.62, 32]} />
           <meshBasicMaterial
-            color={
-              isFocused ? "#fde047" : isChosenHotel ? "#34d399" : node.color
-            }
+            color={isFocused ? "#fde047" : node.color}
             side={THREE.DoubleSide}
             transparent
             opacity={0.95}
@@ -345,7 +333,7 @@ function SingleDestinationPin({
               <meshStandardMaterial
                 color="#fde047"
                 emissive="#fde047"
-                emissiveIntensity={isChosenHotel ? 2.0 : 0.7}
+                emissiveIntensity={0.7}
               />
             </mesh>
           </group>
@@ -504,9 +492,7 @@ function SingleDestinationPin({
                   ? "scale-110 border-amber-300 bg-slate-950 text-white shadow-2xl ring-2 ring-amber-400"
                   : hovered
                     ? "scale-105 border-white/60 bg-slate-900/95 text-white shadow-xl"
-                    : isChosenHotel
-                      ? "border-emerald-400 bg-emerald-950/90 text-emerald-100 shadow-lg"
-                      : "border-slate-900/15 bg-white/92 text-slate-900 shadow-md backdrop-blur-md dark:border-white/15 dark:bg-slate-900/90 dark:text-white"
+                    : "border-slate-900/15 bg-white/92 text-slate-900 shadow-md backdrop-blur-md dark:border-white/15 dark:bg-slate-900/90 dark:text-white"
               }`}
             >
               <div className="flex items-center gap-1.5 whitespace-nowrap">
@@ -517,15 +503,9 @@ function SingleDestinationPin({
                 <span className="max-w-[150px] truncate text-[11px] font-extrabold">
                   {node.place.name}
                 </span>
-                {isFavorite && (
-                  <span className="text-[10px] text-rose-500">♥</span>
-                )}
-                {isDone && (
-                  <span className="text-[10px] text-emerald-500">✓</span>
-                )}
               </div>
 
-              {(hovered || isFocused || isChosenHotel) && (
+              {(hovered || isFocused) && (
                 <div className="mt-0.5 flex items-center justify-between gap-2 whitespace-nowrap text-[10px] opacity-90">
                   <span className="font-semibold text-amber-400">
                     {node.badgeText}
@@ -641,8 +621,6 @@ export function CityDestination3DScene({
     const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
     return new THREE.TubeGeometry(curve, 24, 0.055, 8, false);
   }, [focusedNode]);
-
-  const selectedHotelId = store.selectedHotels[cityId];
 
   return (
     <group name="city-destination-3d-scene">
@@ -834,9 +812,6 @@ export function CityDestination3DScene({
           key={node.place.id}
           node={node}
           isFocused={store.focusedPlaceId === node.place.id}
-          isChosenHotel={selectedHotelId === node.place.id}
-          isFavorite={store.favorites.includes(node.place.id)}
-          isDone={store.donePlaces.includes(node.place.id)}
           isNightMode={isNightMode}
           showAllLabels={showAllLabels}
           onSelectNode={(n) => tripActions.focusPlace(n.place.id, cityId)}
@@ -886,8 +861,6 @@ export function CityDestinationHUD({
       return true;
     });
   }, [allNodes, categoryFilter]);
-
-  const selectedHotelId = store.selectedHotels[cityId];
 
   return (
     <div
@@ -1018,7 +991,6 @@ export function CityDestinationHUD({
             <div className="mt-2 flex-1 space-y-1.5 overflow-y-auto pl-1">
               {filteredDirectoryNodes.map((node) => {
                 const isSelected = store.focusedPlaceId === node.place.id;
-                const isChosenHotel = selectedHotelId === node.place.id;
                 return (
                   <button
                     key={node.place.id}
@@ -1041,11 +1013,6 @@ export function CityDestinationHUD({
                         <span className="truncate font-bold text-slate-900 dark:text-white">
                           {node.place.name}
                         </span>
-                        {isChosenHotel && (
-                          <span className="rounded bg-emerald-500/20 px-1.5 py-0.5 text-[9px] font-bold text-emerald-600 dark:text-emerald-300">
-                            נבחר
-                          </span>
-                        )}
                       </div>
                       <div className="mt-0.5 flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400">
                         <span>{node.badgeText}</span>
@@ -1105,41 +1072,6 @@ export function CityDestinationHUD({
                   </div>
                 )}
               </div>
-
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() =>
-                    tripActions.toggleFavorite(focusedNode.place.id)
-                  }
-                  className={`rounded-xl p-1.5 ${
-                    store.favorites.includes(focusedNode.place.id)
-                      ? "bg-rose-500/15 text-rose-500"
-                      : "text-slate-400 hover:bg-slate-900/5"
-                  }`}
-                  title="מועדף"
-                >
-                  <Heart
-                    className={`h-4 w-4 ${
-                      store.favorites.includes(focusedNode.place.id)
-                        ? "fill-current"
-                        : ""
-                    }`}
-                  />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => tripActions.toggleDone(focusedNode.place.id)}
-                  className={`rounded-xl p-1.5 ${
-                    store.donePlaces.includes(focusedNode.place.id)
-                      ? "bg-emerald-500/15 text-emerald-600"
-                      : "text-slate-400 hover:bg-slate-900/5"
-                  }`}
-                  title="סמן כבוצע"
-                >
-                  <CheckCircle2 className="h-4 w-4" />
-                </button>
-              </div>
             </div>
 
             <p className="mt-2 text-xs leading-relaxed text-slate-700 dark:text-slate-200">
@@ -1174,25 +1106,6 @@ export function CityDestinationHUD({
                     </span>
                   )}
               </div>
-            )}
-
-            {/* Hotel Budget Selection Button */}
-            {focusedNode.place.kind === "hotel" && (
-              <button
-                type="button"
-                onClick={() =>
-                  tripActions.selectHotelForCity(cityId, focusedNode.place.id)
-                }
-                className={`mt-2.5 w-full rounded-2xl py-2 text-xs font-black transition-all ${
-                  selectedHotelId === focusedNode.place.id
-                    ? "bg-emerald-600 text-white"
-                    : "bg-sky-500 text-white hover:bg-sky-600"
-                }`}
-              >
-                {selectedHotelId === focusedNode.place.id
-                  ? "מלון זה נבחר לתקציב הטיול ✓"
-                  : "בחר מלון זה לתקציב בעיר זו"}
-              </button>
             )}
 
             <div className="mt-3 flex items-center justify-between border-t border-slate-900/10 pt-2.5 text-xs dark:border-white/10">
