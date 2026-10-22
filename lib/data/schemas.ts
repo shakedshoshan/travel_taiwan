@@ -31,6 +31,7 @@ export const CITY_IDS = [
   "pingtung",
   "hualien",
   "taitung",
+  "kenting",
 ] as const satisfies readonly CityId[];
 
 export const CityIdSchema = z.enum(CITY_IDS);
@@ -141,7 +142,7 @@ export const RouteDataSchema: z.ZodType<RouteData> = z.object({
   audit: z.array(AuditNoteSchema),
 });
 
-export const CitiesArraySchema = z.array(CitySchema).length(18);
+export const CitiesArraySchema = z.array(CitySchema).length(19);
 export const AttractionsArraySchema = z.array(AttractionSchema).min(1);
 export const FoodArraySchema = z.array(FoodSchema).min(1);
 export const HotelsArraySchema = z.array(HotelSchema).min(1);

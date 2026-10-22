@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import {
   CreditCard,
   Smartphone,
@@ -233,14 +234,16 @@ export default function InfoPage() {
                   key={tr.nameHe}
                   className="flex items-start gap-3 rounded-2xl bg-slate-50 p-3 dark:bg-slate-800/60"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={routeImg.src}
-                    alt={tr.nameHe}
-                    title={routeImg.attribution}
-                    loading="lazy"
-                    className="h-14 w-20 shrink-0 rounded-xl object-cover"
-                  />
+                  <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-xl bg-slate-900">
+                    <Image
+                      src={routeImg.src}
+                      alt={tr.nameHe}
+                      title={routeImg.attribution}
+                      fill
+                      sizes="96px"
+                      className="object-cover"
+                    />
+                  </div>
                   <div className="min-w-0 flex-1">
                     <div className="font-extrabold text-slate-900 dark:text-white">
                       {tr.nameHe}

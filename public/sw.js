@@ -48,6 +48,7 @@ self.addEventListener("fetch", (event) => {
 
   // Cache-first for images & icons, network-first with cache fallback for pages/scripts
   if (
+    url.pathname.startsWith("/_next/image") ||
     url.pathname.startsWith("/images/") ||
     url.pathname.startsWith("/taiwan-images/") ||
     url.pathname === "/icon.svg"

@@ -103,7 +103,8 @@ export function getImageByFile(
 }
 
 export function getCityImages(cityId: CityId): PlaceImageMeta[] {
-  const direct = CITY_CREDITS_MAP.get(cityId);
+  const lookupCity = cityId === "kenting" ? "pingtung" : cityId;
+  const direct = CITY_CREDITS_MAP.get(lookupCity);
   if (direct && direct.length > 0) {
     // Sort so primary (without -2/-3) comes first
     const sorted = [...direct].sort((a, b) => a.file.length - b.file.length);

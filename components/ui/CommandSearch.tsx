@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Search, X, Heart, CheckCircle2, ArrowLeft } from "lucide-react";
 import {
@@ -172,13 +173,15 @@ export function CommandSearch() {
                   }}
                   className="flex w-full items-center justify-between gap-3 rounded-2xl p-2.5 text-right transition-colors hover:bg-orange-500/10"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={thumbSrc}
-                    alt={item.titleHe}
-                    loading="lazy"
-                    className="h-12 w-16 shrink-0 rounded-xl bg-slate-900 object-cover"
-                  />
+                  <div className="relative h-12 w-16 shrink-0 overflow-hidden rounded-xl bg-slate-900">
+                    <Image
+                      src={thumbSrc}
+                      alt={item.titleHe}
+                      fill
+                      sizes="64px"
+                      className="object-cover"
+                    />
+                  </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <span className="truncate font-display text-sm font-bold text-slate-900 dark:text-white">

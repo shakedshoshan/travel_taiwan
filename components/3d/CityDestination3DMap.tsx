@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -1066,13 +1067,13 @@ export function CityDestinationHUD({
         {focusedNode && (
           <div className="glass-panel pointer-events-auto w-full rounded-3xl border-2 border-amber-400/70 p-4 shadow-2xl md:w-96">
             <div className="relative mb-3 h-32 w-full overflow-hidden rounded-2xl bg-slate-900">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={getPlaceImage(focusedNode.place).src}
                 alt={focusedNode.place.name}
                 title={getPlaceImage(focusedNode.place).attribution}
-                loading="lazy"
-                className="h-full w-full object-cover"
+                fill
+                sizes="384px"
+                className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
               <span className="absolute bottom-1.5 left-2 max-w-[90%] truncate rounded bg-slate-950/65 px-1.5 py-0.5 text-[9px] text-slate-200">

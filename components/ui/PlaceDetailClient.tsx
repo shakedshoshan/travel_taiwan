@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   Heart,
@@ -69,6 +70,8 @@ const CITY_TRANSIT_GUIDE_HE: Record<CityId, string> = {
     "רכבת אקספרס מזרחית (EMU3000) מתחנת טייפה מיין לחואליאן (כשעתיים ורבע). לאזור טארוקו וצ׳ישינגטאן באוטובוס תיירים 310 או מונית.",
   taitung:
     "רכבת TRA לאורך עמק הריפט המזרחי מחואליאן לצ׳ישאנג וטאיטונג, ואוטובוס חופי 8101/8102 לדולאן וסאנשיאנטאי.",
+  kenting:
+    "אוטובוס אקספרס Kenting Express (קו 9189) מתחנת HSR Zuoying בקאושיונג ישירות לקנטינג (כשעתיים נסיעה).",
 };
 
 export function PlaceDetailClient({
@@ -129,8 +132,7 @@ export function PlaceDetailClient({
       {/* 1. Hero Photo + Title Header */}
       <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg dark:border-slate-800 dark:bg-slate-900">
         <div className="relative h-56 w-full bg-slate-900 sm:h-72">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={imageMeta.src}
             alt={
               imageMeta.match === "representative"
@@ -138,7 +140,10 @@ export function PlaceDetailClient({
                 : place.name
             }
             title={imageMeta.attribution}
-            className="h-full w-full object-cover"
+            fill
+            priority
+            sizes="(max-width: 896px) 100vw, 896px"
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-transparent" />
 

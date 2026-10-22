@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import {
   BedDouble,
   Wallet,
@@ -148,13 +149,13 @@ export default function HotelsPage() {
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3 dark:border-slate-800">
                 <div className="flex items-center gap-3">
                   <div className="relative h-12 w-16 shrink-0 overflow-hidden rounded-2xl bg-slate-900">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={cityImg.src}
                       alt={city.nameHe}
                       title={cityImg.attribution}
-                      loading="lazy"
-                      className="h-full w-full object-cover"
+                      fill
+                      sizes="64px"
+                      className="object-cover"
                     />
                   </div>
                   <div className="flex flex-wrap items-center gap-2">

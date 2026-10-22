@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import {
   X,
   Sparkles,
@@ -153,12 +154,12 @@ export function CityDrawer() {
                   cityImages.length === 1 ? "w-full" : "w-56 sm:w-64"
                 }`}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={img.src}
                   alt={`${city.nameHe} ${idx + 1}`}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                  fill
+                  sizes="256px"
+                  className="object-cover transition-transform duration-300 hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                 <span className="absolute right-2 bottom-1.5 left-2 truncate text-[9px] font-medium text-slate-200">

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Sparkles } from "@react-three/drei";
 import * as THREE from "three";
+import Image from "next/image";
 import Link from "next/link";
 import { WorldHtml } from "./WorldHtml";
 import {
@@ -450,12 +451,12 @@ export function CategoryMarkers({
             } w-64 rounded-2xl border bg-slate-950/95 p-3 text-right text-xs text-white shadow-2xl backdrop-blur-md`}
           >
             <div className="mb-2 relative h-24 w-full overflow-hidden rounded-xl bg-slate-900">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={getPlaceImage(activeEntry.place).src}
                 alt={activeEntry.place.name}
-                loading="lazy"
-                className="h-full w-full object-cover"
+                fill
+                sizes="256px"
+                className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
               <span className="absolute bottom-1 left-1.5 max-w-[90%] truncate text-[8.5px] text-slate-300">

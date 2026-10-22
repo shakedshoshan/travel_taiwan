@@ -435,9 +435,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "new-taipei",
-    "lat": 25.012,
-    "lng": 121.465,
-    "approxLocation": true
+    "lat": 25.1097,
+    "lng": 121.8452,
+    "approxLocation": false,
+    "nameEn": "Jiufen Old Street"
   },
   {
     "id": "food-020-b80572",
@@ -524,8 +525,9 @@
     "verified": false,
     "cityId": "keelung",
     "lat": 25.1283,
-    "lng": 121.7419,
-    "approxLocation": true
+    "lng": 121.7436,
+    "approxLocation": false,
+    "nameEn": "Miaokou Night Market"
   },
   {
     "id": "food-024-6489ac",
@@ -1051,9 +1053,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "tainan",
-    "lat": 22.9908,
-    "lng": 120.2133,
-    "approxLocation": true
+    "lat": 23.0109,
+    "lng": 120.2004,
+    "approxLocation": false,
+    "nameEn": "Garden Night Market"
   },
   {
     "id": "food-048-d5eaf4",
@@ -1557,9 +1560,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taichung",
-    "lat": 24.1477,
-    "lng": 120.6736,
-    "approxLocation": true
+    "lat": 24.1418,
+    "lng": 120.6802,
+    "approxLocation": false,
+    "nameEn": "Taichung Second Market"
   },
   {
     "id": "food-071-49b250",

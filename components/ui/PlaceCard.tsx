@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   Heart,
@@ -70,8 +71,7 @@ export function PlaceCard({
           compact ? "h-28" : "h-36"
         }`}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={imageMeta.src}
           alt={
             imageMeta.match === "representative"
@@ -79,8 +79,13 @@ export function PlaceCard({
               : place.name
           }
           title={imageMeta.attribution}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+          fill
+          sizes={
+            compact
+              ? "(max-width: 640px) 92vw, 320px"
+              : "(max-width: 640px) 94vw, (max-width: 1024px) 46vw, 360px"
+          }
+          className="object-cover transition-transform duration-300 hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
 

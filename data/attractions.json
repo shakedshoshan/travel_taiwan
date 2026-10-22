@@ -2,93 +2,100 @@
   {
     "id": "attr-000-42986a",
     "name": "ג׳יופן",
-    "nameZh": null,
+    "nameZh": "九份老街",
     "city": "ניו טייפה, ג׳יופן",
     "description": "אחרי שיפן, לשקיעה ולאורות. לפני 10:00 או אחרי 17:00 אם בלי שיפן.",
     "importance": 5,
     "isNature": false,
     "cityId": "new-taipei",
-    "lat": 25.012,
-    "lng": 121.465,
-    "approxLocation": true
+    "lat": 25.1097,
+    "lng": 121.8452,
+    "approxLocation": false,
+    "nameEn": "Jiufen Old Street"
   },
   {
     "id": "attr-001-810bd9",
     "name": "הר הפיל",
-    "nameZh": null,
+    "nameZh": "象山",
     "city": "טייפה",
     "description": "המדרגות המפורסמות מעל 101. שקיעה או לילה בהיר.",
     "importance": 5,
     "isNature": true,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.0273,
+    "lng": 121.5707,
+    "approxLocation": false,
+    "nameEn": "Elephant Mountain"
   },
   {
     "id": "attr-002-84d728",
     "name": "טייפה 101",
-    "nameZh": null,
+    "nameZh": "台北101",
     "city": "טייפה",
     "description": "הנוף למעלה. שעה, לא הקניון. אחד הסמלים של העיר.",
     "importance": 5,
     "isNature": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.034,
+    "lng": 121.5645,
+    "approxLocation": false,
+    "nameEn": "Taipei 101"
   },
   {
     "id": "attr-003-313e83",
     "name": "יהליו",
-    "nameZh": null,
+    "nameZh": "野柳地質公園",
     "city": "ניו טייפה, ואנלי",
     "description": "סלעי המכסה המפורסמים. הכף חשוף למונסון, עדיף יום יבש ושקט.",
     "importance": 5,
     "isNature": true,
     "cityId": "new-taipei",
-    "lat": 25.012,
-    "lng": 121.465,
-    "approxLocation": true
+    "lat": 25.2063,
+    "lng": 121.6905,
+    "approxLocation": false,
+    "nameEn": "Yehliu Geopark"
   },
   {
     "id": "attr-004-cbd9bf",
     "name": "סיור צ׳ינגשאן",
-    "nameZh": null,
+    "nameZh": "艋舺青山宮暗訪暨遶境",
     "city": "טייפה, וואנהואה",
     "description": "סיורי לילה 28–29.11, תהלוכה ב-30.11. האירוע של הטיול.",
     "importance": 5,
     "isNature": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.0359,
+    "lng": 121.5011,
+    "approxLocation": false,
+    "nameEn": "Monga Qingshan King Festival"
   },
   {
     "id": "attr-005-887c67",
     "name": "שביל צאולינג",
-    "nameZh": null,
+    "nameZh": "草嶺古道",
     "city": "ניו טייפה / יילאן",
     "description": "הטיול הצפוני ששווה יום. דשא כסף במעבר, 1–30.11. עדיף באמצע השבוע.",
     "importance": 5,
     "isNature": true,
     "cityId": "new-taipei",
-    "lat": 25.012,
-    "lng": 121.465,
-    "approxLocation": true
+    "lat": 25.006,
+    "lng": 121.918,
+    "approxLocation": false,
+    "nameEn": "Caoling Historic Trail"
   },
   {
     "id": "attr-006-de7ef8",
     "name": "שוק ראוהה",
-    "nameZh": null,
+    "nameZh": "饒河街觀光夜市",
     "city": "טייפה",
     "description": "שוק הלילה של טייפה. מרק צלעות כן. לחמניית הפלפל כאן כבר לא החזקה.",
     "importance": 5,
     "isNature": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.0507,
+    "lng": 121.5775,
+    "approxLocation": false,
+    "nameEn": "Raohe Night Market"
   },
   {
     "id": "attr-007-45e7ef",
@@ -184,15 +191,16 @@
   {
     "id": "attr-014-adb104",
     "name": "לונגשאן",
-    "nameZh": null,
+    "nameZh": "艋舺龍山寺",
     "city": "טייפה, וואנהואה",
     "description": "המקדש המפורסם. מגיעים בערב, בדרך לצ׳ינגשאן.",
     "importance": 4,
     "isNature": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.0372,
+    "lng": 121.4999,
+    "approxLocation": false,
+    "nameEn": "Longshan Temple"
   },
   {
     "id": "attr-015-ed141a",
@@ -210,15 +218,16 @@
   {
     "id": "attr-016-5018ba",
     "name": "מפל שיפן",
-    "nameZh": null,
+    "nameZh": "十分瀑布",
     "city": "ניו טייפה, פינגשי",
     "description": "המפל בבוקר, בלי עששיות. אחר כך ג׳יופן לשקיעה. נעילה ב-17:00.",
     "importance": 4,
     "isNature": true,
     "cityId": "new-taipei",
-    "lat": 25.012,
-    "lng": 121.465,
-    "approxLocation": true
+    "lat": 25.0482,
+    "lng": 121.7875,
+    "approxLocation": false,
+    "nameEn": "Shifen Waterfall"
   },
   {
     "id": "attr-017-4a9543",
@@ -275,15 +284,16 @@
   {
     "id": "attr-021-ea0454",
     "name": "רכבל מאוקונג",
-    "nameZh": null,
+    "nameZh": "貓空纜車",
     "city": "טייפה, וונשאן",
     "description": "הרכבל מעל גן החיות אל גבעות התה. נוף ערב על העיר.",
     "importance": 4,
     "isNature": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 24.9958,
+    "lng": 121.5763,
+    "approxLocation": false,
+    "nameEn": "Maokong Gondola"
   },
   {
     "id": "attr-022-cf1582",
@@ -301,15 +311,16 @@
   {
     "id": "attr-023-bea041",
     "name": "שוק נינגשיה",
-    "nameZh": null,
+    "nameZh": "寧夏夜市",
     "city": "טייפה",
     "description": "שוק הלילה המפורסם של דאדאוצ׳נג. שקט יותר מראוהה, עדיין שווה.",
     "importance": 4,
     "isNature": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.0561,
+    "lng": 121.5154,
+    "approxLocation": false,
+    "nameEn": "Ningxia Night Market"
   },
   {
     "id": "attr-024-c182f1",
@@ -509,15 +520,16 @@
   {
     "id": "attr-039-2d241a",
     "name": "מיאוקואו",
-    "nameZh": null,
+    "nameZh": "基隆廟口夜市",
     "city": "קילונג",
     "description": "שוק פירות הים המפורסם מול המקדש.",
     "importance": 5,
     "isNature": false,
     "cityId": "keelung",
     "lat": 25.1283,
-    "lng": 121.7419,
-    "approxLocation": true
+    "lng": 121.7436,
+    "approxLocation": false,
+    "nameEn": "Miaokou Night Market"
   },
   {
     "id": "attr-040-28a679",
@@ -691,15 +703,16 @@
   {
     "id": "attr-053-176868",
     "name": "Leofoo",
-    "nameZh": null,
+    "nameZh": "六福村主題遊樂園",
     "city": "שינג׳ו, גואנשי",
     "description": "פארק השעשועים היחיד. יום שלם. בלי פארק המים.",
     "importance": 5,
     "isNature": false,
     "cityId": "hsinchu",
-    "lat": 24.8016,
-    "lng": 120.9716,
-    "approxLocation": true
+    "lat": 24.844,
+    "lng": 121.17,
+    "approxLocation": false,
+    "nameEn": "Leofoo Village Theme Park"
   },
   {
     "id": "attr-054-8259b1",
@@ -782,28 +795,30 @@
   {
     "id": "attr-060-3c1496",
     "name": "שוק פנגצ׳יה",
-    "nameZh": null,
+    "nameZh": "逢甲夜市",
     "city": "טאיצ׳ונג",
     "description": "שוק הלילה המפורסם. להגיע סביב 17:30 באמצע השבוע.",
     "importance": 5,
     "isNature": false,
     "cityId": "taichung",
-    "lat": 24.1477,
-    "lng": 120.6736,
-    "approxLocation": true
+    "lat": 24.1749,
+    "lng": 120.6458,
+    "approxLocation": false,
+    "nameEn": "Fengjia Night Market"
   },
   {
     "id": "attr-061-838fd1",
     "name": "גאומיי",
-    "nameZh": null,
+    "nameZh": "高美濕地",
     "city": "טאיצ׳ונג, צ׳ינגשוי",
     "description": "ביצה וטורבינות בשקיעה. לבדוק גאות.",
     "importance": 4,
     "isNature": true,
     "cityId": "taichung",
-    "lat": 24.1477,
-    "lng": 120.6736,
-    "approxLocation": true
+    "lat": 24.3117,
+    "lng": 120.5496,
+    "approxLocation": false,
+    "nameEn": "Gaomei Wetlands"
   },
   {
     "id": "attr-062-5d077b",
@@ -821,15 +836,16 @@
   {
     "id": "attr-063-962245",
     "name": "השוק השני",
-    "nameZh": null,
+    "nameZh": "台中第二市場",
     "city": "טאיצ׳ונג",
     "description": "שוק הבוקר המקומי, לא פנגצ׳יה. הדוכנים נגמרים בצהריים.",
     "importance": 4,
     "isNature": false,
     "cityId": "taichung",
-    "lat": 24.1477,
-    "lng": 120.6736,
-    "approxLocation": true
+    "lat": 24.1418,
+    "lng": 120.6802,
+    "approxLocation": false,
+    "nameEn": "Taichung Second Market"
   },
   {
     "id": "attr-064-d4fcd2",
@@ -951,41 +967,44 @@
   {
     "id": "attr-073-938b0c",
     "name": "רחוב לוקאנג",
-    "nameZh": null,
+    "nameZh": "鹿港老街",
     "city": "ג׳אנגהואה, לוקאנג",
     "description": "רחוב האוכל בדרך. לא מקדשים.",
     "importance": 3,
     "isNature": false,
     "cityId": "changhua",
-    "lat": 24.0809,
-    "lng": 120.5385,
-    "approxLocation": true
+    "lat": 24.0545,
+    "lng": 120.431,
+    "approxLocation": false,
+    "nameEn": "Lukang Old Street"
   },
   {
     "id": "attr-074-85cae9",
     "name": "אגם הירח והשמש",
-    "nameZh": null,
+    "nameZh": "日月潭水社碼頭",
     "city": "נאנטואו, יוצ׳ה",
     "description": "חובה. לילות באידאשאו מ-25.11 בערב. סירה, אופניים לשיאנגשאן, רכבל.",
     "importance": 5,
     "isNature": true,
     "cityId": "nantou",
-    "lat": 23.9157,
-    "lng": 120.6639,
-    "approxLocation": true
+    "lat": 23.8655,
+    "lng": 120.9118,
+    "approxLocation": false,
+    "nameEn": "Sun Moon Lake (Shuishe Pier)"
   },
   {
     "id": "attr-075-0f3ad4",
     "name": "כפר התרבות ג׳יו-דזו",
-    "nameZh": null,
+    "nameZh": "九族文化村",
     "city": "נאנטואו, יוצ׳ה",
     "description": "כרטיס מבוגר 1100 כולל רכבל. קנייה באותו יום באידאשאו או בכניסה. עד 15:00.",
     "importance": 5,
     "isNature": false,
     "cityId": "nantou",
-    "lat": 23.9157,
-    "lng": 120.6639,
-    "approxLocation": true
+    "lat": 23.873,
+    "lng": 120.944,
+    "approxLocation": false,
+    "nameEn": "Formosan Aboriginal Culture Village"
   },
   {
     "id": "attr-076-3467dd",
@@ -1003,15 +1022,16 @@
   {
     "id": "attr-077-536769",
     "name": "רכבל האגם",
-    "nameZh": null,
+    "nameZh": "日月潭纜車",
     "city": "נאנטואו, אידאשאו",
     "description": "מחבר את הכפר לג׳יו-דזו. חול 10:30–16:00. סגור לתחזוקה ב-4–5.11 וב-2.12, לא בימים שלנו.",
     "importance": 5,
     "isNature": false,
     "cityId": "sun-moon-lake",
-    "lat": 23.865,
-    "lng": 120.915,
-    "approxLocation": true
+    "lat": 23.851,
+    "lng": 120.926,
+    "approxLocation": false,
+    "nameEn": "Sun Moon Lake Ropeway"
   },
   {
     "id": "attr-078-42727f",
@@ -1068,15 +1088,16 @@
   {
     "id": "attr-082-f02b43",
     "name": "יער אלישאן",
-    "nameZh": null,
+    "nameZh": "阿里山國家森林遊樂區",
     "city": "צ׳יאיי, אלישאן",
     "description": "בוקר 25.11. אחיות האגם ושביל 2 פתוחים. שביל 1 סגור עד 2027. ירידה 6739 ב-13:00 או 14:30.",
     "importance": 5,
     "isNature": true,
     "cityId": "alishan",
-    "lat": 23.51,
-    "lng": 120.804,
-    "approxLocation": true
+    "lat": 23.5106,
+    "lng": 120.805,
+    "approxLocation": false,
+    "nameEn": "Alishan National Forest Recreation Area"
   },
   {
     "id": "attr-083-1a4ba8",
@@ -1146,15 +1167,16 @@
   {
     "id": "attr-088-fc4197",
     "name": "גשר העננים טאיפינג",
-    "nameZh": null,
+    "nameZh": "太平雲梯",
     "city": "צ׳יאיי, מיישאן",
     "description": "גשר התצפית הגבוה. בחורף עננים. סגור רביעי.",
     "importance": 3,
     "isNature": false,
     "cityId": "chiayi",
-    "lat": 23.4801,
-    "lng": 120.4491,
-    "approxLocation": true
+    "lat": 23.549,
+    "lng": 120.535,
+    "approxLocation": false,
+    "nameEn": "Taiping Suspension Bridge"
   },
   {
     "id": "attr-089-5f073b",
@@ -1172,15 +1194,16 @@
   {
     "id": "attr-090-a3a131",
     "name": "רחוב פנצ׳יהו",
-    "nameZh": null,
+    "nameZh": "奮起湖老街",
     "city": "צ׳יאיי",
     "description": "אוכל ותחנה בדרך לאלישאן.",
     "importance": 3,
     "isNature": false,
-    "cityId": "chiayi",
-    "lat": 23.4801,
-    "lng": 120.4491,
-    "approxLocation": true
+    "cityId": "alishan",
+    "lat": 23.505,
+    "lng": 120.696,
+    "approxLocation": false,
+    "nameEn": "Fenqihu Old Street"
   },
   {
     "id": "attr-091-9c2755",
@@ -1250,15 +1273,16 @@
   {
     "id": "attr-096-d03c0a",
     "name": "מבצר אנפינג",
-    "nameZh": null,
+    "nameZh": "安平古堡",
     "city": "טאינאן, אנפינג",
     "description": "המבצר המפורסם. לא לאכול ברחוב הממתקים.",
     "importance": 4,
     "isNature": false,
     "cityId": "tainan",
-    "lat": 22.9908,
-    "lng": 120.2133,
-    "approxLocation": true
+    "lat": 23.0016,
+    "lng": 120.1607,
+    "approxLocation": false,
+    "nameEn": "Anping Old Fort"
   },
   {
     "id": "attr-097-1cafdb",
@@ -1367,15 +1391,16 @@
   {
     "id": "attr-105-631cc5",
     "name": "שוק הגן",
-    "nameZh": null,
+    "nameZh": "花園夜市",
     "city": "טאינאן",
     "description": "שוק הלילה הגדול. חמישי עד ראשון, גם שישי. נסגר בגשם.",
     "importance": 3,
     "isNature": false,
     "cityId": "tainan",
-    "lat": 22.9908,
-    "lng": 120.2133,
-    "approxLocation": true
+    "lat": 23.0109,
+    "lng": 120.2004,
+    "approxLocation": false,
+    "nameEn": "Garden Night Market"
   },
   {
     "id": "attr-106-87ed96",
@@ -1432,41 +1457,44 @@
   {
     "id": "attr-110-53d721",
     "name": "ג׳יג׳ין",
-    "nameZh": null,
+    "nameZh": "旗津",
     "city": "קאושיונג",
     "description": "האי מול העיר. מעבורת קצרה וארוחת ים.",
     "importance": 4,
     "isNature": false,
     "cityId": "kaohsiung",
-    "lat": 22.6273,
-    "lng": 120.3014,
-    "approxLocation": true
+    "lat": 22.613,
+    "lng": 120.266,
+    "approxLocation": false,
+    "nameEn": "Cijin Island"
   },
   {
     "id": "attr-111-927a05",
     "name": "כיפת האור",
-    "nameZh": null,
+    "nameZh": "美麗島站光之穹頂",
     "city": "קאושיונג",
     "description": "כיפת הזכוכית בתחנת מיילידאו. חינם, כ-20 דקות. בלי מופע אורות מובטח.",
     "importance": 4,
     "isNature": false,
     "cityId": "kaohsiung",
-    "lat": 22.6273,
-    "lng": 120.3014,
-    "approxLocation": true
+    "lat": 22.6313,
+    "lng": 120.302,
+    "approxLocation": false,
+    "nameEn": "Dome of Light, Formosa Boulevard Station"
   },
   {
     "id": "attr-112-e2e92d",
     "name": "פיר 2 והאמסן",
-    "nameZh": null,
+    "nameZh": "駁二藝術特區",
     "city": "קאושיונג",
     "description": "הנמל הישן המפורסם. הליכה, לא מוזיאון.",
     "importance": 4,
     "isNature": false,
     "cityId": "kaohsiung",
-    "lat": 22.6273,
-    "lng": 120.3014,
-    "approxLocation": true
+    "lat": 22.62,
+    "lng": 120.2812,
+    "approxLocation": false,
+    "nameEn": "Pier-2 Art Center"
   },
   {
     "id": "attr-113-0f53c5",
@@ -1601,15 +1629,16 @@
   {
     "id": "attr-123-1b7c97",
     "name": "שיאוליוצ׳יו",
-    "nameZh": null,
+    "nameZh": "小琉球",
     "city": "פינגטונג, ליוצ׳יו",
     "description": "האי היחיד שעדיין הגיוני בנובמבר. לבדוק את הסירה מדונגגאנג יום לפני.",
     "importance": 4,
     "isNature": true,
     "cityId": "pingtung",
-    "lat": 22.669,
-    "lng": 120.488,
-    "approxLocation": true
+    "lat": 22.342,
+    "lng": 120.37,
+    "approxLocation": false,
+    "nameEn": "Xiaoliuqiu"
   },
   {
     "id": "attr-124-711dd8",
@@ -1627,28 +1656,30 @@
   {
     "id": "attr-125-c86842",
     "name": "טארוקו",
-    "nameZh": null,
+    "nameZh": "太魯閣遊客中心",
     "city": "חואליאן",
     "description": "הקניון המפורסם. אוטובוס עד המבקרים בלבד. שבילים סגורים. כביש 8 בחלונות שחרור.",
     "importance": 5,
     "isNature": true,
     "cityId": "hualien",
-    "lat": 23.9872,
-    "lng": 121.6015,
-    "approxLocation": true
+    "lat": 24.1586,
+    "lng": 121.6219,
+    "approxLocation": false,
+    "nameEn": "Taroko Visitor Center"
   },
   {
     "id": "attr-126-74f8ee",
     "name": "צוק צ׳ינגשוי",
-    "nameZh": null,
+    "nameZh": "清水斷崖",
     "city": "חואליאן",
     "description": "הצוק המפורסם. שביל צ׳ונגדה עד הפלטפורמה השנייה. הווידה סגור.",
     "importance": 5,
     "isNature": true,
     "cityId": "hualien",
-    "lat": 23.9872,
-    "lng": 121.6015,
-    "approxLocation": true
+    "lat": 24.2155,
+    "lng": 121.6889,
+    "approxLocation": false,
+    "nameEn": "Qingshui Cliff"
   },
   {
     "id": "attr-127-a2ea0e",
@@ -1679,28 +1710,30 @@
   {
     "id": "attr-129-053f94",
     "name": "צ׳ישינגטאן",
-    "nameZh": null,
+    "nameZh": "七星潭",
     "city": "חואליאן",
     "description": "החוף המפורסם מול האי. לא רחצה. חצי יום עם הצוק.",
     "importance": 4,
     "isNature": true,
     "cityId": "hualien",
-    "lat": 23.9872,
-    "lng": 121.6015,
-    "approxLocation": true
+    "lat": 24.03,
+    "lng": 121.629,
+    "approxLocation": false,
+    "nameEn": "Qixingtan Beach"
   },
   {
     "id": "attr-130-6b692d",
     "name": "שוק דונגדאמן",
-    "nameZh": null,
+    "nameZh": "東大門夜市",
     "city": "חואליאן",
     "description": "לאכול ברחוב הילידי. אורז במבוק ונקניק.",
     "importance": 4,
     "isNature": false,
     "cityId": "hualien",
-    "lat": 23.9872,
-    "lng": 121.6015,
-    "approxLocation": true
+    "lat": 23.9746,
+    "lng": 121.6066,
+    "approxLocation": false,
+    "nameEn": "Dongdamen Night Market"
   },
   {
     "id": "attr-131-6ce39f",
@@ -1809,28 +1842,30 @@
   {
     "id": "attr-139-efe451",
     "name": "סאנשיאנטאי",
-    "nameZh": null,
+    "nameZh": "三仙台",
     "city": "טאיטונג, צ׳נגגונג",
     "description": "הגשר המפורסם סגור עד סוף 2027. נשאר מבט מהחוף אם כבר עוברים.",
     "importance": 4,
     "isNature": true,
     "cityId": "taitung",
-    "lat": 22.7583,
-    "lng": 121.1444,
-    "approxLocation": true
+    "lat": 23.124,
+    "lng": 121.413,
+    "approxLocation": false,
+    "nameEn": "Sanxiantai"
   },
   {
     "id": "attr-140-de6eac",
     "name": "צ׳ישאנג",
-    "nameZh": null,
+    "nameZh": "池上伯朗大道",
     "city": "טאיטונג",
     "description": "מישור האורז וקירות ההר. רחוב מר בראון. הנוף נשאר גם אחרי הקציר.",
     "importance": 4,
     "isNature": true,
     "cityId": "taitung",
-    "lat": 22.7583,
-    "lng": 121.1444,
-    "approxLocation": true
+    "lat": 23.1045,
+    "lng": 121.2135,
+    "approxLocation": false,
+    "nameEn": "Chishang (Mr. Brown Avenue)"
   },
   {
     "id": "attr-141-51cea3",
@@ -1909,5 +1944,35 @@
     "lat": 22.7583,
     "lng": 121.1444,
     "approxLocation": true
+  },
+  {
+    "id": "attr-kenting-01",
+    "name": "קנטינג – שמורת הטבע ואו לואן-בי",
+    "nameZh": "鵝鑾鼻燈塔",
+    "nameEn": "Eluanbi Lighthouse & Kenting National Park",
+    "city": "קנטינג",
+    "description": "הקצה הדרומי של טייוואן: מגדלור, צוקי אלמוגים, חוף באישה (白沙). בנובמבר הרוח הצפון-מזרחית (落山風) חזקה – פחות לשחייה, יותר לנופים.",
+    "importance": 4,
+    "isNature": true,
+    "cityId": "kenting",
+    "lat": 21.902,
+    "lng": 120.853,
+    "approxLocation": false,
+    "optional": true
+  },
+  {
+    "id": "attr-kenting-02",
+    "name": "רחוב הלילה של קנטינג",
+    "nameZh": "墾丁大街",
+    "nameEn": "Kenting Night Market Street",
+    "city": "קנטינג",
+    "description": "רחוב תיירותי עם אוכל רחוב כל ערב.",
+    "importance": 3,
+    "isNature": false,
+    "cityId": "kenting",
+    "lat": 21.945,
+    "lng": 120.797,
+    "approxLocation": false,
+    "optional": true
   }
 ]

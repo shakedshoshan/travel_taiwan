@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Calendar,
@@ -157,13 +158,13 @@ export default function RoutePage() {
                 {/* Route Leg & City Photo Banner */}
                 <div className="mb-3.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
                   <div className="relative h-32 overflow-hidden rounded-2xl bg-slate-900">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={cityImg.src}
                       alt={bundle.city.nameHe}
                       title={cityImg.attribution}
-                      loading="lazy"
-                      className="h-full w-full object-cover"
+                      fill
+                      sizes="(max-width: 640px) 92vw, 440px"
+                      className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                     <span className="absolute right-2.5 bottom-1.5 text-[10px] font-bold text-white">
@@ -174,13 +175,13 @@ export default function RoutePage() {
                     </span>
                   </div>
                   <div className="relative h-32 overflow-hidden rounded-2xl bg-slate-900">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={routeImg.src}
                       alt={leg.focus}
                       title={routeImg.attribution}
-                      loading="lazy"
-                      className="h-full w-full object-cover"
+                      fill
+                      sizes="(max-width: 640px) 92vw, 440px"
+                      className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                     <span className="absolute right-2.5 bottom-1.5 text-[10px] font-bold text-amber-300">
