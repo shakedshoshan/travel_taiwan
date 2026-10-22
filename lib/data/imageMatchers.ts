@@ -44,22 +44,9 @@ export function matchSemanticPlaceImage(
     predicate: (entry: ImageCreditRecord) => boolean
   ) => credits.find(predicate);
 
-  // Hotels without direct file
+  // Hotels without a direct photo fall through to getCityImages(place.cityId) in placeImages.ts
   if (place.kind === "hotel") {
-    const isHotSpringOrResort =
-      text.includes("מעיינות") ||
-      text.includes("溫泉") ||
-      text.includes("ספא") ||
-      place.tier === "splurge" ||
-      place.cityId === "sun-moon-lake";
-
-    if (isHotSpringOrResort) {
-      return getImageByFile(
-        "hotels/generic-hot-spring-hotel.jpg",
-        "representative"
-      );
-    }
-    return getImageByFile("hotels/generic-hotel-room-2.jpg", "representative");
+    return null;
   }
 
   // Food without direct file

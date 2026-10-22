@@ -195,11 +195,41 @@ export function getCityBundle(cityId: CityId): CityBundle {
   };
 }
 
+const BARE_CITY_NAMES_ZH = new Set([
+  "台北",
+  "臺北",
+  "新北",
+  "基隆",
+  "宜蘭",
+  "桃園",
+  "新竹",
+  "苗栗",
+  "台中",
+  "臺中",
+  "彰化",
+  "南投",
+  "日月潭",
+  "嘉義",
+  "阿里山",
+  "台南",
+  "臺南",
+  "高雄",
+  "屏東",
+  "花蓮",
+  "台東",
+  "臺東",
+  "墾丁",
+  "光復",
+  "台灣",
+  "臺灣",
+]);
+
 /**
  * Builds a Google Maps navigation or search URL:
- * - When the place has exact coordinates (`!approxLocation` or overridden in `overrides.json`),
+ * - When the place has exact coordinates (`approxLocation === false` or `resolvedCoords.isExact === true`),
  *   returns `https://www.google.com/maps/dir/?api=1&destination=<lat,lng>`.
- * - Otherwise queries `nameZh || nameEn || nonHebrewName` + city in English + "Taiwan" (never Hebrew alone).
+ * - Otherwise queries `nameZh || nameEn || name` + English city.
+ * - Never returns the city name alone, and never strips digits or Latin characters.
  */
 export function buildGoogleMapsUrl(place: {
   name: string;
@@ -217,27 +247,58 @@ export function buildGoogleMapsUrl(place: {
   const lat = place.resolvedCoords?.lat ?? place.lat;
   const lng = place.resolvedCoords?.lng ?? place.lng;
 
-  if (isExact && typeof lat === "number" && typeof lng === "number") {
+  if (
+    isExact &&
+    typeof lat === "number" &&
+    typeof lng === "number" &&
+    Number.isFinite(lat) &&
+    Number.isFinite(lng)
+  ) {
     return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
   }
 
+  const cityEn = (place.cityNameEn ?? "").trim() || "Taiwan";
+  const cityEnLower = cityEn.toLowerCase();
+
+  const rawZh = (place.nameZh ?? "").trim();
+  const zhIsValid =
+    rawZh.length > 0 &&
+    !BARE_CITY_NAMES_ZH.has(rawZh) &&
+    rawZh.toLowerCase() !== cityEnLower &&
+    !(rawZh.length === 1 && place.name.trim().length > 3);
+
+  const rawEn = (place.nameEn ?? "")
+    .replace(/\s*\(venue unverified\)\s*/gi, "")
+    .trim();
+  const enIsValid =
+    rawEn.length > 0 &&
+    !BARE_CITY_NAMES_ZH.has(rawEn) &&
+    rawEn.toLowerCase() !== cityEnLower;
+
+  // Strip only Hebrew letters and geresh/gershayim; NEVER strip digits (0-9) or Latin/CJK characters
   const nonHebrewFromName = place.name
-    .replace(/[\u0590-\u05FF״׳–—().,0-9-]+/g, " ")
+    .replace(/[\u0590-\u05FF״׳]+/g, " ")
+    .replace(/^[\s–—·,.:;()-]+|[\s–—·,.:;()-]+$/g, "")
     .replace(/\s+/g, " ")
     .trim();
 
-  const primaryQuery =
-    (place.nameZh && place.nameZh.trim()) ||
-    (place.nameEn && place.nameEn.trim()) ||
-    nonHebrewFromName ||
-    place.cityNameEn ||
-    "Taiwan";
+  const nameFallback =
+    nonHebrewFromName.length > 0 &&
+    nonHebrewFromName.toLowerCase() !== cityEnLower &&
+    !BARE_CITY_NAMES_ZH.has(nonHebrewFromName)
+      ? nonHebrewFromName
+      : place.name.trim();
 
-  const cityEn = place.cityNameEn ?? "Taiwan";
-  const queryParts = [primaryQuery, cityEn, "Taiwan"];
+  const primaryQuery = zhIsValid
+    ? rawZh
+    : enIsValid
+      ? rawEn
+      : nameFallback;
+
+  const queryParts = [primaryQuery, cityEn];
 
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    queryParts.join(" ")
+    queryParts.join(" ").replace(/\s+/g, " ").trim()
   )}`;
 }
 

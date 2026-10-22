@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { WorldHtml } from "../WorldHtml";
+import { triggerHapticTap } from "@/lib/haptics";
 import type { CityMapNode } from "./cityMapLayout";
 import { DestinationPinModels } from "./DestinationPinModels";
 
@@ -97,6 +98,7 @@ export function SingleDestinationPin({
         position={[0, node.y, 0]}
         onClick={(e) => {
           e.stopPropagation();
+          triggerHapticTap();
           onSelectNode(node);
         }}
         onPointerOver={(e) => {
@@ -116,22 +118,28 @@ export function SingleDestinationPin({
         {showLabel && (
           <WorldHtml
             position={[0, 1.05, 0]}
-            center
+            anchor="bottom"
+            screenOffset={[0, -6]}
+            clampToViewport
             distanceFactor={14}
             zIndexRange={[isFocused || hovered ? 40 : 22, 0]}
           >
-            <div
+            <button
+              type="button"
               dir="rtl"
+              aria-label={`${node.place.name} (${node.badgeText})`}
+              title={node.place.name}
               onClick={(e) => {
                 e.stopPropagation();
+                triggerHapticTap();
                 onSelectNode(node);
               }}
-              className={`cursor-pointer select-none rounded-2xl border px-2.5 py-1 text-right transition-all ${
+              className={`cursor-pointer select-none rounded-2xl border px-2.5 py-1 text-right transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 ${
                 isFocused
                   ? "scale-110 border-amber-300 bg-slate-950 text-white shadow-2xl ring-2 ring-amber-400"
                   : hovered
                     ? "scale-105 border-white/60 bg-slate-900/95 text-white shadow-xl"
-                    : "border-slate-900/15 bg-white/92 text-slate-900 shadow-md backdrop-blur-md dark:border-white/15 dark:bg-slate-900/90 dark:text-white"
+                    : "border-slate-900/15 bg-white/95 text-slate-900 shadow-md backdrop-blur-md dark:border-white/25 dark:bg-slate-900/95 dark:text-white"
               }`}
             >
               <div className="flex items-center gap-1.5 whitespace-nowrap">
@@ -139,19 +147,22 @@ export function SingleDestinationPin({
                   className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
                   style={{ backgroundColor: node.color }}
                 />
-                <span className="max-w-[150px] truncate text-[11px] font-extrabold">
+                <span className="max-w-[140px] truncate text-[11px] font-extrabold">
                   {node.place.name}
                 </span>
               </div>
 
               {(hovered || isFocused) && (
-                <div className="mt-0.5 flex items-center justify-between gap-2 whitespace-nowrap text-[10px] opacity-90">
-                  <span className="font-semibold text-amber-400">
-                    {node.badgeText}
-                  </span>
-                  <span className="text-amber-400">
-                    {"★".repeat(node.importance)}
-                  </span>
+                <div className="mt-0.5 flex flex-col gap-0.5 whitespace-nowrap text-[10px] opacity-95">
+                  <div className="font-bold text-white">{node.place.name}</div>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-semibold text-amber-400">
+                      {node.badgeText}
+                    </span>
+                    <span className="text-amber-400">
+                      {"★".repeat(node.importance)}
+                    </span>
+                  </div>
                 </div>
               )}
 
@@ -167,7 +178,7 @@ export function SingleDestinationPin({
                     )}
                   </div>
                 )}
-            </div>
+            </button>
           </WorldHtml>
         )}
       </group>

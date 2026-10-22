@@ -123,7 +123,7 @@
   },
   {
     "id": "sun-moon-lake",
-    "nameHe": "אגם הירח והשמש",
+    "nameHe": "אגם השמש והירח",
     "nameEn": "Sun Moon Lake",
     "lat": 23.865,
     "lng": 120.915,
@@ -232,5 +232,19 @@
       "18–19.11"
     ],
     "days": 2
+  },
+  {
+    "id": "kenting",
+    "nameHe": "קנטינג",
+    "nameEn": "Kenting",
+    "lat": 21.9466,
+    "lng": 120.798,
+    "onRoute": false,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0,
+    "optional": true,
+    "nameZh": "墾丁",
+    "note": "אופציונלי: 1–2 לילות אחרי קאושיונג. אוטובוס Kenting Express 9188 מקאושיונג (זואויינג HSR) כ-2.5–3 שעות."
   }
 ]

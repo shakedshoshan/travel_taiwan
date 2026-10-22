@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { WorldHtml } from "../WorldHtml";
 import { getCityBundle, type EnrichedCity } from "@/lib/data/selectors";
 import { tripActions } from "@/lib/store/useTripStore";
+import { triggerHapticTap } from "@/lib/haptics";
 import type { CityId } from "@/data/types";
 
 interface SingleCityPinProps {
@@ -15,35 +16,7 @@ interface SingleCityPinProps {
   isTimelineActive: boolean;
   isNightMode: boolean;
   prefersReducedMotion: boolean;
-  labelNudge: { x: number; z: number };
   onSelectCity: (cityId: CityId) => void;
-}
-
-/**
- * Fixed offsets so each name sits in open space beside its pin.
- * Positive Z is south. Taipei is pulled south, clear of the filter bar.
- * Sun Moon Lake goes west of the ridge; Alishan goes south of it.
- * Taitung goes west, clear of Green Island.
- */
-const LABEL_NUDGE: Record<string, { x: number; z: number }> = {
-  taipei: { x: -1.7, z: 4.35 },
-  taichung: { x: -0.95, z: -0.7 },
-  "sun-moon-lake": { x: -2.25, z: 0.35 },
-  alishan: { x: 0.15, z: 1.55 },
-  tainan: { x: -0.7, z: 0.1 },
-  kaohsiung: { x: -0.95, z: 0.05 },
-  hualien: { x: 1.05, z: 0.05 },
-  taitung: { x: -1.45, z: -0.35 },
-};
-
-export function computeLabelNudges(
-  cities: readonly EnrichedCity[]
-): Map<string, { x: number; z: number }> {
-  const nudges = new Map<string, { x: number; z: number }>();
-  for (const city of cities) {
-    nudges.set(city.id, LABEL_NUDGE[city.id] ?? { x: 0, z: 0 });
-  }
-  return nudges;
 }
 
 export function SingleCityPin({
@@ -53,7 +26,6 @@ export function SingleCityPin({
   isTimelineActive,
   isNightMode,
   prefersReducedMotion,
-  labelNudge,
   onSelectCity,
 }: SingleCityPinProps) {
   const groupRef = useRef<THREE.Group>(null);
@@ -71,7 +43,10 @@ export function SingleCityPin({
   }, [city.id]);
 
   const isOnRoute = city.onRoute;
-  const baseScale = isOnRoute ? 1.05 : 0.65;
+  const isOptionalPin = Boolean(city.optional || city.id === "kenting");
+  const showPinLabel = isOnRoute || isOptionalPin || hovered || isSelected;
+
+  const baseScale = isOnRoute ? 1.05 : isOptionalPin ? 0.92 : 0.65;
   const activeMultiplier = isSelected
     ? 1.38
     : hovered
@@ -88,7 +63,7 @@ export function SingleCityPin({
       const bobOffset = prefersReducedMotion
         ? 0
         : Math.sin(t * (isOnRoute ? 2.4 : 1.6) + index * 0.85) *
-          (isOnRoute ? 0.07 : 0.03);
+          (isOnRoute ? 0.06 : 0.025);
       groupRef.current.position.y = city.worldY + 0.35 + bobOffset;
 
       const targetScale = baseScale * activeMultiplier;
@@ -108,9 +83,11 @@ export function SingleCityPin({
       ? "#ff5a36"
       : isOnRoute
         ? "#ff6b4a"
-        : isNightMode
-          ? "#64748b"
-          : "#94a3b8";
+        : isOptionalPin
+          ? "#38bdf8"
+          : isNightMode
+            ? "#64748b"
+            : "#94a3b8";
 
   const emissiveIntensity = isSelected
     ? 1.8
@@ -118,16 +95,25 @@ export function SingleCityPin({
       ? 1.4
       : isTimelineActive
         ? 1.15
-        : isOnRoute
+        : isOnRoute || isOptionalPin
           ? isNightMode
             ? 0.9
-            : 0.45
+            : 0.48
           : 0.12;
+
+  const handlePinSelect = () => {
+    triggerHapticTap();
+    if (isSelected) {
+      tripActions.enterCityZoomMap(city.id);
+    } else {
+      onSelectCity(city.id);
+    }
+  };
 
   return (
     <group position={[city.worldX, 0, city.worldZ]}>
       {/* Ground target ring on the island surface */}
-      {isOnRoute && (
+      {(isOnRoute || isOptionalPin) && (
         <mesh
           ref={ringRef}
           position={[0, city.worldY + 0.03, 0]}
@@ -135,7 +121,13 @@ export function SingleCityPin({
         >
           <ringGeometry args={[0.18, 0.28, 28]} />
           <meshBasicMaterial
-            color={isSelected || isTimelineActive ? "#facc15" : "#ff5a36"}
+            color={
+              isSelected || isTimelineActive
+                ? "#facc15"
+                : isOptionalPin
+                  ? "#38bdf8"
+                  : "#ff5a36"
+            }
             transparent
             opacity={isSelected || hovered ? 0.95 : 0.65}
             side={THREE.DoubleSide}
@@ -143,17 +135,13 @@ export function SingleCityPin({
         </mesh>
       )}
 
-      {/* Floating 3D Pin */}
+      {/* Floating 3D Pin + Child Label (same world position, <=12px screen-space offset above pin) */}
       <group
         ref={groupRef}
         position={[0, city.worldY + 0.35, 0]}
         onClick={(e) => {
           e.stopPropagation();
-          if (isSelected) {
-            tripActions.enterCityZoomMap(city.id);
-          } else {
-            onSelectCity(city.id);
-          }
+          handlePinSelect();
         }}
         onPointerOver={(e) => {
           e.stopPropagation();
@@ -181,8 +169,8 @@ export function SingleCityPin({
             emissiveIntensity={emissiveIntensity * 0.6}
             roughness={0.28}
             metalness={0.2}
-            transparent={!isOnRoute}
-            opacity={isOnRoute ? 1 : 0.68}
+            transparent={!isOnRoute && !isOptionalPin}
+            opacity={isOnRoute || isOptionalPin ? 1 : 0.68}
           />
         </mesh>
 
@@ -195,8 +183,8 @@ export function SingleCityPin({
             emissiveIntensity={emissiveIntensity}
             roughness={0.22}
             metalness={0.25}
-            transparent={!isOnRoute}
-            opacity={isOnRoute ? 1 : 0.72}
+            transparent={!isOnRoute && !isOptionalPin}
+            opacity={isOnRoute || isOptionalPin ? 1 : 0.72}
           />
         </mesh>
 
@@ -205,68 +193,84 @@ export function SingleCityPin({
           <sphereGeometry args={[0.075, 12, 12]} />
           <meshBasicMaterial color="#ffffff" />
         </mesh>
-      </group>
 
-      {(isOnRoute || hovered || isSelected) && (
-        <WorldHtml
-          position={[labelNudge.x, city.worldY + 0.77, labelNudge.z]}
-          center
-          distanceFactor={16}
-          zIndexRange={[20, 0]}
-        >
-          <div
-            dir="rtl"
-            onClick={(e) => {
-              e.stopPropagation();
-              onSelectCity(city.id);
-            }}
-            className={`relative cursor-pointer select-none rounded-full px-2.5 py-1 text-xs font-bold shadow-lg after:absolute after:-inset-2.5 after:content-[''] ${
-              city.id === "sun-moon-lake"
-                ? "max-w-[5.4rem] whitespace-normal text-center leading-snug"
-                : "whitespace-nowrap"
-            } ${
-              isSelected
-                ? "scale-110 bg-amber-400 text-slate-950 ring-2 ring-white"
-                : hovered
-                  ? "scale-105 bg-slate-900/95 text-white ring-2 ring-amber-400"
-                  : isTimelineActive
-                    ? "bg-orange-500 text-white ring-1 ring-white/80"
-                    : isOnRoute
-                      ? "bg-white/95 text-slate-900 backdrop-blur-md dark:bg-slate-900/95 dark:text-white"
-                      : "bg-slate-800/85 text-slate-200"
-            }`}
+        {/* City Label rendered directly as a child of its pin's group */}
+        {showPinLabel && (
+          <WorldHtml
+            position={[0, 0.2, 0]}
+            anchor="bottom"
+            screenOffset={[0, -6]}
+            clampToViewport
+            zIndexRange={[isSelected || hovered ? 32 : 20, 0]}
           >
-            <div className="flex items-center gap-1.5">
-              <span>{city.nameHe}</span>
+            <div dir="rtl" className="flex flex-col items-center">
+              <button
+                type="button"
+                aria-label={`${city.nameHe} (${city.nameEn})${
+                  city.onRoute
+                    ? ` – ${city.days} ימים במסלול`
+                    : isOptionalPin
+                      ? " – יעד אופציונלי"
+                      : ""
+                }`}
+                title={`${city.nameHe} (${city.nameEn})`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  triggerHapticTap();
+                  onSelectCity(city.id);
+                }}
+                className={`relative cursor-pointer select-none max-w-[7.5rem] truncate whitespace-nowrap rounded-full px-2.5 py-0.5 text-[11px] font-bold shadow-lg transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  isSelected
+                    ? "scale-105 bg-amber-400 text-slate-950 ring-2 ring-white"
+                    : hovered
+                      ? "scale-105 bg-slate-900 text-white ring-2 ring-amber-400"
+                      : isTimelineActive
+                        ? "bg-orange-500 text-white ring-1 ring-white/90"
+                        : isOptionalPin
+                          ? "border-2 border-dashed border-sky-400 bg-slate-900/90 text-sky-100"
+                          : isOnRoute
+                            ? "border border-slate-900/15 bg-white/95 text-slate-900 backdrop-blur-md dark:border-white/25 dark:bg-slate-900/95 dark:text-white"
+                            : "bg-slate-900/90 text-slate-100"
+                }`}
+              >
+                { city.nameHe }
+              </button>
+
+              {(hovered || isSelected) && (
+                <div className="mt-1 flex flex-col items-center gap-1 rounded-2xl border border-white/20 bg-slate-950/95 px-2.5 py-1.5 text-[10px] text-white shadow-xl backdrop-blur-md">
+                  <div className="whitespace-nowrap font-bold text-amber-300">
+                    {city.nameHe} ({city.nameEn})
+                  </div>
+                  <div className="whitespace-nowrap text-[9.5px] text-slate-200">
+                    {city.onRoute
+                      ? `${city.days} ימים • ${city.dates.join(" | ")}`
+                      : city.note ?? "מחוץ לציר הלינה הראשי • לחצו לפתיחה"}
+                  </div>
+                  {counts.total > 0 && (
+                    <div className="flex items-center gap-2 border-t border-white/15 pt-1 text-[9.5px] font-bold">
+                      <span>
+                        🏨 {counts.hotels} • 🍜 {counts.food} • ★{" "}
+                        {counts.attractions}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          triggerHapticTap();
+                          tripActions.enterCityZoomMap(city.id);
+                        }}
+                        className="rounded-full bg-amber-400 px-2 py-0.5 text-[9px] font-black text-slate-950 hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                      >
+                        זום 3D 🔍
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
-            {hovered && (
-              <div className="mt-0.5 text-[10px] font-medium opacity-90">
-                {city.onRoute
-                  ? `${city.days} ימים • ${city.dates.join(" | ")}`
-                  : "מחוץ לציר הלינה הראשי • לחצו לפתיחה"}
-              </div>
-            )}
-            {(hovered || isSelected) && counts.total > 0 && (
-              <div className="mt-1 flex items-center justify-between gap-2 border-t border-slate-950/15 pt-1 text-[10px] font-bold">
-                <span>
-                  🏨 {counts.hotels} • 🍜 {counts.food} • ★{" "}
-                  {counts.attractions}
-                </span>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    tripActions.enterCityZoomMap(city.id);
-                  }}
-                  className="rounded-full bg-slate-950 px-2 py-0.5 text-[9.5px] font-black text-amber-300 hover:bg-slate-800"
-                >
-                  זום למפת יעד 3D 🔍
-                </button>
-              </div>
-            )}
-          </div>
-        </WorldHtml>
-      )}
+          </WorldHtml>
+        )}
+      </group>
     </group>
   );
 }

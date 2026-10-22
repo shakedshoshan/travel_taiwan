@@ -7,19 +7,39 @@ import {
   Calendar,
   ShieldCheck,
   ChevronDown,
+  DoorClosed,
 } from "lucide-react";
 import {
   getAllCities,
   getHotels,
   HOTEL_TIER_META,
+  type EnrichedHotel,
 } from "@/lib/data/selectors";
 import { getCityPrimaryImage } from "@/lib/data/placeImages";
 import { PlaceCard } from "@/components/ui/PlaceCard";
+import { PhotoCreditPopover } from "@/components/ui/PhotoCreditPopover";
+
+type BudgetStayMode = "bed" | "room";
+
+function estimateNightlyRate(hotel: EnrichedHotel, mode: BudgetStayMode): number {
+  const minVal = hotel.priceMin && hotel.priceMin >= 150 ? hotel.priceMin : null;
+  const maxVal = hotel.priceMax && hotel.priceMax >= 150 ? hotel.priceMax : null;
+
+  if (mode === "bed") {
+    return minVal ?? maxVal ?? 800;
+  }
+  // For private room mode, if a hostel lists both bed (minVal < 1000) and room (maxVal >= 1200), use maxVal
+  if (minVal && minVal < 1000 && maxVal && maxVal >= 1200) {
+    return maxVal;
+  }
+  return minVal ?? maxVal ?? 2200;
+}
 
 export default function HotelsPage() {
   const cities = getAllCities();
   const allHotels = getHotels();
   const [onlyVerified, setOnlyVerified] = useState(false);
+  const [budgetMode, setBudgetMode] = useState<BudgetStayMode>("bed");
 
   const citiesWithHotels = useMemo(() => {
     const cityMap = new Map(cities.map((c) => [c.id, c]));
@@ -28,29 +48,44 @@ export default function HotelsPage() {
   }, [cities, allHotels]);
 
   const tripStaySummary = useMemo(() => {
-    let minTotal = 0;
-    let maxTotal = 0;
+    let singleTotal = 0;
     let totalNightsWithHotels = 0;
 
     for (const city of citiesWithHotels) {
       const nights = city.days;
       if (nights <= 0) continue;
       const cityHotels = allHotels.filter((h) => h.cityId === city.id);
-      const cheap = cityHotels
-        .filter((h) => h.tier === "cheap")
-        .sort((a, b) => Number(b.verified) - Number(a.verified));
-      const recommended = cheap[0] ?? cityHotels[0];
-      if (recommended) {
+      if (cityHotels.length === 0) continue;
+
+      let chosen: EnrichedHotel | undefined;
+      if (budgetMode === "bed") {
+        const cheap = cityHotels
+          .filter((h) => h.tier === "cheap")
+          .sort((a, b) => Number(b.verified) - Number(a.verified));
+        chosen = cheap[0] ?? cityHotels[0];
+      } else {
+        const privateRoomCandidates = cityHotels.filter(
+          (h) =>
+            h.priceText.includes("פרטי") ||
+            h.priceText.includes("זוגי") ||
+            h.priceText.includes("חדר") ||
+            h.tier === "quality" ||
+            (h.priceMax !== null && h.priceMax >= 1200)
+        );
+        chosen =
+          privateRoomCandidates.find((h) => h.tier === "cheap") ??
+          privateRoomCandidates[0] ??
+          cityHotels[0];
+      }
+
+      if (chosen) {
         totalNightsWithHotels += nights;
-        const pMin = recommended.priceMin ?? 0;
-        const pMax = recommended.priceMax ?? pMin;
-        minTotal += pMin * nights;
-        maxTotal += pMax * nights;
+        singleTotal += estimateNightlyRate(chosen, budgetMode) * nights;
       }
     }
 
-    return { minTotal, maxTotal, totalNightsWithHotels };
-  }, [citiesWithHotels, allHotels]);
+    return { singleTotal, totalNightsWithHotels };
+  }, [citiesWithHotels, allHotels, budgetMode]);
 
   return (
     <div
@@ -70,30 +105,73 @@ export default function HotelsPage() {
               className="flex min-h-[40px] shrink-0 snap-start items-center gap-1.5 rounded-full bg-white px-3.5 text-xs font-extrabold text-slate-800 shadow-xs hover:bg-orange-500 hover:text-white dark:bg-slate-900 dark:text-slate-200"
             >
               <span>{city.nameHe}</span>
-              <span className="text-[10px] opacity-70">({city.days} לילות)</span>
+              <span className="text-[10px] opacity-75">
+                {city.days > 0 ? `(${city.days} לילות)` : "(אופציונלי)"}
+              </span>
             </a>
           ))}
         </div>
       </div>
 
-      {/* Compact Header & Budget Summary */}
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+      {/* Compact Header & Bed/Room Budget Widget */}
+      <div className="mb-5 flex flex-col gap-3.5 rounded-3xl border border-slate-200 bg-white p-4 shadow-xs md:flex-row md:items-center md:justify-between dark:border-slate-800 dark:bg-slate-900">
         <div>
           <div className="flex items-center gap-1.5 text-xs font-extrabold text-sky-600 dark:text-sky-300">
             <BedDouble className="h-4 w-4" />
-            <span>השוואת 37 מלונות והוסטלים ({tripStaySummary.totalNightsWithHotels} לילות)</span>
+            <span>
+              השוואת {allHotels.length} מלונות והוסטלים (
+              {tripStaySummary.totalNightsWithHotels} לילות במסלול + קנטינג)
+            </span>
           </div>
           <h1 className="mt-1 font-display text-xl font-black text-slate-900 md:text-2xl dark:text-white">
             הבחירה הזולה המומלצת ראשונה · איכותי ופינוק בלחיצה
           </h1>
-          <div className="mt-1 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-300">
-            סה״כ לינה משוער לפי הבחירה הזולה: NT$
-            {tripStaySummary.minTotal.toLocaleString()}–
-            {tripStaySummary.maxTotal.toLocaleString()}
+
+          {/* Single Total Display for Chosen Mode */}
+          <div className="mt-2 inline-flex flex-wrap items-center gap-2 rounded-2xl bg-emerald-500/10 px-3.5 py-2 text-xs font-bold text-emerald-900 dark:bg-emerald-500/15 dark:text-emerald-200">
+            <span>
+              סה״כ לינה משוער ({tripStaySummary.totalNightsWithHotels} לילות ·{" "}
+              {budgetMode === "bed" ? "מיטה בהוסטל" : "חדר פרטי / זוגי"}):
+            </span>
+            <span className="font-mono text-sm font-black text-emerald-700 dark:text-emerald-300">
+              NT${tripStaySummary.singleTotal.toLocaleString()}
+            </span>
           </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
+          {/* Bed / Room Budget Mode Toggle */}
+          <div
+            role="group"
+            aria-label="בחירת מצב חישוב תקציב לינה"
+            className="inline-flex rounded-2xl border border-slate-200 bg-slate-100 p-1 dark:border-slate-700 dark:bg-slate-800"
+          >
+            <button
+              type="button"
+              onClick={() => setBudgetMode("bed")}
+              className={`flex min-h-[38px] items-center gap-1.5 rounded-xl px-3 text-xs font-bold transition-all ${
+                budgetMode === "bed"
+                  ? "bg-white text-slate-950 shadow-xs dark:bg-amber-400 dark:text-slate-950"
+                  : "text-slate-600 hover:text-slate-900 dark:text-slate-300"
+              }`}
+            >
+              <BedDouble className="h-3.5 w-3.5" />
+              <span>מיטה</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setBudgetMode("room")}
+              className={`flex min-h-[38px] items-center gap-1.5 rounded-xl px-3 text-xs font-bold transition-all ${
+                budgetMode === "room"
+                  ? "bg-white text-slate-950 shadow-xs dark:bg-amber-400 dark:text-slate-950"
+                  : "text-slate-600 hover:text-slate-900 dark:text-slate-300"
+              }`}
+            >
+              <DoorClosed className="h-3.5 w-3.5" />
+              <span>חדר פרטי</span>
+            </button>
+          </div>
+
           <button
             type="button"
             onClick={() => setOnlyVerified(!onlyVerified)}
@@ -147,6 +225,10 @@ export default function HotelsPage() {
                       sizes="64px"
                       className="object-cover"
                     />
+                    <PhotoCreditPopover
+                      image={cityImg}
+                      positionClass="bottom-0.5 left-0.5 scale-75 origin-bottom-left"
+                    />
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
                     <h2 className="font-display text-xl font-black text-slate-900 dark:text-white">
@@ -154,7 +236,9 @@ export default function HotelsPage() {
                     </h2>
                     <span className="inline-flex items-center gap-1 rounded-full bg-orange-500/15 px-2.5 py-0.5 text-xs font-extrabold text-orange-700 dark:text-orange-300">
                       <Calendar className="h-3.5 w-3.5" />
-                      {city.days} לילות ({city.dates.join(" • ")})
+                      {city.days > 0
+                        ? `${city.days} לילות (${city.dates.join(" • ")})`
+                        : "אופציונלי (1–2 לילות אחרי קאושיונג)"}
                     </span>
                   </div>
                 </div>
@@ -176,7 +260,8 @@ export default function HotelsPage() {
                 <details className="group mb-2.5 rounded-2xl border border-slate-200 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-slate-800/40">
                   <summary className="flex min-h-[40px] cursor-pointer list-none items-center justify-between text-xs font-extrabold text-emerald-800 dark:text-emerald-300">
                     <span>
-                      עוד אפשרויות זולות / הוסטלים ב{city.nameHe} ({otherCheap.length})
+                      עוד אפשרויות זולות / הוסטלים ב{city.nameHe} (
+                      {otherCheap.length})
                     </span>
                     <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
                   </summary>

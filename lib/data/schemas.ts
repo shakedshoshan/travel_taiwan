@@ -42,6 +42,11 @@ export const LocatedSchema = z.object({
   lat: z.number().min(21).max(26),
   lng: z.number().min(119).max(123),
   approxLocation: z.boolean(),
+  nameEn: z.string().nullable().optional(),
+  optional: z.boolean().optional(),
+  coordSource: z.enum(["openstreetmap", "knowledge"]).optional(),
+  source: z.string().nullable().optional(),
+  temporarilyClosed: z.boolean().optional(),
   // Optional overrides so exact geocoded coordinates can be added per item later
   exactLat: z.number().min(21).max(26).optional(),
   exactLng: z.number().min(119).max(123).optional(),
@@ -57,6 +62,9 @@ export const CitySchema: z.ZodType<City> = z.object({
   routeOrder: z.array(z.number().int().positive()).nullable(),
   dates: z.array(z.string()),
   days: z.number().int().nonnegative(),
+  nameZh: z.string().optional(),
+  optional: z.boolean().optional(),
+  note: z.string().optional(),
 });
 
 export const AttractionSchema: z.ZodType<
@@ -118,6 +126,7 @@ export const HotelSchema: z.ZodType<
   description: z.string(),
   source: z.string().nullable(),
   verified: z.boolean(),
+  priceNote: z.string().optional(),
 });
 
 export const RouteLegSchema: z.ZodType<RouteLeg> = z.object({

@@ -25,9 +25,16 @@ export type CameraCommandType =
   | "zoom-out"
   | "reset";
 
+export interface UserGeoCoords {
+  lat: number;
+  lng: number;
+  labelHe: string;
+}
+
 export interface TripStoreState {
   // Persisted display preference
   isNightMode: boolean;
+  offlineSavedCities: CityId[];
 
   // Interactive session state
   selectedCityId: CityId | null;
@@ -36,6 +43,9 @@ export interface TripStoreState {
   isTimelineExpanded: boolean;
   isLayersSheetOpen: boolean;
   isCityZoomMapOpen: boolean;
+  isTodayCardOpen: boolean;
+  isRoutePlaying: boolean;
+  userCoords: UserGeoCoords | null;
   currentDayIndex: number; // 0..32 (6.11 -> 8.12)
   use2DFallback: boolean;
   prefersReducedMotion: boolean;
@@ -50,6 +60,7 @@ export const STORAGE_KEY = "taiwan_3d_trip_state_v1";
 
 export const DEFAULT_STATE: TripStoreState = {
   isNightMode: false,
+  offlineSavedCities: [],
 
   selectedCityId: null,
   focusedPlaceId: null,
@@ -57,6 +68,9 @@ export const DEFAULT_STATE: TripStoreState = {
   isTimelineExpanded: false,
   isLayersSheetOpen: false,
   isCityZoomMapOpen: false,
+  isTodayCardOpen: false,
+  isRoutePlaying: false,
+  userCoords: null,
   currentDayIndex: 0,
   use2DFallback: false,
   prefersReducedMotion: false,

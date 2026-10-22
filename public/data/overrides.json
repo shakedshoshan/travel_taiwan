@@ -1,0 +1,170 @@
+{
+  "ג׳יופן": {
+    "nameZh": "九份老街",
+    "nameEn": "Jiufen Old Street",
+    "lat": 25.1099,
+    "lng": 121.8452
+  },
+  "הר הפיל": {
+    "nameZh": "象山親山步道",
+    "nameEn": "Elephant Mountain (Xiangshan)",
+    "lat": 25.0273,
+    "lng": 121.5761
+  },
+  "טייפה 101": {
+    "nameZh": "台北101",
+    "nameEn": "Taipei 101 Observatory",
+    "lat": 25.0339,
+    "lng": 121.5645
+  },
+  "יהליו": {
+    "nameZh": "野柳地質公園",
+    "nameEn": "Yehliu Geopark",
+    "lat": 25.2062,
+    "lng": 121.6905
+  },
+  "סיור צ׳ינגשאן": {
+    "nameZh": "艋舺青山宮",
+    "nameEn": "Bangka Qingshan Temple",
+    "lat": 25.0383,
+    "lng": 121.5008
+  },
+  "תהלוכת צ׳ינגשאן": {
+    "nameZh": "艋舺青山宮暗訪暨遶境",
+    "nameEn": "Bangka Qingshan Wang Procession",
+    "lat": 25.0378,
+    "lng": 121.4999
+  },
+  "שיפן": {
+    "nameZh": "十分老街",
+    "nameEn": "Shifen Old Street & Waterfall",
+    "lat": 25.0427,
+    "lng": 121.7769
+  },
+  "ג׳יו-דזו": {
+    "nameZh": "九族文化村",
+    "nameEn": "Formosan Aboriginal Culture Village",
+    "lat": 23.8689,
+    "lng": 120.9478
+  },
+  "ליופו": {
+    "nameZh": "六福村主題遊樂園",
+    "nameEn": "Leofoo Village Theme Park",
+    "lat": 24.8206,
+    "lng": 121.1811
+  },
+  "צ׳ינגשוי": {
+    "nameZh": "清水斷崖",
+    "nameEn": "Qingshui Cliffs",
+    "lat": 24.2017,
+    "lng": 121.6744
+  },
+  "טארוקו": {
+    "nameZh": "太魯閣國家公園遊客中心",
+    "nameEn": "Taroko National Park Visitor Center",
+    "lat": 24.1585,
+    "lng": 121.6217
+  },
+  "צ׳ישינגטאן": {
+    "nameZh": "七星潭",
+    "nameEn": "Qixingtan Beach",
+    "lat": 24.0308,
+    "lng": 121.6285
+  },
+  "צ׳ישאנג": {
+    "nameZh": "池上伯朗大道",
+    "nameEn": "Chishang Brown Boulevard",
+    "lat": 23.1051,
+    "lng": 121.2181
+  },
+  "דולאן": {
+    "nameZh": "都蘭",
+    "nameEn": "Dulan Sugar Factory",
+    "lat": 22.8752,
+    "lng": 121.2255
+  },
+  "סאנשיאנטאי": {
+    "nameZh": "三仙台",
+    "nameEn": "Sanxiantai",
+    "lat": 23.1243,
+    "lng": 121.4141
+  },
+  "פיר 2": {
+    "nameZh": "駁二藝術特區",
+    "nameEn": "The Pier-2 Art Center",
+    "lat": 22.6204,
+    "lng": 120.2816
+  },
+  "ג׳יג׳ין": {
+    "nameZh": "旗津",
+    "nameEn": "Cijin Island",
+    "lat": 22.6132,
+    "lng": 120.2647
+  },
+  "שיאוליוצ׳יו": {
+    "nameZh": "小琉球",
+    "nameEn": "Xiaoliuqiu (Lambai Island)",
+    "lat": 22.3435,
+    "lng": 120.3698
+  },
+  "אנפינג": {
+    "nameZh": "安平古堡",
+    "nameEn": "Anping Old Fort & Tree House",
+    "lat": 23.0016,
+    "lng": 120.1606
+  },
+  "גאומיי": {
+    "nameZh": "高美濕地",
+    "nameEn": "Gaomei Wetlands",
+    "lat": 24.3119,
+    "lng": 120.5497
+  },
+  "ראוהה 饒河夜市": {
+    "nameZh": "饒河街觀光夜市",
+    "nameEn": "Raohe Street Night Market",
+    "lat": 25.0509,
+    "lng": 121.5775
+  },
+  "נינגשיה 寧夏夜市": {
+    "nameZh": "寧夏夜市",
+    "nameEn": "Ningxia Night Market",
+    "lat": 25.0558,
+    "lng": 121.5152
+  },
+  "נאן ג׳יצ׳אנג 南機場夜市": {
+    "nameZh": "南機場夜市",
+    "nameEn": "Nanjichang Night Market",
+    "lat": 25.0292,
+    "lng": 121.5059
+  },
+  "מיאוקואו קילונג 基隆廟口夜市": {
+    "nameZh": "基隆廟口夜市",
+    "nameEn": "Keelung Miaokou Night Market",
+    "lat": 25.1282,
+    "lng": 121.7435
+  },
+  "דונגדאמן 東大門夜市": {
+    "nameZh": "東大門夜市",
+    "nameEn": "Dongdamen Night Market",
+    "lat": 23.9722,
+    "lng": 121.6096
+  },
+  "רויפנג 瑞豐夜市": {
+    "nameZh": "瑞豐夜市",
+    "nameEn": "Ruifeng Night Market",
+    "lat": 22.6657,
+    "lng": 120.2998
+  },
+  "שוק הגן טאינאן 花園夜市": {
+    "nameZh": "台南花園夜市",
+    "nameEn": "Tainan Flowers Night Market",
+    "lat": 23.0108,
+    "lng": 120.1997
+  },
+  "פנגצ׳יה 逢甲夜市": {
+    "nameZh": "逢甲夜市",
+    "nameEn": "Fengchia Night Market",
+    "lat": 24.1788,
+    "lng": 120.6462
+  }
+}

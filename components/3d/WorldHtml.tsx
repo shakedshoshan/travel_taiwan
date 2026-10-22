@@ -19,6 +19,7 @@ interface WorldHtmlEntry {
   id: string;
   children: React.ReactNode;
   center: boolean;
+  anchor: "center" | "bottom";
   zIndex: number;
   bindElement: (el: HTMLDivElement | null) => void;
 }
@@ -80,7 +81,12 @@ export function WorldHtmlHost() {
         >
           <div
             style={{
-              transform: entry.center ? "translate3d(-50%, -50%, 0)" : undefined,
+              transform:
+                entry.anchor === "bottom"
+                  ? "translate3d(-50%, -100%, 0)"
+                  : entry.center
+                    ? "translate3d(-50%, -50%, 0)"
+                    : undefined,
             }}
           >
             {entry.children}
@@ -94,10 +100,14 @@ export function WorldHtmlHost() {
 interface WorldHtmlProps {
   position?: [number, number, number];
   center?: boolean;
+  anchor?: "center" | "bottom";
+  /** Screen-space pixel offset [dx, dy] applied after 3D projection (e.g. [0, -8] for <=12px above pin) */
+  screenOffset?: [number, number];
+  /** Clamp projected label inside safe viewport area so labels never clip off-screen */
+  clampToViewport?: boolean;
   distanceFactor?: number;
   zIndexRange?: [number, number];
   avoidOverlap?: boolean;
-  /** Extra pixels downward before overlap solving. Used by the day badge. */
   overlapDrop?: number;
   children: React.ReactNode;
 }
@@ -109,6 +119,9 @@ const tmpCamDir = new THREE.Vector3();
 export function WorldHtml({
   position = [0, 0, 0],
   center = false,
+  anchor = "center",
+  screenOffset = [0, 0],
+  clampToViewport = false,
   zIndexRange = [20, 0],
   avoidOverlap = false,
   overlapDrop = 0,
@@ -128,11 +141,12 @@ export function WorldHtml({
       id,
       children,
       center,
+      anchor,
       zIndex,
       bindElement,
     });
     emitEntriesChange();
-  }, [id, children, center, zIndex, bindElement]);
+  }, [id, children, center, anchor, zIndex, bindElement]);
 
   useEffect(() => {
     return () => {
@@ -168,8 +182,32 @@ export function WorldHtml({
     }
 
     tmpVec.project(camera);
-    const x = (tmpVec.x * 0.5 + 0.5) * size.width;
-    const y = (-(tmpVec.y * 0.5) + 0.5) * size.height;
+    let x = (tmpVec.x * 0.5 + 0.5) * size.width + screenOffset[0];
+    let y = (-(tmpVec.y * 0.5) + 0.5) * size.height + screenOffset[1];
+
+    if (clampToViewport && Number.isFinite(x) && Number.isFinite(y)) {
+      const w = el.offsetWidth || 72;
+      const h = el.offsetHeight || 26;
+      const padX = 10;
+      const padTop = 104;
+      const padBottom = size.width >= 1024 ? 84 : 132;
+
+      const halfW = anchor === "bottom" || center ? w * 0.5 : 0;
+      const minX = padX + halfW;
+      const maxX = Math.max(minX, size.width - padX - halfW);
+      x = Math.min(maxX, Math.max(minX, x));
+
+      if (anchor === "bottom") {
+        const minY = padTop + h;
+        const maxY = Math.max(minY, size.height - padBottom);
+        y = Math.min(maxY, Math.max(minY, y));
+      } else {
+        const halfH = center ? h * 0.5 : 0;
+        const minY = padTop + halfH;
+        const maxY = Math.max(minY, size.height - padBottom - halfH);
+        y = Math.min(maxY, Math.max(minY, y));
+      }
+    }
 
     if (avoidOverlap && Number.isFinite(x) && Number.isFinite(y)) {
       const slot = labelSlots.get(id) ?? {

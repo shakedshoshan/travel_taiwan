@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/ui/Navbar";
 import { CommandSearch } from "@/components/ui/CommandSearch";
 import { PwaRegister } from "@/components/ui/PwaRegister";
+import { TRIP_DATA } from "@/lib/data/loaders";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -30,8 +31,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "טייוואן 3D | מסע אינטראקטיבי בטייוואן (6.11 – 8.12.2026)",
-  description:
-    "מפת תלת-ממד אינטראקטיבית לטיול בטייוואן: 18 ערים, 10 מקטעי מסלול, 147 אטרקציות, 80 מקומות אוכל ושווקי לילה ו-37 מלונות.",
+  description: `מפת תלת-ממד אינטראקטיבית לטיול בטייוואן: ${TRIP_DATA.cities.length} ערים, ${TRIP_DATA.legs.length} מקטעי מסלול, ${TRIP_DATA.attractions.length} אטרקציות, ${TRIP_DATA.food.length} מקומות אוכל ושווקי לילה ו-${TRIP_DATA.hotels.length} מלונות.`,
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/icon.svg",
-    apple: "/icon.svg",
+    apple: "/apple-touch-icon.png",
   },
 };
 

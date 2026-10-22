@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import type { EnrichedPlace } from "@/lib/data/selectors";
+import { triggerHapticTap } from "@/lib/haptics";
 import type { CityId } from "@/data/types";
 import type { MarkerArchetype, MarkerEntry } from "./markerConfig";
 
@@ -160,6 +161,7 @@ export function InstancedCategoryGroup({
         onClick={(e) => {
           e.stopPropagation();
           if (typeof e.instanceId === "number" && entries[e.instanceId]) {
+            triggerHapticTap();
             onSelect(entries[e.instanceId].place);
           }
         }}

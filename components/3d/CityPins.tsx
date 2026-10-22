@@ -1,16 +1,16 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 import { WorldHtml } from "./WorldHtml";
 import { getAllCities } from "@/lib/data/selectors";
 import { OFFSHORE_ISLANDS } from "@/lib/data/taiwanGeo";
 import { latLngToWorld3D } from "@/lib/data/coordinates";
 import { useTripStore } from "@/lib/store/useTripStore";
+import { triggerHapticTap } from "@/lib/haptics";
 import type { CityId } from "@/data/types";
-import {
-  computeLabelNudges,
-  SingleCityPin,
-} from "./pins/SingleCityPin";
+import { SingleCityPin } from "./pins/SingleCityPin";
 
 interface CityPinsProps {
   selectedCityId: CityId | null;
@@ -27,13 +27,7 @@ export function CityPins({
 }: CityPinsProps) {
   const store = useTripStore();
   const cities = getAllCities();
-  const labelNudges = useMemo(() => computeLabelNudges(cities), [cities]);
-
-  // Optional Kenting (קנטינג) off-route dashed marker on the southern cape
-  const kentingWorld = useMemo(
-    () => latLngToWorld3D(21.9483, 120.7798, 0.14),
-    []
-  );
+  const pulseRingRef = useRef<THREE.Mesh>(null);
 
   // Offshore islands world positions for subtle labels
   const offshoreMarkers = useMemo(
@@ -44,6 +38,20 @@ export function CityPins({
       })),
     []
   );
+
+  // User "Near Me" Geolocation 3D Pulsing Blue Dot (P1 #6)
+  const userWorldPos = useMemo(() => {
+    if (!store.userCoords) return null;
+    return latLngToWorld3D(store.userCoords.lat, store.userCoords.lng, 0.24);
+  }, [store.userCoords]);
+
+  useFrame(({ clock }) => {
+    if (pulseRingRef.current && !store.prefersReducedMotion) {
+      const t = clock.getElapsedTime();
+      const s = 1 + ((t * 1.4) % 1.2) * 1.5;
+      pulseRingRef.current.scale.set(s, s, 1);
+    }
+  });
 
   return (
     <group name="city-pins">
@@ -56,90 +64,103 @@ export function CityPins({
           isTimelineActive={activeTimelineCityId === city.id}
           isNightMode={isNightMode}
           prefersReducedMotion={store.prefersReducedMotion}
-          labelNudge={labelNudges.get(city.id) ?? { x: 0.35, z: 0 }}
           onSelectCity={onSelectCity}
         />
       ))}
 
-      {/* Optional Kenting (קנטינג) Off-Route Dashed Pin */}
-      <group
-        position={[kentingWorld.x, kentingWorld.y, kentingWorld.z]}
-        onClick={(e) => {
-          e.stopPropagation();
-          onSelectCity("pingtung");
-        }}
-      >
-        <mesh position={[0, 0.15, 0]}>
-          <sphereGeometry args={[0.48, 8, 8]} />
-          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        </mesh>
-        <mesh position={[0, 0.12, 0]}>
-          <sphereGeometry args={[0.11, 14, 14]} />
-          <meshStandardMaterial
-            color="#38bdf8"
-            emissive="#0284c7"
-            emissiveIntensity={0.6}
-          />
-        </mesh>
-        <WorldHtml
-          position={[0.35, 0.62, -4.05]}
-          center
-          distanceFactor={16}
-          zIndexRange={[18, 0]}
-        >
-          <button
-            type="button"
-            dir="rtl"
+      {/* Offshore Island Mini Labels (Penghu, Xiaoliuqiu, Green Island, Orchid Island) */}
+      {offshoreMarkers.map((isl) => {
+        const targetCityId: CityId =
+          isl.id === "xiaoliuqiu"
+            ? "pingtung"
+            : isl.id === "green-island" || isl.id === "orchid-island"
+              ? "taitung"
+              : "chiayi";
+        return (
+          <group
+            key={isl.id}
+            position={[isl.world.x, isl.world.y, isl.world.z]}
             onClick={(e) => {
               e.stopPropagation();
-              onSelectCity("pingtung");
+              triggerHapticTap();
+              onSelectCity(targetCityId);
             }}
-            className="relative cursor-pointer select-none whitespace-nowrap rounded-full border-2 border-dashed border-sky-400/90 bg-slate-900/85 px-2.5 py-0.5 text-[10.5px] font-bold text-sky-200 shadow-md after:absolute after:-inset-2.5 after:content-['']"
           >
-            קנטינג (אופציונלי)
-          </button>
-        </WorldHtml>
-      </group>
+            <WorldHtml
+              position={[0, 0.18, 0]}
+              anchor="bottom"
+              screenOffset={[0, -4]}
+              clampToViewport
+              zIndexRange={[14, 0]}
+            >
+              <button
+                type="button"
+                dir="rtl"
+                aria-label={`${isl.nameHe} (${isl.nameEn})`}
+                title={`${isl.nameHe} (${isl.nameEn})`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  triggerHapticTap();
+                  onSelectCity(targetCityId);
+                }}
+                className="cursor-pointer select-none max-w-[6.5rem] truncate whitespace-nowrap rounded-full border border-teal-300/60 bg-slate-900/90 px-2 py-0.5 text-[9.5px] font-bold text-teal-100 shadow-sm backdrop-blur-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+              >
+                {isl.nameHe}
+              </button>
+            </WorldHtml>
+          </group>
+        );
+      })}
 
-      {/* Offshore Island Mini Labels (Penghu, Xiaoliuqiu, Green Island, Orchid Island) */}
-      {offshoreMarkers.map((isl) => (
+      {/* Geolocation Pulsing Blue Dot on the 3D Map */}
+      {userWorldPos && store.userCoords && (
         <group
-          key={isl.id}
-          position={[isl.world.x, isl.world.y, isl.world.z]}
-          onClick={(e) => {
-            e.stopPropagation();
-            if (isl.id === "xiaoliuqiu") onSelectCity("pingtung");
-            else if (isl.id === "green-island" || isl.id === "orchid-island")
-              onSelectCity("taitung");
-          }}
+          name="near-me-blue-dot"
+          position={[userWorldPos.x, userWorldPos.y, userWorldPos.z]}
         >
+          <mesh
+            ref={pulseRingRef}
+            position={[0, -0.18, 0]}
+            rotation={[-Math.PI / 2, 0, 0]}
+          >
+            <ringGeometry args={[0.16, 0.34, 32]} />
+            <meshBasicMaterial
+              color="#38bdf8"
+              transparent
+              opacity={0.75}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
+          <mesh position={[0, 0, 0]}>
+            <sphereGeometry args={[0.16, 20, 20]} />
+            <meshStandardMaterial
+              color="#0284c7"
+              emissive="#38bdf8"
+              emissiveIntensity={2.2}
+              roughness={0.15}
+            />
+          </mesh>
+          <mesh position={[0, 0, 0]}>
+            <sphereGeometry args={[0.07, 12, 12]} />
+            <meshBasicMaterial color="#ffffff" />
+          </mesh>
           <WorldHtml
-            position={[
-              isl.id === "xiaoliuqiu"
-                ? -3.15
-                : isl.id === "orchid-island"
-                  ? 0.55
-                  : 0.15,
-              0.22,
-              isl.id === "xiaoliuqiu"
-                ? -1.55
-                : isl.id === "orchid-island"
-                  ? -2.15
-                  : 0.15,
-            ]}
-            center
-            distanceFactor={18}
-            zIndexRange={[14, 0]}
+            position={[0, 0.22, 0]}
+            anchor="bottom"
+            screenOffset={[0, -6]}
+            clampToViewport
+            zIndexRange={[34, 0]}
           >
             <div
               dir="rtl"
-              className="pointer-events-none select-none whitespace-nowrap rounded-full border border-teal-300/40 bg-slate-900/70 px-2 py-0.5 text-[9.5px] font-semibold text-teal-100 backdrop-blur-xs"
+              title={store.userCoords.labelHe}
+              className="pointer-events-none select-none max-w-[8rem] truncate whitespace-nowrap rounded-full border border-white bg-sky-600 px-2.5 py-0.5 text-[10px] font-black text-white shadow-lg"
             >
-              {isl.nameHe}
+              📍 {store.userCoords.labelHe}
             </div>
           </WorldHtml>
         </group>
-      ))}
+      )}
     </group>
   );
 }

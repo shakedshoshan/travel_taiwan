@@ -19,6 +19,15 @@ export function computeDistanceKm(
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+export function formatDistanceAndWalk(distanceKm: number): string {
+  const walkMinutes = Math.max(1, Math.round(distanceKm * 12));
+  const distPart =
+    distanceKm < 1
+      ? `${Math.round(distanceKm * 1000)} מ׳`
+      : `${distanceKm.toFixed(1)} ק״מ`;
+  return `${distPart} · ${walkMinutes} דק׳ הליכה`;
+}
+
 export function checkIsOpenNow(item: EnrichedFood): boolean {
   const hrs = item.hours;
   if (!hrs) return true;

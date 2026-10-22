@@ -19,6 +19,7 @@ import {
   getCityPrimaryImage,
   getRouteLegImage,
 } from "@/lib/data/placeImages";
+import { PhotoCreditPopover } from "@/components/ui/PhotoCreditPopover";
 import practicalData from "@/data/practical.json";
 import type { CityId, RouteLeg } from "@/data/types";
 
@@ -73,9 +74,7 @@ export function RouteLegCard({
           <span className="absolute right-2.5 bottom-1.5 text-[10px] font-bold text-white">
             {bundle.city.nameHe}
           </span>
-          <span className="absolute bottom-1.5 left-2.5 max-w-[65%] truncate text-[9px] text-slate-300">
-            {cityImg.creditHe}
-          </span>
+          <PhotoCreditPopover image={cityImg} positionClass="bottom-1.5 left-2" />
         </div>
         <div className="relative h-32 overflow-hidden rounded-2xl bg-slate-900">
           <Image
@@ -90,9 +89,7 @@ export function RouteLegCard({
           <span className="absolute right-2.5 bottom-1.5 text-[10px] font-bold text-amber-300">
             תחבורה ודרך · מקטע {leg.order}
           </span>
-          <span className="absolute bottom-1.5 left-2.5 max-w-[65%] truncate text-[9px] text-slate-300">
-            {routeImg.creditHe}
-          </span>
+          <PhotoCreditPopover image={routeImg} positionClass="bottom-1.5 left-2" />
         </div>
       </div>
 

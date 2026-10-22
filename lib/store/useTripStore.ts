@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import type { CityId } from "@/data/types";
+import { triggerHapticTap } from "@/lib/haptics";
 import {
   DEFAULT_STATE,
   STORAGE_KEY,
@@ -10,6 +11,7 @@ import {
   type MapDragMode,
   type SheetSnapPoint,
   type TripStoreState,
+  type UserGeoCoords,
 } from "./tripStoreTypes";
 
 export type {
@@ -18,6 +20,7 @@ export type {
   MapDragMode,
   SheetSnapPoint,
   TripStoreState,
+  UserGeoCoords,
 };
 
 let state: TripStoreState = DEFAULT_STATE;
@@ -35,6 +38,7 @@ function persistToStorage(next: TripStoreState) {
   try {
     const payload = {
       isNightMode: next.isNightMode,
+      offlineSavedCities: next.offlineSavedCities,
     };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   } catch {
@@ -55,6 +59,9 @@ function hydrateOnce() {
           typeof parsed.isNightMode === "boolean"
             ? parsed.isNightMode
             : state.isNightMode,
+        offlineSavedCities: Array.isArray(parsed.offlineSavedCities)
+          ? parsed.offlineSavedCities
+          : state.offlineSavedCities,
       };
     }
 
@@ -102,12 +109,14 @@ export const tripActions = {
   },
 
   selectCity(cityId: CityId | null, initialSnap: SheetSnapPoint = "half") {
+    if (cityId) triggerHapticTap();
     setState((prev) => ({
       selectedCityId: cityId,
       focusedPlaceId: null,
       sheetSnap: cityId === null ? "closed" : initialSnap,
       isTimelineExpanded: false,
       isLayersSheetOpen: false,
+      isTodayCardOpen: false,
       isCityZoomMapOpen: cityId === null ? false : prev.isCityZoomMapOpen,
     }));
   },
@@ -124,6 +133,7 @@ export const tripActions = {
     setState({
       isTimelineExpanded,
       isLayersSheetOpen: false,
+      isTodayCardOpen: false,
     });
   },
 
@@ -131,16 +141,46 @@ export const tripActions = {
     setState({
       isLayersSheetOpen,
       isTimelineExpanded: false,
+      isTodayCardOpen: false,
     });
   },
 
+  setTodayCardOpen(isTodayCardOpen: boolean) {
+    setState({
+      isTodayCardOpen,
+      isTimelineExpanded: false,
+      isLayersSheetOpen: false,
+    });
+  },
+
+  setRoutePlaying(isRoutePlaying: boolean) {
+    setState({ isRoutePlaying });
+  },
+
+  toggleRoutePlaying() {
+    setState((prev) => ({ isRoutePlaying: !prev.isRoutePlaying }));
+  },
+
+  setUserCoords(userCoords: UserGeoCoords | null) {
+    setState({ userCoords });
+  },
+
+  markCitySavedOffline(cityId: CityId) {
+    setState((prev) => {
+      if (prev.offlineSavedCities.includes(cityId)) return {};
+      return { offlineSavedCities: [...prev.offlineSavedCities, cityId] };
+    }, true);
+  },
+
   enterCityZoomMap(cityId: CityId) {
+    triggerHapticTap();
     setState({
       selectedCityId: cityId,
       focusedPlaceId: null,
       sheetSnap: "closed",
       isTimelineExpanded: false,
       isLayersSheetOpen: false,
+      isTodayCardOpen: false,
       isCityZoomMapOpen: true,
     });
   },
@@ -153,6 +193,7 @@ export const tripActions = {
   },
 
   focusPlace(placeId: string | null, cityId?: CityId | null) {
+    if (placeId) triggerHapticTap();
     setState((prev) => {
       const nextCityId = cityId !== undefined ? cityId : prev.selectedCityId;
       return {

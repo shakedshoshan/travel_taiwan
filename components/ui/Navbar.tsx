@@ -48,7 +48,7 @@ export function Navbar() {
 
   return (
     <>
-      {/* Slim Top Header Bar */}
+      {/* Top Header Bar (with Desktop >=1024px Top Nav instead of Bottom Tab Bar) */}
       <header
         dir="rtl"
         style={{ paddingTop: "max(0.5rem, env(safe-area-inset-top))" }}
@@ -57,27 +57,61 @@ export function Navbar() {
         }`}
       >
         <div className="glass-panel pointer-events-auto mx-auto flex h-12 max-w-7xl items-center justify-between gap-2 rounded-2xl px-2.5 shadow-lg md:px-4">
-          {/* Brand Logo */}
-          <Link
-            href="/"
-            onClick={() => {
-              tripActions.selectCity(null);
-              tripActions.setTimelineExpanded(false);
-            }}
-            className="flex min-h-[44px] shrink-0 items-center gap-2 px-1 text-right"
+          {/* Brand Logo + Exact Header String "טייוואן 3D · 6.11–8.12 · 33 ימים" */}
+          <div className="flex min-w-0 items-center gap-2">
+            <Link
+              href="/"
+              onClick={() => {
+                tripActions.selectCity(null);
+                tripActions.setTimelineExpanded(false);
+              }}
+              className="flex min-h-[44px] min-w-0 shrink-0 items-center gap-2 px-1 text-right"
+            >
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-amber-500 to-emerald-500 text-xs font-black text-white shadow-sm">
+                TW
+              </div>
+              <div className="flex items-center gap-1.5 whitespace-nowrap">
+                <span className="font-display text-sm font-black tracking-tight text-slate-900 dark:text-white">
+                  טייוואן 3D · 6.11–8.12 · 33 ימים
+                </span>
+              </div>
+            </Link>
+
+            <span
+              title="נתוני הטיול, המפות והגופנים שמורים וזמינים גם ללא קליטה"
+              className="hidden shrink-0 items-center rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-extrabold text-emerald-800 sm:inline-flex dark:bg-emerald-500/20 dark:text-emerald-300"
+            >
+              זמין אופליין ✓
+            </span>
+          </div>
+
+          {/* Desktop >=1024px Top Navigation Links */}
+          <nav
+            aria-label="ניווט ראשי בדסקטופ"
+            className="hidden items-center gap-1 lg:flex"
           >
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-amber-500 to-emerald-500 text-xs font-black text-white shadow-sm">
-              TW
-            </div>
-            <div className="whitespace-nowrap">
-              <span className="font-display text-sm font-black tracking-tight text-slate-900 dark:text-white">
-                טייוואן 3D
-              </span>
-              <span className="mr-1.5 hidden text-[11px] font-medium text-slate-500 sm:inline dark:text-slate-300">
-                6.11–8.12 • 33 ימים
-              </span>
-            </div>
-          </Link>
+            {NAV_LINKS.map((item) => {
+              const Icon = item.icon;
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex min-h-[38px] items-center gap-1.5 rounded-xl px-3 text-xs font-extrabold transition-colors ${
+                    isActive
+                      ? "bg-orange-500 text-white shadow-xs"
+                      : "text-slate-700 hover:bg-slate-900/5 hover:text-slate-950 dark:text-slate-200 dark:hover:bg-white/10"
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
+          </nav>
 
           {/* Action Buttons: Search and Day/Night */}
           <div className="flex shrink-0 items-center gap-1">
@@ -111,12 +145,12 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* Bottom Tab Bar (56px + safe-area-inset-bottom) */}
+      {/* Mobile & Tablet (<1024px) Bottom Tab Bar — hidden on Desktop >=1024px */}
       <nav
         dir="rtl"
         aria-label="ניווט ראשי"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-        className="fixed right-0 bottom-0 left-0 z-40 border-t border-slate-900/10 bg-white/95 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95"
+        className="fixed right-0 bottom-0 left-0 z-40 border-t border-slate-900/10 bg-white/95 backdrop-blur-xl lg:hidden dark:border-white/10 dark:bg-slate-950/95"
       >
         <div className="mx-auto flex h-14 max-w-xl items-center justify-around px-1">
           {NAV_LINKS.map((item) => {
@@ -132,7 +166,7 @@ export function Navbar() {
                 className={`flex min-h-[44px] min-w-[56px] flex-1 flex-col items-center justify-center gap-0.5 rounded-xl py-1 text-[11px] font-bold transition-colors ${
                   isActive
                     ? "text-orange-600 dark:text-amber-400"
-                    : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                    : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
                 }`}
               >
                 <Icon

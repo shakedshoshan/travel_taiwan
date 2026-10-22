@@ -8,6 +8,7 @@ import {
   Clock,
   Trees,
   Sparkles,
+  BedDouble,
 } from "lucide-react";
 import {
   buildGoogleMapsUrl,
@@ -16,7 +17,9 @@ import {
   HOTEL_TIER_META,
   type EnrichedPlace,
 } from "@/lib/data/selectors";
+import { formatDistanceAndWalk } from "@/lib/data/foodAndPlaceMeta";
 import { getPlaceImage } from "@/lib/data/placeImages";
+import { PhotoCreditPopover } from "./PhotoCreditPopover";
 
 interface PlaceCardProps {
   place: EnrichedPlace;
@@ -47,88 +50,83 @@ export function PlaceCard({
       dir="rtl"
       className="overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-sm transition-all hover:border-orange-400/60 dark:border-slate-800 dark:bg-slate-900"
     >
-      {/* Photo Banner with Credit Badge */}
-      <Link
-        href={`/place/${place.id}`}
-        className={`relative block w-full overflow-hidden bg-slate-900 ${
+      {/* Photo Banner with "ⓘ" Credit Popover */}
+      <div
+        className={`relative w-full overflow-hidden bg-slate-900 ${
           compact ? "h-28" : "h-36"
         }`}
       >
-        <Image
-          src={imageMeta.src}
-          alt={
-            imageMeta.match === "representative"
-              ? `${place.name} (תמונה מייצגת)`
-              : place.name
-          }
-          title={imageMeta.attribution}
-          fill
-          sizes={
-            compact
-              ? "(max-width: 640px) 92vw, 320px"
-              : "(max-width: 640px) 94vw, (max-width: 1024px) 46vw, 360px"
-          }
-          className="object-cover transition-transform duration-300 hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+        <Link href={`/place/${place.id}`} className="relative block h-full w-full">
+          <Image
+            src={imageMeta.src}
+            alt={
+              imageMeta.match === "representative"
+                ? `${place.name} (תמונה מייצגת של ${place.cityNameHe})`
+                : place.name
+            }
+            title={imageMeta.attribution}
+            fill
+            sizes={
+              compact
+                ? "(max-width: 640px) 92vw, 320px"
+                : "(max-width: 640px) 94vw, (max-width: 1024px) 46vw, 360px"
+            }
+            className="object-cover transition-transform duration-300 hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
 
-        {/* Top Badges over Photo */}
-        <div className="absolute top-2.5 right-2.5 left-2.5 flex flex-wrap items-center justify-between gap-1.5">
-          <div className="flex flex-wrap items-center gap-1">
-            {place.kind === "attraction" && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-2.5 py-0.5 text-[10px] font-black text-slate-950 shadow-xs">
-                {place.isNature ? (
-                  <>
-                    <Trees className="h-3 w-3" />
-                    <span>טבע ונוף</span>
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="h-3 w-3" />
-                    <span>אטרקציה</span>
-                  </>
-                )}
-              </span>
-            )}
-            {place.kind === "food" && (
-              <span className="rounded-full bg-rose-500 px-2.5 py-0.5 text-[10px] font-black text-white shadow-xs">
-                {FOOD_TYPE_META[place.type].labelHe}
-              </span>
-            )}
-            {place.kind === "hotel" && (
-              <span className="rounded-full bg-sky-500 px-2.5 py-0.5 text-[10px] font-black text-white shadow-xs">
-                {HOTEL_TIER_META[place.tier].labelHe}
-              </span>
-            )}
+          {/* Top Badges over Photo */}
+          <div className="absolute top-2.5 right-2.5 left-2.5 flex flex-wrap items-center justify-between gap-1.5">
+            <div className="flex flex-wrap items-center gap-1">
+              {place.kind === "attraction" && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-2.5 py-0.5 text-[10px] font-black text-slate-950 shadow-xs">
+                  {place.isNature ? (
+                    <>
+                      <Trees className="h-3 w-3" />
+                      <span>טבע ונוף</span>
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="h-3 w-3" />
+                      <span>אטרקציה</span>
+                    </>
+                  )}
+                </span>
+              )}
+              {place.kind === "food" && (
+                <span className="rounded-full bg-rose-500 px-2.5 py-0.5 text-[10px] font-black text-white shadow-xs">
+                  {FOOD_TYPE_META[place.type].labelHe}
+                </span>
+              )}
+              {place.kind === "hotel" && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-sky-500 px-2.5 py-0.5 text-[10px] font-black text-white shadow-xs">
+                  <BedDouble className="h-3 w-3" />
+                  <span>{HOTEL_TIER_META[place.tier].labelHe}</span>
+                </span>
+              )}
 
-            <span className="rounded-full bg-slate-950/75 px-2.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-xs">
-              {place.cityNameHe}
-            </span>
+              <span className="rounded-full bg-slate-950/80 px-2.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-xs">
+                {place.cityNameHe}
+              </span>
 
-            {typeof distanceKm === "number" && (
-              <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-[10px] font-black text-white">
-                {distanceKm < 1
-                  ? `${Math.round(distanceKm * 1000)} מ׳`
-                  : `${distanceKm.toFixed(1)} ק״מ`}
+              {typeof distanceKm === "number" && (
+                <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-black text-white shadow-xs">
+                  {formatDistanceAndWalk(distanceKm)}
+                </span>
+              )}
+            </div>
+
+            {"importance" in place && (
+              <span className="rounded-full bg-slate-950/80 px-2 py-0.5 text-[10px] font-bold text-amber-400 backdrop-blur-xs">
+                {"★".repeat(place.importance)}
               </span>
             )}
           </div>
+        </Link>
 
-          {"importance" in place && (
-            <span className="rounded-full bg-slate-950/75 px-2 py-0.5 text-[10px] font-bold text-amber-400 backdrop-blur-xs">
-              {"★".repeat(place.importance)}
-            </span>
-          )}
-        </div>
-
-        {/* Photo Credit Pill */}
-        <span
-          title={imageMeta.attribution}
-          className="absolute bottom-1.5 left-2.5 max-w-[85%] truncate rounded bg-slate-950/70 px-1.5 py-0.5 text-[9px] text-slate-200 backdrop-blur-xs"
-        >
-          {imageMeta.creditHe}
-        </span>
-      </Link>
+        {/* "ⓘ" Photo Credit Popover instead of text over the image */}
+        <PhotoCreditPopover image={imageMeta} />
+      </div>
 
       {/* Card Content */}
       <div className="p-3.5">
@@ -148,7 +146,7 @@ export function PlaceCard({
           </div>
         </div>
 
-        <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+        <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-slate-700 dark:text-slate-200">
           {place.description}
         </p>
 
@@ -163,13 +161,13 @@ export function PlaceCard({
               </span>
             )}
             {place.kind === "food" && place.hours && (
-              <span className="inline-flex items-center gap-1 rounded-lg bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+              <span className="inline-flex items-center gap-1 rounded-lg bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 dark:bg-slate-800 dark:text-slate-200">
                 <Clock className="h-3 w-3 text-orange-500" />
                 <span>{place.hours}</span>
               </span>
             )}
             {isUnverified && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-300">
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:bg-amber-400/20 dark:text-amber-200">
                 <AlertCircle className="h-3 w-3" />
                 <span>לא מאומת</span>
               </span>

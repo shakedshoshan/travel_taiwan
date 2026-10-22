@@ -17,9 +17,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.05068,
+    "lng": 121.57598,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-001-6f4aff",
@@ -39,9 +40,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.05619,
+    "lng": 121.51522,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-002-3afe80",
@@ -61,9 +63,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.02851,
+    "lng": 121.50602,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-003-36b1e1",
@@ -83,9 +86,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.05011,
+    "lng": 121.51556,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-004-0cd0db",
@@ -127,9 +131,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.06362,
+    "lng": 121.52416,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-006-ef783b",
@@ -171,9 +176,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.08943,
+    "lng": 121.52633,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-008-e21f68",
@@ -215,9 +221,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.03919,
+    "lng": 121.49856,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-010-43e101",
@@ -237,9 +244,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.06099,
+    "lng": 121.50981,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-011-3b1709",
@@ -259,9 +267,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.03892,
+    "lng": 121.5453,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-012-f13ba3",
@@ -281,9 +290,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.04345,
+    "lng": 121.50575,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-013-7a4993",
@@ -325,9 +335,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.03384,
+    "lng": 121.53206,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-015-a4a5b0",
@@ -347,9 +358,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.04368,
+    "lng": 121.52203,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-016-8a14f1",
@@ -369,9 +381,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.03489,
+    "lng": 121.52691,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-017-edd37a",
@@ -391,9 +404,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.04421,
+    "lng": 121.52477,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-018-987976",
@@ -413,9 +427,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taipei",
-    "lat": 25.0478,
-    "lng": 121.517,
-    "approxLocation": true
+    "lat": 25.04039,
+    "lng": 121.50057,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-019-05edcf",
@@ -480,9 +495,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "new-taipei",
-    "lat": 25.012,
-    "lng": 121.465,
-    "approxLocation": true
+    "lat": 24.96257,
+    "lng": 121.53969,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-022-ac995f",
@@ -502,9 +518,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "new-taipei",
-    "lat": 25.012,
-    "lng": 121.465,
-    "approxLocation": true
+    "lat": 25.1068,
+    "lng": 121.80569,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-023-a31b00",
@@ -591,9 +608,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "keelung",
-    "lat": 25.1283,
-    "lng": 121.7419,
-    "approxLocation": true
+    "lat": 25.12911,
+    "lng": 121.74078,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-027-8fcbfc",
@@ -613,9 +631,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "keelung",
-    "lat": 25.1283,
-    "lng": 121.7419,
-    "approxLocation": true
+    "lat": 25.12802,
+    "lng": 121.74122,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-028-d08633",
@@ -635,9 +654,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "hualien",
-    "lat": 23.9872,
-    "lng": 121.6015,
-    "approxLocation": true
+    "lat": 23.97254,
+    "lng": 121.61131,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-029-1f6767",
@@ -657,9 +677,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "hualien",
-    "lat": 23.9872,
-    "lng": 121.6015,
-    "approxLocation": true
+    "lat": 23.97334,
+    "lng": 121.60612,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-030-3b8c5d",
@@ -701,9 +722,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "hualien",
-    "lat": 23.9872,
-    "lng": 121.6015,
-    "approxLocation": true
+    "lat": 23.97346,
+    "lng": 121.5647,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-032-c70a80",
@@ -745,9 +767,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taitung",
-    "lat": 22.7583,
-    "lng": 121.1444,
-    "approxLocation": true
+    "lat": 22.75764,
+    "lng": 121.15606,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-034-e7982a",
@@ -789,9 +812,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taitung",
-    "lat": 22.7583,
-    "lng": 121.1444,
-    "approxLocation": true
+    "lat": 22.75277,
+    "lng": 121.15122,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-036-4ac4c1",
@@ -811,9 +835,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taitung",
-    "lat": 22.7583,
-    "lng": 121.1444,
-    "approxLocation": true
+    "lat": 23.0985,
+    "lng": 121.2187,
+    "approxLocation": false,
+    "coordSource": "knowledge"
   },
   {
     "id": "food-037-257eaa",
@@ -833,9 +858,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "kaohsiung",
-    "lat": 22.6273,
-    "lng": 120.3014,
-    "approxLocation": true
+    "lat": 22.66625,
+    "lng": 120.29937,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-038-b582f5",
@@ -855,9 +881,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "kaohsiung",
-    "lat": 22.6273,
-    "lng": 120.3014,
-    "approxLocation": true
+    "lat": 22.6238,
+    "lng": 120.308,
+    "approxLocation": false,
+    "coordSource": "knowledge"
   },
   {
     "id": "food-039-f4df33",
@@ -1009,9 +1036,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "kaohsiung",
-    "lat": 22.6273,
-    "lng": 120.3014,
-    "approxLocation": true
+    "lat": 22.72774,
+    "lng": 120.3028,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-046-171392",
@@ -1076,9 +1104,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "tainan",
-    "lat": 22.9908,
-    "lng": 120.2133,
-    "approxLocation": true
+    "lat": 22.62676,
+    "lng": 120.39946,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-049-ea7056",
@@ -1098,9 +1127,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "tainan",
-    "lat": 22.9908,
-    "lng": 120.2133,
-    "approxLocation": true
+    "lat": 22.99759,
+    "lng": 120.19889,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-050-395b48",
@@ -1120,9 +1150,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "tainan",
-    "lat": 22.9908,
-    "lng": 120.2133,
-    "approxLocation": true
+    "lat": 22.99108,
+    "lng": 120.19699,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-051-c8dc0d",
@@ -1142,9 +1173,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "tainan",
-    "lat": 22.9908,
-    "lng": 120.2133,
-    "approxLocation": true
+    "lat": 22.99046,
+    "lng": 120.22705,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-052-fdddf4",
@@ -1186,9 +1218,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "tainan",
-    "lat": 22.9908,
-    "lng": 120.2133,
-    "approxLocation": true
+    "lat": 23.00152,
+    "lng": 120.20746,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-054-e51f25",
@@ -1252,9 +1285,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "tainan",
-    "lat": 22.9908,
-    "lng": 120.2133,
-    "approxLocation": true
+    "lat": 22.57502,
+    "lng": 120.35187,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-057-294114",
@@ -1296,9 +1330,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "tainan",
-    "lat": 22.9908,
-    "lng": 120.2133,
-    "approxLocation": true
+    "lat": 22.9917,
+    "lng": 120.2011,
+    "approxLocation": false,
+    "coordSource": "knowledge"
   },
   {
     "id": "food-059-f73e36",
@@ -1318,9 +1353,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "tainan",
-    "lat": 22.9908,
-    "lng": 120.2133,
-    "approxLocation": true
+    "lat": 23.00003,
+    "lng": 120.19231,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-060-a409b1",
@@ -1384,9 +1420,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "chiayi",
-    "lat": 23.4801,
-    "lng": 120.4491,
-    "approxLocation": true
+    "lat": 23.18419,
+    "lng": 120.26837,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-063-6f7dec",
@@ -1405,10 +1442,12 @@
     "hoursVerified": true,
     "priceVerified": false,
     "verified": false,
-    "cityId": "chiayi",
-    "lat": 23.4801,
-    "lng": 120.4491,
-    "approxLocation": true
+    "cityId": "alishan",
+    "lat": 23.505,
+    "lng": 120.696,
+    "approxLocation": false,
+    "coordSource": "knowledge",
+    "nameEn": "Fenqihu Bento"
   },
   {
     "id": "food-064-cc95fa",
@@ -1428,9 +1467,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "chiayi",
-    "lat": 23.4801,
-    "lng": 120.4491,
-    "approxLocation": true
+    "lat": 23.47856,
+    "lng": 120.44987,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-065-fe4247",
@@ -1450,9 +1490,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "chiayi",
-    "lat": 23.4801,
-    "lng": 120.4491,
-    "approxLocation": true
+    "lat": 23.47881,
+    "lng": 120.45003,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-066-4bd988",
@@ -1472,9 +1513,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "sun-moon-lake",
-    "lat": 23.865,
-    "lng": 120.915,
-    "approxLocation": true
+    "lat": 23.8471,
+    "lng": 120.93368,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-067-863653",
@@ -1494,9 +1536,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "sun-moon-lake",
-    "lat": 23.865,
-    "lng": 120.915,
-    "approxLocation": true
+    "lat": 23.85259,
+    "lng": 120.91323,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-068-bc5e07",
@@ -1516,9 +1559,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taichung",
-    "lat": 24.1477,
-    "lng": 120.6736,
-    "approxLocation": true
+    "lat": 24.17735,
+    "lng": 120.6466,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-069-fc248e",
@@ -1538,9 +1582,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taichung",
-    "lat": 24.1477,
-    "lng": 120.6736,
-    "approxLocation": true
+    "lat": 24.14979,
+    "lng": 120.68525,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-070-f1c4a1",
@@ -1605,9 +1650,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taichung",
-    "lat": 24.1477,
-    "lng": 120.6736,
-    "approxLocation": true
+    "lat": 24.15047,
+    "lng": 120.65532,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-073-4dd969",
@@ -1627,9 +1673,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taichung",
-    "lat": 24.1477,
-    "lng": 120.6736,
-    "approxLocation": true
+    "lat": 24.13442,
+    "lng": 120.68257,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-074-ac6f66",
@@ -1649,9 +1696,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taichung",
-    "lat": 24.1477,
-    "lng": 120.6736,
-    "approxLocation": true
+    "lat": 24.1431,
+    "lng": 120.68247,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-075-9c4030",
@@ -1693,9 +1741,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "changhua",
-    "lat": 24.0809,
-    "lng": 120.5385,
-    "approxLocation": true
+    "lat": 23.7081,
+    "lng": 120.43656,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-077-74357e",
@@ -1715,9 +1764,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "hsinchu",
-    "lat": 24.8016,
-    "lng": 120.9716,
-    "approxLocation": true
+    "lat": 24.80436,
+    "lng": 120.96607,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-078-f37115",
@@ -1737,9 +1787,10 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "hsinchu",
-    "lat": 24.8016,
-    "lng": 120.9716,
-    "approxLocation": true
+    "lat": 24.75673,
+    "lng": 121.09448,
+    "approxLocation": false,
+    "coordSource": "openstreetmap"
   },
   {
     "id": "food-079-18d799",
@@ -1759,8 +1810,105 @@
     "priceVerified": false,
     "verified": false,
     "cityId": "taoyuan",
-    "lat": 24.9937,
-    "lng": 121.301,
-    "approxLocation": true
+    "lat": 24.9584,
+    "lng": 121.2245,
+    "approxLocation": false,
+    "coordSource": "knowledge"
+  },
+  {
+    "id": "food-gm-04",
+    "name": "MINIMAL גלידה",
+    "nameZh": "MINIMAL 冰室",
+    "nameEn": "MINIMAL Ice Cream",
+    "city": "טייפה",
+    "description": "גלידה ושייב-אייס מודרני עם טעמים טייוואניים.",
+    "importance": 3,
+    "cityId": "taipei",
+    "lat": 25.0478,
+    "lng": 121.517,
+    "approxLocation": true,
+    "source": "google-maps-list",
+    "typeHe": "זול",
+    "type": "cheap",
+    "hours": null,
+    "priceText": null,
+    "priceMin": null,
+    "priceMax": null,
+    "priceUnit": "NT$ per person",
+    "hoursVerified": false,
+    "priceVerified": false,
+    "verified": false
+  },
+  {
+    "id": "food-gm-10",
+    "name": "שוק הלילה ליאונינג",
+    "nameZh": "遼寧街夜市",
+    "nameEn": "Liaoning Street Night Market",
+    "city": "טייפה",
+    "description": "שוק לילה קטן של פירות ים וגריל, מקומי.",
+    "importance": 3,
+    "cityId": "taipei",
+    "lat": 25.04941,
+    "lng": 121.54212,
+    "approxLocation": false,
+    "source": "google-maps-list",
+    "typeHe": "שוק לילה",
+    "type": "market",
+    "hours": null,
+    "priceText": null,
+    "priceMin": null,
+    "priceMax": null,
+    "priceUnit": "NT$ per person",
+    "hoursVerified": false,
+    "priceVerified": false,
+    "verified": false
+  },
+  {
+    "id": "food-gm-17",
+    "name": "שוק הלילה שילין",
+    "nameZh": "士林夜市",
+    "nameEn": "Shilin Night Market",
+    "city": "טייפה",
+    "description": "שוק הלילה הגדול בטייפה, יציאה מתחנת ג׳יאנטאן.",
+    "importance": 4,
+    "cityId": "taipei",
+    "lat": 25.08835,
+    "lng": 121.5251,
+    "approxLocation": false,
+    "source": "google-maps-list",
+    "typeHe": "שוק לילה",
+    "type": "market",
+    "hours": null,
+    "priceText": null,
+    "priceMin": null,
+    "priceMax": null,
+    "priceUnit": "NT$ per person",
+    "hoursVerified": false,
+    "priceVerified": false,
+    "verified": false
+  },
+  {
+    "id": "food-gm-25",
+    "name": "פוואן שוקולד",
+    "nameZh": "福灣巧克力",
+    "nameEn": "FuWan Chocolate",
+    "city": "פינגטונג",
+    "description": "שוקולד מקקאו טייוואני עטור פרסים, ליד דונגגאנג.",
+    "importance": 3,
+    "cityId": "pingtung",
+    "lat": 22.669,
+    "lng": 120.488,
+    "approxLocation": true,
+    "source": "google-maps-list",
+    "typeHe": "זול",
+    "type": "cheap",
+    "hours": null,
+    "priceText": null,
+    "priceMin": null,
+    "priceMax": null,
+    "priceUnit": "NT$ per person",
+    "hoursVerified": false,
+    "priceVerified": false,
+    "verified": false
   }
 ]

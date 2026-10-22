@@ -4,7 +4,9 @@ import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { latLngToWorld3D } from "@/lib/data/coordinates";
-import { useTripStore } from "@/lib/store/useTripStore";
+import { getAllCities, getRouteLegs, getTimelineDays } from "@/lib/data/selectors";
+import { tripActions, useTripStore } from "@/lib/store/useTripStore";
+import { WorldHtml } from "./WorldHtml";
 import { LandmarkDioramas } from "./delight/LandmarkDioramas";
 
 interface DelightDetailsProps {
@@ -15,8 +17,13 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
   const store = useTripStore();
   const cloudsGroupRef = useRef<THREE.Group>(null);
   const lanternsGroupRef = useRef<THREE.Group>(null);
+  const landmarksRootRef = useRef<THREE.Group>(null);
   const ropewayCarRef = useRef<THREE.Mesh>(null);
+  const smlBoatRef = useRef<THREE.Group>(null);
   const alishanTrainRef = useRef<THREE.Group>(null);
+  const lighthouseBeamRef = useRef<THREE.Mesh>(null);
+  const travelerRef = useRef<THREE.Group>(null);
+  const playAccumRef = useRef<number>(0);
 
   // Key landmark world coordinates
   const landmarks = useMemo(() => {
@@ -24,15 +31,29 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
     const smlLake = latLngToWorld3D(23.862, 120.912, 0.02);
     const smlRopewayTop = latLngToWorld3D(23.869, 120.942, 0.35);
     const alishanCenter = latLngToWorld3D(23.512, 120.808, 0.06);
-    const pingxiSky = latLngToWorld3D(25.025, 121.74, 0.25);
+    const domeOfLight = latLngToWorld3D(22.6314, 120.3019, 0.04);
+    const eluanbiLighthouse = latLngToWorld3D(21.9024, 120.8526, 0.02);
 
     return {
       taipei101,
       smlLake,
       smlRopewayTop,
       alishanCenter,
-      pingxiSky,
+      domeOfLight,
+      eluanbiLighthouse,
     };
+  }, []);
+
+  // Build smooth 3D curve across the 10 route legs for Traveler "Play" animation
+  const routeCurve = useMemo(() => {
+    const legs = getRouteLegs();
+    const cities = getAllCities();
+    const cityMap = new Map(cities.map((c) => [c.id, c]));
+    const pts = legs.map((leg) => {
+      const c = cityMap.get(leg.cityId) ?? cities[0];
+      return new THREE.Vector3(c.worldX, c.worldY + 0.45, c.worldZ);
+    });
+    return new THREE.CatmullRomCurve3(pts, false, "catmullrom", 0.35);
   }, []);
 
   // Generate sky lanterns (Pingxi/Jiufen + major night market cities)
@@ -86,9 +107,52 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
     });
   }, []);
 
-  useFrame(({ clock }) => {
-    if (store.prefersReducedMotion) return;
+  const days = getTimelineDays();
+  const currentDay = days[store.currentDayIndex] ?? days[0];
+
+  useFrame(({ clock, camera }, delta) => {
     const t = clock.getElapsedTime();
+
+    // Scale landmarks smoothly based on camera zoom distance
+    if (landmarksRootRef.current) {
+      const camDist = camera.position.length();
+      // Full detail when zoomed in (camDist <= 22), compact when overview
+      const zoomVisibility = THREE.MathUtils.clamp(
+        (33.0 - camDist) / 11.0,
+        0.55,
+        1.15
+      );
+      landmarksRootRef.current.visible = zoomVisibility > 0.1;
+    }
+
+    // Traveler route playback animation (P1 #10)
+    if (store.isRoutePlaying) {
+      playAccumRef.current += delta;
+      if (playAccumRef.current >= 0.45) {
+        playAccumRef.current = 0;
+        const nextIdx = store.currentDayIndex + 1;
+        if (nextIdx >= days.length) {
+          tripActions.setCurrentDayIndex(0);
+          tripActions.setRoutePlaying(false);
+        } else {
+          tripActions.setCurrentDayIndex(nextIdx);
+        }
+      }
+    }
+
+    if (travelerRef.current) {
+      const progress = THREE.MathUtils.clamp(
+        store.currentDayIndex / Math.max(1, days.length - 1),
+        0,
+        1
+      );
+      const pt = routeCurve.getPointAt(progress);
+      const bob = store.prefersReducedMotion ? 0 : Math.sin(t * 5.0) * 0.08;
+      travelerRef.current.position.set(pt.x, pt.y + 0.32 + bob, pt.z);
+      travelerRef.current.rotation.y = t * 1.8;
+    }
+
+    if (store.prefersReducedMotion) return;
 
     if (cloudsGroupRef.current) {
       cloudsGroupRef.current.children.forEach((child, idx) => {
@@ -131,9 +195,20 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
       );
     }
 
+    if (smlBoatRef.current) {
+      const boatAngle = t * 0.85;
+      const boatRadius = 0.38;
+      smlBoatRef.current.position.set(
+        landmarks.smlLake.x + Math.cos(boatAngle) * boatRadius,
+        landmarks.smlLake.y + 0.51,
+        landmarks.smlLake.z + Math.sin(boatAngle) * boatRadius
+      );
+      smlBoatRef.current.rotation.y = -boatAngle;
+    }
+
     if (alishanTrainRef.current) {
       const angle = t * 1.35;
-      const radius = 0.26;
+      const radius = 0.24;
       const cx = landmarks.alishanCenter.x;
       const cy = landmarks.alishanCenter.y;
       const cz = landmarks.alishanCenter.z;
@@ -144,6 +219,10 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
       );
       alishanTrainRef.current.rotation.y = -angle;
     }
+
+    if (lighthouseBeamRef.current) {
+      lighthouseBeamRef.current.rotation.z = t * 1.6;
+    }
   });
 
   return (
@@ -151,11 +230,52 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
       <LandmarkDioramas
         isNightMode={isNightMode}
         landmarks={landmarks}
+        landmarksRootRef={landmarksRootRef}
         ropewayCarRef={ropewayCarRef}
+        smlBoatRef={smlBoatRef}
         alishanTrainRef={alishanTrainRef}
+        lighthouseBeamRef={lighthouseBeamRef}
       />
 
-      {/* 4. Floating Sky Lanterns (Pingxi & Night Markets) */}
+      {/* Traveler Avatar along the Route on "Play" */}
+      {store.isRoutePlaying && (
+        <group ref={travelerRef} name="route-traveler-avatar">
+          <mesh position={[0, 0.12, 0]} castShadow>
+            <octahedronGeometry args={[0.2, 1]} />
+            <meshStandardMaterial
+              color="#fde047"
+              emissive="#ff5a36"
+              emissiveIntensity={2.5}
+              roughness={0.15}
+            />
+          </mesh>
+          <mesh position={[0, -0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <ringGeometry args={[0.22, 0.36, 24]} />
+            <meshBasicMaterial
+              color="#fde047"
+              transparent
+              opacity={0.85}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
+          <WorldHtml
+            position={[0, 0.34, 0]}
+            anchor="bottom"
+            screenOffset={[0, -6]}
+            clampToViewport
+            zIndexRange={[36, 0]}
+          >
+            <div
+              dir="rtl"
+              className="pointer-events-none select-none whitespace-nowrap rounded-full border border-white bg-gradient-to-l from-orange-500 to-amber-500 px-2.5 py-0.5 text-[10px] font-black text-slate-950 shadow-xl"
+            >
+              🎒 יום {currentDay.dayNumber}: {currentDay.cityNameHe}
+            </div>
+          </WorldHtml>
+        </group>
+      )}
+
+      {/* Floating Sky Lanterns (Pingxi & Night Markets) */}
       <group ref={lanternsGroupRef} name="sky-lanterns">
         {skyLanterns.map((l) => (
           <mesh key={`lantern-${l.id}`} position={[l.x, l.baseY, l.z]}>
@@ -170,8 +290,8 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
         ))}
       </group>
 
-      {/* 5. Drifting Mountain Clouds over the Central Mountain Range */}
-      <group ref={cloudsGroupRef} name="mountain-clouds">
+      {/* Drifting Mountain Clouds over the Central Mountain Range (visible only when zoomed in) */}
+      <group ref={cloudsGroupRef} name="mountain-clouds" visible={false}>
         {mountainClouds.map((c) => (
           <group
             key={`cloud-${c.id}`}

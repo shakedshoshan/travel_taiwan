@@ -24,6 +24,7 @@ import { CITY_TRANSIT_GUIDE_HE } from "@/lib/data/cityTransitGuides";
 import { getPlaceImage } from "@/lib/data/placeImages";
 import { MiniTaiwanMap } from "@/components/3d/MiniTaiwanMap";
 import { PlaceCard } from "@/components/ui/PlaceCard";
+import { PhotoCreditPopover } from "@/components/ui/PhotoCreditPopover";
 import { tripActions } from "@/lib/store/useTripStore";
 
 interface PlaceDetailClientProps {
@@ -100,16 +101,8 @@ export function PlaceDetailClient({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-transparent" />
 
-          {/* Credit Pill with Wikimedia Commons Source Link */}
-          <a
-            href={imageMeta.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={imageMeta.attribution}
-            className="absolute top-3 left-3 max-w-[80%] truncate rounded-full bg-slate-950/75 px-2.5 py-1 text-[10px] text-slate-200 backdrop-blur-xs hover:bg-slate-900 hover:underline"
-          >
-            {imageMeta.creditHe} ↗
-          </a>
+          {/* "ⓘ" Photo Credit Popover instead of text over the image */}
+          <PhotoCreditPopover image={imageMeta} positionClass="top-3 left-3" />
 
           {/* Overlay Title & Badges */}
           <div className="absolute right-4 bottom-4 left-4 text-white">

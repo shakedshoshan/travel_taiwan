@@ -4,6 +4,7 @@ import attractionsRaw from "@/data/attractions.json";
 import foodRaw from "@/data/food.json";
 import hotelsRaw from "@/data/hotels.json";
 import overridesRaw from "@/data/overrides.json";
+import practicalRaw from "@/data/practical.json";
 import type {
   Attraction,
   AuditNote,
@@ -82,6 +83,7 @@ function applyOverride<
     id: string;
     name: string;
     nameZh: string | null;
+    nameEn?: string | null;
     cityId: CityId;
     lat: number;
     lng: number;
@@ -100,7 +102,7 @@ function applyOverride<
   return {
     ...item,
     nameZh: ov.nameZh ?? item.nameZh,
-    nameEn: ov.nameEn ?? null,
+    nameEn: ov.nameEn ?? item.nameEn ?? null,
     cityId: ov.cityId ?? item.cityId,
     lat: ov.lat ?? item.lat,
     lng: ov.lng ?? item.lng,
@@ -228,6 +230,37 @@ function validateAndBuildDataset(): ValidatedTripDataset {
   const placesById = new Map<string, EnrichedPlace>(
     allPlaces.map((p) => [p.id, p])
   );
+
+  // Build-time dataset counts verification (P0 #1)
+  const kentingHotelsCount = hotels.filter((h) => h.cityId === "kenting").length;
+  const hasKentingCity = cities.some((c) => c.id === "kenting");
+  const alertsCount = Array.isArray(practicalRaw.alerts)
+    ? practicalRaw.alerts.length
+    : 0;
+
+  if (attractions.length !== 172) {
+    throw new Error(
+      `[Data Check Failed] Expected 172 attractions, got ${attractions.length}`
+    );
+  }
+  if (hotels.length !== 40) {
+    throw new Error(
+      `[Data Check Failed] Expected 40 hotels, got ${hotels.length}`
+    );
+  }
+  if (kentingHotelsCount !== 3) {
+    throw new Error(
+      `[Data Check Failed] Expected 3 Kenting hotels, got ${kentingHotelsCount}`
+    );
+  }
+  if (!hasKentingCity) {
+    throw new Error(`[Data Check Failed] Expected cities.json to include kenting`);
+  }
+  if (alertsCount <= 0) {
+    throw new Error(
+      `[Data Check Failed] Expected practical.json alerts > 0, got ${alertsCount}`
+    );
+  }
 
   return {
     cities,

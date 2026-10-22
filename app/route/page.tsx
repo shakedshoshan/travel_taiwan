@@ -1,17 +1,39 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getAuditNotes, getRouteLegs } from "@/lib/data/selectors";
+import { getAuditNotes, getRouteLegs, getTimelineDays } from "@/lib/data/selectors";
 import { MiniTaiwanMap } from "@/components/3d/MiniTaiwanMap";
 import { RouteLegCard } from "@/components/ui/route/RouteLegCard";
+import { getTripTodayStatus, TodayCardModal } from "@/components/ui/TodayCardModal";
+import { tripActions } from "@/lib/store/useTripStore";
 import type { CityId } from "@/data/types";
 
 export default function RoutePage() {
   const legs = getRouteLegs();
   const auditNotes = getAuditNotes();
-  const [activeLegOrder, setActiveLegOrder] = useState<number>(1);
-  const [activeCityId, setActiveCityId] = useState<CityId>(legs[0].cityId);
+  const todayStatus = getTripTodayStatus(
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("today")
+      : null
+  );
+  const initialDay = todayStatus.inTrip
+    ? getTimelineDays()[todayStatus.dayIndex]
+    : undefined;
+
+  const [activeLegOrder, setActiveLegOrder] = useState<number>(
+    initialDay?.legOrder ?? 1
+  );
+  const [activeCityId, setActiveCityId] = useState<CityId>(
+    initialDay?.cityId ?? legs[0].cityId
+  );
+  const todayBannerText = todayStatus.statusTextHe;
   const cardRefs = useRef<Map<number, HTMLElement>>(new Map());
+
+  useEffect(() => {
+    if (todayStatus.inTrip) {
+      tripActions.setCurrentDayIndex(todayStatus.dayIndex);
+    }
+  }, [todayStatus.inTrip, todayStatus.dayIndex]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -90,14 +112,26 @@ export default function RoutePage() {
       </div>
 
       {/* Main Itinerary Content */}
+      <TodayCardModal />
       <div className="px-3.5 pt-16 md:px-6">
-        <div className="mb-5">
-          <h1 className="font-display text-2xl font-black tracking-tight text-slate-900 md:text-3xl dark:text-white">
-            המסלול המלא בטייוואן (10 מקטעים · 33 ימים)
-          </h1>
-          <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-            6.11 – 8.12.2026 • גללו מטה – המפה התלת-ממדית למעלה עוקבת אוטומטית אחרי כל מקטע.
-          </p>
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h1 className="font-display text-2xl font-black tracking-tight text-slate-900 md:text-3xl dark:text-white">
+              המסלול המלא בטייוואן (10 מקטעים · 33 ימים)
+            </h1>
+            <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
+              6.11 – 8.12.2026 • גללו מטה – המפה התלת-ממדית למעלה עוקבת אוטומטית אחרי כל מקטע.
+            </p>
+          </div>
+          {todayBannerText && (
+            <button
+              type="button"
+              onClick={() => tripActions.setTodayCardOpen(true)}
+              className="toy-button rounded-2xl bg-amber-400/25 px-3.5 py-2 text-xs font-extrabold text-amber-950 dark:bg-amber-400/20 dark:text-amber-200"
+            >
+              📅 {todayBannerText} · פתח כרטיס היום
+            </button>
+          )}
         </div>
 
         <div className="space-y-5">

@@ -7,15 +7,24 @@ import {
   Calendar,
   ChevronUp,
   ChevronDown,
+  Play,
+  Pause,
+  Sparkles,
 } from "lucide-react";
 import { getRouteLegs, getTimelineDays } from "@/lib/data/selectors";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
+import { getTripTodayStatus, TodayCardModal } from "./TodayCardModal";
 
 export function TimelineScrubber() {
   const store = useTripStore();
   const days = getTimelineDays();
   const legs = getRouteLegs();
   const currentDay = days[store.currentDayIndex] ?? days[0];
+  const todayStatus = getTripTodayStatus(
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("today")
+      : null
+  );
 
   // Hide timeline pill when city sheet is snapped to half or full
   if (
@@ -23,7 +32,7 @@ export function TimelineScrubber() {
     store.sheetSnap === "half" ||
     store.sheetSnap === "full"
   ) {
-    return null;
+    return <TodayCardModal />;
   }
 
   const progressPct =
@@ -40,19 +49,44 @@ export function TimelineScrubber() {
 
   return (
     <>
+      <TodayCardModal />
+
       {/* Collapsed 64px Timeline Pill (Default) */}
       {!store.isTimelineExpanded && (
         <div
           dir="rtl"
-          className="glass-panel pointer-events-auto mx-auto flex h-16 max-w-md items-center justify-between gap-2 rounded-full px-2.5 shadow-xl"
+          className="glass-panel pointer-events-auto mx-auto flex h-16 max-w-xl items-center justify-between gap-1.5 rounded-full px-2.5 shadow-xl"
         >
+          {/* Play / Pause Traveler Animation along the Route (P1 #10) */}
+          <button
+            type="button"
+            onClick={() => tripActions.toggleRoutePlaying()}
+            aria-label={
+              store.isRoutePlaying ? "השהה אנימציית מסלול" : "נגן אנימציית מטייל במסלול"
+            }
+            title={
+              store.isRoutePlaying ? "השהה מסלול" : "נגן אנימציית מטייל במסלול"
+            }
+            className={`toy-button flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-black transition-colors sm:h-10 sm:w-10 ${
+              store.isRoutePlaying
+                ? "bg-amber-400 text-slate-950 shadow-sm"
+                : "bg-orange-500 text-white shadow-sm hover:bg-orange-600"
+            }`}
+          >
+            {store.isRoutePlaying ? (
+              <Pause className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            ) : (
+              <Play className="h-3.5 w-3.5 fill-current sm:h-4 sm:w-4" />
+            )}
+          </button>
+
           {/* Main Tap Area -> Expands into Timeline Sheet */}
           <button
             type="button"
             onClick={() => tripActions.setTimelineExpanded(true)}
-            className="flex min-h-[44px] min-w-0 flex-1 flex-col justify-center px-2 text-right"
+            className="flex min-h-[44px] min-w-0 flex-1 flex-col justify-center px-1 text-right sm:px-1.5"
           >
-            <div className="flex items-center gap-1.5 truncate font-display text-sm font-black text-slate-900 dark:text-white">
+            <div className="flex items-center gap-1 truncate font-display text-xs font-black text-slate-900 sm:gap-1.5 sm:text-sm dark:text-white">
               <span>יום {currentDay.dayNumber}</span>
               <span className="text-orange-500">·</span>
               <span>{currentDay.dateShort}</span>
@@ -70,14 +104,32 @@ export function TimelineScrubber() {
             </div>
           </button>
 
+          {/* "היום" / Countdown Chip (P1 #5) */}
+          <button
+            type="button"
+            onClick={() => {
+              if (todayStatus.inTrip) {
+                tripActions.setCurrentDayIndex(todayStatus.dayIndex);
+              }
+              tripActions.setTodayCardOpen(true);
+            }}
+            title={todayStatus.statusTextHe}
+            className="toy-button flex min-h-[34px] shrink-0 items-center gap-1 rounded-full bg-amber-400/25 px-2 text-[10px] font-extrabold text-amber-950 hover:bg-amber-400/40 sm:min-h-[38px] sm:px-2.5 sm:text-[11px] dark:bg-amber-400/20 dark:text-amber-200"
+          >
+            <Sparkles className="h-3 w-3 shrink-0 text-orange-500 sm:h-3.5 sm:w-3.5" />
+            <span className="whitespace-nowrap">
+              {todayStatus.inTrip ? "היום" : todayStatus.statusTextHe}
+            </span>
+          </button>
+
           {/* Expand Chevron (>=44x44px) */}
           <button
             type="button"
             onClick={() => tripActions.setTimelineExpanded(true)}
             aria-label="הרחב ציר זמן"
-            className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-full text-slate-600 hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/10"
+            className="flex min-h-[40px] min-w-[32px] shrink-0 items-center justify-center rounded-full text-slate-600 hover:bg-slate-900/5 sm:min-h-[44px] sm:min-w-[40px] dark:text-slate-200 dark:hover:bg-white/10"
           >
-            <ChevronUp className="h-5 w-5" />
+            <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
         </div>
       )}
@@ -101,6 +153,20 @@ export function TimelineScrubber() {
 
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => tripActions.toggleRoutePlaying()}
+                  aria-label={store.isRoutePlaying ? "השהה" : "נגן מסלול"}
+                  className="toy-button flex min-h-[44px] items-center gap-1 rounded-xl bg-orange-500 px-3 text-xs font-black text-white"
+                >
+                  {store.isRoutePlaying ? (
+                    <Pause className="h-4 w-4" />
+                  ) : (
+                    <Play className="h-4 w-4 fill-current" />
+                  )}
+                  <span>{store.isRoutePlaying ? "השהה" : "נגן"}</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={() => {
@@ -130,11 +196,21 @@ export function TimelineScrubber() {
 
               <div className="min-w-0 flex-1 text-right">
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-400/25 px-2.5 py-0.5 text-xs font-extrabold text-amber-900 dark:bg-amber-400/20 dark:text-amber-300">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-400/25 px-2.5 py-0.5 text-xs font-extrabold text-amber-900 dark:bg-amber-400/20 dark:text-amber-200">
                     <Calendar className="h-3.5 w-3.5" />
                     יום {currentDay.dayNumber}/{days.length} ·{" "}
                     {currentDay.dateShort} ({currentDay.weekdayHe})
                   </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      tripActions.setTimelineExpanded(false);
+                      tripActions.setTodayCardOpen(true);
+                    }}
+                    className="rounded-full bg-orange-500/15 px-2.5 py-0.5 text-[11px] font-bold text-orange-700 dark:text-amber-300"
+                  >
+                    כרטיס היום · {todayStatus.statusTextHe}
+                  </button>
                 </div>
                 <div className="mt-0.5 truncate font-display text-sm font-black text-slate-900 dark:text-white">
                   מקטע {currentDay.legOrder}: {currentDay.legFocus}
@@ -145,7 +221,7 @@ export function TimelineScrubber() {
                 type="button"
                 onClick={() => tripActions.setTimelineExpanded(false)}
                 aria-label="כווץ ציר זמן"
-                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-200"
               >
                 <ChevronDown className="h-5 w-5" />
               </button>
@@ -172,7 +248,7 @@ export function TimelineScrubber() {
               </button>
             </div>
 
-            {/* RTL Range Slider: Progress starts from the RIGHT on Day 1 (6.11) and fills LEFT toward 8.12 */}
+            {/* RTL Range Slider */}
             <div className="mt-3 flex items-center gap-3">
               <span className="font-mono text-xs font-bold text-slate-600 dark:text-slate-300">
                 6.11
@@ -209,7 +285,7 @@ export function TimelineScrubber() {
                     className={`toy-button flex min-h-[44px] shrink-0 snap-start items-center rounded-2xl px-3 text-xs font-bold whitespace-nowrap transition-all ${
                       isCurrent
                         ? "bg-orange-500 text-white shadow-sm"
-                        : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300"
+                        : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200"
                     }`}
                   >
                     {leg.order}. {leg.focus} ({leg.dates})

@@ -15,35 +15,7 @@ import {
   smoothstep,
 } from "./polygonMath";
 
-export const TERRAIN_REVISION = 12;
-
-/** Xueshan → Hehuanshan → Nantou highs → Yushan, in world XZ. */
-const CREST_SPINE: ReadonlyArray<readonly [number, number]> = [
-  [1.74, -5.8],
-  [2.09, -3.95],
-  [0.98, -1.52],
-  [-0.16, 1.14],
-];
-
-function distanceToCrest(x: number, z: number): number {
-  let minSq = Infinity;
-  for (let i = 0; i < CREST_SPINE.length - 1; i++) {
-    const ax = CREST_SPINE[i][0];
-    const az = CREST_SPINE[i][1];
-    const bx = CREST_SPINE[i + 1][0];
-    const bz = CREST_SPINE[i + 1][1];
-    const dx = bx - ax;
-    const dz = bz - az;
-    const lenSq = dx * dx + dz * dz;
-    let t = lenSq > 0 ? ((x - ax) * dx + (z - az) * dz) / lenSq : 0;
-    t = Math.max(0, Math.min(1, t));
-    const px = ax + t * dx;
-    const pz = az + t * dz;
-    const dSq = (x - px) * (x - px) + (z - pz) * (z - pz);
-    if (dSq < minSq) minSq = dSq;
-  }
-  return Math.sqrt(minSq);
-}
+export const TERRAIN_REVISION = 16;
 
 export const terrainVertexShader = /* glsl */ `
   attribute vec3 color;
@@ -63,9 +35,6 @@ export const terrainFragmentShader = /* glsl */ `
     vec3 lightDir = normalize(vec3(0.42, 0.86, 0.28));
     float wrap = dot(normalize(vNormal), lightDir) * 0.5 + 0.5;
     float shade = mix(0.58, 1.0, clamp(wrap, 0.0, 1.0));
-    float luma = dot(vColor, vec3(0.299, 0.587, 0.114));
-    float snowKeep = smoothstep(0.62, 0.86, luma);
-    shade = mix(shade, max(shade, 0.94), snowKeep);
     gl_FragColor = vec4(vColor * shade, 1.0);
   }
 `;
@@ -160,8 +129,7 @@ export function buildIslandGeometries(isNightMode: boolean) {
   const dayLow = new THREE.Color("#56bb63");
   const dayMid = new THREE.Color("#268e50");
   const dayHigh = new THREE.Color("#165f39");
-  const dayRock = new THREE.Color("#9a9186");
-  const daySnow = new THREE.Color("#fbfaf7");
+  const dayRock = new THREE.Color("#28503c");
   const daySubmerged = new THREE.Color("#0c6fa8");
 
   const nightBeach = new THREE.Color("#2a3a52");
@@ -170,7 +138,6 @@ export function buildIslandGeometries(isNightMode: boolean) {
   const nightMid = new THREE.Color("#14524a");
   const nightHigh = new THREE.Color("#1a6156");
   const nightRock = new THREE.Color("#5c7084");
-  const nightSnow = new THREE.Color("#eef4fb");
   const nightSubmerged = new THREE.Color("#071525");
 
   const cBeach = isNightMode ? nightBeach : dayBeach;
@@ -179,7 +146,6 @@ export function buildIslandGeometries(isNightMode: boolean) {
   const cMid = isNightMode ? nightMid : dayMid;
   const cHigh = isNightMode ? nightHigh : dayHigh;
   const cRock = isNightMode ? nightRock : dayRock;
-  const cSnow = isNightMode ? nightSnow : daySnow;
   const cSubmerged = isNightMode ? nightSubmerged : daySubmerged;
   const tmpColor = new THREE.Color();
 
@@ -242,24 +208,14 @@ export function buildIslandGeometries(isNightMode: boolean) {
       );
 
       if (relH > 1.0) {
-        tmpColor.lerp(cRock, smoothstep(1.0, 1.38, relH) * 0.94);
+        tmpColor.lerp(cRock, smoothstep(1.0, 1.45, relH) * 0.68);
       }
-
-      const crestDist = distanceToCrest(vx, vz);
-      const onCrest = 1 - smoothstep(0.08, 0.42, crestDist);
-      const snow =
-        relH > 1.16 && onCrest > 0.02
-          ? smoothstep(1.16, 1.4, relH) * onCrest
-          : 0;
 
       const ao =
         (0.82 + 0.18 * smoothstep(0.02, 0.7, relH)) *
         (1 - smoothstep(0.2, 1.1, slope) * 0.06);
       const grain = 0.94 + shadeVariation(vx, vz) * 0.09;
       tmpColor.multiplyScalar(ao * grain);
-      if (snow > 0.04) {
-        tmpColor.lerp(cSnow, Math.min(1, snow));
-      }
     }
 
     colors[i * 3] = tmpColor.r;

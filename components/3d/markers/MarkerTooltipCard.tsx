@@ -5,6 +5,7 @@ import Link from "next/link";
 import { WorldHtml } from "../WorldHtml";
 import { buildGoogleMapsUrl } from "@/lib/data/selectors";
 import { getPlaceImage } from "@/lib/data/placeImages";
+import { PhotoCreditPopover } from "@/components/ui/PhotoCreditPopover";
 import { tripActions } from "@/lib/store/useTripStore";
 import type { MarkerEntry } from "./markerConfig";
 
@@ -47,9 +48,7 @@ export function MarkerTooltipCard({
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-          <span className="absolute bottom-1 left-1.5 max-w-[90%] truncate text-[8.5px] text-slate-300">
-            {imageMeta.creditHe}
-          </span>
+          <PhotoCreditPopover image={imageMeta} positionClass="bottom-1.5 left-1.5" />
         </div>
         <div className="flex items-center justify-between gap-1">
           <span className="rounded-full bg-amber-400/20 px-2 py-0.5 text-[10px] font-bold text-amber-300">

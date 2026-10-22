@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { TRIP_DATA } from "@/lib/data/loaders";
 
 interface TaiwanLoadingScreenProps {
   visible: boolean;
@@ -13,7 +14,7 @@ export function TaiwanLoadingScreen({ visible }: TaiwanLoadingScreenProps) {
     { label: "טייפה והצפון", color: "bg-emerald-400", delay: 0.05, y: -56 },
     { label: "חואליאן וטארוקו", color: "bg-teal-500", delay: 0.14, y: -18 },
     { label: "רכס ההרים המרכזי", color: "bg-emerald-700", delay: 0.22, y: 0 },
-    { label: "אגם הירח והשמש ואלישאן", color: "bg-cyan-500", delay: 0.3, y: 18 },
+    { label: "אגם השמש והירח ואלישאן", color: "bg-cyan-500", delay: 0.3, y: 18 },
     { label: "טאינאן וקאושיונג", color: "bg-amber-400", delay: 0.38, y: 54 },
   ];
 
@@ -26,7 +27,10 @@ export function TaiwanLoadingScreen({ visible }: TaiwanLoadingScreenProps) {
       className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-sky-950 via-slate-900 to-emerald-950 text-white"
     >
       {/* Animated assembling 3D-style island blocks */}
-      <div className="relative flex h-56 w-56 items-center justify-center">
+      <div
+        aria-hidden="true"
+        className="relative flex h-56 w-56 items-center justify-center"
+      >
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
@@ -69,8 +73,10 @@ export function TaiwanLoadingScreen({ visible }: TaiwanLoadingScreenProps) {
       >
         בונים את האי טייוואן בתלת-ממד...
       </motion.h2>
-      <p className="mt-1.5 text-sm text-slate-300">
-        6.11 – 8.12.2026 • 18 ערים • 10 מקטעי מסלול • 264 נקודות עניין
+      <p className="mt-1.5 text-sm text-slate-200">
+        6.11 – 8.12.2026 • {TRIP_DATA.cities.length} ערים • {TRIP_DATA.legs.length} מקטעי מסלול •{" "}
+        {TRIP_DATA.allPlaces.length} נקודות עניין ({TRIP_DATA.attractions.length} אטרקציות ·{" "}
+        {TRIP_DATA.food.length} אוכל · {TRIP_DATA.hotels.length} מלונות)
       </p>
     </motion.div>
   );
