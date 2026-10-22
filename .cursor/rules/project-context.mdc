@@ -1,0 +1,33 @@
+---
+description: Core project context, architecture, data rules, and RTL Hebrew UI conventions for Taiwan 3D
+alwaysApply: true
+---
+
+# Taiwan 3D (`טייוואן 3D`) — Persistent Project Context
+
+Interactive 3D travel web app for a 33-day trip to Taiwan (`6.11 – 8.12.2026`), built with Next.js 16 (App Router, strict TypeScript), Three.js r186, `@react-three/fiber`, `@react-three/drei`, Zod, Framer Motion, and Tailwind CSS v4.
+
+## Directory & Architecture Map
+
+- `/data`: Pre-built static JSON (`cities.json`, `route.json`, `attractions.json`, `food.json`, `hotels.json`), `types.ts`, and `build.py`. **Never re-parse Excel in runtime code.**
+- `/lib/data`:
+  - `schemas.ts`: Strict Zod schemas derived from `data/types.ts`. Fails build if any `cityId` is invalid.
+  - `coordinates.ts` & `taiwanGeo.ts`: Projects `[lat, lng]` to 3D island space (`latLngToXZ`, `latLngToWorld3D`), computes Central Mountain Range elevation (`getElevationAtLatLng`), and calculates deterministic golden-angle spiral offsets (`resolvePlaceCoordinates`).
+  - `loaders.ts` & `selectors.ts`: Validated static dataset (`TRIP_DATA`), selectors by city/leg/day/place, and `buildGoogleMapsUrl`.
+- `/lib/store/useTripStore.ts`: Hydration-safe `useSyncExternalStore` + `localStorage` store (`favorites`, `donePlaces`, `selectedHotels`, `dailyFoodBudget`, `isNightMode`, `selectedCityId`, `currentDayIndex`, `layerToggles`).
+- `/components/3d`:
+  - `MapCanvas.tsx` & `MiniTaiwanMap.tsx`: R3F `<Canvas>` wrappers with `<WorldHtmlHost />`.
+  - `CameraRig.tsx`: Map-style camera controller (left-drag pan, right-drag/toggle orbit, `zoomToCursor`, WASD/arrow keys, and on-screen navigation pad).
+  - `TaiwanIsland.tsx`, `OceanWater.tsx`, `CityPins.tsx`, `CategoryMarkers.tsx`, `RouteTubeAndTraveler.tsx`, `DelightDetails.tsx`, `Map2DFallback.tsx`.
+- `/components/ui`: `Navbar.tsx`, `LayerToggles.tsx`, `TimelineScrubber.tsx`, `CityDrawer.tsx`, `CommandSearch.tsx`, `BudgetWidget.tsx`, `PlaceDetailClient.tsx`.
+- `/app`: `/` (3D map home), `/route` (10 legs synced with mini-map), `/food` (80 spots + cheap must-eats), `/hotels` (37 hotels compared by tier), `/place/[id]` (SSG for all 264 places).
+
+## Non-Negotiable Data & UI Rules
+
+1. **No Hardcoded IDs**: Place IDs (`attr-xxx`, `food-xxx`, `hotel-xxx`) depend on Excel row order. Never hardcode place IDs in components.
+2. **Route Truth**: `route.json -> legs` (10 legs, 33 days) is the source of truth. `route.json -> audit` is historical archive only.
+3. **Price & Verification Display**:
+   - Always display `priceText` verbatim for hotels and food; use `priceMin`/`priceMax` only for sorting and budget math.
+   - Any unverified price or hours (`!verified`, `!priceVerified`, `!hoursVerified`) must show a `"לא מאומת"` badge.
+4. **RTL & Hebrew**: Keep all Hebrew strings untouched (`dir="rtl"`, `lang="he"`, Rubik/Heebo fonts).
+5. **No Orange Route Line on Map**: Do not render a 3D tube or 2D polyline connecting the route path on the island map.

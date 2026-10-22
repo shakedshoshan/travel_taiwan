@@ -1,0 +1,19 @@
+---
+description: Three.js r186, React Three Fiber v9, and React 19 compatibility rules for 3D components
+globs: components/3d/**/*.tsx
+alwaysApply: false
+---
+
+# 3D Map & React 19 / Three.js r186 Rules
+
+1. **Use `<WorldHtml>` Instead of Drei `<Html>`**:
+   - Never import `Html` from `@react-three/drei`. In React 19, Drei's `<Html>` triggers synchronous `root.unmount()` during render and `NotFoundError: removeChild` crashes.
+   - Always use `WorldHtml` and `<WorldHtmlHost />` from `@/components/3d/WorldHtml`.
+2. **Three.js r186 Deprecations**:
+   - Always import `@/components/3d/threeCompat` at the top of Canvas entry files (`MapCanvas.tsx`, `MiniTaiwanMap.tsx`).
+   - Pass `shadows={{ type: THREE.PCFShadowMap }}` instead of boolean `shadows` on `<Canvas>`.
+3. **Map Navigation (`CameraRig.tsx`)**:
+   - Keep `screenSpacePanning={false}` and `zoomToCursor={true}` so dragging moves across the horizontal `(x, z)` island plane and scrolling zooms into the cursor target.
+   - Clamp `controls.target` within Taiwan's bounding box so the camera never drifts into empty ocean.
+4. **No Route Tube Line**:
+   - Do not render a glowing orange route tube mesh over the island; only render the active day's traveler marker.

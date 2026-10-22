@@ -7,3 +7,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Taiwan 3D Project Context
+
+Read `CONTEXT.md` and `.cursor/rules/project-context.mdc` for complete project architecture, dataset rules (`/data`), 3D coordinate system (`lib/data/coordinates.ts`), React 19 `<WorldHtml>` overlay conventions, and map navigation rules (`components/3d/CameraRig.tsx`).
+
