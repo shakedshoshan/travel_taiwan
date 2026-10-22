@@ -72,6 +72,8 @@ const LAYER_CONFIG: ReadonlyArray<{
 export function LayerToggles() {
   const store = useTripStore();
 
+  if (store.isCityZoomMapOpen) return null;
+
   return (
     <div
       dir="rtl"
@@ -133,6 +135,19 @@ export function LayerToggles() {
           <Box className="h-3.5 w-3.5" />
           <span>{store.use2DFallback ? "מפת 3D" : "מפת 2D"}</span>
         </button>
+
+        {store.selectedCityId && (
+          <button
+            type="button"
+            onClick={() =>
+              store.selectedCityId &&
+              tripActions.enterCityZoomMap(store.selectedCityId)
+            }
+            className="toy-button flex items-center gap-1 rounded-xl bg-amber-400 px-2.5 py-1.5 text-xs font-black text-slate-950 shadow-sm hover:bg-amber-300"
+          >
+            <span>🔍 זום למפת יעד 3D</span>
+          </button>
+        )}
 
         {(store.selectedCityId || store.focusedPlaceId) && (
           <button

@@ -39,6 +39,7 @@ export interface TripStoreState {
   // Interactive session state
   selectedCityId: CityId | null;
   focusedPlaceId: string | null;
+  isCityZoomMapOpen: boolean;
   currentDayIndex: number; // 0..32 (6.11 -> 8.12)
   isPlaying: boolean;
   use2DFallback: boolean;
@@ -77,6 +78,7 @@ const DEFAULT_STATE: TripStoreState = {
 
   selectedCityId: null,
   focusedPlaceId: null,
+  isCityZoomMapOpen: false,
   currentDayIndex: 0,
   isPlaying: false,
   use2DFallback: false,
@@ -92,7 +94,7 @@ const DEFAULT_STATE: TripStoreState = {
     markets: true,
     michelinBib: true,
     hiddenLocal: true,
-    hotels: false,
+    hotels: true,
   },
 };
 
@@ -239,8 +241,24 @@ export const tripActions = {
   },
 
   selectCity(cityId: CityId | null) {
+    setState((prev) => ({
+      selectedCityId: cityId,
+      focusedPlaceId: null,
+      isCityZoomMapOpen: cityId === null ? false : prev.isCityZoomMapOpen,
+    }));
+  },
+
+  enterCityZoomMap(cityId: CityId) {
     setState({
       selectedCityId: cityId,
+      focusedPlaceId: null,
+      isCityZoomMapOpen: true,
+    });
+  },
+
+  exitCityZoomMap() {
+    setState({
+      isCityZoomMapOpen: false,
       focusedPlaceId: null,
     });
   },

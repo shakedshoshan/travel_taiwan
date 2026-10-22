@@ -4,9 +4,17 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Sparkles } from "@react-three/drei";
 import * as THREE from "three";
+import Link from "next/link";
 import { WorldHtml } from "./WorldHtml";
-import { getAllPlaces, type EnrichedPlace } from "@/lib/data/selectors";
-import type { LayerToggles } from "@/lib/store/useTripStore";
+import {
+  buildGoogleMapsUrl,
+  getAllPlaces,
+  type EnrichedPlace,
+} from "@/lib/data/selectors";
+import {
+  tripActions,
+  type LayerToggles,
+} from "@/lib/store/useTripStore";
 import type { CityId } from "@/data/types";
 
 interface CategoryMarkersProps {
@@ -276,6 +284,20 @@ export function CategoryMarkers({
     return list;
   }, [groupedEntries]);
 
+  // Find focused entry if any
+  const focusedEntry = useMemo(() => {
+    if (!focusedPlaceId) return null;
+    for (const key of Object.keys(groupedEntries) as MarkerArchetype[]) {
+      const found = groupedEntries[key].find(
+        (e) => e.place.id === focusedPlaceId
+      );
+      if (found) return found;
+    }
+    return null;
+  }, [groupedEntries, focusedPlaceId]);
+
+  const activeEntry = hoveredEntry ?? focusedEntry;
+
   return (
     <group name="category-markers">
       {/* Markets = Glowing Lanterns */}
@@ -350,49 +372,98 @@ export function CategoryMarkers({
         />
       )}
 
-      {/* Hover Tooltip for any Category Marker */}
-      {hoveredEntry && (
+      {/* Hover or Focused Card for any Category Marker */}
+      {activeEntry && (
         <WorldHtml
           position={[
-            hoveredEntry.place.resolvedCoords.worldX,
-            hoveredEntry.place.resolvedCoords.worldY + 0.35,
-            hoveredEntry.place.resolvedCoords.worldZ,
+            activeEntry.place.resolvedCoords.worldX,
+            activeEntry.place.resolvedCoords.worldY + 0.42,
+            activeEntry.place.resolvedCoords.worldZ,
           ]}
           center
           distanceFactor={15}
-          zIndexRange={[30, 0]}
+          zIndexRange={[35, 0]}
         >
           <div
             dir="rtl"
-            className="pointer-events-none w-56 rounded-2xl border border-white/40 bg-slate-950/92 p-2.5 text-right text-xs text-white shadow-2xl backdrop-blur-md"
+            className={`${
+              focusedEntry?.place.id === activeEntry.place.id
+                ? "pointer-events-auto border-amber-300 ring-2 ring-amber-400"
+                : "pointer-events-none border-white/40"
+            } w-64 rounded-2xl border bg-slate-950/95 p-3 text-right text-xs text-white shadow-2xl backdrop-blur-md`}
           >
             <div className="flex items-center justify-between gap-1">
               <span className="rounded-full bg-amber-400/20 px-2 py-0.5 text-[10px] font-bold text-amber-300">
-                {hoveredEntry.place.kind === "attraction"
-                  ? hoveredEntry.place.isNature
+                {activeEntry.place.kind === "attraction"
+                  ? activeEntry.place.isNature
                     ? "טבע ונוף"
                     : "אטרקציה"
-                  : hoveredEntry.place.kind === "food"
-                    ? hoveredEntry.place.typeHe
-                    : `מלון • ${hoveredEntry.place.tierHe}`}
+                  : activeEntry.place.kind === "food"
+                    ? activeEntry.place.typeHe
+                    : `מלון • ${activeEntry.place.tierHe}`}
               </span>
               <span className="text-[10px] text-amber-400">
-                {"★".repeat(hoveredEntry.importance)}
+                {"★".repeat(activeEntry.importance)}
               </span>
             </div>
             <div className="mt-1 font-bold text-white">
-              {hoveredEntry.place.name}
+              {activeEntry.place.name}
             </div>
-            <div className="mt-0.5 line-clamp-2 text-[11px] text-slate-300">
-              {hoveredEntry.place.description}
+            <div className="text-[10px] text-slate-400">
+              {activeEntry.place.cityNameHe} ({activeEntry.place.cityNameEn})
             </div>
-            {(hoveredEntry.place.kind === "food" ||
-              hoveredEntry.place.kind === "hotel") &&
-              !hoveredEntry.place.verified && (
+            <div className="mt-1 line-clamp-2 text-[11px] text-slate-300">
+              {activeEntry.place.description}
+            </div>
+            {(activeEntry.place.kind === "food" ||
+              activeEntry.place.kind === "hotel") &&
+              activeEntry.place.priceText && (
+                <div className="mt-1 font-mono text-[10.5px] font-bold text-emerald-300">
+                  {activeEntry.place.priceText}
+                </div>
+              )}
+            {(activeEntry.place.kind === "food" ||
+              activeEntry.place.kind === "hotel") &&
+              !activeEntry.place.verified && (
                 <div className="mt-1 inline-block rounded bg-amber-500/20 px-1.5 py-0.5 text-[9px] text-amber-300">
                   לא מאומת
                 </div>
               )}
+
+            {focusedEntry?.place.id === activeEntry.place.id && (
+              <div className="mt-2.5 flex flex-col gap-1.5 border-t border-white/15 pt-2">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    tripActions.enterCityZoomMap(activeEntry.place.cityId);
+                    tripActions.focusPlace(
+                      activeEntry.place.id,
+                      activeEntry.place.cityId
+                    );
+                  }}
+                  className="w-full rounded-xl bg-amber-400 py-1.5 text-[11px] font-black text-slate-950 hover:bg-amber-300"
+                >
+                  🔍 זום למפת יעד 3D ({activeEntry.place.cityNameHe})
+                </button>
+                <div className="flex items-center justify-between text-[10.5px]">
+                  <Link
+                    href={`/place/${activeEntry.place.id}`}
+                    className="font-bold text-orange-400 hover:underline"
+                  >
+                    לעמוד המקום המלא ←
+                  </Link>
+                  <a
+                    href={buildGoogleMapsUrl(activeEntry.place)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-300 hover:text-white"
+                  >
+                    Google Maps ↗
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </WorldHtml>
       )}

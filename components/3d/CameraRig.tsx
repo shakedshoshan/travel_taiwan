@@ -9,6 +9,7 @@ import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import type { CityId } from "@/data/types";
 import { getCityById, getPlaceById } from "@/lib/data/selectors";
 import { useTripStore } from "@/lib/store/useTripStore";
+import { computeCityMapNodes } from "./CityDestination3DMap";
 
 interface CameraRigProps {
   selectedCityId: CityId | null;
@@ -124,8 +125,27 @@ export function CameraRig({
     transitionTimer.current = 0.45;
   };
 
-  // Fly to focused place or selected city
+  // Fly to focused place or selected city (or Destination 3D Zoom Map)
   useEffect(() => {
+    if (store.isCityZoomMapOpen && selectedCityId) {
+      if (focusedPlaceId) {
+        const nodes = computeCityMapNodes(selectedCityId);
+        const node = nodes.find((n) => n.place.id === focusedPlaceId);
+        if (node) {
+          desiredTarget.current.set(node.x, node.y + 0.35, node.z);
+          desiredCamPos.current.set(node.x - 1.8, node.y + 4.4, node.z + 4.6);
+          isTransitioning.current = true;
+          transitionTimer.current = 0.95;
+          return;
+        }
+      }
+      desiredTarget.current.set(0, 0.25, 0);
+      desiredCamPos.current.set(0, 12.2, 12.8);
+      isTransitioning.current = true;
+      transitionTimer.current = 1.05;
+      return;
+    }
+
     if (focusedPlaceId) {
       const place = getPlaceById(focusedPlaceId);
       if (place) {
@@ -149,9 +169,15 @@ export function CameraRig({
         );
         isTransitioning.current = true;
         transitionTimer.current = 1.1;
+        return;
       }
     }
-  }, [selectedCityId, focusedPlaceId]);
+
+    desiredTarget.current.copy(DEFAULT_TARGET);
+    desiredCamPos.current.copy(DEFAULT_CAMERA_POS);
+    isTransitioning.current = true;
+    transitionTimer.current = 0.95;
+  }, [selectedCityId, focusedPlaceId, store.isCityZoomMapOpen]);
 
   // Follow timeline city only while Play is active
   useEffect(() => {
@@ -237,8 +263,13 @@ export function CameraRig({
         break;
       }
       case "reset": {
-        desiredTarget.current.copy(DEFAULT_TARGET);
-        desiredCamPos.current.copy(DEFAULT_CAMERA_POS);
+        if (store.isCityZoomMapOpen) {
+          desiredTarget.current.set(0, 0.25, 0);
+          desiredCamPos.current.set(0, 12.2, 12.8);
+        } else {
+          desiredTarget.current.copy(DEFAULT_TARGET);
+          desiredCamPos.current.copy(DEFAULT_CAMERA_POS);
+        }
         isTransitioning.current = true;
         transitionTimer.current = 1.0;
         break;

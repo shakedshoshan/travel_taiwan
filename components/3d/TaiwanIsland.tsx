@@ -102,8 +102,8 @@ export function TaiwanIsland({ isNightMode }: TaiwanIslandProps) {
     beachExtrude.rotateX(-Math.PI / 2);
 
     // 2. Build stylized low-poly Central Mountain Range topographic mesh over the island interior
-    const segX = 76;
-    const segZ = 136;
+    const segX = 96;
+    const segZ = 168;
     const width = 16.5;
     const height = 27.5;
     const gridGeo = new THREE.PlaneGeometry(width, height, segX, segZ);

@@ -40,9 +40,9 @@ export function CityDrawer() {
   );
 
   const bundle = useMemo(() => {
-    if (!store.selectedCityId) return null;
+    if (!store.selectedCityId || store.isCityZoomMapOpen) return null;
     return getCityBundle(store.selectedCityId);
-  }, [store.selectedCityId]);
+  }, [store.selectedCityId, store.isCityZoomMapOpen]);
 
   if (!bundle) return null;
 
@@ -113,6 +113,13 @@ export function CityDrawer() {
                 <span>תאריכים: {city.dates.join(" • ")}</span>
               </div>
             )}
+            <button
+              type="button"
+              onClick={() => tripActions.enterCityZoomMap(city.id)}
+              className="toy-button mt-2.5 flex items-center gap-2 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 px-3.5 py-2 text-xs font-black text-slate-950 shadow-md hover:brightness-105"
+            >
+              <span>🔍 כניסה למפת יעד 3D פנימית ({attractions.length + food.length + hotels.length} מקומות)</span>
+            </button>
           </div>
 
           <button
@@ -284,12 +291,24 @@ export function CityDrawer() {
                       </p>
 
                       <div className="mt-2.5 flex items-center justify-between border-t border-slate-900/5 pt-2 text-[11px] dark:border-white/5">
-                        <Link
-                          href={`/place/${item.id}`}
-                          className="font-bold text-orange-600 hover:underline dark:text-amber-300"
-                        >
-                          פרטים מלאים והתמקדות ←
-                        </Link>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              tripActions.enterCityZoomMap(city.id);
+                              tripActions.focusPlace(item.id, city.id);
+                            }}
+                            className="rounded-lg bg-amber-400/25 px-2 py-0.5 font-extrabold text-amber-900 hover:bg-amber-400 dark:text-amber-300 dark:hover:text-slate-950"
+                          >
+                            🔍 הצג במפת יעד 3D
+                          </button>
+                          <Link
+                            href={`/place/${item.id}`}
+                            className="font-bold text-orange-600 hover:underline dark:text-amber-300"
+                          >
+                            פרטים מלאים ←
+                          </Link>
+                        </div>
                         <a
                           href={buildGoogleMapsUrl(item)}
                           target="_blank"
@@ -442,12 +461,24 @@ export function CityDrawer() {
                       </div>
 
                       <div className="mt-2.5 flex items-center justify-between border-t border-slate-900/5 pt-2 text-[11px] dark:border-white/5">
-                        <Link
-                          href={`/place/${item.id}`}
-                          className="font-bold text-orange-600 hover:underline dark:text-amber-300"
-                        >
-                          עמוד מקום מלא ←
-                        </Link>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              tripActions.enterCityZoomMap(city.id);
+                              tripActions.focusPlace(item.id, city.id);
+                            }}
+                            className="rounded-lg bg-amber-400/25 px-2 py-0.5 font-extrabold text-amber-900 hover:bg-amber-400 dark:text-amber-300 dark:hover:text-slate-950"
+                          >
+                            🔍 הצג במפת יעד 3D
+                          </button>
+                          <Link
+                            href={`/place/${item.id}`}
+                            className="font-bold text-orange-600 hover:underline dark:text-amber-300"
+                          >
+                            עמוד מקום מלא ←
+                          </Link>
+                        </div>
                         <a
                           href={buildGoogleMapsUrl(item)}
                           target="_blank"
@@ -559,12 +590,24 @@ export function CityDrawer() {
                       </div>
 
                       <div className="mt-2 flex items-center justify-between text-[11px]">
-                        <Link
-                          href={`/place/${hotel.id}`}
-                          className="font-bold text-orange-600 hover:underline dark:text-amber-300"
-                        >
-                          פרטי מלון ←
-                        </Link>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              tripActions.enterCityZoomMap(city.id);
+                              tripActions.focusPlace(hotel.id, city.id);
+                            }}
+                            className="rounded-lg bg-amber-400/25 px-2 py-0.5 font-extrabold text-amber-900 hover:bg-amber-400 dark:text-amber-300 dark:hover:text-slate-950"
+                          >
+                            🔍 הצג במפת יעד 3D
+                          </button>
+                          <Link
+                            href={`/place/${hotel.id}`}
+                            className="font-bold text-orange-600 hover:underline dark:text-amber-300"
+                          >
+                            פרטי מלון ←
+                          </Link>
+                        </div>
                         <a
                           href={buildGoogleMapsUrl(hotel)}
                           target="_blank"

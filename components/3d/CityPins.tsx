@@ -1,10 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { WorldHtml } from "./WorldHtml";
-import { getAllCities, type EnrichedCity } from "@/lib/data/selectors";
+import {
+  getAllCities,
+  getCityBundle,
+  type EnrichedCity,
+} from "@/lib/data/selectors";
+import { tripActions } from "@/lib/store/useTripStore";
 import type { CityId } from "@/data/types";
 
 interface CityPinsProps {
@@ -34,6 +39,16 @@ function SingleCityPin({
   const groupRef = useRef<THREE.Group>(null);
   const ringRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
+
+  const counts = useMemo(() => {
+    const b = getCityBundle(city.id);
+    return {
+      hotels: b.hotels.length,
+      food: b.food.length,
+      attractions: b.attractions.length,
+      total: b.hotels.length + b.food.length + b.attractions.length,
+    };
+  }, [city.id]);
 
   const isOnRoute = city.onRoute;
   const baseScale = isOnRoute ? 1.05 : 0.62;
@@ -107,7 +122,11 @@ function SingleCityPin({
         position={[0, city.worldY + 0.35, 0]}
         onClick={(e) => {
           e.stopPropagation();
-          onSelectCity(city.id);
+          if (isSelected) {
+            tripActions.enterCityZoomMap(city.id);
+          } else {
+            onSelectCity(city.id);
+          }
         }}
         onPointerOver={(e) => {
           e.stopPropagation();
@@ -198,6 +217,23 @@ function SingleCityPin({
                   {city.onRoute
                     ? `${city.days} ימים • ${city.dates.join(" | ")}`
                     : "מחוץ לציר הלינה הראשי • לחצו לפתיחה"}
+                </div>
+              )}
+              {(hovered || isSelected) && counts.total > 0 && (
+                <div className="mt-1 flex items-center justify-between gap-2 border-t border-slate-950/15 pt-1 text-[10px] font-bold">
+                  <span>
+                    🏨 {counts.hotels} • 🍜 {counts.food} • ★ {counts.attractions}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      tripActions.enterCityZoomMap(city.id);
+                    }}
+                    className="rounded-full bg-slate-950 px-2 py-0.5 text-[9.5px] font-black text-amber-300 hover:bg-slate-800"
+                  >
+                    זום למפת יעד 3D 🔍
+                  </button>
                 </div>
               )}
             </div>

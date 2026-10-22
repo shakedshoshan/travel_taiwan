@@ -6,13 +6,16 @@ import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import { AdaptiveDpr, AdaptiveEvents, Stars } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
-import { useRouter } from "next/navigation";
 import { TaiwanIsland } from "./TaiwanIsland";
 import { OceanWater } from "./OceanWater";
 import { CityPins } from "./CityPins";
 import { CategoryMarkers } from "./CategoryMarkers";
 import { RouteTubeAndTraveler } from "./RouteTubeAndTraveler";
 import { DelightDetails } from "./DelightDetails";
+import {
+  CityDestination3DScene,
+  CityDestinationHUD,
+} from "./CityDestination3DMap";
 import { CameraRig } from "./CameraRig";
 import { Map2DFallback } from "./Map2DFallback";
 import { TaiwanLoadingScreen } from "./TaiwanLoadingScreen";
@@ -35,9 +38,12 @@ function checkWebGLAvailable(): boolean {
 }
 
 export function MapCanvas() {
-  const router = useRouter();
   const store = useTripStore();
   const [isReady, setIsReady] = useState(false);
+  const [showAllCityLabels, setShowAllCityLabels] = useState(true);
+  const [cityCategoryFilter, setCityCategoryFilter] = useState<
+    "all" | "hotel" | "food" | "attraction" | "nature"
+  >("all");
 
   const timelineDays = getTimelineDays();
   const currentDay =
@@ -65,7 +71,6 @@ export function MapCanvas() {
 
   const handleSelectPlace = (place: EnrichedPlace) => {
     tripActions.focusPlace(place.id, place.cityId);
-    router.push(`/place/${place.id}`);
   };
 
   if (store.use2DFallback) {
@@ -177,26 +182,37 @@ export function MapCanvas() {
         )}
 
         <Suspense fallback={null}>
-          <TaiwanIsland isNightMode={store.isNightMode} />
           <OceanWater isNightMode={store.isNightMode} />
-          <RouteTubeAndTraveler
-            currentDay={currentDay}
-            isNightMode={store.isNightMode}
-          />
-          <CityPins
-            selectedCityId={store.selectedCityId}
-            activeTimelineCityId={currentDay.cityId}
-            isNightMode={store.isNightMode}
-            onSelectCity={(cityId) => tripActions.selectCity(cityId)}
-          />
-          <CategoryMarkers
-            layerToggles={store.layerToggles}
-            isNightMode={store.isNightMode}
-            selectedCityId={store.selectedCityId}
-            focusedPlaceId={store.focusedPlaceId}
-            onSelectPlace={handleSelectPlace}
-          />
-          <DelightDetails isNightMode={store.isNightMode} />
+          {store.isCityZoomMapOpen && store.selectedCityId ? (
+            <CityDestination3DScene
+              cityId={store.selectedCityId}
+              isNightMode={store.isNightMode}
+              showAllLabels={showAllCityLabels}
+              categoryFilter={cityCategoryFilter}
+            />
+          ) : (
+            <>
+              <TaiwanIsland isNightMode={store.isNightMode} />
+              <RouteTubeAndTraveler
+                currentDay={currentDay}
+                isNightMode={store.isNightMode}
+              />
+              <CityPins
+                selectedCityId={store.selectedCityId}
+                activeTimelineCityId={currentDay.cityId}
+                isNightMode={store.isNightMode}
+                onSelectCity={(cityId) => tripActions.selectCity(cityId)}
+              />
+              <CategoryMarkers
+                layerToggles={store.layerToggles}
+                isNightMode={store.isNightMode}
+                selectedCityId={store.selectedCityId}
+                focusedPlaceId={store.focusedPlaceId}
+                onSelectPlace={handleSelectPlace}
+              />
+              <DelightDetails isNightMode={store.isNightMode} />
+            </>
+          )}
         </Suspense>
 
         <CameraRig
@@ -218,6 +234,15 @@ export function MapCanvas() {
         )}
       </Canvas>
       <WorldHtmlHost />
+      {store.isCityZoomMapOpen && store.selectedCityId && (
+        <CityDestinationHUD
+          cityId={store.selectedCityId}
+          showAllLabels={showAllCityLabels}
+          onToggleAllLabels={() => setShowAllCityLabels((prev) => !prev)}
+          categoryFilter={cityCategoryFilter}
+          onChangeCategoryFilter={setCityCategoryFilter}
+        />
+      )}
     </div>
   );
 }
