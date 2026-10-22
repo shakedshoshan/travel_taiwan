@@ -5,6 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { latLngToWorld3D } from "@/lib/data/coordinates";
 import { useTripStore } from "@/lib/store/useTripStore";
+import { LandmarkDioramas } from "./delight/LandmarkDioramas";
 
 interface DelightDetailsProps {
   isNightMode: boolean;
@@ -89,7 +90,6 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
     if (store.prefersReducedMotion) return;
     const t = clock.getElapsedTime();
 
-    // Animate drifting mountain clouds
     if (cloudsGroupRef.current) {
       cloudsGroupRef.current.children.forEach((child, idx) => {
         const meta = mountainClouds[idx];
@@ -99,7 +99,6 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
       });
     }
 
-    // Animate rising sky lanterns
     if (lanternsGroupRef.current) {
       lanternsGroupRef.current.children.forEach((child, idx) => {
         const l = skyLanterns[idx];
@@ -115,7 +114,6 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
       });
     }
 
-    // Animate Sun Moon Lake cable-car gondola moving back and forth
     if (ropewayCarRef.current) {
       const alpha = (Math.sin(t * 1.2) + 1) * 0.5;
       ropewayCarRef.current.position.lerpVectors(
@@ -133,7 +131,6 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
       );
     }
 
-    // Animate miniature red Alishan forest train on circular mountain loop
     if (alishanTrainRef.current) {
       const angle = t * 1.35;
       const radius = 0.26;
@@ -149,166 +146,14 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
     }
   });
 
-  const ropewayLineGeo = useMemo(() => {
-    const start = new THREE.Vector3(
-      landmarks.smlLake.x,
-      landmarks.smlLake.y + 0.22,
-      landmarks.smlLake.z
-    );
-    const end = new THREE.Vector3(
-      landmarks.smlRopewayTop.x,
-      landmarks.smlRopewayTop.y + 0.22,
-      landmarks.smlRopewayTop.z
-    );
-    const curve = new THREE.LineCurve3(start, end);
-    return new THREE.TubeGeometry(curve, 8, 0.012, 6, false);
-  }, [landmarks]);
-
   return (
     <group name="delight-details">
-      {/* 1. Mini Taipei 101 Bamboo-Tiered Tower */}
-      <group
-        position={[
-          landmarks.taipei101.x + 0.18,
-          landmarks.taipei101.y,
-          landmarks.taipei101.z - 0.12,
-        ]}
-      >
-        {/* Podium base */}
-        <mesh position={[0, 0.1, 0]} castShadow>
-          <boxGeometry args={[0.24, 0.2, 0.24]} />
-          <meshStandardMaterial
-            color="#38bdf8"
-            emissive="#0284c7"
-            emissiveIntensity={isNightMode ? 1.2 : 0.35}
-            roughness={0.2}
-            metalness={0.5}
-          />
-        </mesh>
-        {/* 5 Iconic stacked pagoda tiers */}
-        {[0, 1, 2, 3, 4].map((tier) => (
-          <mesh
-            key={`t101-tier-${tier}`}
-            position={[0, 0.26 + tier * 0.14, 0]}
-            castShadow
-          >
-            <cylinderGeometry args={[0.11, 0.085, 0.13, 4]} />
-            <meshStandardMaterial
-              color="#2dd4bf"
-              emissive={isNightMode ? "#38bdf8" : "#0d9488"}
-              emissiveIntensity={isNightMode ? 1.6 : 0.4}
-              roughness={0.18}
-              metalness={0.55}
-            />
-          </mesh>
-        ))}
-        {/* Pinnacle spire */}
-        <mesh position={[0, 1.05, 0]}>
-          <cylinderGeometry args={[0.012, 0.03, 0.26, 8]} />
-          <meshStandardMaterial
-            color="#fde047"
-            emissive="#fde047"
-            emissiveIntensity={isNightMode ? 2.8 : 1.0}
-          />
-        </mesh>
-      </group>
-
-      {/* 2. Sun Moon Lake Water Surface + Ropeway Cable Car to Formosan Aboriginal Village */}
-      <group name="sun-moon-lake-delight">
-        {/* Shimmering turquoise lake surface */}
-        <mesh
-          position={[
-            landmarks.smlLake.x,
-            landmarks.smlLake.y + 0.52,
-            landmarks.smlLake.z,
-          ]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          renderOrder={3}
-        >
-          <circleGeometry args={[0.88, 40]} />
-          {isNightMode ? (
-            <meshStandardMaterial
-              color="#7ef3ff"
-              emissive="#cffafe"
-              emissiveIntensity={0.85}
-              roughness={0.22}
-              metalness={0.04}
-            />
-          ) : (
-            <meshBasicMaterial color="#1ad4f2" />
-          )}
-        </mesh>
-        <mesh
-          position={[
-            landmarks.smlLake.x,
-            landmarks.smlLake.y + 0.5,
-            landmarks.smlLake.z,
-          ]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          renderOrder={3}
-        >
-          <ringGeometry args={[0.78, 1.02, 40]} />
-          <meshBasicMaterial
-            color={isNightMode ? "#e7fbff" : "#f4fdff"}
-            transparent
-            opacity={0.92}
-            side={THREE.DoubleSide}
-            depthWrite={false}
-          />
-        </mesh>
-
-        {/* Ropeway cable */}
-        <mesh geometry={ropewayLineGeo}>
-          <meshBasicMaterial color="#e2e8f0" />
-        </mesh>
-
-        {/* Moving Gondola Cabin */}
-        <mesh ref={ropewayCarRef} castShadow>
-          <boxGeometry args={[0.09, 0.08, 0.09]} />
-          <meshStandardMaterial
-            color="#f43f5e"
-            emissive="#f43f5e"
-            emissiveIntensity={isNightMode ? 1.8 : 0.6}
-          />
-        </mesh>
-      </group>
-
-      {/* 3. Alishan Forest Railway Red Train + Track Ring */}
-      <group name="alishan-train-delight">
-        <mesh
-          position={[
-            landmarks.alishanCenter.x,
-            landmarks.alishanCenter.y + 0.01,
-            landmarks.alishanCenter.z,
-          ]}
-          rotation={[-Math.PI / 2, 0, 0]}
-        >
-          <ringGeometry args={[0.23, 0.28, 28]} />
-          <meshBasicMaterial
-            color="#78350f"
-            side={THREE.DoubleSide}
-            transparent
-            opacity={0.75}
-          />
-        </mesh>
-
-        <group ref={alishanTrainRef}>
-          {/* Red forest locomotive */}
-          <mesh castShadow>
-            <boxGeometry args={[0.1, 0.09, 0.18]} />
-            <meshStandardMaterial
-              color="#ef4444"
-              emissive="#dc2626"
-              emissiveIntensity={isNightMode ? 1.5 : 0.4}
-            />
-          </mesh>
-          {/* Little chimney */}
-          <mesh position={[0, 0.07, 0.05]}>
-            <cylinderGeometry args={[0.02, 0.02, 0.06, 8]} />
-            <meshStandardMaterial color="#1e293b" />
-          </mesh>
-        </group>
-      </group>
+      <LandmarkDioramas
+        isNightMode={isNightMode}
+        landmarks={landmarks}
+        ropewayCarRef={ropewayCarRef}
+        alishanTrainRef={alishanTrainRef}
+      />
 
       {/* 4. Floating Sky Lanterns (Pingxi & Night Markets) */}
       <group ref={lanternsGroupRef} name="sky-lanterns">

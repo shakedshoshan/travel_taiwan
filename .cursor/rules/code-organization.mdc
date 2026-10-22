@@ -1,0 +1,19 @@
+---
+description: Code organization, file size limits, component modularity, and TypeScript conventions for Taiwan 3D
+globs: "**/*.{ts,tsx}"
+alwaysApply: true
+---
+
+# Code Organization & Modularity Standards
+
+1. **Small Files & Single Responsibility**:
+   - Target **< 250 lines** per file; never exceed **390 lines** in a single `.ts` or `.tsx` file.
+   - Separate pure math/data/geometry builders (`.ts`) from React/R3F rendering components (`.tsx`).
+2. **Feature Subfolder Structure**:
+   - **3D Scene (`components/3d/`)**: Place top-level scene orchestrators in `components/3d/` and decompose sub-parts into `camera/`, `city-map/`, `delight/`, `island/`, `markers/`, `overlay/`, and `pins/`.
+   - **UI (`components/ui/`)**: Keep shared primitives (`Navbar`, `BottomSheet`, `PlaceCard`, `LayerToggles`, `TimelineScrubber`) in `components/ui/` and place feature-specific subcomponents in `drawer/`, `food/`, `info/`, and `route/`.
+   - **Data & Store (`lib/data/`, `lib/store/`)**: Keep Zod schemas (`schemas.ts`), coordinate projection (`coordinates.ts`, `taiwanGeo.ts`), data loaders (`loaders.ts`), selectors (`selectors.ts`), search (`search.ts`), metadata (`foodAndPlaceMeta.ts`, `cityTransitGuides.ts`), and image matchers (`placeImages.ts`, `imageMatchers.ts`) in dedicated modules.
+3. **Stable Public Imports**:
+   - When splitting a module used across multiple pages, preserve clean barrel re-exports (e.g., `CityDestination3DMap.tsx`, `selectors.ts`, `useTripStore.ts`) so consumer imports stay concise and stable.
+4. **Verification**:
+   - After structural edits, run `npm run lint` and `npm run build` to verify zero TypeScript, ESLint, or SSG build errors across all 264 static place pages.

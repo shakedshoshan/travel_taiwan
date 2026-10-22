@@ -1,33 +1,41 @@
----
-description: Core project context, architecture, data rules, and RTL Hebrew UI conventions for Taiwan 3D
-alwaysApply: true
----
-
 # Taiwan 3D (`טייוואן 3D`) — Persistent Project Context
 
 Interactive 3D travel web app for a 33-day trip to Taiwan (`6.11 – 8.12.2026`), built with Next.js 16 (App Router, strict TypeScript), Three.js r186, `@react-three/fiber`, `@react-three/drei`, Zod, Framer Motion, and Tailwind CSS v4.
 
-## Directory & Architecture Map
+## Directory & Modular Architecture Map
 
-- `/data`: Pre-built static JSON (`cities.json`, `route.json`, `attractions.json`, `food.json`, `hotels.json`), `types.ts`, and `build.py`. **Never re-parse Excel in runtime code.**
+Keep all files small (**target < 250 lines, hard cap < 390 lines**) and organized by feature domain:
+
+- `/data`: Pre-built static JSON (`cities.json` [19 cities], `route.json` [10 legs, 33 days], `attractions.json` [147], `food.json` [80], `hotels.json` [37], `overrides.json`, `practical.json`, `images/credits.json`), `types.ts`, and `build.py`. **Never re-parse Excel in runtime code.**
 - `/lib/data`:
   - `schemas.ts`: Strict Zod schemas derived from `data/types.ts`. Fails build if any `cityId` is invalid.
-  - `coordinates.ts` & `taiwanGeo.ts`: Projects `[lat, lng]` to 3D island space (`latLngToXZ`, `latLngToWorld3D`), computes Central Mountain Range elevation (`getElevationAtLatLng`), and calculates deterministic golden-angle spiral offsets (`resolvePlaceCoordinates`).
-  - `loaders.ts` & `selectors.ts`: Validated static dataset (`TRIP_DATA`), selectors by city/leg/day/place, and `buildGoogleMapsUrl`.
-- `/lib/store/useTripStore.ts`: Hydration-safe `useSyncExternalStore` + `localStorage` store for display and map session only (`isNightMode`, `selectedCityId`, `currentDayIndex`, `layerToggles`). This is an info app: do not add favorites, visited/done tracking, hotel picks, or a personal budget.
+  - `coordinates.ts` & `taiwanGeo.ts`: Projects `[lat, lng]` to 3D island space (`latLngToXZ`, `latLngToWorld3D`), computes Central Mountain Range DEM elevation (`getElevationAtLatLng`), and calculates deterministic golden-angle spiral offsets (`resolvePlaceCoordinates`).
+  - `loaders.ts` & `selectors.ts`: Validated static dataset (`TRIP_DATA`), selectors by city/leg/day/place, `buildGoogleMapsUrl`, and `formatDisplayPriceText`.
+  - `search.ts`, `foodAndPlaceMeta.ts`, `placeImages.ts`, `imageMatchers.ts`, `cityTransitGuides.ts`: Modular helpers for search, food/hotel metadata, Haversine distance, Taiwan UTC+8 open-hours check, and Wikimedia Commons image resolution.
+- `/lib/store`:
+  - `tripStoreTypes.ts` & `useTripStore.ts`: Hydration-safe `useSyncExternalStore` + `localStorage` store for display and map session only (`isNightMode`, `selectedCityId`, `focusedPlaceId`, `sheetSnap`, `currentDayIndex`, `layerToggles`). This is an info app: do not add favorites, visited/done tracking, hotel picks, or a personal budget.
 - `/components/3d`:
   - `MapCanvas.tsx` & `MiniTaiwanMap.tsx`: R3F `<Canvas>` wrappers with `<WorldHtmlHost />`.
-  - `CameraRig.tsx`: Map-style camera controller (left-drag pan, right-drag/toggle orbit, `zoomToCursor`, WASD/arrow keys, and on-screen navigation pad).
-  - `TaiwanIsland.tsx`, `OceanWater.tsx`, `CityPins.tsx`, `CategoryMarkers.tsx`, `DelightDetails.tsx`, `Map2DFallback.tsx`. Do not add a route tube, driving car, or timeline play button.
-- `/components/ui`: `Navbar.tsx`, `LayerToggles.tsx`, `TimelineScrubber.tsx`, `CityDrawer.tsx`, `CommandSearch.tsx`, `PlaceDetailClient.tsx`.
-- `/app`: `/` (3D map home), `/route` (10 legs synced with mini-map), `/food` (80 spots + cheap must-eats), `/hotels` (37 hotels compared by tier), `/place/[id]` (SSG for all 264 places).
+  - `CameraRig.tsx` + `/components/3d/camera/` (`cameraMath.ts`, `useCameraPointerAndKeys.ts`): Fit-to-island camera pose, half-sheet reframing, pointer pan, double-tap zoom, and keyboard controls.
+  - `TaiwanIsland.tsx`, `OceanWater.tsx` + `/components/3d/island/` (`polygonMath.ts`, `terrainBuilder.ts`, `oceanBuilder.ts`): Extruded coastline, offshore islands, DEM mountain shader, and SDF coastline water shader.
+  - `CityPins.tsx` + `/components/3d/pins/SingleCityPin.tsx`: 3D city pins, label nudges, Kenting dashed marker, and offshore island labels.
+  - `CategoryMarkers.tsx` + `/components/3d/markers/` (`markerConfig.ts`, `InstancedCategoryGroup.tsx`, `MarkerTooltipCard.tsx`): GPU-instanced category markers with `>=44px` hit spheres and zoom LOD.
+  - `CityDestination3DMap.tsx` + `/components/3d/city-map/` (`cityMapLayout.ts`, `DestinationPinModels.tsx`, `SingleDestinationPin.tsx`, `CityDestination3DScene.tsx`, `CityDestinationHUD.tsx`, `FocusedDestinationCard.tsx`): Zoomed-in 3D city diorama and HUD.
+  - `DelightDetails.tsx` + `/components/3d/delight/LandmarkDioramas.tsx`: Mini Taipei 101, Sun Moon Lake cable car, Alishan train, sky lanterns, and clouds.
+  - `WorldHtml.tsx` + `/components/3d/overlay/labelOverlapSolver.ts`: React 19 DOM overlay host and 2D overlap solver.
+  - `Map2DFallback.tsx`, `TaiwanLoadingScreen.tsx`, `threeCompat.ts`. Do not add a route tube, driving car, or timeline play button.
+- `/components/ui`:
+  - `Navbar.tsx`, `LayerToggles.tsx`, `TimelineScrubber.tsx`, `BottomSheet.tsx`, `PlaceCard.tsx`, `PlaceDetailClient.tsx`, `CommandSearch.tsx`, `MapNavigationPad.tsx`, `PwaRegister.tsx`.
+  - Feature subfolders: `/components/ui/drawer/` (`CityDrawerTabsContent.tsx`), `/components/ui/food/` (`FoodFilterSheet.tsx`), `/components/ui/route/` (`RouteLegCard.tsx`), `/components/ui/info/` (`EmergencyAndPhrasesSection.tsx`, `ImageCreditsDetails.tsx`).
+- `/app`: `/` (3D map home), `/route` (10 legs synced with sticky 3D mini-map), `/food` (80 spots + sticky filter bar), `/hotels` (37 hotels with best cheap pick first), `/info` (practical guide, Mandarin audio phrasebook, emergency dialers), `/place/[id]` (SSG for all 264 places).
 
-## Non-Negotiable Data & UI Rules
+## Non-Negotiable Data, Code & UI Rules
 
-1. **No Hardcoded IDs**: Place IDs (`attr-xxx`, `food-xxx`, `hotel-xxx`) depend on Excel row order. Never hardcode place IDs in components.
-2. **Route Truth**: `route.json -> legs` (10 legs, 33 days) is the source of truth. `route.json -> audit` is historical archive only.
-3. **Price & Verification Display**:
-   - Always display `priceText` verbatim for hotels and food; use `priceMin`/`priceMax` only for sorting and budget math.
+1. **Small Files & Single Responsibility**: Keep components and modules focused and under **300–390 lines**. Extract subcomponents, hooks, geometry builders, and pure utilities into feature subfolders (`/components/3d/<feature>/`, `/components/ui/<feature>/`, `/lib/data/`) rather than growing monolithic files.
+2. **No Hardcoded IDs**: Place IDs (`attr-xxx`, `food-xxx`, `hotel-xxx`) depend on Excel row order. Never hardcode place IDs in components.
+3. **Route Truth**: `route.json -> legs` (10 legs, 33 days) is the source of truth. `route.json -> audit` is historical archive only.
+4. **Price & Verification Display**:
+   - Always display `priceText` (via `formatDisplayPriceText`) for hotels and food; use `priceMin`/`priceMax` only for sorting and budget math.
    - Any unverified price or hours (`!verified`, `!priceVerified`, `!hoursVerified`) must show a `"לא מאומת"` badge.
-4. **RTL & Hebrew**: Keep all Hebrew strings untouched (`dir="rtl"`, `lang="he"`, Rubik/Heebo fonts).
-5. **No Orange Route Line on Map**: Do not render a 3D tube or 2D polyline connecting the route path on the island map.
+5. **RTL & Hebrew**: Keep all Hebrew strings untouched (`dir="rtl"`, `lang="he"`, Rubik/Heebo fonts).
+6. **No Orange Route Line on Map**: Do not render a 3D tube or 2D polyline connecting the route path on the island map.

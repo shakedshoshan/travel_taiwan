@@ -2,80 +2,22 @@
 
 import { useSyncExternalStore } from "react";
 import type { CityId } from "@/data/types";
+import {
+  DEFAULT_STATE,
+  STORAGE_KEY,
+  type CameraCommandType,
+  type LayerToggles,
+  type MapDragMode,
+  type SheetSnapPoint,
+  type TripStoreState,
+} from "./tripStoreTypes";
 
-export interface LayerToggles {
-  attractions: boolean;
-  nature: boolean;
-  food: boolean;
-  markets: boolean;
-  michelinBib: boolean;
-  hiddenLocal: boolean;
-  hotels: boolean;
-}
-
-export type MapDragMode = "pan" | "rotate";
-export type SheetSnapPoint = "closed" | "peek" | "half" | "full";
-
-export type CameraCommandType =
-  | "pan-north"
-  | "pan-south"
-  | "pan-east"
-  | "pan-west"
-  | "rotate-left"
-  | "rotate-right"
-  | "tilt-toggle"
-  | "zoom-in"
-  | "zoom-out"
-  | "reset";
-
-export interface TripStoreState {
-  // Persisted display preference
-  isNightMode: boolean;
-
-  // Interactive session state
-  selectedCityId: CityId | null;
-  focusedPlaceId: string | null;
-  sheetSnap: SheetSnapPoint;
-  isTimelineExpanded: boolean;
-  isLayersSheetOpen: boolean;
-  isCityZoomMapOpen: boolean;
-  currentDayIndex: number; // 0..32 (6.11 -> 8.12)
-  use2DFallback: boolean;
-  prefersReducedMotion: boolean;
-  isSearchOpen: boolean;
-  mapDragMode: MapDragMode;
-  cameraCommand: { type: CameraCommandType; seq: number } | null;
-  map2DView: { x: number; y: number; zoom: number };
-  layerToggles: LayerToggles;
-}
-
-const STORAGE_KEY = "taiwan_3d_trip_state_v1";
-
-const DEFAULT_STATE: TripStoreState = {
-  isNightMode: false,
-
-  selectedCityId: null,
-  focusedPlaceId: null,
-  sheetSnap: "closed",
-  isTimelineExpanded: false,
-  isLayersSheetOpen: false,
-  isCityZoomMapOpen: false,
-  currentDayIndex: 0,
-  use2DFallback: false,
-  prefersReducedMotion: false,
-  isSearchOpen: false,
-  mapDragMode: "pan",
-  cameraCommand: null,
-  map2DView: { x: 0, y: 0, zoom: 1 },
-  layerToggles: {
-    attractions: true,
-    nature: true,
-    food: true,
-    markets: true,
-    michelinBib: true,
-    hiddenLocal: true,
-    hotels: true,
-  },
+export type {
+  CameraCommandType,
+  LayerToggles,
+  MapDragMode,
+  SheetSnapPoint,
+  TripStoreState,
 };
 
 let state: TripStoreState = DEFAULT_STATE;
@@ -116,7 +58,6 @@ function hydrateOnce() {
       };
     }
 
-    // Check reduced motion preference (keep 3D island active, calm animations)
     if (
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -258,8 +199,10 @@ export const tripActions = {
       else if (type === "pan-south") next2D.y -= 65;
       else if (type === "pan-east") next2D.x -= 65;
       else if (type === "pan-west") next2D.x += 65;
-      else if (type === "zoom-in") next2D.zoom = Math.min(3.5, next2D.zoom * 1.25);
-      else if (type === "zoom-out") next2D.zoom = Math.max(0.65, next2D.zoom / 1.25);
+      else if (type === "zoom-in")
+        next2D.zoom = Math.min(3.5, next2D.zoom * 1.25);
+      else if (type === "zoom-out")
+        next2D.zoom = Math.max(0.65, next2D.zoom / 1.25);
       else if (type === "reset") {
         next2D.x = 0;
         next2D.y = 0;

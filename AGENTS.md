@@ -10,5 +10,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Taiwan 3D Project Context
 
-Read `CONTEXT.md` and `.cursor/rules/project-context.mdc` for complete project architecture, dataset rules (`/data`), 3D coordinate system (`lib/data/coordinates.ts`), React 19 `<WorldHtml>` overlay conventions, and map navigation rules (`components/3d/CameraRig.tsx`).
+Read `CONTEXT.md` and `.cursor/rules/` (`project-context.mdc`, `code-organization.mdc`, `threejs-r3f-conventions.mdc`) for complete project architecture, dataset rules (`/data`), modular folder structure (`components/3d/<feature>/`, `components/ui/<feature>/`, `lib/data/`), 3D coordinate system (`lib/data/coordinates.ts`), React 19 `<WorldHtml>` overlay conventions, and map navigation rules (`components/3d/CameraRig.tsx`). Keep every file small (< 390 lines) with a single responsibility.
 

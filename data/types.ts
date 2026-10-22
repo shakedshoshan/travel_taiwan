@@ -1,5 +1,5 @@
 export type CityId = 'taipei'|'new-taipei'|'keelung'|'yilan'|'taoyuan'|'hsinchu'|'miaoli'|'taichung'|'changhua'|'nantou'|'sun-moon-lake'|'chiayi'|'alishan'|'tainan'|'kaohsiung'|'pingtung'|'hualien'|'taitung'|'kenting';
-interface Located { cityId: CityId; city: string; lat: number; lng: number; approxLocation: boolean; nameEn?: string; optional?: boolean; }
+interface Located { cityId: CityId; city: string; lat: number; lng: number; approxLocation: boolean; nameEn?: string | null; optional?: boolean; coordSource?: 'openstreetmap'|'knowledge'; source?: string | null; temporarilyClosed?: boolean; }
 export interface City { id: CityId; nameHe: string; nameEn: string; lat: number; lng: number; onRoute: boolean; routeOrder: number[] | null; dates: string[]; days: number; nameZh?: string; optional?: boolean; note?: string; }
 export interface Attraction extends Located { id: string; name: string; nameZh: string | null; description: string; importance: number; isNature: boolean; }
 export type FoodType = 'market'|'cheap'|'michelin-bib'|'hidden-local';

@@ -24,20 +24,22 @@ import { getTimelineDays } from "@/lib/data/selectors";
 import type { EnrichedPlace } from "@/lib/data/loaders";
 
 /** The sun only moves when day/night changes, so the shadow map can stay frozen. */
+function configureStaticShadows(gl: THREE.WebGLRenderer) {
+  gl.shadowMap.autoUpdate = false;
+  let frames = 0;
+  let id = 0;
+  const tick = () => {
+    gl.shadowMap.needsUpdate = true;
+    frames += 1;
+    if (frames < 10) id = window.requestAnimationFrame(tick);
+  };
+  id = window.requestAnimationFrame(tick);
+  return () => window.cancelAnimationFrame(id);
+}
+
 function StaticShadows({ isNightMode }: { isNightMode: boolean }) {
   const gl = useThree((state) => state.gl);
-  useEffect(() => {
-    gl.shadowMap.autoUpdate = false;
-    let frames = 0;
-    let id = 0;
-    const tick = () => {
-      gl.shadowMap.needsUpdate = true;
-      frames += 1;
-      if (frames < 10) id = window.requestAnimationFrame(tick);
-    };
-    id = window.requestAnimationFrame(tick);
-    return () => window.cancelAnimationFrame(id);
-  }, [gl, isNightMode]);
+  useEffect(() => configureStaticShadows(gl), [gl, isNightMode]);
   return null;
 }
 

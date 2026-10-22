@@ -1,6 +1,6 @@
 ---
-description: Three.js r186, React Three Fiber v9, and React 19 compatibility rules for 3D components
-globs: components/3d/**/*.tsx
+description: Three.js r186, React Three Fiber v9, and React 19 compatibility and modular 3D architecture rules
+globs: components/3d/**/*.{ts,tsx}
 alwaysApply: false
 ---
 
@@ -8,12 +8,15 @@ alwaysApply: false
 
 1. **Use `<WorldHtml>` Instead of Drei `<Html>`**:
    - Never import `Html` from `@react-three/drei`. In React 19, Drei's `<Html>` triggers synchronous `root.unmount()` during render and `NotFoundError: removeChild` crashes.
-   - Always use `WorldHtml` and `<WorldHtmlHost />` from `@/components/3d/WorldHtml`.
+   - Always use `WorldHtml` and `<WorldHtmlHost />` from `@/components/3d/WorldHtml` (backed by `@/components/3d/overlay/labelOverlapSolver`).
 2. **Three.js r186 Deprecations**:
    - Always import `@/components/3d/threeCompat` at the top of Canvas entry files (`MapCanvas.tsx`, `MiniTaiwanMap.tsx`).
    - Pass `shadows={{ type: THREE.PCFShadowMap }}` instead of boolean `shadows` on `<Canvas>`.
-3. **Map Navigation (`CameraRig.tsx`)**:
+3. **Map Navigation (`CameraRig.tsx` & `components/3d/camera/`)**:
    - Keep `screenSpacePanning={false}` and `zoomToCursor={true}` so dragging moves across the horizontal `(x, z)` island plane and scrolling zooms into the cursor target.
-   - Clamp `controls.target` within Taiwan's bounding box so the camera never drifts into empty ocean.
-4. **No Route Playback**:
+   - Clamp `controls.target` within Taiwan's bounding box (`clampTargetToBounds` in `cameraMath.ts`) so the camera never drifts into empty ocean.
+   - Use `computeFitIslandPose` on initial mount/resize and `applySheetReframeOffset` when the bottom sheet is snapped to `half` or `peek`.
+4. **Modular 3D Subfolders**:
+   - Keep pure geometry/shader builders in `components/3d/island/` (`polygonMath.ts`, `terrainBuilder.ts`, `oceanBuilder.ts`), marker instancing/tooltips in `components/3d/markers/`, city pins in `components/3d/pins/`, landmark dioramas in `components/3d/delight/`, and zoomed-in city diorama views in `components/3d/city-map/`.
+5. **No Route Playback**:
    - Do not render a route tube, a driving car, or a play button. The map is a static info view.

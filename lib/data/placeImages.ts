@@ -1,33 +1,13 @@
 import creditsRaw from "@/data/images/credits.json";
 import type { CityId } from "@/data/types";
 import type { EnrichedPlace } from "./loaders";
+import {
+  matchSemanticPlaceImage,
+  type ImageCreditRecord,
+  type PlaceImageMeta,
+} from "./imageMatchers";
 
-export interface ImageCreditRecord {
-  title: string;
-  author: string;
-  license: string;
-  license_url: string;
-  source: string;
-  match: "exact" | "representative";
-  verification: string;
-  file: string;
-  query: string;
-  source_site: string;
-  attribution: string;
-}
-
-export interface PlaceImageMeta {
-  src: string;
-  file: string;
-  title: string;
-  author: string;
-  license: string;
-  licenseUrl: string;
-  sourceUrl: string;
-  creditHe: string;
-  attribution: string;
-  match: "exact" | "representative";
-}
+export type { ImageCreditRecord, PlaceImageMeta };
 
 const CREDITS = creditsRaw as ImageCreditRecord[];
 
@@ -60,7 +40,10 @@ function toPlaceImageMeta(
   overrideMatch?: "exact" | "representative"
 ): PlaceImageMeta {
   const match = overrideMatch ?? record.match;
-  const cleanAuthor = record.author.replace(/Unknown authorUnknown author/g, "Unknown");
+  const cleanAuthor = record.author.replace(
+    /Unknown authorUnknown author/g,
+    "Unknown"
+  );
   const matchLabel = match === "representative" ? " · תמונה מייצגת" : "";
   return {
     src: `/images/${record.file}`,
@@ -74,12 +57,6 @@ function toPlaceImageMeta(
     attribution: record.attribution,
     match,
   };
-}
-
-function findCreditByQuery(
-  predicate: (entry: ImageCreditRecord) => boolean
-): ImageCreditRecord | undefined {
-  return CREDITS.find(predicate);
 }
 
 function hashString(str: string): number {
@@ -106,12 +83,10 @@ export function getCityImages(cityId: CityId): PlaceImageMeta[] {
   const lookupCity = cityId === "kenting" ? "pingtung" : cityId;
   const direct = CITY_CREDITS_MAP.get(lookupCity);
   if (direct && direct.length > 0) {
-    // Sort so primary (without -2/-3) comes first
     const sorted = [...direct].sort((a, b) => a.file.length - b.file.length);
     return sorted.map((rec) => toPlaceImageMeta(rec));
   }
 
-  // Hsinchu has city photos under attractions/food in credits.json
   if (cityId === "hsinchu") {
     const hsinchuRecords = CREDITS.filter((c) =>
       c.query.toLowerCase().includes("hsinchu")
@@ -130,163 +105,21 @@ export function getCityPrimaryImage(cityId: CityId): PlaceImageMeta {
 }
 
 export function getPlaceImage(place: EnrichedPlace): PlaceImageMeta {
-  // 1. Direct match by item ID in data/images/{attractions,food,hotels}/{id}.jpg
   const exactRecord = CREDITS_BY_STEM.get(place.id);
   if (exactRecord) {
     return toPlaceImageMeta(exactRecord);
   }
 
-  const text = `${place.name} ${place.nameZh ?? ""} ${place.description}`.toLowerCase();
-
-  // 2. Hotels without direct file: map to hot-spring hotel or hotel room in data/images/hotels
-  if (place.kind === "hotel") {
-    const isHotSpringOrResort =
-      text.includes("מעיינות") ||
-      text.includes("溫泉") ||
-      text.includes("ספא") ||
-      place.tier === "splurge" ||
-      place.cityId === "sun-moon-lake";
-
-    if (isHotSpringOrResort) {
-      return getImageByFile("hotels/generic-hot-spring-hotel.jpg", "representative");
-    }
-    return getImageByFile("hotels/generic-hotel-room-2.jpg", "representative");
+  const semanticMatch = matchSemanticPlaceImage(
+    place,
+    CREDITS,
+    toPlaceImageMeta,
+    getImageByFile
+  );
+  if (semanticMatch) {
+    return semanticMatch;
   }
 
-  // 3. Food without direct file: match dish / market photo from credits.json
-  if (place.kind === "food") {
-    if (text.includes("第二市場") || text.includes("השוק השני")) {
-      const rec = findCreditByQuery((c) => c.title.includes("台中第二市場"));
-      if (rec) return toPlaceImageMeta(rec, "exact");
-    }
-    if (text.includes("胡椒餅") || text.includes("לחמניית פלפל")) {
-      const rec = findCreditByQuery((c) => c.query.includes("hujiao bing"));
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (
-      text.includes("魯肉飯") ||
-      text.includes("肉燥飯") ||
-      text.includes("爌肉飯") ||
-      text.includes("חזיר מבושל")
-    ) {
-      const rec = findCreditByQuery((c) => c.query === "braised pork rice");
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (text.includes("筒仔米糕") || text.includes("מי-גאו")) {
-      const rec = findCreditByQuery((c) => c.title.includes("Tube rice pudding"));
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (text.includes("牛肉麵") || text.includes("נודלס בקר")) {
-      const rec = findCreditByQuery((c) =>
-        c.title.includes("Taiwanese Beef Noodle Soup.jpg")
-      );
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (
-      text.includes("牛肉湯") ||
-      text.includes("מרק בקר") ||
-      text.includes("鹹粥") ||
-      text.includes("דייסת דג") ||
-      text.includes("魚羹")
-    ) {
-      const rec = findCreditByQuery((c) => c.query.includes("beef soup"));
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (text.includes("肉圓") || text.includes("肉員") || text.includes("באוואן")) {
-      const rec = findCreditByQuery((c) => c.query.includes("ba wan"));
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (text.includes("圓仔") || text.includes("汤圆") || text.includes("כדורי אורז")) {
-      const rec = findCreditByQuery((c) => c.query === "tangyuan");
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (
-      text.includes("小籠包") ||
-      text.includes("包子") ||
-      text.includes("蒸餃") ||
-      text.includes("באוזה") ||
-      text.includes("דמפלינגס")
-    ) {
-      const rec = findCreditByQuery((c) => c.query === "steamed dumplings");
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (text.includes("鴨") || text.includes("ברווז") || text.includes("אווז")) {
-      const rec = findCreditByQuery((c) => c.query.includes("duck"));
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (
-      text.includes("炊粉") ||
-      text.includes("麵線") ||
-      text.includes("冬粉") ||
-      text.includes("ורמיצ׳לי") ||
-      text.includes("אטריות אורז")
-    ) {
-      const rec = findCreditByQuery((c) => c.query === "oyster vermicelli");
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (text.includes("סשימי") || text.includes("דגים") || text.includes("סרטן")) {
-      const rec = findCreditByQuery((c) => c.query.includes("Donggang fish market"));
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (text.includes("豆漿") || text.includes("שאובינג")) {
-      const rec = findCreditByQuery((c) => c.query === "scallion pancake");
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (text.includes("臭豆腐") || text.includes("טופו")) {
-      const rec = findCreditByQuery((c) => c.query === "Taitung night market");
-      if (rec) return toPlaceImageMeta(rec, "representative");
-    }
-    if (place.type === "market") {
-      const cityMarket = CREDITS.find(
-        (c) =>
-          c.query.toLowerCase().includes("night market") &&
-          c.verification.toLowerCase().includes(place.cityId)
-      );
-      if (cityMarket) return toPlaceImageMeta(cityMarket, "representative");
-    }
-
-    const fallbackFood = findCreditByQuery(
-      (c) => c.query === "wonton soup Taiwan"
-    );
-    if (fallbackFood) return toPlaceImageMeta(fallbackFood, "representative");
-  }
-
-  // 4. Attractions without direct file: semantic & regional match in data/images
-  if (text.includes("ג׳יופן") || text.includes("jiufen")) {
-    return getImageByFile("cities/new-taipei-2.jpg", "exact");
-  }
-  if (text.includes("עמק תרמי") || text.includes("בייטואו")) {
-    const rec = findCreditByQuery((c) => c.query === "Beitou hot spring");
-    if (rec) return toPlaceImageMeta(rec, "representative");
-  }
-  if (text.includes("טאנג-ווייגואו") || text.includes("ג׳יאושי")) {
-    const rec = findCreditByQuery((c) => c.query === "Jiaoxi hot spring");
-    if (rec) return toPlaceImageMeta(rec, "representative");
-  }
-  if (text.includes("פיר 2") || text.includes("האמסן")) {
-    return getImageByFile("routes/kaohsiung-lrt.jpg", "representative");
-  }
-  if (text.includes("מוסך המניפה") || text.includes("רכבות")) {
-    return getImageByFile("routes/tra-taroko-express.jpg", "representative");
-  }
-  if (text.includes("ארקייד") || text.includes("טומס וורלד")) {
-    const rec = findCreditByQuery((c) =>
-      c.query.includes("arcade Taiwan claw machines")
-    );
-    if (rec) return toPlaceImageMeta(rec, "representative");
-  }
-  if (text.includes("החלקה") || text.includes("roller186") || text.includes("אקיוזפייב")) {
-    const rec = findCreditByQuery((c) => c.query === "Taipei Arena");
-    if (rec) return toPlaceImageMeta(rec, "representative");
-  }
-  if (text.includes("סרטן ואנלי") || text.includes("יהליו")) {
-    const rec = findCreditByQuery((c) =>
-      c.query.includes("Yehliu Geopark")
-    );
-    if (rec) return toPlaceImageMeta(rec, "representative");
-  }
-
-  // 5. Fallback to city images (deterministic rotation across the city's photos)
   const cityGallery = getCityImages(place.cityId);
   const chosen = cityGallery[hashString(place.id) % cityGallery.length];
   return {

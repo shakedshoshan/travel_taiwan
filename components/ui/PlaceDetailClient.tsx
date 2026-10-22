@@ -3,15 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Navigation,
   AlertCircle,
   ArrowRight,
-  Sparkles,
-  Trees,
   Clock,
-  Wallet,
+  Navigation,
+  Sparkles,
   Train,
+  Trees,
   Utensils,
+  Wallet,
 } from "lucide-react";
 import {
   buildGoogleMapsUrl,
@@ -20,57 +20,16 @@ import {
   HOTEL_TIER_META,
   type EnrichedPlace,
 } from "@/lib/data/selectors";
+import { CITY_TRANSIT_GUIDE_HE } from "@/lib/data/cityTransitGuides";
 import { getPlaceImage } from "@/lib/data/placeImages";
 import { MiniTaiwanMap } from "@/components/3d/MiniTaiwanMap";
 import { PlaceCard } from "@/components/ui/PlaceCard";
 import { tripActions } from "@/lib/store/useTripStore";
-import type { CityId } from "@/data/types";
 
 interface PlaceDetailClientProps {
   place: EnrichedPlace;
   nearbyPlaces: EnrichedPlace[];
 }
-
-const CITY_TRANSIT_GUIDE_HE: Record<CityId, string> = {
-  taipei:
-    "הגעה נוחה במטרו של טייפה (MRT) עם כרטיס איזי-קארד או באוטובוס עירוני. מומלץ לנווט ישירות לתחנת ה-MRT הקרובה.",
-  "new-taipei":
-    "רכבת פרברית (TRA) או אוטובוס ישיר מתחנת טייפה מיין / שער צפוני (קו 965 לג׳יופן, קו פונג-שי לשיפן, קו 1815 ליהליו).",
-  keelung:
-    "רכבת פרברית (TRA) מתחנת טייפה מיין לקילונג (כ-45 דקות נסיעה) או אוטובוס מהיר 2088.",
-  yilan:
-    "רכבת אקספרס (TRA) מתחנת טייפה מיין או אוטובוס קוואן/קמאלאן דרך מנהרת שואשאן (כ-50 דקות).",
-  taoyuan:
-    "קו ה-MRT של שדה התעופה (Airport MRT) מתחנת טייפה מיין (35 דקות באקספרס) או רכבת מהירה (HSR).",
-  hsinchu:
-    "רכבת מהירה (HSR) או רכבת TRA מטייפה, ובהמשך שאטל/אוטובוס מקומי (לפארק ליופו אוטובוס 5350 ממתחם סונגשאן/ג׳ונגלי).",
-  miaoli:
-    "רכבת TRA לתחנת מיאולי או סאני (Sanyi), ומונית/אוטובוס תיירים לאזור דאהו.",
-  taichung:
-    "רכבת מהירה (HSR) לתחנת טאיצ׳ונג, MRT קו ירוק ואוטובוסים עירוניים (חינם או מוזלים עם איזי-קארד).",
-  changhua:
-    "רכבת TRA מטאיצ׳ונג לתחנת ג׳אנגהואה (כ-20 דקות) ואוטובוס ללוקאנג.",
-  nantou:
-    "אוטובוס תיירים Taiwan Tourist Shuttle מתחנת טאיצ׳ונג מיין או תחנת HSR טאיצ׳ונג.",
-  "sun-moon-lake":
-    "אוטובוס קו 6670 מתחנת HSR טאיצ׳ונג או קו 6739 שמור מראש מאלישאן. סביב האגם מתניידים בסירות מעבורת, אופניים ורכבל.",
-  chiayi:
-    "רכבת מהירה (HSR) או רכבת TRA לתחנת צ׳יאיי – שער היציאה הראשי לרכבת היער ולאוטובוסים לאלישאן.",
-  alishan:
-    "אוטובוס 7322 מתחנת TRA צ׳יאיי או 7329 מתחנת HSR צ׳יאיי (או רכבת היער של אלישאן בהזמנה מראש). היציאה לאגם בקו 6739 שמור.",
-  tainan:
-    "רכבת TRA לתחנת טאינאן במרכז העיר (עדיפה על HSR המרוחקת), ומשם הליכה או אוטובוס קצר לאזור גואואה ואנפינג.",
-  kaohsiung:
-    "רכבת מהירה (HSR Zuoying) מחוברת ישירות לקו ה-MRT האדום והרכבת הקלה (LRT) סביב הנמל ופיר 2. לג׳יג׳ין – מעבורת של 5 דקות מגושאן.",
-  pingtung:
-    "רכבת ל-Fangliao או אוטובוס Kenting Express מתחנת HSR Zuoying בקאושיונג; לשיאוליוצ׳יו – מעבורת מנמל דונגגאנג (Donggang).",
-  hualien:
-    "רכבת אקספרס מזרחית (EMU3000) מתחנת טייפה מיין לחואליאן (כשעתיים ורבע). לאזור טארוקו וצ׳ישינגטאן באוטובוס תיירים 310 או מונית.",
-  taitung:
-    "רכבת TRA לאורך עמק הריפט המזרחי מחואליאן לצ׳ישאנג וטאיטונג, ואוטובוס חופי 8101/8102 לדולאן וסאנשיאנטאי.",
-  kenting:
-    "אוטובוס אקספרס Kenting Express (קו 9189) מתחנת HSR Zuoying בקאושיונג ישירות לקנטינג (כשעתיים נסיעה).",
-};
 
 export function PlaceDetailClient({
   place,
@@ -238,7 +197,6 @@ export function PlaceDetailClient({
 
         {/* 3. What to Eat / Do, Hours, Price & How to Get There */}
         <div className="space-y-4 p-4 sm:p-6">
-          {/* What to Eat / Do */}
           <div className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800/60">
             <div className="mb-1.5 flex items-center gap-2 text-xs font-black text-orange-600 dark:text-amber-300">
               {place.kind === "food" ? (
@@ -258,7 +216,6 @@ export function PlaceDetailClient({
             </p>
           </div>
 
-          {/* Price & Hours */}
           {(cleanPrice ||
             (place.kind === "food" && place.hours) ||
             isUnverified) && (
@@ -345,7 +302,10 @@ export function PlaceDetailClient({
                 <span>{imageMeta.license}</span>
               )}
               {imageMeta.match === "representative" && (
-                <span dir="rtl" className="ml-2 inline-block rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-300">
+                <span
+                  dir="rtl"
+                  className="ml-2 inline-block rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-300"
+                >
                   תמונה מייצגת של המנה/האזור
                 </span>
               )}
