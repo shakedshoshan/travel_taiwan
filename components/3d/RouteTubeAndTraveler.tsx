@@ -10,6 +10,7 @@ import {
   type TimelineDay,
 } from "@/lib/data/selectors";
 import { latLngToWorld3D } from "@/lib/data/coordinates";
+import { useTripStore } from "@/lib/store/useTripStore";
 
 interface RouteTubeAndTravelerProps {
   currentDay: TimelineDay;
@@ -20,7 +21,9 @@ export function RouteTubeAndTraveler({
   currentDay,
   isNightMode,
 }: RouteTubeAndTravelerProps) {
+  const store = useTripStore();
   const travelerRef = useRef<THREE.Group>(null);
+  const badgeAnchorRef = useRef<THREE.Group>(null);
   const pulseRingRef = useRef<THREE.Mesh>(null);
   const smoothProgress = useRef(currentDay.routeProgress);
 
@@ -89,19 +92,24 @@ export function RouteTubeAndTraveler({
     const tangent = curve.getTangentAt(t).normalize();
 
     if (travelerRef.current) {
-      const hoverBob = Math.sin(clock.getElapsedTime() * 5.0) * 0.03;
+      const hoverBob = store.prefersReducedMotion
+        ? 0
+        : Math.sin(clock.getElapsedTime() * 5.0) * 0.03;
       travelerRef.current.position.set(
         point.x,
         point.y + 0.14 + hoverBob,
         point.z
       );
+      if (badgeAnchorRef.current) {
+        badgeAnchorRef.current.position.set(point.x + 0.85, point.y + 0.92, point.z);
+      }
 
       const lookTarget = point.clone().add(tangent);
       lookTarget.y = travelerRef.current.position.y;
       travelerRef.current.lookAt(lookTarget);
     }
 
-    if (pulseRingRef.current) {
+    if (pulseRingRef.current && !store.prefersReducedMotion) {
       const s = 1 + Math.sin(clock.getElapsedTime() * 4.5) * 0.25;
       pulseRingRef.current.scale.set(s, s, 1);
     }
@@ -157,12 +165,15 @@ export function RouteTubeAndTraveler({
           />
         </mesh>
 
-        {/* Floating Day Badge on Traveler */}
+      </group>
+      <group ref={badgeAnchorRef}>
         <WorldHtml
-          position={[0, 0.42, 0]}
+          position={[0, 0, 0]}
           center
           distanceFactor={15}
           zIndexRange={[25, 0]}
+          avoidOverlap
+          overlapDrop={42}
         >
           <div
             dir="rtl"

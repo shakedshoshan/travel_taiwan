@@ -145,3 +145,15 @@ export const CitiesArraySchema = z.array(CitySchema).length(18);
 export const AttractionsArraySchema = z.array(AttractionSchema).min(1);
 export const FoodArraySchema = z.array(FoodSchema).min(1);
 export const HotelsArraySchema = z.array(HotelSchema).min(1);
+
+export const PlaceOverrideSchema = z.object({
+  nameZh: z.string().optional(),
+  nameEn: z.string().optional(),
+  lat: z.number().min(21).max(26).optional(),
+  lng: z.number().min(119).max(123).optional(),
+  cityId: CityIdSchema.optional(),
+});
+
+export const OverridesRecordSchema = z.record(z.string(), PlaceOverrideSchema);
+export type PlaceOverride = z.infer<typeof PlaceOverrideSchema>;
+

@@ -1,7 +1,10 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { TAIWAN_COASTLINE_LAT_LNG } from "@/lib/data/taiwanGeo";
+import {
+  OFFSHORE_ISLANDS,
+  TAIWAN_COASTLINE_LAT_LNG,
+} from "@/lib/data/taiwanGeo";
 import {
   getAllCities,
   getAllPlaces,
@@ -146,6 +149,40 @@ export function Map2DFallback({
           strokeWidth="2.5"
           strokeLinejoin="round"
         />
+
+        {/* Offshore Islands: Penghu, Xiaoliuqiu, Green Island, Orchid Island */}
+        {OFFSHORE_ISLANDS.map((isl) => {
+          const pts = isl.polygonLatLng
+            .map(([lat, lng]) => {
+              const { x, y } = latLngToSvg(lat, lng);
+              return `${x.toFixed(1)},${y.toFixed(1)}`;
+            })
+            .join(" ");
+          const center = latLngToSvg(isl.centerLat, isl.centerLng);
+          return (
+            <g key={isl.id}>
+              <polygon
+                points={pts}
+                fill={
+                  isNightMode ? "url(#islandGradNight)" : "url(#islandGradDay)"
+                }
+                stroke={isNightMode ? "#2dd4bf" : "#047857"}
+                strokeWidth="1.8"
+                strokeLinejoin="round"
+              />
+              {!compact && (
+                <text
+                  x={center.x}
+                  y={center.y - 8}
+                  textAnchor="middle"
+                  className="select-none fill-slate-700 text-[9px] font-bold dark:fill-teal-200"
+                >
+                  {isl.nameHe}
+                </text>
+              )}
+            </g>
+          );
+        })}
 
         {/* Central Mountain Range Spine Contour */}
         <path

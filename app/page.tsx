@@ -16,33 +16,42 @@ export default function HomePage() {
     const params = new URLSearchParams(window.location.search);
     const cityParam = params.get("city");
     if (cityParam && (CITY_IDS as readonly string[]).includes(cityParam)) {
-      tripActions.selectCity(cityParam as CityId);
+      tripActions.selectCity(cityParam as CityId, "half");
     }
   }, []);
 
   return (
     <div
       dir="rtl"
-      className="relative h-screen w-screen overflow-hidden select-none"
+      className="relative h-dvh w-screen overflow-hidden select-none"
     >
-      {/* Fullscreen 3D Taiwan Map (or 2D Fallback) */}
+      {/* Full-bleed 3D Taiwan Map Hero */}
       <MapCanvas />
 
-      {/* Top-Right Floating Layer Filters & Map Controls */}
-      <div className="pointer-events-none fixed top-28 right-3 left-3 z-20 flex justify-start md:top-20 md:right-6 md:left-auto">
+      {/* Top Horizontally Scrollable Category Chips + "שכבות" Sheet Trigger */}
+      <div
+        style={{ top: "calc(3.65rem + env(safe-area-inset-top))" }}
+        className="pointer-events-none fixed right-2.5 left-2.5 z-20 md:right-5 md:left-5"
+      >
         <LayerToggles />
       </div>
 
-      {/* Floating Map Navigation Pad (Move / Rotate / Tilt / Zoom) */}
-      <div className="pointer-events-none fixed right-3 bottom-48 z-20 md:right-6 md:bottom-44">
+      {/* Single 44x44px Recenter FAB */}
+      <div
+        style={{ bottom: "calc(8.25rem + env(safe-area-inset-bottom))" }}
+        className="pointer-events-none fixed left-3 z-20 md:left-6"
+      >
         <MapNavigationPad />
       </div>
 
-      {/* City Glassmorphism Drawer (RTL Desktop Side Panel / Mobile Bottom Sheet) */}
+      {/* Multi-Snap Bottom Sheet (Peek 20% / Half 55% / Full) */}
       <CityDrawer />
 
-      {/* Bottom Timeline Scrubber (6.11 -> 8.12) */}
-      <div className="pointer-events-none fixed right-3 bottom-3 left-3 z-20 md:right-6 md:bottom-4 md:left-6">
+      {/* Collapsed 64px Timeline Pill (Tap to Expand into Sheet) */}
+      <div
+        style={{ bottom: "calc(4rem + env(safe-area-inset-bottom))" }}
+        className="pointer-events-none fixed right-2.5 left-2.5 z-20 md:right-6 md:left-6"
+      >
         <TimelineScrubber />
       </div>
     </div>

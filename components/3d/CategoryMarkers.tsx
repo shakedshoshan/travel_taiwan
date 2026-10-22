@@ -11,8 +11,10 @@ import {
   getAllPlaces,
   type EnrichedPlace,
 } from "@/lib/data/selectors";
+import { getPlaceImage } from "@/lib/data/placeImages";
 import {
   tripActions,
+  useTripStore,
   type LayerToggles,
 } from "@/lib/store/useTripStore";
 import type { CityId } from "@/data/types";
@@ -85,7 +87,6 @@ function getArchetypeAndColor(place: EnrichedPlace): {
     return { archetype: "bowl", color, importance: place.importance };
   }
 
-  // Attraction
   if (place.isNature) {
     return {
       archetype: "nature",
@@ -112,6 +113,8 @@ interface InstancedCategoryGroupProps {
   baseColor: string;
   emissiveColor: string;
   emissiveIntensity: number;
+  selectedCityId: CityId | null;
+  prefersReducedMotion: boolean;
   onHover: (entry: MarkerEntry | null) => void;
   onSelect: (place: EnrichedPlace) => void;
 }
@@ -122,15 +125,25 @@ function InstancedCategoryGroup({
   baseColor,
   emissiveColor,
   emissiveIntensity,
+  selectedCityId,
+  prefersReducedMotion,
   onHover,
   onSelect,
 }: InstancedCategoryGroupProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
+  const hitMeshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const tmpColor = useMemo(() => new THREE.Color(), []);
 
+  // Enlarged invisible hit-sphere geometry (>=44px screen equivalent) for reliable raycasting
+  const hitSphereGeo = useMemo(
+    () => new THREE.SphereGeometry(0.24, 8, 8),
+    []
+  );
+
   useEffect(() => {
     const mesh = meshRef.current;
+    const hitMesh = hitMeshRef.current;
     if (!mesh) return;
 
     entries.forEach((entry, idx) => {
@@ -140,6 +153,7 @@ function InstancedCategoryGroup({
       dummy.rotation.set(0, idx * 0.5, 0);
       dummy.updateMatrix();
       mesh.setMatrixAt(idx, dummy.matrix);
+      if (hitMesh) hitMesh.setMatrixAt(idx, dummy.matrix);
 
       tmpColor.set(entry.color);
       mesh.setColorAt(idx, tmpColor);
@@ -147,67 +161,112 @@ function InstancedCategoryGroup({
 
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    if (hitMesh) hitMesh.instanceMatrix.needsUpdate = true;
   }, [entries, dummy, tmpColor]);
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock, camera }) => {
     const mesh = meshRef.current;
+    const hitMesh = hitMeshRef.current;
     if (!mesh || entries.length === 0) return;
     const t = clock.getElapsedTime();
+
+    // Zoom-based clustering LOD:
+    // When zoomed out (camera.position.length() > 21) and no city is selected,
+    // cluster non-top-importance markers into cities so the overview map stays crisp.
+    const camDist = camera.position.length();
+    const zoomDetailFactor = selectedCityId
+      ? 1.0
+      : THREE.MathUtils.clamp((22.5 - camDist) / 4.5, 0.0, 1.0);
 
     for (let idx = 0; idx < entries.length; idx++) {
       const entry = entries[idx];
       const { worldX, worldY, worldZ } = entry.place.resolvedCoords;
+      const isSelectedCityPlace =
+        selectedCityId && entry.place.cityId === selectedCityId;
+
+      // Importance 5 landmarks stay subtly visible zoomed out; others emerge as you zoom in
+      const lodScale =
+        isSelectedCityPlace || entry.importance === 5
+          ? Math.max(0.68, zoomDetailFactor)
+          : zoomDetailFactor;
+
+      const finalScale = entry.scale * lodScale;
       const bob =
-        entry.importance >= 4
-          ? Math.sin(t * 2.6 + idx * 0.7) * 0.035
+        !prefersReducedMotion && entry.importance >= 4 && finalScale > 0.2
+          ? Math.sin(t * 2.4 + idx * 0.7) * 0.03
           : 0;
-      dummy.position.set(worldX, worldY + 0.08 * entry.scale + bob, worldZ);
-      dummy.scale.setScalar(entry.scale);
+
+      dummy.position.set(
+        worldX,
+        worldY + 0.08 * Math.max(0.2, finalScale) + bob,
+        worldZ
+      );
+      dummy.scale.setScalar(finalScale);
       dummy.rotation.set(
         0,
-        entry.importance === 5 ? t * 0.9 + idx : idx * 0.5,
+        !prefersReducedMotion && entry.importance === 5
+          ? t * 0.8 + idx
+          : idx * 0.5,
         0
       );
       dummy.updateMatrix();
       mesh.setMatrixAt(idx, dummy.matrix);
+
+      if (hitMesh) {
+        dummy.scale.setScalar(finalScale > 0.15 ? Math.max(1.0, finalScale) : 0);
+        dummy.updateMatrix();
+        hitMesh.setMatrixAt(idx, dummy.matrix);
+      }
     }
     mesh.instanceMatrix.needsUpdate = true;
+    if (hitMesh) hitMesh.instanceMatrix.needsUpdate = true;
   });
 
   if (entries.length === 0) return null;
 
   return (
-    <instancedMesh
-      ref={meshRef}
-      args={[geometry, undefined, entries.length]}
-      castShadow
-      onPointerMove={(e) => {
-        e.stopPropagation();
-        if (typeof e.instanceId === "number" && entries[e.instanceId]) {
-          onHover(entries[e.instanceId]);
-          document.body.style.cursor = "pointer";
-        }
-      }}
-      onPointerOut={(e) => {
-        e.stopPropagation();
-        onHover(null);
-        document.body.style.cursor = "auto";
-      }}
-      onClick={(e) => {
-        e.stopPropagation();
-        if (typeof e.instanceId === "number" && entries[e.instanceId]) {
-          onSelect(entries[e.instanceId].place);
-        }
-      }}
-    >
-      <meshStandardMaterial
-        color={baseColor}
-        emissive={emissiveColor}
-        emissiveIntensity={emissiveIntensity}
-        roughness={0.3}
-        metalness={0.2}
-      />
-    </instancedMesh>
+    <group>
+      {/* Visible Instanced Mesh */}
+      <instancedMesh
+        ref={meshRef}
+        args={[geometry, undefined, entries.length]}
+        castShadow
+      >
+        <meshStandardMaterial
+          color={baseColor}
+          emissive={emissiveColor}
+          emissiveIntensity={emissiveIntensity}
+          roughness={0.3}
+          metalness={0.2}
+        />
+      </instancedMesh>
+
+      {/* Enlarged Invisible Raycast Hit Mesh (>=44px touch target) */}
+      <instancedMesh
+        ref={hitMeshRef}
+        args={[hitSphereGeo, undefined, entries.length]}
+        onPointerMove={(e) => {
+          e.stopPropagation();
+          if (typeof e.instanceId === "number" && entries[e.instanceId]) {
+            onHover(entries[e.instanceId]);
+            document.body.style.cursor = "pointer";
+          }
+        }}
+        onPointerOut={(e) => {
+          e.stopPropagation();
+          onHover(null);
+          document.body.style.cursor = "auto";
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (typeof e.instanceId === "number" && entries[e.instanceId]) {
+            onSelect(entries[e.instanceId].place);
+          }
+        }}
+      >
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </instancedMesh>
+    </group>
   );
 }
 
@@ -218,18 +277,14 @@ export function CategoryMarkers({
   focusedPlaceId,
   onSelectPlace,
 }: CategoryMarkersProps) {
+  const store = useTripStore();
   const [hoveredEntry, setHoveredEntry] = useState<MarkerEntry | null>(null);
 
   const geometries = useMemo(() => {
-    // Lantern = cylindrical red paper lantern
     const lanternGeo = new THREE.CylinderGeometry(0.065, 0.065, 0.16, 12);
-    // Bowl = tapered noodle bowl
     const bowlGeo = new THREE.CylinderGeometry(0.085, 0.045, 0.09, 14);
-    // Bed = cozy hotel block
     const bedGeo = new THREE.BoxGeometry(0.13, 0.08, 0.11);
-    // Nature = stylized pine cone / mountain peak
     const natureGeo = new THREE.ConeGeometry(0.085, 0.21, 7);
-    // Star = octahedral crystal star
     const starGeo = new THREE.OctahedronGeometry(0.095, 0);
 
     return {
@@ -255,8 +310,7 @@ export function CategoryMarkers({
       if (!isPlaceVisible(place, layerToggles)) continue;
 
       const { archetype, color, importance } = getArchetypeAndColor(place);
-      // Scale marker by importance (1..5), boost if city is selected or place is focused
-      const importanceScale = 0.55 + importance * 0.16; // imp 5 => 1.35, imp 3 => 1.03
+      const importanceScale = 0.55 + importance * 0.16;
       const cityBoost =
         selectedCityId && place.cityId === selectedCityId ? 1.2 : 1.0;
       const focusBoost = focusedPlaceId === place.id ? 1.65 : 1.0;
@@ -273,7 +327,6 @@ export function CategoryMarkers({
     return groups;
   }, [layerToggles, selectedCityId, focusedPlaceId]);
 
-  // Collect importance-5 places for extra sparkle effects
   const topImportancePlaces = useMemo(() => {
     const list: MarkerEntry[] = [];
     for (const key of Object.keys(groupedEntries) as MarkerArchetype[]) {
@@ -284,7 +337,6 @@ export function CategoryMarkers({
     return list;
   }, [groupedEntries]);
 
-  // Find focused entry if any
   const focusedEntry = useMemo(() => {
     if (!focusedPlaceId) return null;
     for (const key of Object.keys(groupedEntries) as MarkerArchetype[]) {
@@ -300,7 +352,6 @@ export function CategoryMarkers({
 
   return (
     <group name="category-markers">
-      {/* Markets = Glowing Lanterns */}
       <InstancedCategoryGroup
         archetype="lantern"
         entries={groupedEntries.lantern}
@@ -308,11 +359,12 @@ export function CategoryMarkers({
         baseColor="#ffffff"
         emissiveColor="#ff4522"
         emissiveIntensity={isNightMode ? 2.4 : 0.85}
+        selectedCityId={selectedCityId}
+        prefersReducedMotion={store.prefersReducedMotion}
         onHover={setHoveredEntry}
         onSelect={onSelectPlace}
       />
 
-      {/* Food = Noodle Bowls */}
       <InstancedCategoryGroup
         archetype="bowl"
         entries={groupedEntries.bowl}
@@ -320,11 +372,12 @@ export function CategoryMarkers({
         baseColor="#ffffff"
         emissiveColor="#f43f5e"
         emissiveIntensity={isNightMode ? 1.3 : 0.45}
+        selectedCityId={selectedCityId}
+        prefersReducedMotion={store.prefersReducedMotion}
         onHover={setHoveredEntry}
         onSelect={onSelectPlace}
       />
 
-      {/* Hotels = Cozy Beds */}
       <InstancedCategoryGroup
         archetype="bed"
         entries={groupedEntries.bed}
@@ -332,11 +385,12 @@ export function CategoryMarkers({
         baseColor="#ffffff"
         emissiveColor="#38bdf8"
         emissiveIntensity={isNightMode ? 1.2 : 0.4}
+        selectedCityId={selectedCityId}
+        prefersReducedMotion={store.prefersReducedMotion}
         onHover={setHoveredEntry}
         onSelect={onSelectPlace}
       />
 
-      {/* Nature = Pine / Mountain Cones */}
       <InstancedCategoryGroup
         archetype="nature"
         entries={groupedEntries.nature}
@@ -344,11 +398,12 @@ export function CategoryMarkers({
         baseColor="#ffffff"
         emissiveColor="#10b981"
         emissiveIntensity={isNightMode ? 0.9 : 0.35}
+        selectedCityId={selectedCityId}
+        prefersReducedMotion={store.prefersReducedMotion}
         onHover={setHoveredEntry}
         onSelect={onSelectPlace}
       />
 
-      {/* Attractions & Importance-5 Stars */}
       <InstancedCategoryGroup
         archetype="star"
         entries={groupedEntries.star}
@@ -356,18 +411,20 @@ export function CategoryMarkers({
         baseColor="#ffffff"
         emissiveColor="#fbbf24"
         emissiveIntensity={isNightMode ? 1.9 : 0.75}
+        selectedCityId={selectedCityId}
+        prefersReducedMotion={store.prefersReducedMotion}
         onHover={setHoveredEntry}
         onSelect={onSelectPlace}
       />
 
-      {/* Sparkles around importance=5 places */}
-      {topImportancePlaces.length > 0 && (
+      {/* Sparkles around importance=5 places (disabled when prefers-reduced-motion) */}
+      {topImportancePlaces.length > 0 && !store.prefersReducedMotion && (
         <Sparkles
-          count={Math.min(120, topImportancePlaces.length * 2)}
+          count={Math.min(90, topImportancePlaces.length * 2)}
           scale={[12, 3.2, 22]}
           position={[0, 1.1, 0]}
-          size={isNightMode ? 3.2 : 2.2}
-          speed={0.45}
+          size={isNightMode ? 3.0 : 2.0}
+          speed={0.4}
           color={isNightMode ? "#fde047" : "#f59e0b"}
         />
       )}
@@ -392,6 +449,19 @@ export function CategoryMarkers({
                 : "pointer-events-none border-white/40"
             } w-64 rounded-2xl border bg-slate-950/95 p-3 text-right text-xs text-white shadow-2xl backdrop-blur-md`}
           >
+            <div className="mb-2 relative h-24 w-full overflow-hidden rounded-xl bg-slate-900">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={getPlaceImage(activeEntry.place).src}
+                alt={activeEntry.place.name}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+              <span className="absolute bottom-1 left-1.5 max-w-[90%] truncate text-[8.5px] text-slate-300">
+                {getPlaceImage(activeEntry.place).creditHe}
+              </span>
+            </div>
             <div className="flex items-center justify-between gap-1">
               <span className="rounded-full bg-amber-400/20 px-2 py-0.5 text-[10px] font-bold text-amber-300">
                 {activeEntry.place.kind === "attraction"
@@ -409,8 +479,13 @@ export function CategoryMarkers({
             <div className="mt-1 font-bold text-white">
               {activeEntry.place.name}
             </div>
+            {activeEntry.place.nameZh && (
+              <div className="text-[10px] text-amber-200/90">
+                {activeEntry.place.nameZh}
+              </div>
+            )}
             <div className="text-[10px] text-slate-400">
-              {activeEntry.place.cityNameHe} ({activeEntry.place.cityNameEn})
+              {activeEntry.place.cityNameHe}
             </div>
             <div className="mt-1 line-clamp-2 text-[11px] text-slate-300">
               {activeEntry.place.description}
@@ -442,11 +517,11 @@ export function CategoryMarkers({
                       activeEntry.place.cityId
                     );
                   }}
-                  className="w-full rounded-xl bg-amber-400 py-1.5 text-[11px] font-black text-slate-950 hover:bg-amber-300"
+                  className="min-h-[38px] w-full rounded-xl bg-amber-400 py-1.5 text-[11px] font-black text-slate-950 hover:bg-amber-300"
                 >
                   🔍 זום למפת יעד 3D ({activeEntry.place.cityNameHe})
                 </button>
-                <div className="flex items-center justify-between text-[10.5px]">
+                <div className="flex items-center justify-between text-[11px]">
                   <Link
                     href={`/place/${activeEntry.place.id}`}
                     className="font-bold text-orange-400 hover:underline"
@@ -457,9 +532,9 @@ export function CategoryMarkers({
                     href={buildGoogleMapsUrl(activeEntry.place)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-slate-300 hover:text-white"
+                    className="font-bold text-emerald-300 hover:text-white"
                   >
-                    Google Maps ↗
+                    נווט ↗
                   </a>
                 </div>
               </div>

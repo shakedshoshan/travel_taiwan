@@ -3,6 +3,7 @@ import routeRaw from "@/data/route.json";
 import attractionsRaw from "@/data/attractions.json";
 import foodRaw from "@/data/food.json";
 import hotelsRaw from "@/data/hotels.json";
+import overridesRaw from "@/data/overrides.json";
 import type {
   Attraction,
   AuditNote,
@@ -17,7 +18,9 @@ import {
   CitiesArraySchema,
   FoodArraySchema,
   HotelsArraySchema,
+  OverridesRecordSchema,
   RouteDataSchema,
+  type PlaceOverride,
 } from "./schemas";
 import {
   latLngToWorld3D,
@@ -36,6 +39,7 @@ export interface PlaceMeta {
   indexWithinCity: number;
   cityNameHe: string;
   cityNameEn: string;
+  nameEn?: string | null;
 }
 
 export type EnrichedAttraction = Attraction &
@@ -73,12 +77,53 @@ export interface ValidatedTripDataset {
   placesById: Map<string, EnrichedPlace>;
 }
 
+function applyOverride<
+  T extends {
+    id: string;
+    name: string;
+    nameZh: string | null;
+    cityId: CityId;
+    lat: number;
+    lng: number;
+    approxLocation: boolean;
+    exactLat?: number;
+    exactLng?: number;
+  },
+>(
+  item: T,
+  overrides: Record<string, PlaceOverride>
+): T & { nameEn?: string | null } {
+  const ov = overrides[item.id] ?? overrides[item.name];
+  if (!ov) return item;
+
+  const hasCoords = typeof ov.lat === "number" && typeof ov.lng === "number";
+  return {
+    ...item,
+    nameZh: ov.nameZh ?? item.nameZh,
+    nameEn: ov.nameEn ?? null,
+    cityId: ov.cityId ?? item.cityId,
+    lat: ov.lat ?? item.lat,
+    lng: ov.lng ?? item.lng,
+    approxLocation: hasCoords ? false : item.approxLocation,
+    exactLat: ov.lat ?? item.exactLat,
+    exactLng: ov.lng ?? item.exactLng,
+  };
+}
+
 function validateAndBuildDataset(): ValidatedTripDataset {
   const citiesParsed = CitiesArraySchema.parse(citiesRaw);
   const routeParsed = RouteDataSchema.parse(routeRaw);
-  const attractionsParsed = AttractionsArraySchema.parse(attractionsRaw);
-  const foodParsed = FoodArraySchema.parse(foodRaw);
-  const hotelsParsed = HotelsArraySchema.parse(hotelsRaw);
+  const overridesParsed = OverridesRecordSchema.parse(overridesRaw);
+
+  const attractionsParsed = AttractionsArraySchema.parse(attractionsRaw).map(
+    (a) => applyOverride(a, overridesParsed)
+  );
+  const foodParsed = FoodArraySchema.parse(foodRaw).map((f) =>
+    applyOverride(f, overridesParsed)
+  );
+  const hotelsParsed = HotelsArraySchema.parse(hotelsRaw).map((h) =>
+    applyOverride(h, overridesParsed)
+  );
 
   const validCityIds = new Set<string>(citiesParsed.map((c) => c.id));
 

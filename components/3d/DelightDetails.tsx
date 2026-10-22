@@ -4,12 +4,14 @@ import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { latLngToWorld3D } from "@/lib/data/coordinates";
+import { useTripStore } from "@/lib/store/useTripStore";
 
 interface DelightDetailsProps {
   isNightMode: boolean;
 }
 
 export function DelightDetails({ isNightMode }: DelightDetailsProps) {
+  const store = useTripStore();
   const cloudsGroupRef = useRef<THREE.Group>(null);
   const lanternsGroupRef = useRef<THREE.Group>(null);
   const ropewayCarRef = useRef<THREE.Mesh>(null);
@@ -71,19 +73,20 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
       [22.75, 120.82],
     ];
     return cloudCoords.map(([lat, lng], idx) => {
-      const pos = latLngToWorld3D(lat, lng, 0.85 + (idx % 2) * 0.22);
+      const pos = latLngToWorld3D(lat, lng, 1.45 + (idx % 2) * 0.2);
       return {
         id: idx,
         baseX: pos.x,
         baseY: pos.y,
         baseZ: pos.z,
-        scale: 0.85 + (idx % 3) * 0.2,
+        scale: 0.58 + (idx % 3) * 0.08,
         phase: idx * 1.3,
       };
     });
   }, []);
 
   useFrame(({ clock }) => {
+    if (store.prefersReducedMotion) return;
     const t = clock.getElapsedTime();
 
     // Animate drifting mountain clouds
@@ -216,18 +219,18 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
         <mesh
           position={[
             landmarks.smlLake.x,
-            landmarks.smlLake.y,
+            landmarks.smlLake.y + 0.08,
             landmarks.smlLake.z,
           ]}
           rotation={[-Math.PI / 2, 0, 0]}
         >
-          <circleGeometry args={[0.28, 24]} />
+          <circleGeometry args={[0.95, 36]} />
           <meshStandardMaterial
-            color="#22d3ee"
-            emissive="#06b6d4"
-            emissiveIntensity={isNightMode ? 1.1 : 0.45}
-            roughness={0.12}
-            metalness={0.35}
+            color={isNightMode ? "#67e8f9" : "#19b4d2"}
+            emissive={isNightMode ? "#cffafe" : "#22d3ee"}
+            emissiveIntensity={isNightMode ? 0.9 : 0.12}
+            roughness={0.18}
+            metalness={0.08}
           />
         </mesh>
 
@@ -307,33 +310,36 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
             position={[c.baseX, c.baseY, c.baseZ]}
             scale={c.scale}
           >
-            <mesh position={[0, 0, 0]} castShadow>
-              <dodecahedronGeometry args={[0.24, 0]} />
-              <meshStandardMaterial
-                color={isNightMode ? "#475569" : "#ffffff"}
-                transparent
-                opacity={isNightMode ? 0.55 : 0.82}
-                roughness={0.9}
-                flatShading
-              />
-            </mesh>
-            <mesh position={[0.18, -0.04, 0.06]} castShadow>
-              <dodecahedronGeometry args={[0.17, 0]} />
-              <meshStandardMaterial
-                color={isNightMode ? "#475569" : "#ffffff"}
-                transparent
-                opacity={isNightMode ? 0.55 : 0.82}
-                roughness={0.9}
-                flatShading
-              />
-            </mesh>
-            <mesh position={[-0.17, -0.03, -0.04]} castShadow>
+            <mesh position={[0, 0, 0]}>
               <dodecahedronGeometry args={[0.16, 0]} />
               <meshStandardMaterial
-                color={isNightMode ? "#475569" : "#ffffff"}
+                color={isNightMode ? "#64748b" : "#f8fafc"}
                 transparent
-                opacity={isNightMode ? 0.55 : 0.82}
-                roughness={0.9}
+                opacity={isNightMode ? 0.4 : 0.58}
+                roughness={1}
+                depthWrite={false}
+                flatShading
+              />
+            </mesh>
+            <mesh position={[0.14, -0.03, 0.04]}>
+              <dodecahedronGeometry args={[0.11, 0]} />
+              <meshStandardMaterial
+                color={isNightMode ? "#64748b" : "#f8fafc"}
+                transparent
+                opacity={isNightMode ? 0.4 : 0.58}
+                roughness={1}
+                depthWrite={false}
+                flatShading
+              />
+            </mesh>
+            <mesh position={[-0.12, -0.02, -0.03]}>
+              <dodecahedronGeometry args={[0.1, 0]} />
+              <meshStandardMaterial
+                color={isNightMode ? "#64748b" : "#f8fafc"}
+                transparent
+                opacity={isNightMode ? 0.4 : 0.58}
+                roughness={1}
+                depthWrite={false}
                 flatShading
               />
             </mesh>

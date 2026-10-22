@@ -9,7 +9,9 @@ import {
   getCityBundle,
   type EnrichedCity,
 } from "@/lib/data/selectors";
-import { tripActions } from "@/lib/store/useTripStore";
+import { OFFSHORE_ISLANDS } from "@/lib/data/taiwanGeo";
+import { latLngToWorld3D } from "@/lib/data/coordinates";
+import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 import type { CityId } from "@/data/types";
 
 interface CityPinsProps {
@@ -25,7 +27,79 @@ interface SingleCityPinProps {
   isSelected: boolean;
   isTimelineActive: boolean;
   isNightMode: boolean;
+  prefersReducedMotion: boolean;
+  labelNudge: { x: number; z: number };
   onSelectCity: (cityId: CityId) => void;
+}
+
+/** Push nearby city names apart so north–south clusters do not stack. */
+function computeLabelNudges(
+  cities: readonly EnrichedCity[]
+): Map<string, { x: number; z: number }> {
+  const labeled = cities.filter((city) => city.onRoute);
+  const nudges = new Map<string, { x: number; z: number }>();
+  for (const city of cities) {
+    if (!city.onRoute) {
+      nudges.set(city.id, { x: 0, z: 0 });
+      continue;
+    }
+    let px = 0;
+    let pz = 0;
+    for (const other of labeled) {
+      if (other.id === city.id) continue;
+      const dx = city.worldX - other.worldX;
+      const dz = city.worldZ - other.worldZ;
+      const distSq = dx * dx + dz * dz;
+      if (distSq > 19 || distSq < 1e-4) continue;
+      const dist = Math.sqrt(distSq);
+      const push = Math.max(0, 4.4 - dist) / dist;
+      px += dx * push;
+      pz += dz * push;
+    }
+    if (Math.abs(pz) > Math.abs(px)) {
+      const side =
+        Math.abs(px) < 0.3 ? (city.worldZ > 0 ? 1 : -1) : Math.sign(px);
+      px += side * 0.35;
+    }
+    const edge = Math.hypot(city.worldX, city.worldZ);
+    if (edge > 5.5 && city.worldZ < 1) {
+      const pull = Math.min(1, (edge - 5.5) / 5);
+      const zPull = city.worldZ < -6 ? 0.05 : 0.35;
+      px = px * (1 - pull) - (city.worldX / edge) * pull * 0.55;
+      pz = pz * (1 - pull) - (city.worldZ / edge) * pull * zPull;
+    }
+    if (city.worldZ < -8) {
+      px -= 0.4;
+      pz -= 0.25;
+    }
+    if (city.id === "sun-moon-lake") {
+      nudges.set(city.id, { x: -0.55, z: 1.35 });
+      continue;
+    }
+    if (city.id === "alishan") {
+      nudges.set(city.id, { x: -1.55, z: -0.2 });
+      continue;
+    }
+    if (city.id === "tainan") {
+      nudges.set(city.id, { x: -0.45, z: -0.7 });
+      continue;
+    }
+    if (city.id === "kaohsiung") {
+      nudges.set(city.id, { x: -0.35, z: 1.05 });
+      continue;
+    }
+    const len = Math.hypot(px, pz);
+    if (len < 0.04) {
+      nudges.set(city.id, { x: 0.45, z: 0 });
+      continue;
+    }
+    const reach = Math.min(0.95, 0.4 + len * 0.25);
+    nudges.set(city.id, {
+      x: (px / len) * reach,
+      z: (pz / len) * reach * 0.45,
+    });
+  }
+  return nudges;
 }
 
 function SingleCityPin({
@@ -34,6 +108,8 @@ function SingleCityPin({
   isSelected,
   isTimelineActive,
   isNightMode,
+  prefersReducedMotion,
+  labelNudge,
   onSelectCity,
 }: SingleCityPinProps) {
   const groupRef = useRef<THREE.Group>(null);
@@ -51,25 +127,32 @@ function SingleCityPin({
   }, [city.id]);
 
   const isOnRoute = city.onRoute;
-  const baseScale = isOnRoute ? 1.05 : 0.62;
-  const activeMultiplier = isSelected ? 1.38 : hovered ? 1.22 : isTimelineActive ? 1.16 : 1.0;
+  const baseScale = isOnRoute ? 1.05 : 0.65;
+  const activeMultiplier = isSelected
+    ? 1.38
+    : hovered
+      ? 1.22
+      : isTimelineActive
+        ? 1.16
+        : 1.0;
+
+  const pinScaleTarget = useMemo(() => new THREE.Vector3(), []);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      const bobOffset =
-        Math.sin(t * (isOnRoute ? 2.4 : 1.6) + index * 0.85) *
-        (isOnRoute ? 0.08 : 0.035);
+      const bobOffset = prefersReducedMotion
+        ? 0
+        : Math.sin(t * (isOnRoute ? 2.4 : 1.6) + index * 0.85) *
+          (isOnRoute ? 0.07 : 0.03);
       groupRef.current.position.y = city.worldY + 0.35 + bobOffset;
 
       const targetScale = baseScale * activeMultiplier;
-      groupRef.current.scale.lerp(
-        new THREE.Vector3(targetScale, targetScale, targetScale),
-        0.15
-      );
+      pinScaleTarget.set(targetScale, targetScale, targetScale);
+      groupRef.current.scale.lerp(pinScaleTarget, 0.15);
     }
 
-    if (ringRef.current) {
+    if (ringRef.current && !prefersReducedMotion) {
       const pulse = 1 + Math.sin(t * 3.5 + index) * 0.16;
       ringRef.current.scale.set(pulse, pulse, 1);
     }
@@ -139,6 +222,12 @@ function SingleCityPin({
           document.body.style.cursor = "auto";
         }}
       >
+        {/* Invisible >=44px equivalent 3D hit sphere for outdoor touch accuracy */}
+        <mesh position={[0, 0.04, 0]}>
+          <sphereGeometry args={[0.56, 10, 10]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+
         {/* Pin stem cone pointing down */}
         <mesh position={[0, -0.14, 0]} rotation={[Math.PI, 0, 0]} castShadow>
           <coneGeometry args={[0.12, 0.28, 16]} />
@@ -174,12 +263,25 @@ function SingleCityPin({
         </mesh>
 
         {/* Persistent label for on-route cities or hover tooltip for any city */}
-        {(isOnRoute || hovered || isSelected) && (
+      </group>
+      {(isOnRoute || hovered || isSelected) && (
           <WorldHtml
-            position={[0, 0.34, 0]}
+            position={[
+              labelNudge.x,
+              city.worldY + 0.77,
+              labelNudge.z,
+            ]}
             center
             distanceFactor={16}
             zIndexRange={[20, 0]}
+            avoidOverlap
+            overlapDrop={
+              city.id === "sun-moon-lake"
+                ? 78
+                : city.id === "kaohsiung"
+                  ? 36
+                  : 0
+            }
           >
             <div
               dir="rtl"
@@ -187,7 +289,7 @@ function SingleCityPin({
                 e.stopPropagation();
                 onSelectCity(city.id);
               }}
-              className={`cursor-pointer select-none whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold shadow-lg transition-all ${
+              className={`relative cursor-pointer select-none whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold shadow-lg after:absolute after:-inset-2.5 after:content-[''] ${
                 isSelected
                   ? "scale-110 bg-amber-400 text-slate-950 ring-2 ring-white"
                   : hovered
@@ -195,8 +297,8 @@ function SingleCityPin({
                     : isTimelineActive
                       ? "bg-orange-500 text-white ring-1 ring-white/80"
                       : isOnRoute
-                        ? "bg-white/90 text-slate-900 backdrop-blur-md dark:bg-slate-900/90 dark:text-white"
-                        : "bg-slate-800/80 text-slate-200"
+                        ? "bg-white/95 text-slate-900 backdrop-blur-md dark:bg-slate-900/95 dark:text-white"
+                        : "bg-slate-800/85 text-slate-200"
               }`}
             >
               <div className="flex items-center gap-1.5">
@@ -206,9 +308,9 @@ function SingleCityPin({
                   </span>
                 )}
                 <span>{city.nameHe}</span>
-                {(hovered || isSelected) && (
-                  <span className="text-[10px] font-normal opacity-80">
-                    {city.nameEn}
+                {counts.total > 0 && !hovered && !isSelected && (
+                  <span className="text-[10px] font-semibold opacity-65">
+                    · {counts.total}
                   </span>
                 )}
               </div>
@@ -222,7 +324,8 @@ function SingleCityPin({
               {(hovered || isSelected) && counts.total > 0 && (
                 <div className="mt-1 flex items-center justify-between gap-2 border-t border-slate-950/15 pt-1 text-[10px] font-bold">
                   <span>
-                    🏨 {counts.hotels} • 🍜 {counts.food} • ★ {counts.attractions}
+                    🏨 {counts.hotels} • 🍜 {counts.food} • ★{" "}
+                    {counts.attractions}
                   </span>
                   <button
                     type="button"
@@ -239,7 +342,6 @@ function SingleCityPin({
             </div>
           </WorldHtml>
         )}
-      </group>
     </group>
   );
 }
@@ -250,7 +352,25 @@ export function CityPins({
   isNightMode,
   onSelectCity,
 }: CityPinsProps) {
+  const store = useTripStore();
   const cities = getAllCities();
+  const labelNudges = useMemo(() => computeLabelNudges(cities), [cities]);
+
+  // Optional Kenting (קנטינג) off-route dashed marker on the southern cape
+  const kentingWorld = useMemo(
+    () => latLngToWorld3D(21.9483, 120.7798, 0.14),
+    []
+  );
+
+  // Offshore islands world positions for subtle labels
+  const offshoreMarkers = useMemo(
+    () =>
+      OFFSHORE_ISLANDS.map((isl) => ({
+        ...isl,
+        world: latLngToWorld3D(isl.centerLat, isl.centerLng, 0.16),
+      })),
+    []
+  );
 
   return (
     <group name="city-pins">
@@ -262,8 +382,78 @@ export function CityPins({
           isSelected={selectedCityId === city.id}
           isTimelineActive={activeTimelineCityId === city.id}
           isNightMode={isNightMode}
+          prefersReducedMotion={store.prefersReducedMotion}
+          labelNudge={labelNudges.get(city.id) ?? { x: 0.35, z: 0 }}
           onSelectCity={onSelectCity}
         />
+      ))}
+
+      {/* Optional Kenting (קנטינג) Off-Route Dashed Pin */}
+      <group
+        position={[kentingWorld.x, kentingWorld.y, kentingWorld.z]}
+        onClick={(e) => {
+          e.stopPropagation();
+          onSelectCity("pingtung");
+        }}
+      >
+        <mesh position={[0, 0.15, 0]}>
+          <sphereGeometry args={[0.48, 8, 8]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+        <mesh position={[0, 0.12, 0]}>
+          <sphereGeometry args={[0.11, 14, 14]} />
+          <meshStandardMaterial
+            color="#38bdf8"
+            emissive="#0284c7"
+            emissiveIntensity={0.6}
+          />
+        </mesh>
+        <WorldHtml
+          position={[0.35, 0.62, -4.05]}
+          center
+          distanceFactor={16}
+          zIndexRange={[18, 0]}
+        >
+          <button
+            type="button"
+            dir="rtl"
+            onClick={(e) => {
+              e.stopPropagation();
+              onSelectCity("pingtung");
+            }}
+            className="relative cursor-pointer select-none whitespace-nowrap rounded-full border-2 border-dashed border-sky-400/90 bg-slate-900/85 px-2.5 py-0.5 text-[10.5px] font-bold text-sky-200 shadow-md after:absolute after:-inset-2.5 after:content-['']"
+          >
+            קנטינג (אופציונלי)
+          </button>
+        </WorldHtml>
+      </group>
+
+      {/* Offshore Island Mini Labels (Penghu, Xiaoliuqiu, Green Island, Orchid Island) */}
+      {offshoreMarkers.map((isl) => (
+        <group
+          key={isl.id}
+          position={[isl.world.x, isl.world.y, isl.world.z]}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (isl.id === "xiaoliuqiu") onSelectCity("pingtung");
+            else if (isl.id === "green-island" || isl.id === "orchid-island")
+              onSelectCity("taitung");
+          }}
+        >
+          <WorldHtml
+            position={[0, 0.22, 0]}
+            center
+            distanceFactor={18}
+            zIndexRange={[14, 0]}
+          >
+            <div
+              dir="rtl"
+              className="pointer-events-none select-none whitespace-nowrap rounded-full border border-teal-300/40 bg-slate-900/70 px-2 py-0.5 text-[9.5px] font-semibold text-teal-100 backdrop-blur-xs"
+            >
+              {isl.nameHe}
+            </div>
+          </WorldHtml>
+        </group>
       ))}
     </group>
   );

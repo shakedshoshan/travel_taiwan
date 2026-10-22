@@ -15,6 +15,7 @@ export interface LayerToggles {
 }
 
 export type MapDragMode = "pan" | "rotate";
+export type SheetSnapPoint = "closed" | "peek" | "half" | "full";
 
 export type CameraCommandType =
   | "pan-north"
@@ -39,10 +40,14 @@ export interface TripStoreState {
   // Interactive session state
   selectedCityId: CityId | null;
   focusedPlaceId: string | null;
+  sheetSnap: SheetSnapPoint;
+  isTimelineExpanded: boolean;
+  isLayersSheetOpen: boolean;
   isCityZoomMapOpen: boolean;
   currentDayIndex: number; // 0..32 (6.11 -> 8.12)
   isPlaying: boolean;
   use2DFallback: boolean;
+  prefersReducedMotion: boolean;
   isSearchOpen: boolean;
   isBudgetOpen: boolean;
   mapDragMode: MapDragMode;
@@ -78,10 +83,14 @@ const DEFAULT_STATE: TripStoreState = {
 
   selectedCityId: null,
   focusedPlaceId: null,
+  sheetSnap: "closed",
+  isTimelineExpanded: false,
+  isLayersSheetOpen: false,
   isCityZoomMapOpen: false,
   currentDayIndex: 0,
   isPlaying: false,
   use2DFallback: false,
+  prefersReducedMotion: false,
   isSearchOpen: false,
   isBudgetOpen: false,
   mapDragMode: "pan",
@@ -155,12 +164,12 @@ function hydrateOnce() {
       };
     }
 
-    // Check reduced motion preference
+    // Check reduced motion preference (keep 3D island active, calm animations)
     if (
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
-      state = { ...state, use2DFallback: true };
+      state = { ...state, prefersReducedMotion: true };
     }
   } catch {
     // Ignore malformed localStorage
@@ -240,18 +249,46 @@ export const tripActions = {
     setState({ isNightMode }, true);
   },
 
-  selectCity(cityId: CityId | null) {
+  selectCity(cityId: CityId | null, initialSnap: SheetSnapPoint = "half") {
     setState((prev) => ({
       selectedCityId: cityId,
       focusedPlaceId: null,
+      sheetSnap: cityId === null ? "closed" : initialSnap,
+      isTimelineExpanded: false,
+      isLayersSheetOpen: false,
       isCityZoomMapOpen: cityId === null ? false : prev.isCityZoomMapOpen,
     }));
+  },
+
+  setSheetSnap(sheetSnap: SheetSnapPoint) {
+    setState((prev) => ({
+      sheetSnap,
+      selectedCityId: sheetSnap === "closed" ? null : prev.selectedCityId,
+      focusedPlaceId: sheetSnap === "closed" ? null : prev.focusedPlaceId,
+    }));
+  },
+
+  setTimelineExpanded(isTimelineExpanded: boolean) {
+    setState({
+      isTimelineExpanded,
+      isLayersSheetOpen: false,
+    });
+  },
+
+  setLayersSheetOpen(isLayersSheetOpen: boolean) {
+    setState({
+      isLayersSheetOpen,
+      isTimelineExpanded: false,
+    });
   },
 
   enterCityZoomMap(cityId: CityId) {
     setState({
       selectedCityId: cityId,
       focusedPlaceId: null,
+      sheetSnap: "closed",
+      isTimelineExpanded: false,
+      isLayersSheetOpen: false,
       isCityZoomMapOpen: true,
     });
   },
@@ -264,11 +301,19 @@ export const tripActions = {
   },
 
   focusPlace(placeId: string | null, cityId?: CityId | null) {
-    setState((prev) => ({
-      focusedPlaceId: placeId,
-      selectedCityId:
-        cityId !== undefined ? cityId : prev.selectedCityId,
-    }));
+    setState((prev) => {
+      const nextCityId = cityId !== undefined ? cityId : prev.selectedCityId;
+      return {
+        focusedPlaceId: placeId,
+        selectedCityId: nextCityId,
+        sheetSnap:
+          placeId || nextCityId
+            ? prev.sheetSnap === "closed"
+              ? "half"
+              : prev.sheetSnap
+            : "closed",
+      };
+    });
   },
 
   setCurrentDayIndex(dayIndex: number) {

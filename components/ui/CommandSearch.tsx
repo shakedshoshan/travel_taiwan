@@ -3,7 +3,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search, X, Heart, CheckCircle2, ArrowLeft } from "lucide-react";
-import { getAllPlaces, searchEverything } from "@/lib/data/selectors";
+import {
+  getAllPlaces,
+  getPlaceById,
+  searchEverything,
+} from "@/lib/data/selectors";
+import {
+  getCityPrimaryImage,
+  getPlaceImage,
+  getRouteLegImage,
+} from "@/lib/data/placeImages";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 
 export function CommandSearch() {
@@ -137,38 +146,56 @@ export function CommandSearch() {
               לא נמצאו תוצאות מתאימות.
             </div>
           ) : (
-            searchResults.map((item) => (
-              <button
-                key={`${item.kind}-${item.id}`}
-                type="button"
-                onClick={() => {
-                  tripActions.setSearchOpen(false);
-                  if (item.kind === "city") {
-                    tripActions.selectCity(item.cityId);
-                    router.push("/");
-                  } else {
-                    tripActions.selectCity(item.cityId);
-                    router.push(item.href);
-                  }
-                }}
-                className="flex w-full items-center justify-between gap-3 rounded-2xl p-3 text-right transition-colors hover:bg-orange-500/10"
-              >
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="truncate font-display text-sm font-bold text-slate-900 dark:text-white">
-                      {item.titleHe}
-                    </span>
-                    <span className="shrink-0 rounded-full bg-slate-900/10 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-white/10 dark:text-amber-300">
-                      {item.badgeHe}
-                    </span>
+            searchResults.map((item) => {
+              let thumbSrc = getCityPrimaryImage(item.cityId).src;
+              if (item.kind === "leg") {
+                const order = Number(item.id.replace("leg-", "")) || 1;
+                thumbSrc = getRouteLegImage(order, item.cityId).src;
+              } else if (item.kind !== "city") {
+                const place = getPlaceById(item.id);
+                if (place) thumbSrc = getPlaceImage(place).src;
+              }
+
+              return (
+                <button
+                  key={`${item.kind}-${item.id}`}
+                  type="button"
+                  onClick={() => {
+                    tripActions.setSearchOpen(false);
+                    if (item.kind === "city") {
+                      tripActions.selectCity(item.cityId);
+                      router.push("/");
+                    } else {
+                      tripActions.selectCity(item.cityId);
+                      router.push(item.href);
+                    }
+                  }}
+                  className="flex w-full items-center justify-between gap-3 rounded-2xl p-2.5 text-right transition-colors hover:bg-orange-500/10"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={thumbSrc}
+                    alt={item.titleHe}
+                    loading="lazy"
+                    className="h-12 w-16 shrink-0 rounded-xl bg-slate-900 object-cover"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="truncate font-display text-sm font-bold text-slate-900 dark:text-white">
+                        {item.titleHe}
+                      </span>
+                      <span className="shrink-0 rounded-full bg-slate-900/10 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-white/10 dark:text-amber-300">
+                        {item.badgeHe}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 truncate text-xs text-slate-500 dark:text-slate-400">
+                      {item.subtitle}
+                    </p>
                   </div>
-                  <p className="mt-0.5 truncate text-xs text-slate-500 dark:text-slate-400">
-                    {item.subtitle}
-                  </p>
-                </div>
-                <ArrowLeft className="h-4 w-4 shrink-0 text-slate-400" />
-              </button>
-            ))
+                  <ArrowLeft className="h-4 w-4 shrink-0 text-slate-400" />
+                </button>
+              );
+            })
           )}
         </div>
       </div>

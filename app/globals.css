@@ -43,8 +43,8 @@ body {
 
 /* Custom playful scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -59,6 +59,41 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 90, 54, 0.65);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.fade-edge-scroll {
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent 0px,
+    #000 16px,
+    #000 calc(100% - 28px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to left,
+    transparent 0px,
+    #000 16px,
+    #000 calc(100% - 28px),
+    transparent 100%
+  );
+}
+
+@media (pointer: coarse) {
+  .desktop-only-control {
+    display: none !important;
+  }
+}
+
+nextjs-portal {
+  display: none !important;
 }
 
 /* Toy-like glassmorphic surfaces */

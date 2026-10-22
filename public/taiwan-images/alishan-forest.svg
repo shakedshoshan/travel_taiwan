@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="sunrise" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="50%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#fde047"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#sunrise)"/>
+  <circle cx="480" cy="185" r="58" fill="#fef08a" opacity="0.9"/>
+  <!-- Sea of Clouds -->
+  <path d="M0 280 Q140 245 280 275 T560 265 T800 280 L800 450 L0 450 Z" fill="#fff7ed" opacity="0.8"/>
+  <!-- Cypress Trees & Ridge -->
+  <path d="M0 320 Q260 240 520 340 L800 310 L800 450 L0 450 Z" fill="#064e3b"/>
+  <!-- Red Alishan Forest Train -->
+  <rect x="210" y="305" width="160" height="58" rx="10" fill="#dc2626" stroke="#fde047" stroke-width="3"/>
+  <rect x="228" y="318" width="32" height="22" rx="4" fill="#bae6fd"/>
+  <rect x="274" y="318" width="32" height="22" rx="4" fill="#bae6fd"/>
+  <rect x="320" y="318" width="32" height="22" rx="4" fill="#bae6fd"/>
+</svg>

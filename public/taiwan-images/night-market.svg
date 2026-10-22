@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="night" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="60%" stop-color="#31102f"/>
+      <stop offset="100%" stop-color="#7c2d12"/>
+    </linearGradient>
+    <radialGradient id="lanternGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="55%" stop-color="#ff5a36"/>
+      <stop offset="100%" stop-color="#9a3412" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#night)"/>
+  <!-- Market Archway -->
+  <rect x="110" y="130" width="24" height="320" fill="#dc2626"/>
+  <rect x="666" y="130" width="24" height="320" fill="#dc2626"/>
+  <path d="M70 140 Q400 75 730 140 L710 175 Q400 118 90 175 Z" fill="#f59e0b"/>
+  <!-- Glowing Red Lanterns -->
+  <circle cx="220" cy="215" r="52" fill="url(#lanternGlow)"/>
+  <ellipse cx="220" cy="215" rx="28" ry="34" fill="#ef4444" stroke="#fde047" stroke-width="3"/>
+  <circle cx="400" cy="195" r="62" fill="url(#lanternGlow)"/>
+  <ellipse cx="400" cy="195" rx="34" ry="40" fill="#ef4444" stroke="#fde047" stroke-width="3"/>
+  <circle cx="580" cy="215" r="52" fill="url(#lanternGlow)"/>
+  <ellipse cx="580" cy="215" rx="28" ry="34" fill="#ef4444" stroke="#fde047" stroke-width="3"/>
+  <!-- Street Food Stalls -->
+  <rect x="170" y="320" width="140" height="130" rx="12" fill="#1f2937" stroke="#f59e0b" stroke-width="2"/>
+  <rect x="330" y="310" width="140" height="140" rx="12" fill="#1f2937" stroke="#fb923c" stroke-width="2"/>
+  <rect x="490" y="320" width="140" height="130" rx="12" fill="#1f2937" stroke="#f59e0b" stroke-width="2"/>
+</svg>

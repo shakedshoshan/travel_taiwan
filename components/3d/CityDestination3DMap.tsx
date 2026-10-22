@@ -31,6 +31,7 @@ import {
   HOTEL_TIER_META,
   type EnrichedPlace,
 } from "@/lib/data/selectors";
+import { getPlaceImage } from "@/lib/data/placeImages";
 import {
   tripActions,
   useTripStore,
@@ -1064,6 +1065,20 @@ export function CityDestinationHUD({
         {/* Left Side: Focused Place Inspector Card when a pin is clicked */}
         {focusedNode && (
           <div className="glass-panel pointer-events-auto w-full rounded-3xl border-2 border-amber-400/70 p-4 shadow-2xl md:w-96">
+            <div className="relative mb-3 h-32 w-full overflow-hidden rounded-2xl bg-slate-900">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={getPlaceImage(focusedNode.place).src}
+                alt={focusedNode.place.name}
+                title={getPlaceImage(focusedNode.place).attribution}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+              <span className="absolute bottom-1.5 left-2 max-w-[90%] truncate rounded bg-slate-950/65 px-1.5 py-0.5 text-[9px] text-slate-200">
+                {getPlaceImage(focusedNode.place).creditHe}
+              </span>
+            </div>
             <div className="flex items-start justify-between gap-2">
               <div>
                 <div className="flex flex-wrap items-center gap-1.5">
@@ -1193,7 +1208,7 @@ export function CityDestinationHUD({
                 className="inline-flex items-center gap-1 font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
               >
                 <MapPin className="h-3.5 w-3.5" />
-                <span>Google Maps</span>
+                <span>נווט</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
             </div>

@@ -3,7 +3,7 @@
 import "./threeCompat";
 import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import { AdaptiveDpr, AdaptiveEvents, Stars } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { TaiwanIsland } from "./TaiwanIsland";
@@ -23,6 +23,24 @@ import { WorldHtmlHost } from "./WorldHtml";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 import { getTimelineDays } from "@/lib/data/selectors";
 import type { EnrichedPlace } from "@/lib/data/loaders";
+
+/** The sun only moves when day/night changes, so the shadow map can stay frozen. */
+function StaticShadows({ isNightMode }: { isNightMode: boolean }) {
+  const gl = useThree((state) => state.gl);
+  useEffect(() => {
+    gl.shadowMap.autoUpdate = false;
+    let frames = 0;
+    let id = 0;
+    const tick = () => {
+      gl.shadowMap.needsUpdate = true;
+      frames += 1;
+      if (frames < 10) id = window.requestAnimationFrame(tick);
+    };
+    id = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(id);
+  }, [gl, isNightMode]);
+  return null;
+}
 
 function checkWebGLAvailable(): boolean {
   if (typeof window === "undefined") return true;
@@ -55,7 +73,7 @@ export function MapCanvas() {
     if (!supported) {
       tripActions.setUse2DFallback(true);
     }
-    const timer = window.setTimeout(() => setIsReady(true), 650);
+    const timer = window.setTimeout(() => setIsReady(true), 320);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -103,13 +121,19 @@ export function MapCanvas() {
         shadows={{ type: THREE.PCFShadowMap }}
         dpr={[1, 2]}
         camera={{ position: [-4.5, 19.5, 16.5], fov: 42, near: 0.1, far: 160 }}
-        gl={{ antialias: true, powerPreference: "high-performance" }}
+        gl={{
+          antialias: true,
+          powerPreference: "high-performance",
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 0.92,
+        }}
         onPointerMissed={() => {
           // Clicking empty ocean closes city drawer if open
         }}
       >
         <AdaptiveDpr pixelated />
         <AdaptiveEvents />
+        <StaticShadows isNightMode={store.isNightMode} />
 
         {/* Sky & Atmosphere */}
         <fog
@@ -123,14 +147,14 @@ export function MapCanvas() {
 
         {/* Lighting */}
         <ambientLight
-          intensity={store.isNightMode ? 0.55 : 1.15}
-          color={store.isNightMode ? "#93c5fd" : "#fffbeb"}
+          intensity={store.isNightMode ? 0.45 : 0.62}
+          color={store.isNightMode ? "#93c5fd" : "#fff7e8"}
         />
         <directionalLight
           castShadow
           position={store.isNightMode ? [-8, 16, -6] : [12, 22, 10]}
-          intensity={store.isNightMode ? 0.85 : 2.1}
-          color={store.isNightMode ? "#60a5fa" : "#fff7ed"}
+          intensity={store.isNightMode ? 0.7 : 1.25}
+          color={store.isNightMode ? "#60a5fa" : "#fff4e0"}
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
           shadow-camera-near={1}
@@ -144,7 +168,7 @@ export function MapCanvas() {
           args={[
             store.isNightMode ? "#1e293b" : "#bae6fd",
             store.isNightMode ? "#0f172a" : "#fde68a",
-            store.isNightMode ? 0.45 : 0.65,
+            store.isNightMode ? 0.35 : 0.38,
           ]}
         />
 
@@ -225,9 +249,9 @@ export function MapCanvas() {
         {store.isNightMode && (
           <EffectComposer>
             <Bloom
-              luminanceThreshold={0.55}
+              luminanceThreshold={0.78}
               mipmapBlur
-              intensity={1.35}
+              intensity={0.9}
               radius={0.65}
             />
           </EffectComposer>

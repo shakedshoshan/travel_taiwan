@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="smlSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="55%" stop-color="#7dd3fc"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+    <linearGradient id="smlWater" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#smlSky)"/>
+  <path d="M0 260 Q160 150 340 230 T700 180 L800 220 L800 320 L0 320 Z" fill="#047857"/>
+  <path d="M120 275 Q320 175 520 250 T800 210 L800 320 L0 320 Z" fill="#065f46" opacity="0.85"/>
+  <rect x="0" y="285" width="800" height="165" fill="url(#smlWater)"/>
+  <!-- Ropeway Cable & Red Gondola -->
+  <line x1="120" y1="260" x2="640" y2="110" stroke="#e2e8f0" stroke-width="2.5"/>
+  <rect x="370" y="175" width="36" height="28" rx="6" fill="#f43f5e" stroke="#ffffff" stroke-width="2"/>
+  <ellipse cx="410" cy="355" rx="180" ry="12" fill="#67e8f9" opacity="0.35"/>
+</svg>

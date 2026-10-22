@@ -317,22 +317,60 @@ export function searchEverything(rawQuery: string): SearchResultItem[] {
 }
 
 /**
- * Builds a Google Maps search URL from the place name, Chinese name (if available), and English/Hebrew city name.
+ * Builds a Google Maps navigation or search URL:
+ * - When the place has exact coordinates (`!approxLocation` or overridden in `overrides.json`),
+ *   returns `https://www.google.com/maps/dir/?api=1&destination=<lat,lng>`.
+ * - Otherwise queries `nameZh || nameEn || nonHebrewName` + city in English + "Taiwan" (never Hebrew alone).
  */
 export function buildGoogleMapsUrl(place: {
   name: string;
   nameZh?: string | null;
+  nameEn?: string | null;
   cityNameEn?: string;
   city?: string;
+  lat?: number;
+  lng?: number;
+  approxLocation?: boolean;
+  resolvedCoords?: { lat: number; lng: number; isExact: boolean };
 }): string {
-  const queryParts = [
-    place.nameZh ? `${place.name} ${place.nameZh}` : place.name,
-    place.cityNameEn ?? place.city ?? "Taiwan",
-    "Taiwan",
-  ];
+  const isExact =
+    place.approxLocation === false || place.resolvedCoords?.isExact === true;
+  const lat = place.resolvedCoords?.lat ?? place.lat;
+  const lng = place.resolvedCoords?.lng ?? place.lng;
+
+  if (isExact && typeof lat === "number" && typeof lng === "number") {
+    return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+  }
+
+  // Extract Chinese/English tokens from `name` if `nameZh`/`nameEn` are not set
+  const nonHebrewFromName = place.name
+    .replace(/[\u0590-\u05FF״׳–—().,0-9-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  const primaryQuery =
+    (place.nameZh && place.nameZh.trim()) ||
+    (place.nameEn && place.nameEn.trim()) ||
+    nonHebrewFromName ||
+    place.cityNameEn ||
+    "Taiwan";
+
+  const cityEn = place.cityNameEn ?? "Taiwan";
+  const queryParts = [primaryQuery, cityEn, "Taiwan"];
+
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     queryParts.join(" ")
   )}`;
+}
+
+/**
+ * Returns the clean price portion of `priceText` (e.g. bed/room rate in NT$)
+ * without internal scraper diagnostic notes after `|`.
+ */
+export function formatDisplayPriceText(priceText: string | null | undefined): string {
+  if (!priceText) return "";
+  const [mainPrice] = priceText.split("|");
+  return mainPrice.trim();
 }
 
 export const FOOD_TYPE_META: Record<

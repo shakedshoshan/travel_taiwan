@@ -8,6 +8,7 @@ import {
   Route,
   UtensilsCrossed,
   BedDouble,
+  Lightbulb,
   Search,
   Wallet,
   Heart,
@@ -17,10 +18,11 @@ import {
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 
 const NAV_LINKS = [
-  { href: "/", label: "מפת 3D", icon: MapIcon },
-  { href: "/route", label: "המסלול (10 מקטעים)", icon: Route },
-  { href: "/food", label: "אוכל ושווקים (80)", icon: UtensilsCrossed },
-  { href: "/hotels", label: "מלונות (37)", icon: BedDouble },
+  { href: "/", label: "מפה", icon: MapIcon },
+  { href: "/route", label: "מסלול", icon: Route },
+  { href: "/food", label: "אוכל", icon: UtensilsCrossed },
+  { href: "/hotels", label: "מלונות", icon: BedDouble },
+  { href: "/info", label: "טיפים", icon: Lightbulb },
 ] as const;
 
 export function Navbar() {
@@ -40,32 +42,108 @@ export function Navbar() {
     );
   }, [store.isNightMode]);
 
-  return (
-    <header
-      dir="rtl"
-      className="pointer-events-none fixed top-0 right-0 left-0 z-40 px-3 pt-3 md:px-6"
-    >
-      <div className="glass-panel pointer-events-auto mx-auto flex max-w-7xl items-center justify-between gap-2 rounded-3xl px-3.5 py-2.5 md:px-5">
-        {/* Brand Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 text-right transition-transform hover:scale-[1.02]"
-        >
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 via-amber-500 to-emerald-500 text-lg font-black text-white shadow-md shadow-orange-500/25">
-            TW
-          </div>
-          <div>
-            <div className="font-display text-base font-extrabold leading-tight tracking-tight text-slate-900 dark:text-white">
-              טייוואן 3D
-            </div>
-            <div className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
-              6.11 – 8.12.2026 • 33 ימים
-            </div>
-          </div>
-        </Link>
+  const hideMapHud =
+    pathname === "/" &&
+    (store.sheetSnap === "half" ||
+      store.sheetSnap === "full" ||
+      store.isCityZoomMapOpen);
 
-        {/* Main Navigation Links */}
-        <nav className="hidden items-center gap-1 md:flex">
+  return (
+    <>
+      {/* Slim Top Header Bar */}
+      <header
+        dir="rtl"
+        style={{ paddingTop: "max(0.5rem, env(safe-area-inset-top))" }}
+        className={`pointer-events-none fixed top-0 right-0 left-0 z-40 px-2.5 transition-opacity duration-200 md:px-5 ${
+          hideMapHud ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
+      >
+        <div className="glass-panel pointer-events-auto mx-auto flex h-12 max-w-7xl items-center justify-between gap-2 rounded-2xl px-2.5 shadow-lg md:px-4">
+          {/* Brand Logo */}
+          <Link
+            href="/"
+            onClick={() => {
+              tripActions.selectCity(null);
+              tripActions.setTimelineExpanded(false);
+            }}
+            className="flex min-h-[44px] shrink-0 items-center gap-2 px-1 text-right"
+          >
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-amber-500 to-emerald-500 text-xs font-black text-white shadow-sm">
+              TW
+            </div>
+            <div className="whitespace-nowrap">
+              <span className="font-display text-sm font-black tracking-tight text-slate-900 dark:text-white">
+                טייוואן 3D
+              </span>
+              <span className="mr-1.5 hidden text-[11px] font-medium text-slate-500 sm:inline dark:text-slate-300">
+                6.11–8.12 • 33 ימים
+              </span>
+            </div>
+          </Link>
+
+          {/* Action Buttons: Search (no Cmd+K on touch), Budget, Favorites, Day/Night */}
+          <div className="flex shrink-0 items-center gap-1">
+            <button
+              type="button"
+              onClick={() => tripActions.setSearchOpen(true)}
+              aria-label="חיפוש מהיר"
+              className="toy-button flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 text-xs font-bold text-slate-700 hover:bg-slate-900/5 dark:text-slate-200 dark:hover:bg-white/10"
+            >
+              <Search className="h-4 w-4 text-orange-500" />
+              <span className="hidden md:inline">חיפוש</span>
+              <kbd className="desktop-only-control hidden rounded bg-slate-900/10 px-1.5 py-0.5 font-mono text-[10px] lg:inline-block dark:bg-white/15">
+                ⌘K
+              </kbd>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => tripActions.setBudgetOpen(true)}
+              aria-label="מחשבון תקציב"
+              className="toy-button flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 rounded-xl px-2.5 text-xs font-bold text-emerald-700 hover:bg-emerald-500/15 dark:text-emerald-300"
+            >
+              <Wallet className="h-4 w-4" />
+              <span className="hidden sm:inline">תקציב</span>
+            </button>
+
+            {store.favorites.length > 0 && (
+              <button
+                type="button"
+                onClick={() => tripActions.setSearchOpen(true)}
+                aria-label="מועדפים"
+                title="מועדפים ששמרתם"
+                className="toy-button flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 rounded-xl px-2 text-xs font-bold text-rose-600 hover:bg-rose-500/15 dark:text-rose-300"
+              >
+                <Heart className="h-4 w-4 fill-current" />
+                <span>{store.favorites.length}</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={() => tripActions.toggleNightMode()}
+              aria-label={store.isNightMode ? "עבור למצב יום" : "עבור למצב לילה"}
+              title={store.isNightMode ? "עבור למצב יום" : "עבור למצב לילה"}
+              className="toy-button flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl text-slate-700 hover:bg-slate-900/5 dark:text-amber-300 dark:hover:bg-white/10"
+            >
+              {store.isNightMode ? (
+                <Moon className="h-4 w-4" />
+              ) : (
+                <Sun className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Bottom Tab Bar (56px + safe-area-inset-bottom) */}
+      <nav
+        dir="rtl"
+        aria-label="ניווט ראשי"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+        className="fixed right-0 bottom-0 left-0 z-40 border-t border-slate-900/10 bg-white/95 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95"
+      >
+        <div className="mx-auto flex h-14 max-w-xl items-center justify-around px-1">
           {NAV_LINKS.map((item) => {
             const Icon = item.icon;
             const isActive =
@@ -76,93 +154,23 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`toy-button flex items-center gap-1.5 rounded-2xl px-3.5 py-2 text-xs font-bold transition-all ${
+                className={`flex min-h-[44px] min-w-[56px] flex-1 flex-col items-center justify-center gap-0.5 rounded-xl py-1 text-[11px] font-bold transition-colors ${
                   isActive
-                    ? "bg-slate-900 text-white shadow-sm dark:bg-amber-400 dark:text-slate-950"
-                    : "text-slate-700 hover:bg-slate-900/5 dark:text-slate-200 dark:hover:bg-white/10"
+                    ? "text-orange-600 dark:text-amber-400"
+                    : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                 }`}
               >
-                <Icon className="h-4 w-4" />
-                <span>{item.label}</span>
+                <Icon
+                  className={`h-5 w-5 ${
+                    isActive ? "stroke-[2.5]" : "stroke-[2]"
+                  }`}
+                />
+                <span className="leading-none">{item.label}</span>
               </Link>
             );
           })}
-        </nav>
-
-        {/* Action Buttons: Search Cmd+K, Budget, Favorites, Night Mode */}
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={() => tripActions.setSearchOpen(true)}
-            className="toy-button flex items-center gap-2 rounded-2xl border border-slate-900/10 bg-white/70 px-3 py-1.5 text-xs font-bold text-slate-700 shadow-xs hover:bg-white dark:border-white/15 dark:bg-slate-800/80 dark:text-slate-200"
-          >
-            <Search className="h-3.5 w-3.5 text-orange-500" />
-            <span className="hidden sm:inline">חיפוש מהיר...</span>
-            <kbd className="rounded bg-slate-900/10 px-1.5 py-0.5 font-mono text-[10px] dark:bg-white/15">
-              ⌘K
-            </kbd>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => tripActions.setBudgetOpen(true)}
-            className="toy-button flex items-center gap-1.5 rounded-2xl bg-emerald-500/15 px-3 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-500/25 dark:bg-emerald-500/20 dark:text-emerald-300"
-          >
-            <Wallet className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">תקציב</span>
-          </button>
-
-          {store.favorites.length > 0 && (
-            <button
-              type="button"
-              onClick={() => tripActions.setSearchOpen(true)}
-              className="toy-button flex items-center gap-1 rounded-2xl bg-rose-500/15 px-2.5 py-1.5 text-xs font-bold text-rose-600 dark:text-rose-300"
-              title="מועדפים ששמרתם"
-            >
-              <Heart className="h-3.5 w-3.5 fill-current" />
-              <span>{store.favorites.length}</span>
-            </button>
-          )}
-
-          <button
-            type="button"
-            onClick={() => tripActions.toggleNightMode()}
-            className="toy-button flex h-8 w-8 items-center justify-center rounded-2xl bg-slate-900/5 text-slate-700 hover:bg-slate-900/10 dark:bg-white/10 dark:text-amber-300"
-            title={store.isNightMode ? "עבור למצב יום" : "עבור למצב לילה"}
-          >
-            {store.isNightMode ? (
-              <Moon className="h-4 w-4" />
-            ) : (
-              <Sun className="h-4 w-4" />
-            )}
-          </button>
         </div>
-      </div>
-
-      {/* Mobile Sub-Navigation Bar */}
-      <div className="glass-panel pointer-events-auto mx-auto mt-1.5 flex max-w-md items-center justify-around rounded-2xl p-1 md:hidden">
-        {NAV_LINKS.map((item) => {
-          const Icon = item.icon;
-          const isActive =
-            item.href === "/"
-              ? pathname === "/"
-              : pathname.startsWith(item.href);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-1 rounded-xl px-2.5 py-1.5 text-[11px] font-bold ${
-                isActive
-                  ? "bg-slate-900 text-white dark:bg-amber-400 dark:text-slate-950"
-                  : "text-slate-700 dark:text-slate-300"
-              }`}
-            >
-              <Icon className="h-3.5 w-3.5" />
-              <span>{item.label.split(" ")[0]}</span>
-            </Link>
-          );
-        })}
-      </div>
-    </header>
+      </nav>
+    </>
   );
 }

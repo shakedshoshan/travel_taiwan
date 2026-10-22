@@ -1,4 +1,9 @@
-import { CENTRAL_MOUNTAIN_PEAKS } from "./taiwanGeo";
+import {
+  CENTRAL_MOUNTAIN_PEAKS,
+  OFFSHORE_ISLANDS,
+  TAIWAN_COASTLINE_LAT_LNG,
+  sampleTaiwanDem,
+} from "./taiwanGeo";
 
 // Geographic center of Taiwan for projection to 3D world space
 export const TAIWAN_CENTER_LAT = 23.62;
@@ -7,8 +12,8 @@ export const TAIWAN_CENTER_LNG = 120.98;
 // 1 deg latitude ≈ 111km, 1 deg longitude at 23.6N ≈ 101.8km
 export const WORLD_LAT_SCALE = 7.6;
 export const WORLD_LNG_SCALE = 7.6 * 0.916;
-export const ISLAND_BASE_HEIGHT = 0.26;
-export const MAX_MOUNTAIN_HEIGHT = 2.15;
+export const ISLAND_BASE_HEIGHT = 0.24;
+export const MAX_MOUNTAIN_HEIGHT = 2.05;
 
 const GOLDEN_ANGLE_RAD = Math.PI * (3 - Math.sqrt(5)); // ~2.399963229728653 rad
 
@@ -28,9 +33,8 @@ export interface ResolvedCoordinates {
 }
 
 /**
- * Converts latitude/longitude into horizontal 3D plane coordinates (x = East/West, z = South/North).
- * Note: North is -Z so that looking from the South/above keeps North at the top of the viewport
- * and East at +X (right-hand coordinate system with +Y up).
+ * Shared projection function converting latitude/longitude into horizontal 3D plane coordinates
+ * (x = West->East, z = North->South where North is -Z and East is +X).
  */
 export function latLngToXZ(lat: number, lng: number): { x: number; z: number } {
   const x = (lng - TAIWAN_CENTER_LNG) * WORLD_LNG_SCALE;
@@ -47,43 +51,70 @@ export function xzToLatLng(x: number, z: number): { lat: number; lng: number } {
   return { lat, lng };
 }
 
+function isLatLngInsidePolygon(
+  lat: number,
+  lng: number,
+  poly: ReadonlyArray<readonly [number, number]>
+): boolean {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const lati = poly[i][0];
+    const lngi = poly[i][1];
+    const latj = poly[j][0];
+    const lngj = poly[j][1];
+    const intersect =
+      lngi > lng !== lngj > lng &&
+      lat < ((latj - lati) * (lng - lngi)) / (lngj - lngi + 1e-10) + lati;
+    if (intersect) inside = !inside;
+  }
+  return inside;
+}
+
 /**
- * Deterministic elevation function for Taiwan's Central Mountain Range (running down east-center).
- * Used both to displace the 3D island geometry and to place city pins / category markers on top of the terrain.
+ * Downsampled real DEM + peak synthesis for Taiwan's Central Mountain Range,
+ * East Rift Valley, Coastal Range, and offshore islands.
  */
 export function getElevationAtLatLng(lat: number, lng: number): number {
-  let ridgeSum = 0;
+  // Check offshore islands first
+  for (const isl of OFFSHORE_ISLANDS) {
+    const dLat = (lat - isl.centerLat) / 0.12;
+    const dLng = (lng - isl.centerLng) / 0.12;
+    const dSq = dLat * dLat + dLng * dLng;
+    if (dSq < 1.8) {
+      return ISLAND_BASE_HEIGHT + isl.peakHeight * Math.exp(-dSq * 1.6);
+    }
+  }
 
+  const demValue = sampleTaiwanDem(lat, lng);
+
+  let peakDetail = 0;
   for (const peak of CENTRAL_MOUNTAIN_PEAKS) {
     const dLat = (lat - peak.lat) / peak.radiusLat;
     const dLng = (lng - peak.lng) / peak.radiusLng;
     const distSq = dLat * dLat + dLng * dLng;
-    if (distSq < 4.5) {
-      ridgeSum += peak.height * Math.exp(-distSq * 1.15);
+    if (distSq < 2.8) {
+      peakDetail += peak.height * Math.exp(-distSq * 2.2);
     }
   }
 
-  // Subtle deterministic organic ridges running NNE-SSW along Taiwan's tectonic axis (~18 deg)
-  const ridgeAxis = (lat - 23.6) * 0.32 - (lng - 121.1) * 0.95;
-  const alongAxis = (lat - 23.6) * 0.95 + (lng - 121.1) * 0.32;
-  const spineEnvelope = Math.exp(-(ridgeAxis * ridgeAxis) / 0.09) *
-    Math.exp(-(alongAxis * alongAxis) / 1.45);
+  // Fine ridge texture so high mountain ranges have crisp facets
+  const ridgeDetail =
+    0.09 *
+    Math.sin(lat * 22.0 + lng * 14.0) *
+    Math.cos(lat * 13.0 - lng * 19.0);
 
-  const detailWave =
-    0.08 *
-    Math.sin(lat * 26.0 + lng * 19.0) *
-    Math.cos(lat * 18.0 - lng * 31.0);
+  // Sun Moon Lake scenic depression
+  const dSmlLat = (lat - 23.865) / 0.068;
+  const dSmlLng = (lng - 120.915) / 0.068;
+  const smlBasin = Math.exp(-(dSmlLat * dSmlLat + dSmlLng * dSmlLng)) * 0.24;
 
-  // Sun Moon Lake basin depression so the lake sits in a scenic mountain hollow
-  const dSmlLat = (lat - 23.865) / 0.075;
-  const dSmlLng = (lng - 120.915) / 0.075;
-  const smlBasin = Math.exp(-(dSmlLat * dSmlLat + dSmlLng * dSmlLng)) * 0.22;
+  const combined =
+    demValue * 0.65 +
+    peakDetail * 0.36 +
+    ridgeDetail * Math.max(0, demValue - 0.15) -
+    smlBasin;
 
-  const normalized = Math.max(
-    0,
-    Math.min(1.25, ridgeSum * 0.62 + spineEnvelope * 0.45 + detailWave * spineEnvelope - smlBasin)
-  );
-
+  const normalized = Math.max(0, Math.min(1.12, combined));
   return ISLAND_BASE_HEIGHT + normalized * MAX_MOUNTAIN_HEIGHT;
 }
 
@@ -109,8 +140,10 @@ export function latLngToWorld3D(
 }
 
 /**
- * Computes deterministic golden-angle spiral offset around the city center for places with `approxLocation: true`,
- * while respecting optional `exactLat` / `exactLng` overrides if added in the future.
+ * Computes coordinates for a place:
+ * - Uses exact item lat/lng when `approxLocation` is false or overridden in `/data/overrides.json`.
+ * - Otherwise applies a deterministic golden-angle spiral offset around the city center,
+ *   clamped to stay on the proper coast (east coast for Hualien/Taitung, west coast for Tainan/Kaohsiung).
  */
 export function resolvePlaceCoordinates(
   item: {
@@ -142,18 +175,27 @@ export function resolvePlaceCoordinates(
 
   // Golden-angle spiral around city center so markers never overlap
   const angle = indexWithinCity * GOLDEN_ANGLE_RAD;
-  const stepRadiusDeg = 0.0135; // compact ~1.5km base step
+  const stepRadiusDeg = 0.0125;
   const maxNormalized = Math.sqrt(indexWithinCity + 1);
-  // Keep spiral tight even in cities with 60+ items (like Taipei)
-  const scaleFactor = totalInCity > 35 ? 0.78 : 1.0;
+  const scaleFactor = totalInCity > 35 ? 0.72 : 0.92;
   const radiusLat = stepRadiusDeg * maxNormalized * scaleFactor;
   const radiusLng = (stepRadiusDeg * maxNormalized * scaleFactor) / 0.916;
 
-  // Slightly nudge coastal cities inward toward the island spine (lng ~120.95) so spiral pins stay on land
-  const inwardLngBias = (120.95 - item.lng) * 0.08;
+  // Keep east-coast cities (Hualien, Taitung) on the east coast and west-coast cities on land
+  const isEastCoast = item.lng > 121.1 && item.lat < 24.85;
+  const inwardLngBias = isEastCoast
+    ? -Math.abs(Math.cos(angle) * radiusLng) * 0.45
+    : (120.95 - item.lng) * 0.06;
 
-  const lat = item.lat + Math.sin(angle) * radiusLat;
-  const lng = item.lng + Math.cos(angle) * radiusLng + inwardLngBias;
+  let lat = item.lat + Math.sin(angle) * radiusLat;
+  let lng = item.lng + Math.cos(angle) * radiusLng + inwardLngBias;
+
+  // Ensure spiral point stays on the main island polygon
+  if (!isLatLngInsidePolygon(lat, lng, TAIWAN_COASTLINE_LAT_LNG)) {
+    lat = item.lat + (lat - item.lat) * 0.35;
+    lng = item.lng + (lng - item.lng) * 0.35;
+  }
+
   const { x, y, z } = latLngToWorld3D(lat, lng, 0.08);
 
   return {
