@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { WorldHtml } from "./WorldHtml";
 import { getAllCities } from "@/lib/data/selectors";
 import { OFFSHORE_ISLANDS } from "@/lib/data/taiwanGeo";
 import { latLngToWorld3D } from "@/lib/data/coordinates";
+import { markLoadStage } from "./loadProgress";
 import { useTripStore } from "@/lib/store/useTripStore";
 import { triggerHapticTap } from "@/lib/haptics";
 import type { CityId } from "@/data/types";
@@ -17,6 +18,8 @@ interface CityPinsProps {
   activeTimelineCityId: CityId;
   isNightMode: boolean;
   onSelectCity: (cityId: CityId) => void;
+  /** Place-page mini map: mount only this city's label. */
+  onlyLabelCityId?: CityId | null;
 }
 
 export function CityPins({
@@ -24,6 +27,7 @@ export function CityPins({
   activeTimelineCityId,
   isNightMode,
   onSelectCity,
+  onlyLabelCityId = null,
 }: CityPinsProps) {
   const store = useTripStore();
   const cities = getAllCities();
@@ -45,6 +49,10 @@ export function CityPins({
     return latLngToWorld3D(store.userCoords.lat, store.userCoords.lng, 0.24);
   }, [store.userCoords]);
 
+  useEffect(() => {
+    markLoadStage("pins");
+  }, []);
+
   useFrame(({ clock }) => {
     if (pulseRingRef.current && !store.prefersReducedMotion) {
       const t = clock.getElapsedTime();
@@ -65,11 +73,12 @@ export function CityPins({
           isNightMode={isNightMode}
           prefersReducedMotion={store.prefersReducedMotion}
           onSelectCity={onSelectCity}
+          onlyLabelCityId={onlyLabelCityId}
         />
       ))}
 
       {/* Offshore Island Mini Labels (Penghu, Xiaoliuqiu, Green Island, Orchid Island) */}
-      {offshoreMarkers.map((isl) => {
+      {onlyLabelCityId == null && offshoreMarkers.map((isl) => {
         const targetCityId: CityId =
           isl.id === "xiaoliuqiu"
             ? "pingtung"
@@ -87,11 +96,13 @@ export function CityPins({
             }}
           >
             <WorldHtml
-              position={[0, 0.18, 0]}
+              position={[0, 0.45, 0]}
               anchor="bottom"
               screenOffset={[0, -4]}
               clampToViewport
-              avoidOverlap
+              labelPriority={15}
+              showWhenFar={false}
+              ariaHidden
               zIndexRange={[14, 0]}
             >
               <button
@@ -146,10 +157,11 @@ export function CityPins({
             <meshBasicMaterial color="#ffffff" />
           </mesh>
           <WorldHtml
-            position={[0, 0.22, 0]}
+            position={[0, 0.45, 0]}
             anchor="bottom"
             screenOffset={[0, -6]}
             clampToViewport
+            ariaHidden
             zIndexRange={[34, 0]}
           >
             <div

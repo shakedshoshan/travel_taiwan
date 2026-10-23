@@ -264,7 +264,10 @@ export function Map2DFallback({
                 stroke="#ffffff"
                 strokeWidth="2"
               />
-              {(city.onRoute || !compact) && (
+              {(city.onRoute ||
+                city.optional ||
+                city.id === selectedCityId ||
+                !compact) && (
                 <text
                   x={city.lng > 121.1 ? 11 : -11}
                   y={4}

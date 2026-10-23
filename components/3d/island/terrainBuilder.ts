@@ -15,7 +15,35 @@ import {
   smoothstep,
 } from "./polygonMath";
 
-export const TERRAIN_REVISION = 16;
+export const TERRAIN_REVISION = 20;
+
+const CREST_SPINE: ReadonlyArray<readonly [number, number]> = [
+  [1.74, -5.8],
+  [2.09, -3.95],
+  [0.98, -1.52],
+  [-0.16, 1.14],
+  [-0.62, 2.35],
+];
+
+function distanceToCrest(x: number, z: number): number {
+  let minSq = Infinity;
+  for (let i = 0; i < CREST_SPINE.length - 1; i++) {
+    const ax = CREST_SPINE[i][0];
+    const az = CREST_SPINE[i][1];
+    const bx = CREST_SPINE[i + 1][0];
+    const bz = CREST_SPINE[i + 1][1];
+    const dx = bx - ax;
+    const dz = bz - az;
+    const lenSq = dx * dx + dz * dz;
+    let t = lenSq > 0 ? ((x - ax) * dx + (z - az) * dz) / lenSq : 0;
+    t = Math.max(0, Math.min(1, t));
+    const dSq =
+      (x - (ax + t * dx)) * (x - (ax + t * dx)) +
+      (z - (az + t * dz)) * (z - (az + t * dz));
+    if (dSq < minSq) minSq = dSq;
+  }
+  return Math.sqrt(minSq);
+}
 
 export const terrainVertexShader = /* glsl */ `
   attribute vec3 color;
@@ -34,7 +62,9 @@ export const terrainFragmentShader = /* glsl */ `
   void main() {
     vec3 lightDir = normalize(vec3(0.42, 0.86, 0.28));
     float wrap = dot(normalize(vNormal), lightDir) * 0.5 + 0.5;
-    float shade = mix(0.58, 1.0, clamp(wrap, 0.0, 1.0));
+    float shade = mix(0.74, 1.0, clamp(wrap, 0.0, 1.0));
+    float luma = dot(vColor, vec3(0.299, 0.587, 0.114));
+    shade = mix(shade, max(shade, 0.94), smoothstep(0.62, 0.86, luma));
     gl_FragColor = vec4(vColor * shade, 1.0);
   }
 `;
@@ -128,8 +158,10 @@ export function buildIslandGeometries(isNightMode: boolean) {
   const dayPlain = new THREE.Color("#84d464");
   const dayLow = new THREE.Color("#56bb63");
   const dayMid = new THREE.Color("#268e50");
-  const dayHigh = new THREE.Color("#165f39");
+  const dayHigh = new THREE.Color("#2e8a4c");
   const dayRock = new THREE.Color("#28503c");
+  const dayAlpine = new THREE.Color("#9a9186");
+  const daySnow = new THREE.Color("#fbfaf7");
   const daySubmerged = new THREE.Color("#0c6fa8");
 
   const nightBeach = new THREE.Color("#2a3a52");
@@ -138,6 +170,7 @@ export function buildIslandGeometries(isNightMode: boolean) {
   const nightMid = new THREE.Color("#14524a");
   const nightHigh = new THREE.Color("#1a6156");
   const nightRock = new THREE.Color("#5c7084");
+  const nightSnow = new THREE.Color("#eef4fb");
   const nightSubmerged = new THREE.Color("#071525");
 
   const cBeach = isNightMode ? nightBeach : dayBeach;
@@ -146,6 +179,8 @@ export function buildIslandGeometries(isNightMode: boolean) {
   const cMid = isNightMode ? nightMid : dayMid;
   const cHigh = isNightMode ? nightHigh : dayHigh;
   const cRock = isNightMode ? nightRock : dayRock;
+  const cAlpine = isNightMode ? nightRock : dayAlpine;
+  const cSnow = isNightMode ? nightSnow : daySnow;
   const cSubmerged = isNightMode ? nightSubmerged : daySubmerged;
   const tmpColor = new THREE.Color();
 
@@ -204,11 +239,27 @@ export function buildIslandGeometries(isNightMode: boolean) {
 
       tmpColor.lerp(
         cRock,
-        smoothstep(0.7, 1.5, slope) * (relH > 0.45 ? 0.32 : 0.08)
+        smoothstep(0.85, 1.7, slope) * (relH > 0.45 ? 0.16 : 0.05)
       );
 
       if (relH > 1.0) {
-        tmpColor.lerp(cRock, smoothstep(1.0, 1.45, relH) * 0.68);
+        tmpColor.lerp(cAlpine, smoothstep(1.0, 1.38, relH) * 0.9);
+      }
+
+      const crestDist = distanceToCrest(vx, vz);
+      const onCrest = 1 - smoothstep(0.08, 0.42, crestDist);
+      const southern = smoothstep(-0.6, 2.1, vz);
+      const snowFloor = 1.16 - southern * 0.14;
+      const snow =
+        relH > snowFloor && onCrest > 0.02
+          ? smoothstep(snowFloor, snowFloor + 0.2, relH) * onCrest
+          : 0;
+
+      if (onCrest > 0.2 && snow < 0.25 && relH > 0.75) {
+        tmpColor.lerp(
+          cAlpine,
+          Math.min(1, onCrest * smoothstep(0.75, 1.15, relH))
+        );
       }
 
       const ao =
@@ -216,6 +267,7 @@ export function buildIslandGeometries(isNightMode: boolean) {
         (1 - smoothstep(0.2, 1.1, slope) * 0.06);
       const grain = 0.94 + shadeVariation(vx, vz) * 0.09;
       tmpColor.multiplyScalar(ao * grain);
+      if (snow > 0.04) tmpColor.lerp(cSnow, Math.min(1, snow));
     }
 
     colors[i * 3] = tmpColor.r;

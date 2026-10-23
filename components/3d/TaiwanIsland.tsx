@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { markLoadStage } from "./loadProgress";
 import {
   buildIslandGeometries,
   terrainFragmentShader,
@@ -13,6 +14,10 @@ interface TaiwanIslandProps {
 }
 
 export function TaiwanIsland({ isNightMode }: TaiwanIslandProps) {
+  useEffect(() => {
+    markLoadStage("terrain");
+  }, []);
+
   const { baseExtrudeGeo, beachRimGeo, terrainGeo, offshoreMeshes } = useMemo(
     () => buildIslandGeometries(isNightMode),
     // eslint-disable-next-line react-hooks/exhaustive-deps

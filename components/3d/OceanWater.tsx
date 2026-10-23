@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { markLoadStage } from "./loadProgress";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import {
@@ -30,6 +31,9 @@ const scratchFoam = new THREE.Color();
 
 export function OceanWater({ isNightMode }: OceanWaterProps) {
   const matRef = useRef<THREE.ShaderMaterial>(null);
+  useEffect(() => {
+    markLoadStage("ocean");
+  }, []);
   const coastMap = useMemo(() => buildCoastDistanceTexture(), []);
   const shoreRibbon = useMemo(() => buildShoreRibbon(), []);
 

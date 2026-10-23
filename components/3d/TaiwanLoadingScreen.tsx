@@ -5,9 +5,13 @@ import { TRIP_DATA } from "@/lib/data/loaders";
 
 interface TaiwanLoadingScreenProps {
   visible: boolean;
+  progress?: number;
 }
 
-export function TaiwanLoadingScreen({ visible }: TaiwanLoadingScreenProps) {
+export function TaiwanLoadingScreen({
+  visible,
+  progress = 0,
+}: TaiwanLoadingScreenProps) {
   if (!visible) return null;
 
   const blocks = [
@@ -73,7 +77,16 @@ export function TaiwanLoadingScreen({ visible }: TaiwanLoadingScreenProps) {
       >
         בונים את האי טייוואן בתלת-ממד...
       </motion.h2>
-      <p className="mt-1.5 text-sm text-slate-200">
+      <p className="mt-3 font-mono text-3xl font-black text-white" aria-live="polite">
+        {Math.round(progress)}%
+      </p>
+      <div className="mt-2 h-2 w-56 overflow-hidden rounded-full bg-white/15">
+        <div
+          className="h-full rounded-full bg-amber-300 transition-[width] duration-200"
+          style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
+        />
+      </div>
+      <p className="mt-3 text-sm text-slate-200">
         6.11 – 8.12.2026 • {TRIP_DATA.cities.length} ערים • {TRIP_DATA.legs.length} מקטעי מסלול •{" "}
         {TRIP_DATA.allPlaces.length} נקודות עניין ({TRIP_DATA.attractions.length} אטרקציות ·{" "}
         {TRIP_DATA.food.length} אוכל · {TRIP_DATA.hotels.length} מלונות)

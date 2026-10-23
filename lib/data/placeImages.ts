@@ -110,8 +110,22 @@ export function hasOwnHotelImage(place: { id: string; kind: string }): boolean {
 
 export function getPlaceImage(place: EnrichedPlace): PlaceImageMeta {
   const exactRecord = CREDITS_BY_STEM.get(place.id);
-  if (exactRecord) {
+  const exactIsStock =
+    exactRecord?.file.includes("generic-hotel") ||
+    exactRecord?.file.includes("generic-hot-spring");
+  if (exactRecord && !exactIsStock) {
     return toPlaceImageMeta(exactRecord);
+  }
+
+  if (place.kind === "hotel") {
+    const cityPhoto = getCityPrimaryImage(place.cityId);
+    return {
+      ...cityPhoto,
+      match: "representative",
+      creditHe: cityPhoto.creditHe.includes("תמונה מייצגת")
+        ? cityPhoto.creditHe
+        : `${cityPhoto.creditHe} · תמונה מייצגת`,
+    };
   }
 
   const semanticMatch = matchSemanticPlaceImage(

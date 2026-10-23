@@ -16,30 +16,15 @@ import {
   type EnrichedHotel,
 } from "@/lib/data/selectors";
 import { getCityPrimaryImage, hasOwnHotelImage } from "@/lib/data/placeImages";
+import { nightlyRateForMode, type StayRateMode } from "@/lib/data/lodgingPrice";
 import { PlaceCard } from "@/components/ui/PlaceCard";
 import { PhotoCreditPopover } from "@/components/ui/PhotoCreditPopover";
-
-type BudgetStayMode = "bed" | "room";
-
-function estimateNightlyRate(hotel: EnrichedHotel, mode: BudgetStayMode): number {
-  const minVal = hotel.priceMin && hotel.priceMin >= 150 ? hotel.priceMin : null;
-  const maxVal = hotel.priceMax && hotel.priceMax >= 150 ? hotel.priceMax : null;
-
-  if (mode === "bed") {
-    return minVal ?? maxVal ?? 800;
-  }
-  // For private room mode, if a hostel lists both bed (minVal < 1000) and room (maxVal >= 1200), use maxVal
-  if (minVal && minVal < 1000 && maxVal && maxVal >= 1200) {
-    return maxVal;
-  }
-  return minVal ?? maxVal ?? 2200;
-}
 
 export default function HotelsPage() {
   const cities = getAllCities();
   const allHotels = getHotels();
   const [onlyVerified, setOnlyVerified] = useState(false);
-  const [budgetMode, setBudgetMode] = useState<BudgetStayMode>("bed");
+  const [budgetMode, setBudgetMode] = useState<StayRateMode>("room");
 
   const citiesWithHotels = useMemo(() => {
     const cityMap = new Map(cities.map((c) => [c.id, c]));
@@ -50,41 +35,26 @@ export default function HotelsPage() {
   const tripStaySummary = useMemo(() => {
     let singleTotal = 0;
     let totalNightsWithHotels = 0;
+    let skippedNights = 0;
 
     for (const city of citiesWithHotels) {
       const nights = city.days;
       if (nights <= 0) continue;
       const cityHotels = allHotels.filter((h) => h.cityId === city.id);
-      if (cityHotels.length === 0) continue;
-
-      let chosen: EnrichedHotel | undefined;
-      if (budgetMode === "bed") {
-        const cheap = cityHotels
-          .filter((h) => h.tier === "cheap")
-          .sort((a, b) => Number(b.verified) - Number(a.verified));
-        chosen = cheap[0] ?? cityHotels[0];
-      } else {
-        const privateRoomCandidates = cityHotels.filter(
-          (h) =>
-            h.priceText.includes("פרטי") ||
-            h.priceText.includes("זוגי") ||
-            h.priceText.includes("חדר") ||
-            h.tier === "quality" ||
-            (h.priceMax !== null && h.priceMax >= 1200)
-        );
-        chosen =
-          privateRoomCandidates.find((h) => h.tier === "cheap") ??
-          privateRoomCandidates[0] ??
-          cityHotels[0];
+      const priced = cityHotels
+        .map((hotel) => ({ hotel, rate: nightlyRateForMode(hotel, budgetMode) }))
+        .filter((entry): entry is { hotel: EnrichedHotel; rate: number } => entry.rate != null)
+        .sort((a, b) => Number(b.hotel.verified) - Number(a.hotel.verified) || a.rate - b.rate);
+      const chosen = priced.find((entry) => entry.hotel.tier === "cheap") ?? priced[0];
+      if (!chosen) {
+        skippedNights += nights;
+        continue;
       }
-
-      if (chosen) {
-        totalNightsWithHotels += nights;
-        singleTotal += estimateNightlyRate(chosen, budgetMode) * nights;
-      }
+      totalNightsWithHotels += nights;
+      singleTotal += chosen.rate * nights;
     }
 
-    return { singleTotal, totalNightsWithHotels };
+    return { singleTotal, totalNightsWithHotels, skippedNights };
   }, [citiesWithHotels, allHotels, budgetMode]);
 
   return (
@@ -131,11 +101,17 @@ export default function HotelsPage() {
           <div className="mt-2 inline-flex flex-wrap items-center gap-2 rounded-2xl bg-emerald-500/10 px-3.5 py-2 text-xs font-bold text-emerald-900 dark:bg-emerald-500/15 dark:text-emerald-200">
             <span>
               סה״כ לינה משוער ({tripStaySummary.totalNightsWithHotels} לילות ·{" "}
-              {budgetMode === "bed" ? "מיטה בהוסטל" : "חדר פרטי / זוגי"}):
+              {budgetMode === "bed" ? "סה״כ לפי מיטה" : "סה״כ לפי חדר"}):
             </span>
             <span className="font-mono text-sm font-black text-emerald-700 dark:text-emerald-300">
               NT${tripStaySummary.singleTotal.toLocaleString()}
             </span>
+            {tripStaySummary.skippedNights > 0 && (
+              <span className="text-[11px] font-semibold text-emerald-800/80 dark:text-emerald-200/80">
+                {tripStaySummary.skippedNights} לילות בלי מחיר{" "}
+                {budgetMode === "bed" ? "מיטה" : "חדר"} לא נכללו
+              </span>
+            )}
           </div>
         </div>
 
@@ -149,7 +125,7 @@ export default function HotelsPage() {
             <button
               type="button"
               onClick={() => setBudgetMode("bed")}
-              className={`flex min-h-[38px] items-center gap-1.5 rounded-xl px-3 text-xs font-bold transition-all ${
+              className={`flex min-h-11 min-w-11 items-center gap-1.5 rounded-xl px-3 text-xs font-bold transition-all ${
                 budgetMode === "bed"
                   ? "bg-white text-slate-950 shadow-xs dark:bg-amber-400 dark:text-slate-950"
                   : "text-slate-600 hover:text-slate-900 dark:text-slate-300"
@@ -161,14 +137,14 @@ export default function HotelsPage() {
             <button
               type="button"
               onClick={() => setBudgetMode("room")}
-              className={`flex min-h-[38px] items-center gap-1.5 rounded-xl px-3 text-xs font-bold transition-all ${
+              className={`flex min-h-11 min-w-11 items-center gap-1.5 rounded-xl px-3 text-xs font-bold transition-all ${
                 budgetMode === "room"
                   ? "bg-white text-slate-950 shadow-xs dark:bg-amber-400 dark:text-slate-950"
                   : "text-slate-600 hover:text-slate-900 dark:text-slate-300"
               }`}
             >
               <DoorClosed className="h-3.5 w-3.5" />
-              <span>חדר פרטי</span>
+              <span>חדר</span>
             </button>
           </div>
 
@@ -193,7 +169,24 @@ export default function HotelsPage() {
           const cityHotels = allHotels.filter(
             (h) => h.cityId === city.id && (!onlyVerified || h.verified)
           );
-          if (cityHotels.length === 0) return null;
+          if (cityHotels.length === 0) {
+            if (city.id !== "kenting" && !city.optional) return null;
+            return (
+              <section
+                key={city.id}
+                id={city.id}
+                className="scroll-mt-32 rounded-3xl border-2 border-dashed border-sky-400/80 bg-sky-500/5 p-4 md:p-6"
+              >
+                <h2 className="font-display text-xl font-black text-slate-900 dark:text-white">
+                  {city.nameHe} (אופציונלי)
+                </h2>
+                <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">
+                  אין מלונות שמורים ליעד הזה
+                  {city.note ? `. ${city.note}` : "."}
+                </p>
+              </section>
+            );
+          }
 
           const cheapHotels = cityHotels.filter((h) => h.tier === "cheap");
           const qualityHotels = cityHotels.filter((h) => h.tier === "quality");
@@ -329,6 +322,19 @@ export default function HotelsPage() {
             </section>
           );
         })}
+        {!citiesWithHotels.some((city) => city.id === "kenting") && (
+          <section
+            id="kenting"
+            className="scroll-mt-32 rounded-3xl border-2 border-dashed border-sky-400/80 bg-sky-500/5 p-4 md:p-6"
+          >
+            <h2 className="font-display text-xl font-black text-slate-900 dark:text-white">
+              קנטינג (אופציונלי)
+            </h2>
+            <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">
+              אין מלונות שמורים לקנטינג. {cities.find((city) => city.id === "kenting")?.note}
+            </p>
+          </section>
+        )}
       </div>
     </div>
   );

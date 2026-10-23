@@ -238,9 +238,9 @@ function validateAndBuildDataset(): ValidatedTripDataset {
     ? practicalRaw.alerts.length
     : 0;
 
-  if (attractions.length !== 172) {
+  if (attractions.length !== 180) {
     throw new Error(
-      `[Data Check Failed] Expected 172 attractions, got ${attractions.length}`
+      `[Data Check Failed] Expected 180 attractions, got ${attractions.length}`
     );
   }
   if (hotels.length !== 40) {

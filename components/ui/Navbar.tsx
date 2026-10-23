@@ -59,7 +59,7 @@ export function Navbar() {
           hideMapHud ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
-        <div className="glass-panel pointer-events-auto mx-auto flex h-12 max-w-7xl items-center justify-between gap-2 rounded-2xl px-1.5 shadow-lg md:px-4">
+        <div className="glass-panel pointer-events-auto mx-auto flex min-h-12 max-w-7xl flex-wrap items-center justify-between gap-x-2 gap-y-1 rounded-2xl px-2 py-1 shadow-lg md:px-4 lg:flex-nowrap">
           <div className="flex min-w-0 shrink items-center gap-2">
             <Link
               href="/"
@@ -74,7 +74,7 @@ export function Navbar() {
               </div>
               <div
                 dir="rtl"
-                className="flex items-center gap-1 whitespace-nowrap font-display text-[13px] font-black tracking-tight text-slate-900 sm:text-sm dark:text-white"
+                className="flex flex-wrap items-center gap-1 font-display text-[12px] font-black leading-tight tracking-tight text-slate-900 sm:flex-nowrap sm:text-sm dark:text-white"
               >
                 <span>טייוואן</span>
                 <span aria-hidden="true">·</span>
@@ -109,7 +109,7 @@ export function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex min-h-[38px] items-center gap-1.5 rounded-xl px-3 text-xs font-extrabold transition-colors ${
+                  className={`flex min-h-11 items-center gap-1.5 rounded-xl px-3 text-xs font-extrabold transition-colors ${
                     isActive
                       ? "bg-orange-500 text-white shadow-xs"
                       : "text-slate-700 hover:bg-slate-900/5 hover:text-slate-950 dark:text-slate-200 dark:hover:bg-white/10"

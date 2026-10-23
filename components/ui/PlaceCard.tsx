@@ -19,6 +19,7 @@ import {
   type EnrichedPlace,
 } from "@/lib/data/selectors";
 import { formatDistanceAndWalk } from "@/lib/data/foodAndPlaceMeta";
+import { lodgingUnitChip } from "@/lib/data/lodgingPrice";
 import { getPlaceImage } from "@/lib/data/placeImages";
 import { PhotoCreditPopover } from "./PhotoCreditPopover";
 
@@ -57,18 +58,25 @@ export function PlaceCard({
       ? formatDisplayPriceText(place.priceText)
       : "";
 
+  const unitChip = place.kind === "hotel" ? lodgingUnitChip(place.priceText) : null;
+
   return (
     <article
       dir="rtl"
-      className="overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-sm transition-all hover:border-orange-400/60 dark:border-slate-800 dark:bg-slate-900"
+      className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-sm transition-all hover:border-orange-400/60 dark:border-slate-800 dark:bg-slate-900"
     >
+      <Link
+        href={`/place/${place.id}`}
+        aria-label={place.name}
+        className="absolute inset-0 z-0 rounded-3xl"
+      />
       {/* Photo Banner with "ⓘ" Credit Popover */}
       <div
         className={`relative w-full overflow-hidden bg-slate-900 ${
           compact ? "h-28" : "h-36"
         }`}
       >
-        <Link href={`/place/${place.id}`} className="relative block h-full w-full">
+        <div className="pointer-events-none relative block h-full w-full">
           {useTierIcon && place.kind === "hotel" ? (
             <div
               className={`flex h-full w-full flex-col items-center justify-center gap-1 ${HOTEL_TIER_META[place.tier].bgClass}`}
@@ -149,7 +157,7 @@ export function PlaceCard({
               </span>
             )}
           </div>
-        </Link>
+        </div>
 
         {/* "ⓘ" Photo Credit Popover instead of text over the image */}
         {imageMeta && <PhotoCreditPopover image={imageMeta} />}
@@ -179,12 +187,18 @@ export function PlaceCard({
 
         {/* Price, Hours & Unverified Badge */}
         {(cleanPrice ||
+          unitChip ||
           (place.kind === "food" && place.hours) ||
           isUnverified) && (
           <div className="mt-2.5 flex flex-wrap items-center gap-1.5 text-xs">
             {cleanPrice && (
               <span className="rounded-lg bg-emerald-500/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-emerald-800 dark:text-emerald-300">
                 {cleanPrice}
+              </span>
+            )}
+            {unitChip && (
+              <span className="rounded-full bg-sky-500/15 px-2.5 py-0.5 text-[10px] font-black text-sky-800 dark:text-sky-200">
+                {unitChip}
               </span>
             )}
             {place.kind === "food" && place.hours && (
@@ -202,12 +216,13 @@ export function PlaceCard({
           </div>
         )}
 
-        <div className="mt-3 border-t border-slate-100 pt-2.5 dark:border-slate-800">
+        <div className="relative z-10 mt-3 border-t border-slate-100 pt-2.5 dark:border-slate-800">
           <a
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="toy-button inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-l from-orange-500 to-amber-500 px-4 text-xs font-black text-white shadow-sm"
+            onClick={(event) => event.stopPropagation()}
+            className="toy-button relative z-10 inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-l from-orange-500 to-amber-500 px-4 text-xs font-black text-white shadow-sm"
           >
             <Navigation className="h-4 w-4" />
             <span>נווט</span>

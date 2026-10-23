@@ -3,6 +3,7 @@
 import "./threeCompat";
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
+import { DemandFrames } from "./DemandFrames";
 import { TaiwanIsland } from "./TaiwanIsland";
 import { OceanWater } from "./OceanWater";
 import { KentingDetourLine } from "./delight/KentingDetourLine";
@@ -61,9 +62,11 @@ export function MiniTaiwanMap({
       }}
     >
       <Canvas
-        dpr={[1, 1.5]}
+        frameloop="demand"
+        dpr={[1, 2]}
         camera={{ position: [-4.5, 18.5, 15.5], fov: 42, near: 0.1, far: 140 }}
       >
+        <DemandFrames />
         <ambientLight intensity={store.isNightMode ? 0.65 : 1.2} />
         <directionalLight
           position={[10, 18, 8]}
@@ -83,6 +86,7 @@ export function MiniTaiwanMap({
             activeTimelineCityId={currentDay.cityId}
             isNightMode={store.isNightMode}
             onSelectCity={(cityId) => tripActions.selectCity(cityId)}
+            onlyLabelCityId={activeCityId}
           />
         </Suspense>
 

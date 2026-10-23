@@ -18,6 +18,7 @@ import {
 import { useCameraPointerAndKeys } from "./camera/useCameraPointerAndKeys";
 import { runCameraCommand } from "./camera/runCameraCommand";
 import { poseForRouteDay } from "./camera/routeCameraFollow";
+import { markMapActivity } from "./mapActivity";
 
 export { computeFitIslandPose };
 
@@ -65,7 +66,7 @@ export function CameraRig({
     const fit = computeFitIslandPose(size.width, size.height);
     desiredTarget.current.copy(fit.target);
     desiredCamPos.current.copy(fit.position);
-    isTransitioning.current = true;
+    isTransitioning.current = true; markMapActivity();
     transitionTimer.current = 0.65;
   }, [
     size.width,
@@ -83,7 +84,7 @@ export function CameraRig({
         const fit = computeFitIslandPose(window.innerWidth, window.innerHeight);
         desiredTarget.current.copy(fit.target);
         desiredCamPos.current.copy(fit.position);
-        isTransitioning.current = true;
+        isTransitioning.current = true; markMapActivity();
         transitionTimer.current = 0.7;
       }, 120);
     };
@@ -101,14 +102,14 @@ export function CameraRig({
         if (node) {
           desiredTarget.current.set(node.x, node.y + 0.35, node.z);
           desiredCamPos.current.set(node.x - 1.8, node.y + 4.4, node.z + 4.6);
-          isTransitioning.current = true;
+          isTransitioning.current = true; markMapActivity();
           transitionTimer.current = 0.95;
           return;
         }
       }
       desiredTarget.current.set(0, 0.25, 0);
       desiredCamPos.current.set(0, 12.2, 12.8);
-      isTransitioning.current = true;
+      isTransitioning.current = true; markMapActivity();
       transitionTimer.current = 1.05;
       return;
     }
@@ -124,7 +125,7 @@ export function CameraRig({
           desiredCamPos.current,
           store.sheetSnap
         );
-        isTransitioning.current = true;
+        isTransitioning.current = true; markMapActivity();
         transitionTimer.current = 0.95;
         return;
       }
@@ -144,7 +145,7 @@ export function CameraRig({
           desiredCamPos.current,
           store.sheetSnap
         );
-        isTransitioning.current = true;
+        isTransitioning.current = true; markMapActivity();
         transitionTimer.current = 0.95;
         return;
       }
@@ -153,7 +154,7 @@ export function CameraRig({
     const fit = computeFitIslandPose(size.width, size.height);
     desiredTarget.current.copy(fit.target);
     desiredCamPos.current.copy(fit.position);
-    isTransitioning.current = true;
+    isTransitioning.current = true; markMapActivity();
     transitionTimer.current = 0.9;
   }, [
     selectedCityId,
@@ -197,6 +198,13 @@ export function CameraRig({
   useFrame((_, delta) => {
     const controls = controlsRef.current;
     if (!controls) return;
+    if (
+      pressedKeys.current.size > 0 ||
+      isTransitioning.current ||
+      userInteracting.current
+    ) {
+      markMapActivity();
+    }
 
     // 1. Desktop keyboard navigation
     if (pressedKeys.current.size > 0) {
@@ -256,7 +264,7 @@ export function CameraRig({
           desiredTarget.current,
           desiredCamPos.current
         );
-        isTransitioning.current = true;
+        isTransitioning.current = true; markMapActivity();
         transitionTimer.current = 0.45;
       }
     }
@@ -315,9 +323,11 @@ export function CameraRig({
       onStart={() => {
         userInteracting.current = true;
         isTransitioning.current = false;
+        markMapActivity();
       }}
       onEnd={() => {
         userInteracting.current = false;
+        markMapActivity();
       }}
     />
   );

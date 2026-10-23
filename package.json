@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:maps": "node scripts/test-maps-links.mjs"
+    "test": "node --experimental-strip-types --test lib/data/googleMapsUrl.test.ts",
+    "test:maps": "node --experimental-strip-types --test lib/data/googleMapsUrl.test.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

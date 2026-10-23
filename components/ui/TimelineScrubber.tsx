@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   SkipBack,
   SkipForward,
@@ -20,11 +21,11 @@ export function TimelineScrubber() {
   const days = getTimelineDays();
   const legs = getRouteLegs();
   const currentDay = days[store.currentDayIndex] ?? days[0];
-  const todayStatus = getTripTodayStatus(
-    typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search).get("today")
-      : null
-  );
+  const [todayOverride, setTodayOverride] = useState<string | null>(null);
+  useEffect(() => {
+    setTodayOverride(new URLSearchParams(window.location.search).get("today"));
+  }, []);
+  const todayStatus = getTripTodayStatus(todayOverride);
 
   // Hide timeline pill when city sheet is snapped to half or full
   if (
@@ -114,10 +115,11 @@ export function TimelineScrubber() {
               tripActions.setTodayCardOpen(true);
             }}
             title={todayStatus.statusTextHe}
+            suppressHydrationWarning
             className="toy-button flex min-h-[44px] min-w-[44px] shrink-0 items-center gap-1 rounded-full bg-amber-400/25 px-2.5 text-[11px] font-extrabold text-amber-950 hover:bg-amber-400/40 dark:bg-amber-400/20 dark:text-amber-200"
           >
             <Sparkles className="h-3 w-3 shrink-0 text-orange-500 sm:h-3.5 sm:w-3.5" />
-            <span className="whitespace-nowrap">{todayStatus.chipLabelHe}</span>
+            <span className="whitespace-nowrap" suppressHydrationWarning>{todayStatus.chipLabelHe}</span>
           </button>
 
           {/* Expand Chevron (>=44x44px) */}

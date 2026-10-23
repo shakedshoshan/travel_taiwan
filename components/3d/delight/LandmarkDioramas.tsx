@@ -21,6 +21,7 @@ interface LandmarkDioramasProps {
   smlBoatRef: RefObject<THREE.Group | null>;
   alishanTrainRef: RefObject<THREE.Group | null>;
   lighthouseBeamRef: RefObject<THREE.Mesh | null>;
+  waterOnly?: boolean;
 }
 
 export function LandmarkDioramas({
@@ -31,6 +32,7 @@ export function LandmarkDioramas({
   smlBoatRef,
   alishanTrainRef,
   lighthouseBeamRef,
+  waterOnly = false,
 }: LandmarkDioramasProps) {
   const ropewayLineGeo = useMemo(() => {
     const start = new THREE.Vector3(
@@ -49,6 +51,8 @@ export function LandmarkDioramas({
 
   return (
     <group ref={landmarksRootRef} name="landmark-dioramas">
+      {!waterOnly && (
+      <>
       {/* 1. Mini Taipei 101 Bamboo-Tiered Tower */}
       <group
         name="landmark-taipei-101"
@@ -93,30 +97,59 @@ export function LandmarkDioramas({
           />
         </mesh>
       </group>
+      </>
+      )}
 
       {/* 2. Sun Moon Lake Water Surface + Gliding Boat + Ropeway Cable Car */}
       <group name="landmark-sun-moon-lake">
         <mesh
           position={[
-            landmarks.smlLake.x,
-            landmarks.smlLake.y + 0.48,
-            landmarks.smlLake.z,
+            landmarks.smlLake.x + 0.72,
+            landmarks.smlLake.y + 0.62,
+            landmarks.smlLake.z + 0.06,
           ]}
           rotation={[-Math.PI / 2, 0, 0]}
-          renderOrder={3}
+          scale={[1.22, 0.86, 1]}
+          renderOrder={4}
         >
-          <circleGeometry args={[0.38, 28]} />
+          <circleGeometry args={[0.92, 36]} />
           {isNightMode ? (
             <meshStandardMaterial
-              color="#38bdf8"
-              emissive="#0284c7"
-              emissiveIntensity={0.65}
-              roughness={0.22}
-              metalness={0.04}
+              color="#5eefff"
+              emissive="#e0fbff"
+              emissiveIntensity={0.9}
+              roughness={0.2}
+              metalness={0.02}
+              depthTest={false}
+              depthWrite={false}
             />
           ) : (
-            <meshBasicMaterial color="#0ea5e9" />
+            <meshBasicMaterial
+              color="#12d8f6"
+              depthTest={false}
+              depthWrite={false}
+            />
           )}
+        </mesh>
+        <mesh
+          position={[
+            landmarks.smlLake.x + 0.72,
+            landmarks.smlLake.y + 0.6,
+            landmarks.smlLake.z + 0.06,
+          ]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={[1.22, 0.86, 1]}
+          renderOrder={4}
+        >
+          <ringGeometry args={[0.84, 1.02, 36]} />
+          <meshBasicMaterial
+            color={isNightMode ? "#e7fbff" : "#f4fdff"}
+            transparent
+            opacity={0.9}
+            side={THREE.DoubleSide}
+            depthTest={false}
+            depthWrite={false}
+          />
         </mesh>
 
         {/* Sun Moon Lake Ferry Boat */}
@@ -147,6 +180,8 @@ export function LandmarkDioramas({
         </group>
 
         {/* Ropeway Cable Line & Car */}
+        {!waterOnly && (
+          <>
         <mesh geometry={ropewayLineGeo}>
           <meshBasicMaterial color="#e2e8f0" />
         </mesh>
@@ -158,8 +193,12 @@ export function LandmarkDioramas({
             emissiveIntensity={isNightMode ? 1.8 : 0.6}
           />
         </mesh>
+          </>
+        )}
       </group>
 
+      {!waterOnly && (
+      <>
       {/* 3. Alishan Forest Railway Red Train + Track Ring */}
       <group name="landmark-alishan-train">
         <mesh
@@ -287,6 +326,8 @@ export function LandmarkDioramas({
           />
         </mesh>
       </group>
+      </>
+      )}
     </group>
   );
 }

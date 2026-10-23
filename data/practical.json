@@ -561,7 +561,7 @@
   "phrasesVerified": true,
   "_meta": {
     "tripDates": "6.11–8.12.2026",
-    "updated": "2026-10-22",
+    "updated": "2026-10-23",
     "noteHe": "שדה verified=false = לא אומת ממקור רשמי; לבדוק לפני הנסיעה."
   },
   "alerts": [
@@ -600,6 +600,59 @@
       "verified": true,
       "sourceUrls": [
         "https://ylbus.fontour.com/news/18"
+      ]
+    },
+    {
+      "id": "lanyu-winter-ferry-2026",
+      "dateHe": "12.10.2026 – מרץ 2027",
+      "titleHe": "אי הסחלבים: אין סירה מקנטינג בחורף",
+      "detailHe": "הקו הוביהו–לאניו מושבת עד אמצע מרץ 2027. מפוגאנג (טאיטונג) יש שיט בימים ב׳, ד׳, ו׳ ובכל יום ראשון שני, תלוי במזג הים. 21–24.10 כל השיט לאיים בוטל בגלל טייפון.",
+      "severity": "warning",
+      "verified": true,
+      "checkedAt": "2026-10-23",
+      "sourceUrls": [
+        "https://www.farnlin.com.tw/info_detial.html?InfoID=361",
+        "https://www.travel123.com.tw/news/article.php?slug=offshore-islands-winter-ferry-stay-2026",
+        "https://www.motcmpb.gov.tw/ShipAlter?NodeId=10512&SiteId=1"
+      ]
+    },
+    {
+      "id": "green-island-winter-2026",
+      "dateHe": "נובמבר–דצמבר",
+      "titleHe": "האי הירוק: יש שיט יומי, אבל ביטולים ברוח",
+      "detailHe": "פוגאנג–האי הירוק כ-50 דק׳. השיט מתבטל או מופעל רק בבוקר כשרוח המונסון חזקה. להזמין לינה שאפשר לבטל ולהשאיר יום רזרבה בטאיטונג. גם הטיסות מטאיטונג מתבטלות ברוח.",
+      "severity": "warning",
+      "verified": true,
+      "checkedAt": "2026-10-23",
+      "sourceUrls": [
+        "https://www.travel123.com.tw/news/article.php?slug=offshore-islands-winter-ferry-stay-2026",
+        "https://ferry.tw/time-table/lyudao"
+      ]
+    },
+    {
+      "id": "islets-season-2026",
+      "dateHe": "30.11 / 31.10",
+      "titleHe": "אי הצב ואי קילונג: עונת הנחיתה נגמרת",
+      "detailHe": "אי הצב (龜山島): נחיתה עד 30.11, בקשה 11–20 יום מראש. אי קילונג (基隆嶼): פתוח רק עד 31.10, סגור בזמן הטיול.",
+      "severity": "info",
+      "verified": true,
+      "checkedAt": "2026-10-23",
+      "sourceUrls": [
+        "https://www.tad.gov.tw/m1.aspx?id=C100_164&sNo=0001106",
+        "https://travel.yam.com/article/137505"
+      ]
+    },
+    {
+      "id": "liuqiu-ferry-2026",
+      "dateHe": "כל הטיול",
+      "titleHe": "שיאוליוצ׳יו: סירה מדונגגאנג",
+      "detailHe": "סירות פרטיות לנמל באישה (泰富, 藍白, 聯營): NT$250 לכיוון, NT$450 הלוך-חזור, 25–30 דק׳, אחרונה מהאי כ-16:30–16:50. הסירה הציבורית 琉興 לנמל דאפו: NT$200. חובה מסמך מזהה עם תמונה (דרכון).",
+      "severity": "info",
+      "verified": true,
+      "checkedAt": "2026-10-23",
+      "sourceUrls": [
+        "https://www.pthg.gov.tw/liuchiu/cp.aspx?n=8DE2BED8879F898F&s=627BF485C1E0AC19",
+        "https://ferry.tw/time-table/liuqiu"
       ]
     }
   ]

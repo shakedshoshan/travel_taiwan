@@ -11,6 +11,7 @@ import { FOOD_TYPE_META, HOTEL_TIER_META } from "./foodAndPlaceMeta";
 import { searchEverything, type SearchResultItem } from "./search";
 
 export { FOOD_TYPE_META, HOTEL_TIER_META, searchEverything };
+export { buildGoogleMapsUrl } from "./googleMapsUrl";
 export type {
   EnrichedAttraction,
   EnrichedCity,
@@ -193,113 +194,6 @@ export function getCityBundle(cityId: CityId): CityBundle {
     hotels,
     hotelsByTier,
   };
-}
-
-const BARE_CITY_NAMES_ZH = new Set([
-  "台北",
-  "臺北",
-  "新北",
-  "基隆",
-  "宜蘭",
-  "桃園",
-  "新竹",
-  "苗栗",
-  "台中",
-  "臺中",
-  "彰化",
-  "南投",
-  "日月潭",
-  "嘉義",
-  "阿里山",
-  "台南",
-  "臺南",
-  "高雄",
-  "屏東",
-  "花蓮",
-  "台東",
-  "臺東",
-  "墾丁",
-  "光復",
-  "台灣",
-  "臺灣",
-]);
-
-/**
- * Builds a Google Maps navigation or search URL:
- * - When the place has exact coordinates (`approxLocation === false` or `resolvedCoords.isExact === true`),
- *   returns `https://www.google.com/maps/dir/?api=1&destination=<lat,lng>`.
- * - Otherwise queries `nameZh || nameEn || name` + English city.
- * - Never returns the city name alone, and never strips digits or Latin characters.
- */
-export function buildGoogleMapsUrl(place: {
-  name: string;
-  nameZh?: string | null;
-  nameEn?: string | null;
-  cityNameEn?: string;
-  city?: string;
-  lat?: number;
-  lng?: number;
-  approxLocation?: boolean;
-  resolvedCoords?: { lat: number; lng: number; isExact: boolean };
-}): string {
-  const isExact =
-    place.approxLocation === false || place.resolvedCoords?.isExact === true;
-  const lat = place.resolvedCoords?.lat ?? place.lat;
-  const lng = place.resolvedCoords?.lng ?? place.lng;
-
-  if (
-    isExact &&
-    typeof lat === "number" &&
-    typeof lng === "number" &&
-    Number.isFinite(lat) &&
-    Number.isFinite(lng)
-  ) {
-    return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-  }
-
-  const cityEn = (place.cityNameEn ?? "").trim() || "Taiwan";
-  const cityEnLower = cityEn.toLowerCase();
-
-  const rawZh = (place.nameZh ?? "").trim();
-  const zhIsValid =
-    rawZh.length > 0 &&
-    !BARE_CITY_NAMES_ZH.has(rawZh) &&
-    rawZh.toLowerCase() !== cityEnLower &&
-    !(rawZh.length === 1 && place.name.trim().length > 3);
-
-  const rawEn = (place.nameEn ?? "")
-    .replace(/\s*\(venue unverified\)\s*/gi, "")
-    .trim();
-  const enIsValid =
-    rawEn.length > 0 &&
-    !BARE_CITY_NAMES_ZH.has(rawEn) &&
-    rawEn.toLowerCase() !== cityEnLower;
-
-  // Strip only Hebrew letters and geresh/gershayim; NEVER strip digits (0-9) or Latin/CJK characters
-  const nonHebrewFromName = place.name
-    .replace(/[\u0590-\u05FF״׳]+/g, " ")
-    .replace(/^[\s–—·,.:;()-]+|[\s–—·,.:;()-]+$/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-
-  const nameFallback =
-    nonHebrewFromName.length > 0 &&
-    nonHebrewFromName.toLowerCase() !== cityEnLower &&
-    !BARE_CITY_NAMES_ZH.has(nonHebrewFromName)
-      ? nonHebrewFromName
-      : place.name.trim();
-
-  const primaryQuery = zhIsValid
-    ? rawZh
-    : enIsValid
-      ? rawEn
-      : nameFallback;
-
-  const queryParts = [primaryQuery, cityEn];
-
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    queryParts.join(" ").replace(/\s+/g, " ").trim()
-  )}`;
 }
 
 /**

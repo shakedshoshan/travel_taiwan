@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { markLoadStage } from "../loadProgress";
 import * as THREE from "three";
 import { WorldHtml } from "../WorldHtml";
 import { getCityBundle } from "@/lib/data/selectors";
@@ -28,6 +29,10 @@ export function CityDestination3DScene({
   categoryFilter,
 }: CityDestination3DSceneProps) {
   const store = useTripStore();
+  useEffect(() => {
+    markLoadStage("terrain");
+    markLoadStage("pins");
+  }, []);
   const bundle = useMemo(() => getCityBundle(cityId), [cityId]);
   const allNodes = useMemo(() => computeCityMapNodes(cityId), [cityId]);
 

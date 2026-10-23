@@ -3,121 +3,58 @@ export interface LabelSlot {
   ay: number;
   w: number;
   h: number;
-  ox: number;
-  oy: number;
-  homeOy: number;
-  drop: number;
+  priority: number;
+  showWhenFar: boolean;
   active: boolean;
-  /** City labels stay on their pins. Island labels move around them. */
-  locked: boolean;
-  hasSolve: boolean;
-  solvedAx: number;
-  solvedAy: number;
-  solvedW: number;
+  hidden: boolean;
+  scale: number;
 }
 
 export const labelSlots = new Map<string, LabelSlot>();
 export const labelElements = new Map<string, HTMLDivElement>();
+
+let farZoom = false;
 let solveQueued = false;
 
-function anchorsMoved(): boolean {
-  for (const slot of labelSlots.values()) {
-    if (!slot.active) continue;
-    if (!slot.hasSolve) return true;
-    if (Math.abs(slot.ax - slot.solvedAx) > 12) return true;
-    if (Math.abs(slot.ay - slot.solvedAy) > 12) return true;
-    if (Math.abs(slot.w - slot.solvedW) > 10) return true;
-  }
-  return false;
+export function setFarZoom(next: boolean) {
+  farZoom = next;
 }
 
-function solveLabelOverlaps() {
+function overlaps(a: LabelSlot, b: LabelSlot): boolean {
+  const scale = Math.min(a.scale, b.scale);
+  const gapX = (a.w + b.w) * 0.5 * scale + 6 - Math.abs(b.ax - a.ax);
+  const gapY = (a.h + b.h) * 0.5 * scale + 4 - Math.abs(b.ay - a.ay);
+  return gapX > 1 && gapY > 1;
+}
+
+function solveLabelVisibility() {
   const list: LabelSlot[] = [];
   for (const slot of labelSlots.values()) {
     if (!slot.active) continue;
+    slot.hidden = farZoom && !slot.showWhenFar;
+    slot.scale = farZoom ? 0.86 : 1;
     list.push(slot);
   }
-  const maxDrift = 96;
-  for (const slot of list) {
-    if (slot.locked) {
-      slot.ox = 0;
-      slot.oy = 0;
-      slot.homeOy = 0;
+
+  const visible = list
+    .filter((slot) => !slot.hidden)
+    .sort((a, b) => b.priority - a.priority || a.ay - b.ay);
+  const kept: LabelSlot[] = [];
+
+  for (const slot of visible) {
+    const hit = kept.find((other) => overlaps(other, slot));
+    if (!hit) {
+      kept.push(slot);
       continue;
     }
-    const widthChanged = slot.hasSolve && Math.abs(slot.w - slot.solvedW) > 10;
-    if (!slot.hasSolve || widthChanged) {
-      slot.ox = 0;
-      slot.oy = slot.drop;
+    if (slot.priority < hit.priority) {
+      slot.hidden = true;
+      continue;
     }
-    slot.homeOy = 0;
+    slot.scale = Math.min(slot.scale, 0.78);
+    hit.scale = Math.min(hit.scale, 0.78);
+    kept.push(slot);
   }
-  for (let iter = 0; iter < 10; iter++) {
-    for (let i = 0; i < list.length; i++) {
-      for (let j = i + 1; j < list.length; j++) {
-        const a = list[i];
-        const b = list[j];
-        if (a.locked && b.locked) continue;
-        const ax = a.ax + a.ox;
-        const ay = a.ay + a.oy;
-        const bx = b.ax + b.ox;
-        const by = b.ay + b.oy;
-        const gapX = (a.w + b.w) * 0.5 + 8 - Math.abs(dx(ax, bx));
-        const gapY = (a.h + b.h) * 0.5 + 8 - Math.abs(dy(ay, by));
-        if (gapX <= 1 || gapY <= 1) continue;
-        if (a.locked || b.locked) {
-          const free = a.locked ? b : a;
-          const fixed = free === a ? b : a;
-          const fx = fixed.ax + fixed.ox;
-          const fy = fixed.ay + fixed.oy;
-          const px = free.ax + free.ox;
-          const py = free.ay + free.oy;
-          if (gapX < gapY) {
-            free.ox += (px >= fx ? 1 : -1) * gapX;
-          } else {
-            free.oy += (py >= fy ? 1 : -1) * gapY;
-          }
-          continue;
-        }
-        const xDir =
-          Math.abs(bx - ax) < 4 ? (a.ax <= b.ax ? -1 : 1) : Math.sign(bx - ax);
-        const aWould = a.ox - xDir * gapX * 0.5;
-        const bWould = b.ox + xDir * gapX * 0.5;
-        if (Math.abs(aWould) <= maxDrift && Math.abs(bWould) <= maxDrift && gapX <= gapY) {
-          a.ox = aWould;
-          b.ox = bWould;
-        } else if (ay >= by) {
-          a.oy += gapY;
-        } else {
-          b.oy += gapY;
-        }
-      }
-    }
-    for (const slot of list) {
-      if (slot.locked) {
-        slot.ox = 0;
-        slot.oy = 0;
-        continue;
-      }
-      if (slot.ox > maxDrift) slot.ox = maxDrift;
-      if (slot.ox < -maxDrift) slot.ox = -maxDrift;
-      if (slot.oy > maxDrift) slot.oy = maxDrift;
-      if (slot.oy < -maxDrift) slot.oy = -maxDrift;
-    }
-  }
-  for (const slot of list) {
-    slot.solvedAx = slot.ax;
-    slot.solvedAy = slot.ay;
-    slot.solvedW = slot.w;
-    slot.hasSolve = true;
-  }
-}
-
-function dx(ax: number, bx: number) {
-  return bx - ax;
-}
-function dy(ay: number, by: number) {
-  return by - ay;
 }
 
 export function queueLabelSolve() {
@@ -125,15 +62,37 @@ export function queueLabelSolve() {
   solveQueued = true;
   queueMicrotask(() => {
     solveQueued = false;
-    if (anchorsMoved()) solveLabelOverlaps();
+    solveLabelVisibility();
     for (const [id, slot] of labelSlots) {
       const el = labelElements.get(id);
       if (!el || !slot.active) continue;
-      const x = slot.ax + slot.ox;
-      const y = slot.ay + slot.oy;
+      const decorative = el.dataset.decorative === "1";
+      if (slot.hidden) {
+        el.hidden = true;
+        el.style.opacity = "0";
+        el.style.pointerEvents = "none";
+        el.setAttribute("aria-hidden", "true");
+        continue;
+      }
+      el.hidden = false;
       el.style.opacity = "1";
       el.style.pointerEvents = "auto";
-      el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+      if (decorative) el.setAttribute("aria-hidden", "true");
+      else el.removeAttribute("aria-hidden");
+      el.style.transform = `translate3d(${slot.ax.toFixed(1)}px, ${slot.ay.toFixed(1)}px, 0)`;
+      const inner = el.firstElementChild as HTMLElement | null;
+      if (inner) {
+        const anchor = inner.dataset.anchor;
+        const base =
+          anchor === "bottom"
+            ? "translate3d(-50%, -100%, 0)"
+            : anchor === "center"
+              ? "translate3d(-50%, -50%, 0)"
+              : "";
+        inner.style.transformOrigin = anchor === "bottom" ? "50% 100%" : "50% 50%";
+        inner.style.transform =
+          slot.scale === 1 ? base : `${base} scale(${slot.scale})`.trim();
+      }
     }
   });
 }

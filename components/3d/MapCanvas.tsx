@@ -4,6 +4,8 @@ import "./threeCompat";
 import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useThree } from "@react-three/fiber";
+import { DemandFrames } from "./DemandFrames";
+import { bindDefaultLoadingManager, markLoadStage, useLoadProgress } from "./loadProgress";
 import { AdaptiveDpr, AdaptiveEvents, Stars } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { TaiwanIsland } from "./TaiwanIsland";
@@ -59,7 +61,8 @@ function checkWebGLAvailable(): boolean {
 
 export function MapCanvas() {
   const store = useTripStore();
-  const [isReady, setIsReady] = useState(false);
+  const loadProgress = useLoadProgress();
+  const [coarsePointer, setCoarsePointer] = useState(false);
   const [showAllCityLabels, setShowAllCityLabels] = useState(true);
   const [cityCategoryFilter, setCityCategoryFilter] = useState<
     "all" | "hotel" | "food" | "attraction" | "nature"
@@ -75,8 +78,11 @@ export function MapCanvas() {
     if (!supported) {
       tripActions.setUse2DFallback(true);
     }
-    const timer = window.setTimeout(() => setIsReady(true), 320);
-    return () => window.clearTimeout(timer);
+    const media = window.matchMedia("(pointer: coarse)");
+    const applyPointer = () => setCoarsePointer(media.matches);
+    applyPointer();
+    media.addEventListener("change", applyPointer);
+    return () => media.removeEventListener("change", applyPointer);
   }, []);
 
   const handleSelectPlace = (place: EnrichedPlace) => {
@@ -108,9 +114,10 @@ export function MapCanvas() {
           : OCEAN_HORIZON_DAY,
       }}
     >
-      <TaiwanLoadingScreen visible={!isReady} />
+      <TaiwanLoadingScreen visible={loadProgress < 100} progress={loadProgress} />
 
       <Canvas
+        frameloop="demand"
         shadows={{ type: THREE.PCFShadowMap }}
         dpr={[1, 2]}
         camera={{ position: [-4.5, 19.5, 16.5], fov: 42, near: 0.1, far: 160 }}
@@ -120,10 +127,15 @@ export function MapCanvas() {
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 0.92,
         }}
+        onCreated={() => {
+          bindDefaultLoadingManager();
+          markLoadStage("frame");
+        }}
         onPointerMissed={() => {
           // Clicking empty ocean closes city drawer if open
         }}
       >
+        <DemandFrames />
         <AdaptiveDpr pixelated />
         <AdaptiveEvents />
         <StaticShadows isNightMode={store.isNightMode} />
@@ -151,8 +163,8 @@ export function MapCanvas() {
           position={store.isNightMode ? [-8, 16, -6] : [12, 22, 10]}
           intensity={store.isNightMode ? 0.7 : 1.25}
           color={store.isNightMode ? "#60a5fa" : "#fff4e0"}
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
+          shadow-mapSize-width={coarsePointer ? 512 : 1024}
+          shadow-mapSize-height={coarsePointer ? 512 : 1024}
           shadow-camera-near={1}
           shadow-camera-far={60}
           shadow-camera-left={-16}
@@ -174,7 +186,7 @@ export function MapCanvas() {
             <Stars
               radius={55}
               depth={35}
-              count={1800}
+              count={coarsePointer ? 400 : 900}
               factor={3.5}
               saturation={0.5}
               fade
@@ -236,7 +248,7 @@ export function MapCanvas() {
           focusedPlaceId={store.focusedPlaceId}
         />
 
-        {store.isNightMode && (
+        {store.isNightMode && !coarsePointer && (
           <EffectComposer>
             <Bloom
               luminanceThreshold={0.78}

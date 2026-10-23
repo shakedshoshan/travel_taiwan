@@ -32,8 +32,8 @@ const counts = {
 console.log("[Data Counts Check]", JSON.stringify(counts, null, 2));
 
 const errors = [];
-if (attractions.length !== 172) {
-  errors.push(`attractions must be 172 (got ${attractions.length})`);
+if (attractions.length !== 180) {
+  errors.push(`attractions must be 180 (got ${attractions.length})`);
 }
 if (hotels.length !== 40) {
   errors.push(`hotels must be 40 (got ${hotels.length})`);

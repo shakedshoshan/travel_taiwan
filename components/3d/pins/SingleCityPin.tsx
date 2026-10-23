@@ -9,6 +9,19 @@ import { tripActions } from "@/lib/store/useTripStore";
 import { triggerHapticTap } from "@/lib/haptics";
 import type { CityId } from "@/data/types";
 
+/** Fixed world offset so each resting name sits beside its pin. Positive Z is south. */
+const LABEL_NUDGE: Partial<Record<CityId, { x: number; z: number }>> = {
+  taipei: { x: -1.55, z: 3.6 },
+  taichung: { x: -1.05, z: -0.85 },
+  "sun-moon-lake": { x: -2.15, z: -0.15 },
+  alishan: { x: 0.2, z: 1.45 },
+  tainan: { x: -0.85, z: -0.15 },
+  kaohsiung: { x: -1.05, z: -0.2 },
+  hualien: { x: 1.15, z: 0.35 },
+  taitung: { x: -1.35, z: -0.45 },
+  kenting: { x: -0.35, z: -1.4 },
+};
+
 interface SingleCityPinProps {
   city: EnrichedCity;
   index: number;
@@ -17,6 +30,8 @@ interface SingleCityPinProps {
   isNightMode: boolean;
   prefersReducedMotion: boolean;
   onSelectCity: (cityId: CityId) => void;
+  /** When set, only this city's HTML label is mounted. */
+  onlyLabelCityId?: CityId | null;
 }
 
 export function SingleCityPin({
@@ -27,6 +42,7 @@ export function SingleCityPin({
   isNightMode,
   prefersReducedMotion,
   onSelectCity,
+  onlyLabelCityId = null,
 }: SingleCityPinProps) {
   const groupRef = useRef<THREE.Group>(null);
   const ringRef = useRef<THREE.Mesh>(null);
@@ -44,7 +60,32 @@ export function SingleCityPin({
 
   const isOnRoute = city.onRoute;
   const isOptionalPin = Boolean(city.optional || city.id === "kenting");
-  const showPinLabel = isOnRoute || isOptionalPin || hovered || isSelected;
+  const showPinLabel =
+    onlyLabelCityId == null || onlyLabelCityId === city.id;
+  const routeCaption =
+    city.routeOrder && city.routeOrder.length > 1
+      ? `מקטעים ${city.routeOrder.join(", ")}`
+      : city.routeOrder && city.routeOrder.length === 1
+        ? (city.dates[0] ?? `מקטע ${city.routeOrder[0]}`)
+        : null;
+  const labelPriority = isSelected
+    ? 100
+    : hovered
+      ? 90
+      : isTimelineActive
+        ? 80
+        : isOnRoute
+          ? 60
+          : isOptionalPin
+            ? 55
+            : 30;
+  const showWhenFar =
+    onlyLabelCityId === city.id ||
+    isOnRoute ||
+    isOptionalPin ||
+    isSelected ||
+    hovered ||
+    isTimelineActive;
 
   const baseScale = isOnRoute ? 1.05 : isOptionalPin ? 0.92 : 0.65;
   const activeMultiplier = isSelected
@@ -194,21 +235,33 @@ export function SingleCityPin({
           <meshBasicMaterial color="#ffffff" />
         </mesh>
 
-        {/* City Label rendered directly as a child of its pin's group */}
-        {showPinLabel && (
-          <WorldHtml
-            position={[0, 0.2, 0]}
-            anchor="bottom"
-            screenOffset={[0, -6]}
-            clampToViewport
-            avoidOverlap
-            overlapLocked
-            zIndexRange={[isSelected || hovered ? 32 : 20, 0]}
-          >
+      </group>
+      {showPinLabel && (
+        <WorldHtml
+          position={[
+            LABEL_NUDGE[city.id]?.x ?? 0,
+            city.worldY + 0.82,
+            LABEL_NUDGE[city.id]?.z ?? 0,
+          ]}
+          anchor="bottom"
+          screenOffset={[0, -4]}
+          clampToViewport
+          labelPriority={labelPriority}
+          showWhenFar={showWhenFar}
+          ariaHidden={onlyLabelCityId != null && onlyLabelCityId !== city.id}
+          zIndexRange={[isSelected || hovered ? 32 : 20, 0]}
+        >
             <div dir="rtl" className="flex flex-col items-center">
+              {routeCaption && (hovered || isSelected) && (
+                <span className="pointer-events-none mb-0.5 text-center text-[10px] font-bold leading-none text-slate-950 [text-shadow:0_1px_0_#fff] dark:text-white dark:[text-shadow:0_1px_2px_#020617]">
+                  {routeCaption}
+                </span>
+              )}
               <button
                 type="button"
                 aria-label={`${city.nameHe} (${city.nameEn})${
+                  routeCaption ? ` – ${routeCaption}` : ""
+                }${
                   city.onRoute
                     ? ` – ${city.days} ימים במסלול`
                     : isOptionalPin
@@ -221,7 +274,7 @@ export function SingleCityPin({
                   triggerHapticTap();
                   onSelectCity(city.id);
                 }}
-                className={`relative flex min-h-[44px] min-w-[44px] cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full px-3 text-[13px] font-bold shadow-lg transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                className={`relative flex cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold shadow-lg transition-transform after:absolute after:-inset-2 after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                   isSelected
                     ? "scale-105 bg-amber-400 text-slate-950 ring-2 ring-white"
                     : hovered
@@ -235,7 +288,7 @@ export function SingleCityPin({
                             : "bg-slate-900/90 text-slate-100"
                 }`}
               >
-                { city.nameHe }
+                {city.nameHe}
               </button>
 
               {(hovered || isSelected) && (
@@ -261,9 +314,9 @@ export function SingleCityPin({
                           triggerHapticTap();
                           tripActions.enterCityZoomMap(city.id);
                         }}
-                        className="rounded-full bg-amber-400 px-2 py-0.5 text-[9px] font-black text-slate-950 hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-amber-400 px-3 text-[11px] font-black text-slate-950 hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                       >
-                        זום 3D 🔍
+                        זום למפת יעד 3D
                       </button>
                     </div>
                   )}
@@ -272,7 +325,6 @@ export function SingleCityPin({
             </div>
           </WorldHtml>
         )}
-      </group>
     </group>
   );
 }

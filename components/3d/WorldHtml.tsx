@@ -13,6 +13,7 @@ import {
   labelElements,
   labelSlots,
   queueLabelSolve,
+  setFarZoom,
 } from "./overlay/labelOverlapSolver";
 
 interface WorldHtmlEntry {
@@ -21,6 +22,7 @@ interface WorldHtmlEntry {
   center: boolean;
   anchor: "center" | "bottom";
   zIndex: number;
+  ariaHidden: boolean;
   bindElement: (el: HTMLDivElement | null) => void;
 }
 
@@ -68,6 +70,7 @@ export function WorldHtmlHost() {
         <div
           key={entry.id}
           ref={entry.bindElement}
+          aria-hidden={entry.ariaHidden || undefined}
           style={{
             position: "absolute",
             top: 0,
@@ -80,6 +83,9 @@ export function WorldHtmlHost() {
           }}
         >
           <div
+            data-anchor={
+              entry.anchor === "bottom" ? "bottom" : entry.center ? "center" : "none"
+            }
             style={{
               transform:
                 entry.anchor === "bottom"
@@ -107,16 +113,19 @@ interface WorldHtmlProps {
   clampToViewport?: boolean;
   distanceFactor?: number;
   zIndexRange?: [number, number];
-  avoidOverlap?: boolean;
-  /** When true, the label stays on its anchor and other labels move aside. */
-  overlapLocked?: boolean;
-  overlapDrop?: number;
+  /** Higher wins. Overlaps hide the lower label; they are never moved apart. */
+  labelPriority?: number;
+  /** Shown at the fit-island zoom. Off-route and offshore labels pass false. */
+  showWhenFar?: boolean;
+  /** Decorative overlay text. The selected city control leaves this false. */
+  ariaHidden?: boolean;
   children: React.ReactNode;
 }
 
 const tmpVec = new THREE.Vector3();
 const tmpCamPos = new THREE.Vector3();
 const tmpCamDir = new THREE.Vector3();
+const tmpIsland = new THREE.Vector3(-0.35, 0.35, 0.4);
 
 export function WorldHtml({
   position = [0, 0, 0],
@@ -125,9 +134,9 @@ export function WorldHtml({
   screenOffset = [0, 0],
   clampToViewport = false,
   zIndexRange = [20, 0],
-  avoidOverlap = false,
-  overlapLocked = false,
-  overlapDrop = 0,
+  labelPriority,
+  showWhenFar = true,
+  ariaHidden = false,
   children,
 }: WorldHtmlProps) {
   const id = useId();
@@ -146,10 +155,11 @@ export function WorldHtml({
       center,
       anchor,
       zIndex,
+      ariaHidden,
       bindElement,
     });
     emitEntriesChange();
-  }, [id, children, center, anchor, zIndex, bindElement]);
+  }, [id, children, center, anchor, zIndex, ariaHidden, bindElement]);
 
   useEffect(() => {
     return () => {
@@ -177,6 +187,8 @@ export function WorldHtml({
     const behind =
       toObj.lengthSq() > 1e-6 && toObj.angleTo(tmpCamDir) > Math.PI / 2;
     if (behind) {
+      const slot = labelSlots.get(id);
+      if (slot) slot.active = false;
       if (el.style.opacity !== "0") {
         el.style.opacity = "0";
         el.style.pointerEvents = "none";
@@ -191,7 +203,7 @@ export function WorldHtml({
     if (clampToViewport && Number.isFinite(x) && Number.isFinite(y)) {
       const w = el.offsetWidth || 72;
       const h = el.offsetHeight || 26;
-      const padX = 10;
+      const padX = 12;
       const padTop = 104;
       const padBottom = size.width >= 1024 ? 84 : 132;
 
@@ -212,38 +224,30 @@ export function WorldHtml({
       }
     }
 
-    if (avoidOverlap && Number.isFinite(x) && Number.isFinite(y)) {
+    if (typeof labelPriority === "number" && Number.isFinite(x) && Number.isFinite(y)) {
+      setFarZoom(camera.position.distanceTo(tmpIsland) > 18);
       const slot = labelSlots.get(id) ?? {
         ax: x,
         ay: y,
         w: 88,
         h: 28,
-        ox: 0,
-        oy: 0,
-        homeOy: 0,
-        drop: 0,
+        priority: labelPriority,
+        showWhenFar,
         active: true,
-        locked: overlapLocked,
-        hasSolve: false,
-        solvedAx: x,
-        solvedAy: y,
-        solvedW: 88,
+        hidden: false,
+        scale: 1,
       };
       slot.ax = x;
       slot.ay = y;
-      slot.w = Math.max(72, el.offsetWidth || 88);
-      slot.h = Math.max(24, el.offsetHeight || 28);
-      slot.drop = overlapDrop;
+      slot.w = Math.max(48, el.offsetWidth || 88);
+      slot.h = Math.max(20, el.offsetHeight || 28);
+      slot.priority = labelPriority;
+      slot.showWhenFar = showWhenFar;
       slot.active = true;
-      slot.locked = overlapLocked;
       labelSlots.set(id, slot);
       labelElements.set(id, el);
+      el.dataset.decorative = ariaHidden ? "1" : "0";
       queueLabelSolve();
-      if (el.style.opacity !== "1") {
-        el.style.opacity = "1";
-        el.style.pointerEvents = "auto";
-      }
-      el.style.transform = `translate3d(${(x + slot.ox).toFixed(1)}px, ${(y + slot.oy).toFixed(1)}px, 0)`;
       return;
     }
 

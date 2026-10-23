@@ -200,11 +200,11 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
 
     if (smlBoatRef.current) {
       const boatAngle = t * 0.85;
-      const boatRadius = 0.38;
+      const boatRadius = 0.48;
       smlBoatRef.current.position.set(
-        landmarks.smlLake.x + Math.cos(boatAngle) * boatRadius,
-        landmarks.smlLake.y + 0.51,
-        landmarks.smlLake.z + Math.sin(boatAngle) * boatRadius
+        landmarks.smlLake.x + 0.72 + Math.cos(boatAngle) * boatRadius,
+        landmarks.smlLake.y + 0.64,
+        landmarks.smlLake.z + 0.06 + Math.sin(boatAngle) * boatRadius * 0.7
       );
       smlBoatRef.current.rotation.y = -boatAngle;
     }
@@ -230,8 +230,7 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
 
   return (
     <group name="delight-details">
-      {landmarksOn && (
-        <Suspense fallback={null}>
+      <Suspense fallback={null}>
           <LandmarkDioramas
             isNightMode={isNightMode}
             landmarks={landmarks}
@@ -240,9 +239,9 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
             smlBoatRef={smlBoatRef}
             alishanTrainRef={alishanTrainRef}
             lighthouseBeamRef={lighthouseBeamRef}
+            waterOnly={!landmarksOn}
           />
         </Suspense>
-      )}
 
       {/* Traveler Avatar along the Route on "Play" */}
       {store.isRoutePlaying && (

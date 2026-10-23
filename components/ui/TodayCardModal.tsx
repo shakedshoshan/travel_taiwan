@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   BedDouble,
@@ -106,14 +107,14 @@ export function getTripTodayStatus(overrideDateStr?: string | null): TripTodaySt
 
 export function TodayCardModal() {
   const store = useTripStore();
+  const [todayOverride, setTodayOverride] = useState<string | null>(null);
+  useEffect(() => {
+    setTodayOverride(new URLSearchParams(window.location.search).get("today"));
+  }, []);
   if (!store.isTodayCardOpen) return null;
 
   const days = getTimelineDays();
-  const status = getTripTodayStatus(
-    typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search).get("today")
-      : null
-  );
+  const status = getTripTodayStatus(todayOverride);
   const activeDay = days[store.currentDayIndex] ?? days[status.dayIndex] ?? days[0];
   const bundle = getCityBundle(activeDay.cityId);
 

@@ -165,7 +165,7 @@ export function BottomSheet({
                   type="button"
                   onPointerDown={(e) => e.stopPropagation()}
                   onClick={() => onSnapChange(pt)}
-                  className={`min-h-[28px] rounded-full px-2.5 text-[10px] font-bold transition-colors ${
+                  className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-[11px] font-bold transition-colors ${
                     snap === pt
                       ? "bg-orange-500 text-white"
                       : "bg-slate-100 text-slate-500 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400"
@@ -180,7 +180,7 @@ export function BottomSheet({
               type="button"
               onClick={cycleSnapOnHandleClick}
               aria-label="שנה גובה חלונית"
-              className="flex h-6 w-16 items-center justify-center"
+              className="flex min-h-11 min-w-11 items-center justify-center px-3"
             >
               <span className="h-1.5 w-11 rounded-full bg-slate-300 dark:bg-slate-700" />
             </button>
