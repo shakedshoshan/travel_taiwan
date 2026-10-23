@@ -311,10 +311,10 @@ export function CameraRig({
       rotateSpeed={0.85}
       enablePan
       screenSpacePanning={false}
-      minDistance={2.5}
+      minDistance={10}
       maxDistance={42}
-      maxPolarAngle={Math.PI / 2 - 0.08}
-      minPolarAngle={0.16}
+      maxPolarAngle={Math.PI / 2 - 0.22}
+      minPolarAngle={0.28}
       mouseButtons={mouseButtons}
       touches={{
         ONE: THREE.TOUCH.PAN,

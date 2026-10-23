@@ -221,7 +221,7 @@ export function PlaceDetailClient({
                       <span>מחיר</span>
                     </span>
                     {isUnverified && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/20 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-300">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/20 px-2 py-0.5 text-xs font-bold text-amber-800 dark:text-amber-300">
                         <AlertCircle className="h-3 w-3" />
                         לא מאומת
                       </span>
@@ -241,7 +241,7 @@ export function PlaceDetailClient({
                       <span>שעות פעילות</span>
                     </span>
                     {!place.hoursVerified && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/20 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-300">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/20 px-2 py-0.5 text-xs font-bold text-amber-800 dark:text-amber-300">
                         <AlertCircle className="h-3 w-3" />
                         לא מאומת
                       </span>
@@ -269,7 +269,7 @@ export function PlaceDetailClient({
           {/* Full Wikimedia Attribution & Representative Notice */}
           <div
             dir="ltr"
-            className="rounded-2xl border border-slate-200/70 bg-slate-50/70 px-3.5 py-2.5 text-[11px] text-slate-500 dark:border-slate-800 dark:bg-slate-800/40 dark:text-slate-400"
+            className="rounded-2xl border border-slate-200/70 bg-slate-50/70 px-3.5 py-2.5 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-800/40 dark:text-slate-400"
           >
             <div>
               Photo credit:{" "}
@@ -297,7 +297,7 @@ export function PlaceDetailClient({
               {imageMeta.match === "representative" && (
                 <span
                   dir="rtl"
-                  className="ml-2 inline-block rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-300"
+                  className="ml-2 inline-block rounded bg-amber-500/15 px-1.5 py-0.5 text-xs font-bold text-amber-800 dark:text-amber-300"
                 >
                   תמונה מייצגת של המנה/האזור
                 </span>

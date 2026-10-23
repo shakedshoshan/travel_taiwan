@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { WorldHtml } from "./WorldHtml";
-import { getAllCities } from "@/lib/data/selectors";
+import { getAllCities, getAllPlaces } from "@/lib/data/selectors";
 import { OFFSHORE_ISLANDS } from "@/lib/data/taiwanGeo";
 import { latLngToWorld3D } from "@/lib/data/coordinates";
 import { markLoadStage } from "./loadProgress";
@@ -34,14 +34,44 @@ export function CityPins({
   const pulseRingRef = useRef<THREE.Mesh>(null);
 
   // Offshore islands world positions for subtle labels
-  const offshoreMarkers = useMemo(
-    () =>
-      OFFSHORE_ISLANDS.map((isl) => ({
-        ...isl,
-        world: latLngToWorld3D(isl.centerLat, isl.centerLng, 0.16),
-      })),
-    []
-  );
+  const offshoreMarkers = useMemo(() => {
+    const islands: Array<{
+      id: string;
+      nameHe: string;
+      nameEn: string;
+      world: ReturnType<typeof latLngToWorld3D>;
+      targetCityId: CityId;
+    }> = OFFSHORE_ISLANDS.map((isl) => ({
+      id: isl.id,
+      nameHe: isl.nameHe,
+      nameEn: isl.nameEn,
+      world: latLngToWorld3D(isl.centerLat, isl.centerLng, 0.16),
+      targetCityId:
+        isl.id === "xiaoliuqiu"
+          ? ("pingtung" as CityId)
+          : isl.id === "green-island" || isl.id === "orchid-island"
+            ? ("taitung" as CityId)
+            : ("chiayi" as CityId),
+    }));
+    const islets = getAllPlaces().filter(
+      (place) =>
+        place.nameEn === "Guishan Island" || place.nameEn === "Keelung Islet"
+    );
+    for (const place of islets) {
+      islands.push({
+        id: place.id,
+        nameHe: place.name,
+        nameEn: place.nameEn ?? place.name,
+        world: latLngToWorld3D(
+          place.resolvedCoords.lat,
+          place.resolvedCoords.lng,
+          0.16
+        ),
+        targetCityId: place.cityId,
+      });
+    }
+    return islands;
+  }, []);
 
   // User "Near Me" Geolocation 3D Pulsing Blue Dot (P1 #6)
   const userWorldPos = useMemo(() => {
@@ -78,28 +108,22 @@ export function CityPins({
       ))}
 
       {/* Offshore Island Mini Labels (Penghu, Xiaoliuqiu, Green Island, Orchid Island) */}
-      {onlyLabelCityId == null && offshoreMarkers.map((isl) => {
-        const targetCityId: CityId =
-          isl.id === "xiaoliuqiu"
-            ? "pingtung"
-            : isl.id === "green-island" || isl.id === "orchid-island"
-              ? "taitung"
-              : "chiayi";
-        return (
+      {onlyLabelCityId == null &&
+        offshoreMarkers.map((isl) => (
           <group
             key={isl.id}
             position={[isl.world.x, isl.world.y, isl.world.z]}
             onClick={(e) => {
               e.stopPropagation();
               triggerHapticTap();
-              onSelectCity(targetCityId);
+              onSelectCity(isl.targetCityId);
             }}
           >
             <WorldHtml
               position={[0, 0.45, 0]}
               anchor="bottom"
               screenOffset={[0, -4]}
-              clampToViewport
+              hideWhenOffscreen
               labelPriority={15}
               showWhenFar={false}
               ariaHidden
@@ -113,16 +137,15 @@ export function CityPins({
                 onClick={(e) => {
                   e.stopPropagation();
                   triggerHapticTap();
-                  onSelectCity(targetCityId);
+                  onSelectCity(isl.targetCityId);
                 }}
-                className="flex min-h-[44px] min-w-[44px] cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full border border-teal-300/60 bg-slate-900/90 px-3 text-[13px] font-bold text-teal-50 shadow-sm backdrop-blur-xs [text-shadow:0_1px_2px_#020617,0_0_8px_#020617] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                className="flex min-h-11 min-w-11 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full border border-teal-200/80 bg-slate-950/90 px-3 text-[13px] font-bold text-teal-50 shadow-sm backdrop-blur-xs [text-shadow:0_0_1px_#fff,0_1px_2px_#020617,0_0_10px_#020617] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               >
                 {isl.nameHe}
               </button>
             </WorldHtml>
           </group>
-        );
-      })}
+        ))}
 
       {/* Geolocation Pulsing Blue Dot on the 3D Map */}
       {userWorldPos && store.userCoords && (
@@ -160,14 +183,14 @@ export function CityPins({
             position={[0, 0.45, 0]}
             anchor="bottom"
             screenOffset={[0, -6]}
-            clampToViewport
+            hideWhenOffscreen
             ariaHidden
             zIndexRange={[34, 0]}
           >
             <div
               dir="rtl"
               title={store.userCoords.labelHe}
-              className="pointer-events-none select-none max-w-[8rem] truncate whitespace-nowrap rounded-full border border-white bg-sky-600 px-2.5 py-0.5 text-[10px] font-black text-white shadow-lg"
+              className="pointer-events-none max-w-[8rem] truncate rounded-full border border-white bg-sky-600 px-2.5 py-0.5 text-xs font-black whitespace-nowrap text-white shadow-lg select-none"
             >
               📍 {store.userCoords.labelHe}
             </div>

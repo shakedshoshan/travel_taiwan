@@ -28,6 +28,8 @@ export function MarkerTooltipCard({
         activeEntry.place.resolvedCoords.worldZ,
       ]}
       center
+      clampToViewport
+      hideWhenOffscreen={false}
       distanceFactor={15}
       zIndexRange={[35, 0]}
     >
@@ -37,7 +39,7 @@ export function MarkerTooltipCard({
           isFocused
             ? "pointer-events-auto border-amber-300 ring-2 ring-amber-400"
             : "pointer-events-none border-white/40"
-        } w-64 rounded-2xl border bg-slate-950/95 p-3 text-right text-xs text-white shadow-2xl backdrop-blur-md`}
+        } w-64 max-w-[calc(100vw-24px)] rounded-2xl border bg-slate-950/95 p-3 text-right text-xs text-white shadow-2xl backdrop-blur-md`}
       >
         <div className="relative mb-2 h-24 w-full overflow-hidden rounded-xl bg-slate-900">
           <Image
@@ -51,7 +53,7 @@ export function MarkerTooltipCard({
           <PhotoCreditPopover image={imageMeta} positionClass="bottom-1.5 left-1.5" />
         </div>
         <div className="flex items-center justify-between gap-1">
-          <span className="rounded-full bg-amber-400/20 px-2 py-0.5 text-[10px] font-bold text-amber-300">
+          <span className="rounded-full bg-amber-400/20 px-2 py-0.5 text-xs font-bold text-amber-300">
             {activeEntry.place.kind === "attraction"
               ? activeEntry.place.isNature
                 ? "טבע ונוף"
@@ -60,7 +62,7 @@ export function MarkerTooltipCard({
                 ? activeEntry.place.typeHe
                 : `מלון • ${activeEntry.place.tierHe}`}
           </span>
-          <span className="text-[10px] text-amber-400">
+          <span className="text-xs text-amber-400">
             {"★".repeat(activeEntry.importance)}
           </span>
         </div>
@@ -68,14 +70,14 @@ export function MarkerTooltipCard({
           {activeEntry.place.name}
         </div>
         {activeEntry.place.nameZh && (
-          <div className="text-[10px] text-amber-200/90">
+          <div className="text-xs text-amber-200/90">
             {activeEntry.place.nameZh}
           </div>
         )}
-        <div className="text-[10px] text-slate-400">
+        <div className="text-xs text-slate-400">
           {activeEntry.place.cityNameHe}
         </div>
-        <div className="mt-1 line-clamp-2 text-[11px] text-slate-300">
+        <div className="mt-1 line-clamp-2 text-xs text-slate-300">
           {activeEntry.place.description}
         </div>
         {(activeEntry.place.kind === "food" ||
@@ -88,7 +90,7 @@ export function MarkerTooltipCard({
         {(activeEntry.place.kind === "food" ||
           activeEntry.place.kind === "hotel") &&
           !activeEntry.place.verified && (
-            <div className="mt-1 inline-block rounded bg-amber-500/20 px-1.5 py-0.5 text-[9px] text-amber-300">
+            <div className="mt-1 inline-block rounded bg-amber-500/20 px-1.5 py-0.5 text-xs text-amber-300">
               לא מאומת
             </div>
           )}
@@ -105,11 +107,11 @@ export function MarkerTooltipCard({
                   activeEntry.place.cityId
                 );
               }}
-              className="min-h-[38px] w-full rounded-xl bg-amber-400 py-1.5 text-[11px] font-black text-slate-950 hover:bg-amber-300"
+              className="min-h-11 w-full rounded-xl bg-amber-400 py-1.5 text-xs font-black text-slate-950 hover:bg-amber-300"
             >
               🔍 זום למפת יעד 3D ({activeEntry.place.cityNameHe})
             </button>
-            <div className="flex items-center justify-between text-[11px]">
+            <div className="flex items-center justify-between text-xs">
               <Link
                 href={`/place/${activeEntry.place.id}`}
                 className="font-bold text-orange-400 hover:underline"

@@ -1,6 +1,44 @@
 import type { CityId } from "@/data/types";
 import { TRIP_DATA } from "./loaders";
 
+const NAME_ALIASES: Record<string, readonly string[]> = {
+  taipei: ["taipei", "taibei"],
+  kenting: ["kenting", "kending", "hengchun"],
+  "guishan island": ["guishan", "gui shan", "gueishan", "turtle island"],
+  "keelung islet": ["keelung islet", "keelung island"],
+  "sun moon lake": ["sun moon lake", "sunmoon"],
+  "green island": ["green island", "ludao"],
+  "orchid island (lanyu)": ["orchid island", "lanyu"],
+  penghu: ["penghu", "pescadores"],
+  xiaoliuqiu: ["xiaoliuqiu", "liuqiu", "lamay"],
+  kaohsiung: ["kaohsiung", "gaoxiong"],
+  taichung: ["taichung", "taizhong"],
+  taitung: ["taitung", "taidong"],
+  hualien: ["hualien", "hualian"],
+};
+
+function fold(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .replace(/['’ʼʻ′]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+function textHit(haystack: string | null | undefined, needle: string): boolean {
+  if (!needle) return true;
+  if (!haystack) return false;
+  return fold(haystack).includes(needle);
+}
+
+function aliasHit(label: string | null | undefined, needle: string): boolean {
+  if (!needle || !label) return false;
+  const list = NAME_ALIASES[fold(label)];
+  if (!list) return false;
+  return list.some((alias) => fold(alias).includes(needle));
+}
+
 export interface SearchResultItem {
   id: string;
   kind: "city" | "leg" | "attraction" | "food" | "hotel";
@@ -13,15 +51,16 @@ export interface SearchResultItem {
 }
 
 export function searchEverything(rawQuery: string): SearchResultItem[] {
-  const q = rawQuery.trim().toLowerCase();
+  const q = fold(rawQuery);
   const results: SearchResultItem[] = [];
 
   for (const city of TRIP_DATA.cities) {
     if (
       !q ||
-      city.nameHe.toLowerCase().includes(q) ||
-      city.nameEn.toLowerCase().includes(q) ||
-      city.id.toLowerCase().includes(q)
+      textHit(city.nameHe, q) ||
+      textHit(city.nameEn, q) ||
+      textHit(city.id, q) ||
+      aliasHit(city.nameEn, q)
     ) {
       results.push({
         id: `city-${city.id}`,
@@ -42,10 +81,12 @@ export function searchEverything(rawQuery: string): SearchResultItem[] {
     const city = TRIP_DATA.citiesById[leg.cityId];
     if (
       q &&
-      (leg.focus.toLowerCase().includes(q) ||
-        leg.anchor.toLowerCase().includes(q) ||
-        leg.dates.toLowerCase().includes(q) ||
-        (leg.notes && leg.notes.toLowerCase().includes(q)))
+      (textHit(leg.focus, q) ||
+        textHit(leg.anchor, q) ||
+        textHit(leg.dates, q) ||
+        textHit(leg.notes, q) ||
+        textHit(city?.nameEn, q) ||
+        aliasHit(city?.nameEn, q))
     ) {
       results.push({
         id: leg.id,
@@ -74,12 +115,15 @@ export function searchEverything(rawQuery: string): SearchResultItem[] {
   for (const place of TRIP_DATA.allPlaces) {
     const matches =
       !q ||
-      place.name.toLowerCase().includes(q) ||
-      (place.nameZh && place.nameZh.toLowerCase().includes(q)) ||
-      place.description.toLowerCase().includes(q) ||
-      place.city.toLowerCase().includes(q) ||
-      place.cityNameHe.toLowerCase().includes(q) ||
-      place.cityNameEn.toLowerCase().includes(q);
+      textHit(place.name, q) ||
+      textHit(place.nameZh, q) ||
+      textHit(place.nameEn, q) ||
+      aliasHit(place.nameEn, q) ||
+      textHit(place.description, q) ||
+      textHit(place.city, q) ||
+      textHit(place.cityNameHe, q) ||
+      textHit(place.cityNameEn, q) ||
+      aliasHit(place.cityNameEn, q);
 
     if (!matches) continue;
 

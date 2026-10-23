@@ -99,7 +99,7 @@ export function MapNavigationPad() {
         <LocateFixed className="h-5 w-5 text-orange-500" />
       </button>
       {locationDenied && (
-        <p className="max-w-[10rem] rounded-xl bg-slate-950/90 px-2 py-1 text-[11px] font-bold text-white">
+        <p className="max-w-[10rem] rounded-xl bg-slate-950/90 px-2 py-1 text-xs font-bold text-white">
           הגישה למיקום נדחתה
         </p>
       )}

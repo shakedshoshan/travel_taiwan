@@ -14,7 +14,7 @@ export function OptionalDetourCard() {
       className="rounded-3xl border-2 border-dashed border-sky-400 bg-sky-500/5 p-4 shadow-xs"
     >
       <div className="flex flex-wrap items-center gap-2">
-        <span className="rounded-full bg-sky-500 px-2.5 py-1 text-[11px] font-black text-white">
+        <span className="rounded-full bg-sky-500 px-2.5 py-1 text-xs font-black text-white">
           אופציונלי
         </span>
         <h2 className="font-display text-lg font-black text-slate-900 dark:text-white">

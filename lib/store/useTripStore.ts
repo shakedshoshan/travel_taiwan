@@ -4,6 +4,11 @@ import { useSyncExternalStore } from "react";
 import type { CityId } from "@/data/types";
 import { triggerHapticTap } from "@/lib/haptics";
 import {
+  backSheetIfOwned,
+  pushOrReplaceSheet,
+  type SheetHistorySource,
+} from "./sheetUrl";
+import {
   DEFAULT_STATE,
   STORAGE_KEY,
   type CameraCommandType,
@@ -108,8 +113,12 @@ export const tripActions = {
     setState({ isNightMode }, true);
   },
 
-  selectCity(cityId: CityId | null, initialSnap: SheetSnapPoint = "half") {
-    if (cityId) triggerHapticTap();
+  selectCity(
+    cityId: CityId | null,
+    initialSnap: SheetSnapPoint = "half",
+    source: SheetHistorySource = "user"
+  ) {
+    if (cityId && source === "user") triggerHapticTap();
     setState((prev) => ({
       selectedCityId: cityId,
       focusedPlaceId: null,
@@ -119,6 +128,9 @@ export const tripActions = {
       isTodayCardOpen: false,
       isCityZoomMapOpen: cityId === null ? false : prev.isCityZoomMapOpen,
     }));
+    if (source !== "user") return;
+    if (cityId) pushOrReplaceSheet(cityId, null);
+    else backSheetIfOwned();
   },
 
   setSheetSnap(sheetSnap: SheetSnapPoint) {
@@ -192,10 +204,15 @@ export const tripActions = {
     });
   },
 
-  focusPlace(placeId: string | null, cityId?: CityId | null) {
-    if (placeId) triggerHapticTap();
+  focusPlace(
+    placeId: string | null,
+    cityId?: CityId | null,
+    source: SheetHistorySource = "user"
+  ) {
+    if (placeId && source === "user") triggerHapticTap();
+    let nextCityId: CityId | null = null;
     setState((prev) => {
-      const nextCityId = cityId !== undefined ? cityId : prev.selectedCityId;
+      nextCityId = cityId !== undefined ? cityId : prev.selectedCityId;
       return {
         focusedPlaceId: placeId,
         selectedCityId: nextCityId,
@@ -207,6 +224,8 @@ export const tripActions = {
             : "closed",
       };
     });
+    if (source !== "user" || !nextCityId) return;
+    pushOrReplaceSheet(nextCityId, placeId);
   },
 
   setCurrentDayIndex(dayIndex: number) {

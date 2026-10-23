@@ -77,7 +77,7 @@ export default function InfoPage() {
                       <span>{alert.titleHe}</span>
                     </div>
                     <span
-                      className={`rounded-full px-2.5 py-0.5 font-mono text-[11px] font-black ${
+                      className={`rounded-full px-2.5 py-0.5 font-mono text-xs font-black ${
                         isWarning
                           ? "bg-rose-500/15 text-rose-800 dark:bg-rose-500/25 dark:text-rose-200"
                           : "bg-orange-500/15 text-orange-800 dark:bg-orange-500/25 dark:text-amber-200"
@@ -92,14 +92,14 @@ export default function InfoPage() {
                   </p>
 
                   {alert.sourceUrls && alert.sourceUrls.length > 0 && (
-                    <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px]">
+                    <div className="mt-2 flex flex-wrap items-center gap-3 text-[13px]">
                       {alert.sourceUrls.map((url, idx) => (
                         <a
                           key={url}
                           href={url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 font-bold text-sky-700 underline hover:text-orange-600 dark:text-sky-300"
+                          className="inline-flex min-h-11 items-center gap-1 font-bold text-sky-800 underline hover:text-orange-700 dark:text-sky-200"
                         >
                           <span>מקור רשמי {idx + 1}</span>
                           <ExternalLink className="h-3 w-3" />
@@ -159,7 +159,7 @@ export default function InfoPage() {
                 <div className="mt-0.5 font-mono font-bold text-sky-700 dark:text-sky-300">
                   {opt.priceHe}
                 </div>
-                <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
                   {opt.noteHe}
                 </p>
               </div>
@@ -191,7 +191,7 @@ export default function InfoPage() {
               <p className="mt-1.5 text-slate-700 dark:text-slate-200">
                 {w.conditionHe}
               </p>
-              <p className="mt-1 text-[11px] font-semibold text-emerald-700 dark:text-emerald-300">
+              <p className="mt-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
                 מה לארוז: {w.packingHe}
               </p>
             </div>

@@ -48,7 +48,9 @@ export function TaiwanIsland({ isNightMode }: TaiwanIslandProps) {
         castShadow
       >
         <meshStandardMaterial
-          color={isNightMode ? "#1a3338" : "#3f8f56"}
+          color={isNightMode ? "#1a3338" : "#5cbf72"}
+          emissive={isNightMode ? "#000000" : "#1f7a40"}
+          emissiveIntensity={isNightMode ? 0 : 0.28}
           roughness={0.9}
           metalness={0}
         />
@@ -72,24 +74,29 @@ export function TaiwanIsland({ isNightMode }: TaiwanIslandProps) {
         <group key={isl.id} name={`island-${isl.id}`}>
           <mesh
             geometry={isl.rimGeo}
-            position={[0, -0.015, 0]}
+            position={[0, 0.01, 0]}
             receiveShadow
           >
-            <meshStandardMaterial
-              color={isNightMode ? "#24344d" : "#f0ddb0"}
-              roughness={0.9}
+            <meshBasicMaterial
+              color={isNightMode ? "#1e4a52" : "#f3e3b2"}
             />
           </mesh>
           <mesh
             geometry={isl.landGeo}
-            position={[0, 0, 0]}
+            position={[0, 0.02, 0]}
             receiveShadow
             castShadow
           >
-            <meshStandardMaterial
-              color={isNightMode ? "#194842" : "#389e56"}
-              roughness={0.85}
-            />
+            {isNightMode ? (
+              <meshBasicMaterial color="#1a6156" />
+            ) : (
+              <meshStandardMaterial
+                color="#62d86c"
+                emissive="#1c7a3c"
+                emissiveIntensity={0.22}
+                roughness={0.82}
+              />
+            )}
           </mesh>
         </group>
       ))}

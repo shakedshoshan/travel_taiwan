@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import {
   BedDouble,
@@ -24,8 +24,14 @@ import {
   formatDistanceAndWalk,
 } from "@/lib/data/foodAndPlaceMeta";
 import practicalData from "@/data/practical.json";
-import { getTripSpan } from "@/lib/data/tripSpan";
+import { DateRange, LtrText, RtlParen } from "@/components/ui/bidi";
+import {
+  TodayCardPeek,
+  TripRecap,
+  useTodayCardCollapse,
+} from "@/components/ui/TodayCardPeek";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
+import { getTripSpan } from "@/lib/data/tripSpan";
 
 type LegTransportMap = typeof practicalData.legTransport;
 
@@ -107,11 +113,13 @@ export function getTripTodayStatus(overrideDateStr?: string | null): TripTodaySt
 
 export function TodayCardModal() {
   const store = useTripStore();
-  const [todayOverride, setTodayOverride] = useState<string | null>(null);
-  useEffect(() => {
-    setTodayOverride(new URLSearchParams(window.location.search).get("today"));
-  }, []);
-  if (!store.isTodayCardOpen) return null;
+  const collapse = useTodayCardCollapse();
+  const dragY = useRef<number | null>(null);
+  const todayOverride =
+    typeof window === "undefined"
+      ? null
+      : new URLSearchParams(window.location.search).get("today");
+  if (!store.isTodayCardOpen || !collapse.ready) return null;
 
   const days = getTimelineDays();
   const status = getTripTodayStatus(todayOverride);
@@ -164,16 +172,41 @@ export function TodayCardModal() {
     })
     .slice(0, 3);
 
+  const closeCard = () => {
+    collapse.dismiss();
+    tripActions.setTodayCardOpen(false);
+  };
+
+  if (collapse.collapsed) {
+    return (
+      <TodayCardPeek
+        status={status}
+        day={status.phase === "during" ? activeDay : days[0]}
+        onExpand={collapse.expand}
+        onDismiss={closeCard}
+      />
+    );
+  }
+
   return (
     <div
       dir="rtl"
       className="pointer-events-auto fixed inset-0 z-50 flex items-end justify-center bg-slate-950/50 p-2.5 backdrop-blur-xs sm:items-center"
-      onClick={() => tripActions.setTodayCardOpen(false)}
+      onClick={closeCard}
     >
       <div
         role="dialog"
         aria-label="כרטיס היום במסלול"
         onClick={(e) => e.stopPropagation()}
+        onPointerDown={(event) => {
+          dragY.current = event.clientY;
+        }}
+        onPointerUp={(event) => {
+          if (dragY.current == null) return;
+          const dy = event.clientY - dragY.current;
+          dragY.current = null;
+          if (dy > 72) closeCard();
+        }}
         className="max-h-[86dvh] w-full max-w-lg overflow-y-auto rounded-3xl border border-slate-200 bg-white p-4 shadow-2xl dark:border-slate-800 dark:bg-slate-900"
       >
         {/* Header */}
@@ -183,22 +216,32 @@ export function TodayCardModal() {
               <span className="inline-flex items-center gap-1 rounded-full bg-orange-500 px-2.5 py-0.5 text-xs font-black text-white">
                 <Calendar className="h-3.5 w-3.5" />
                 <span>
-                  {status.phase === "during"
-                    ? `היום · יום ${activeDay.dayNumber}/${days.length}`
-                    : status.chipLabelHe}
+                  {status.phase === "during" ? (
+                    <>
+                      היום · יום <LtrText>{activeDay.dayNumber}</LtrText>
+                      <LtrText>/{days.length}</LtrText>
+                    </>
+                  ) : (
+                    status.chipLabelHe
+                  )}
                 </span>
               </span>
             </div>
             <h3 className="mt-1 font-display text-lg font-black text-slate-900 dark:text-white">
-              {status.phase === "during"
-                ? `${activeDay.dateShort} (${activeDay.weekdayHe}) · ${activeDay.cityNameHe}`
-                : status.statusTextHe}
+              {status.phase === "during" ? (
+                <>
+                  <DateRange>{activeDay.dateShort}</DateRange>{" "}
+                  <RtlParen>({activeDay.weekdayHe})</RtlParen> · {activeDay.cityNameHe}
+                </>
+              ) : (
+                status.statusTextHe
+              )}
             </h3>
           </div>
 
           <button
             type="button"
-            onClick={() => tripActions.setTodayCardOpen(false)}
+            onClick={closeCard}
             aria-label="סגור כרטיס היום"
             className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-2xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-200"
           >
@@ -209,11 +252,16 @@ export function TodayCardModal() {
         <div className="mt-3 space-y-3 text-xs">
           {status.phase === "before" && (
             <div className="rounded-2xl bg-amber-400/15 p-3 text-slate-900 dark:text-amber-50">
-              <p className="font-display text-base font-black">{status.statusTextHe}</p>
-              <p className="mt-2 font-extrabold text-orange-700 dark:text-amber-300">
-                המקטע הראשון: {days[0].legFocus} ({days[0].legDates})
+              <p className="font-extrabold text-orange-700 dark:text-amber-300">
+                המקטע הראשון: {days[0].legFocus}{" "}
+                <RtlParen>
+                  (<DateRange>{days[0].legDates}</DateRange>)
+                </RtlParen>
               </p>
-              <p className="mt-1 leading-relaxed">{days[0].legAnchor}</p>
+              <p className="mt-1 leading-relaxed">
+                <span className="font-extrabold">{days[0].cityNameHe}: </span>
+                {days[0].legAnchor}
+              </p>
             </div>
           )}
           {status.phase === "after" && <TripRecap />}
@@ -229,7 +277,7 @@ export function TodayCardModal() {
               {activeDay.legAnchor}
             </p>
             {activeDay.legNotes && (
-              <p className="mt-1 text-[11px] font-semibold text-amber-800 dark:text-amber-300">
+              <p className="mt-1 text-xs font-semibold text-amber-800 dark:text-amber-300">
                 דגש: {activeDay.legNotes}
               </p>
             )}
@@ -243,14 +291,14 @@ export function TodayCardModal() {
                   <BedDouble className="h-4 w-4" />
                   <span>המלון המומלץ להלילה ב{activeDay.cityNameHe}</span>
                 </span>
-                <span className="font-mono text-[11px] font-bold text-emerald-700 dark:text-emerald-300">
+                <span className="font-mono text-xs font-bold text-emerald-700 dark:text-emerald-300">
                   {formatDisplayPriceText(tonightHotel.priceText)}
                 </span>
               </div>
               <div className="mt-1 flex items-center justify-between gap-2">
                 <Link
                   href={`/place/${tonightHotel.id}`}
-                  onClick={() => tripActions.setTodayCardOpen(false)}
+                  onClick={closeCard}
                   className="font-bold text-slate-900 hover:underline dark:text-white"
                 >
                   {tonightHotel.name}
@@ -259,7 +307,7 @@ export function TodayCardModal() {
                   href={buildGoogleMapsUrl(tonightHotel)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-[44px] min-w-[44px] items-center gap-1 rounded-xl bg-sky-600 px-2.5 text-[11px] font-bold text-white"
+                  className="inline-flex min-h-[44px] min-w-[44px] items-center gap-1 rounded-xl bg-sky-600 px-2.5 text-xs font-bold text-white"
                 >
                   <Navigation className="h-3 w-3" />
                   <span>נווט</span>
@@ -280,7 +328,7 @@ export function TodayCardModal() {
                   href={transport.bookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-[44px] min-w-[44px] items-center gap-1 rounded-xl bg-emerald-600 px-2.5 text-[11px] font-bold text-white"
+                  className="inline-flex min-h-[44px] min-w-[44px] items-center gap-1 rounded-xl bg-emerald-600 px-2.5 text-xs font-bold text-white"
                 >
                   <span>{transport.bookingLabelHe}</span>
                   <ExternalLink className="h-3 w-3" />
@@ -314,7 +362,7 @@ export function TodayCardModal() {
                     <div className="min-w-0 flex-1">
                       <Link
                         href={`/place/${food.id}`}
-                        onClick={() => tripActions.setTodayCardOpen(false)}
+                        onClick={closeCard}
                         className="block truncate font-bold text-slate-900 hover:underline dark:text-white"
                       >
                         {food.name}
@@ -345,7 +393,7 @@ export function TodayCardModal() {
           <button
             type="button"
             onClick={() => {
-              tripActions.setTodayCardOpen(false);
+              closeCard();
               tripActions.selectCity(activeDay.cityId, "half");
             }}
             className="toy-button flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-2xl bg-slate-900 text-xs font-black text-white dark:bg-amber-400 dark:text-slate-950"
@@ -359,19 +407,3 @@ export function TodayCardModal() {
   );
 }
 
-function TripRecap() {
-  const span = getTripSpan();
-  return (
-    <div className="rounded-2xl bg-slate-50 p-3 dark:bg-slate-800/70">
-      <p className="font-display text-base font-black text-slate-900 dark:text-white">
-        סיכום הטיול
-      </p>
-      <p className="mt-1 font-bold text-slate-700 dark:text-slate-200">
-        {span.dayCount} ימים · {span.legCount} מקטעים · {span.dateRange}
-      </p>
-      <p className="mt-2 leading-relaxed text-slate-800 dark:text-slate-100">
-        {span.routeCityNamesHe.join(" · ")}
-      </p>
-    </div>
-  );
-}

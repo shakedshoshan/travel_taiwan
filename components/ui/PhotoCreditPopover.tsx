@@ -33,7 +33,7 @@ export function PhotoCreditPopover({
           e.stopPropagation();
           setOpen((prev) => !prev);
         }}
-        className="flex h-6 w-6 items-center justify-center rounded-full border border-white/30 bg-slate-950/75 text-[11px] font-bold text-slate-100 shadow-sm backdrop-blur-xs transition-colors hover:bg-slate-900 hover:text-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+        className="relative flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-slate-950/75 text-xs font-bold text-slate-100 shadow-sm backdrop-blur-xs transition-colors hover:bg-slate-900 hover:text-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
       >
         ⓘ
       </button>
@@ -42,7 +42,7 @@ export function PhotoCreditPopover({
         <div
           role="dialog"
           aria-label="פרטי קרדיט ורישיון תמונה"
-          className="absolute bottom-7 left-0 w-56 rounded-2xl border border-white/20 bg-slate-950/95 p-2.5 text-right text-[10px] leading-relaxed text-slate-100 shadow-2xl backdrop-blur-md"
+          className="absolute bottom-7 left-0 w-56 rounded-2xl border border-white/20 bg-slate-950/95 p-2.5 text-right text-xs leading-relaxed text-slate-100 shadow-2xl backdrop-blur-md"
         >
           <div className="font-bold text-amber-300">{image.creditHe}</div>
           <div dir="ltr" className="mt-0.5 truncate text-[9.5px] text-slate-300">

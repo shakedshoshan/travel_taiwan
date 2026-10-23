@@ -130,7 +130,7 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
 
     // Traveler route playback animation (P1 #10)
     if (store.isRoutePlaying) {
-      playAccumRef.current += delta;
+      playAccumRef.current += store.prefersReducedMotion ? delta * 4 : delta;
       if (playAccumRef.current >= 0.45) {
         playAccumRef.current = 0;
         const nextIdx = store.currentDayIndex + 1;
@@ -152,7 +152,7 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
       const pt = routeCurve.getPointAt(progress);
       const bob = store.prefersReducedMotion ? 0 : Math.sin(t * 5.0) * 0.08;
       travelerRef.current.position.set(pt.x, pt.y + 0.32 + bob, pt.z);
-      travelerRef.current.rotation.y = t * 1.8;
+      travelerRef.current.rotation.y = store.prefersReducedMotion ? 0 : t * 1.8;
     }
 
     if (store.prefersReducedMotion) return;
@@ -273,7 +273,7 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
           >
             <div
               dir="rtl"
-              className="pointer-events-none select-none whitespace-nowrap rounded-full border border-white bg-gradient-to-l from-orange-500 to-amber-500 px-2.5 py-0.5 text-[10px] font-black text-slate-950 shadow-xl"
+              className="pointer-events-none select-none whitespace-nowrap rounded-full border border-white bg-gradient-to-l from-orange-500 to-amber-500 px-2.5 py-0.5 text-xs font-black text-slate-950 shadow-xl"
             >
               🎒 יום {currentDay.dayNumber}: {currentDay.cityNameHe}
             </div>

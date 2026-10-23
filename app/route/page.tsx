@@ -2,15 +2,19 @@
 
 import { Fragment, useEffect, useRef, useState } from "react";
 import { getAuditNotes, getRouteLegs, getTimelineDays } from "@/lib/data/selectors";
+import { uniqueRouteLegImages } from "@/lib/data/placeImages";
 import { MiniTaiwanMap } from "@/components/3d/MiniTaiwanMap";
 import { RouteLegCard } from "@/components/ui/route/RouteLegCard";
 import { OptionalDetourCard } from "@/components/ui/route/OptionalDetourCard";
 import { getTripTodayStatus, TodayCardModal } from "@/components/ui/TodayCardModal";
+import { DateRange, LtrText, RtlParen } from "@/components/ui/bidi";
+import { BackToTop } from "@/components/ui/CityJumpBar";
 import { tripActions } from "@/lib/store/useTripStore";
 import type { CityId } from "@/data/types";
 
 export default function RoutePage() {
   const legs = getRouteLegs();
+  const legImages = uniqueRouteLegImages(legs);
   const auditNotes = getAuditNotes();
   const todayStatus = getTripTodayStatus(
     typeof window !== "undefined"
@@ -81,8 +85,11 @@ export default function RoutePage() {
               <span className="text-amber-300">מקטע {activeLeg.order}: </span>
               <span>{activeLeg.focus}</span>
             </div>
-            <span className="shrink-0 rounded-full bg-orange-500 px-2 py-0.5 text-[10px] font-black text-white">
-              {activeLeg.dates} ({activeLeg.days} ימים)
+            <span className="shrink-0 rounded-full bg-orange-500 px-2 py-0.5 text-xs font-black text-white">
+              <DateRange>{activeLeg.dates}</DateRange>{" "}
+              <RtlParen>
+                (<LtrText>{activeLeg.days}</LtrText> ימים)
+              </RtlParen>
             </span>
           </div>
         </div>
@@ -99,13 +106,13 @@ export default function RoutePage() {
                   setActiveLegOrder(leg.order);
                   setActiveCityId(leg.cityId);
                 }}
-                className={`flex min-h-[36px] shrink-0 snap-start items-center rounded-full px-3 text-[11px] font-bold whitespace-nowrap transition-colors ${
+                className={`flex min-h-11 shrink-0 snap-start items-center rounded-full px-3 text-xs font-bold whitespace-nowrap transition-colors ${
                   isCurrent
                     ? "bg-orange-500 text-white shadow-xs"
                     : "bg-slate-200/80 text-slate-700 dark:bg-slate-800 dark:text-slate-300"
                 }`}
               >
-                {leg.order}. {leg.focus}
+                <LtrText>{leg.order}.</LtrText> {leg.focus}
               </a>
             );
           })}
@@ -118,10 +125,13 @@ export default function RoutePage() {
         <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
           <div>
             <h1 className="font-display text-2xl font-black tracking-tight text-slate-900 md:text-3xl dark:text-white">
-              המסלול המלא בטייוואן (10 מקטעים · 33 ימים)
+              המסלול המלא בטייוואן{" "}
+              <RtlParen className="inline-block whitespace-nowrap">
+                (<LtrText>10</LtrText> מקטעים · <LtrText>33</LtrText> ימים)
+              </RtlParen>
             </h1>
-            <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-              6.11 – 8.12.2026 • גללו מטה – המפה התלת-ממדית למעלה עוקבת אוטומטית אחרי כל מקטע.
+            <p className="mt-1 text-xs text-slate-700 dark:text-slate-200">
+              <DateRange>6.11 – 8.12.2026</DateRange> • גללו מטה – המפה התלת-ממדית למעלה עוקבת אוטומטית אחרי כל מקטע.
             </p>
           </div>
           {todayBannerText && (
@@ -148,6 +158,7 @@ export default function RoutePage() {
                 registerRef={(order, el) => {
                   if (el) cardRefs.current.set(order, el);
                 }}
+                images={legImages.get(leg.order) ?? { city: null, route: null }}
               />
               {leg.cityId === "kaohsiung" && <OptionalDetourCard />}
             </Fragment>
@@ -167,7 +178,7 @@ export default function RoutePage() {
               >
                 <div className="flex items-center justify-between">
                   <span className="font-bold">{note.topic}</span>
-                  <span className="rounded-full bg-amber-500/20 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-300">
+                  <span className="rounded-full bg-amber-500/20 px-2 py-0.5 text-xs font-bold text-amber-800 dark:text-amber-300">
                     {note.status} (ארכיון)
                   </span>
                 </div>
@@ -179,6 +190,7 @@ export default function RoutePage() {
           </div>
         </details>
       </div>
+      <BackToTop />
     </div>
   );
 }

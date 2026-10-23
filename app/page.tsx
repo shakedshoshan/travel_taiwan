@@ -8,6 +8,7 @@ import { CityDrawer } from "@/components/ui/CityDrawer";
 import { MapNavigationPad } from "@/components/ui/MapNavigationPad";
 import { getTripTodayStatus } from "@/components/ui/TodayCardModal";
 import { tripActions } from "@/lib/store/useTripStore";
+import { seedSheetHistory } from "@/lib/store/sheetUrl";
 import { CITY_IDS } from "@/lib/data/schemas";
 import type { CityId } from "@/data/types";
 
@@ -16,8 +17,13 @@ export default function HomePage() {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const cityParam = params.get("city");
+    const placeParam = params.get("place");
     if (cityParam && (CITY_IDS as readonly string[]).includes(cityParam)) {
-      tripActions.selectCity(cityParam as CityId, "half");
+      tripActions.selectCity(cityParam as CityId, "half", "url");
+      if (placeParam) {
+        tripActions.focusPlace(placeParam, cityParam as CityId, "url");
+      }
+      seedSheetHistory(cityParam, placeParam);
       return;
     }
 
@@ -32,6 +38,22 @@ export default function HomePage() {
       window.sessionStorage.setItem(seenKey, "1");
       tripActions.setTodayCardOpen(true);
     }
+  }, []);
+
+  useEffect(() => {
+    const onPop = () => {
+      const params = new URLSearchParams(window.location.search);
+      const cityParam = params.get("city");
+      const placeParam = params.get("place");
+      if (cityParam && (CITY_IDS as readonly string[]).includes(cityParam)) {
+        tripActions.selectCity(cityParam as CityId, "half", "history");
+        tripActions.focusPlace(placeParam, cityParam as CityId, "history");
+        return;
+      }
+      tripActions.selectCity(null, "closed", "history");
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
   }, []);
 
   return (

@@ -63,6 +63,7 @@ export function MapCanvas() {
   const store = useTripStore();
   const loadProgress = useLoadProgress();
   const [coarsePointer, setCoarsePointer] = useState(false);
+  const [paintReady, setPaintReady] = useState(false);
   const [showAllCityLabels, setShowAllCityLabels] = useState(true);
   const [cityCategoryFilter, setCityCategoryFilter] = useState<
     "all" | "hotel" | "food" | "attraction" | "nature"
@@ -82,7 +83,15 @@ export function MapCanvas() {
     const applyPointer = () => setCoarsePointer(media.matches);
     applyPointer();
     media.addEventListener("change", applyPointer);
-    return () => media.removeEventListener("change", applyPointer);
+    let second = 0;
+    const first = window.requestAnimationFrame(() => {
+      second = window.requestAnimationFrame(() => setPaintReady(true));
+    });
+    return () => {
+      media.removeEventListener("change", applyPointer);
+      window.cancelAnimationFrame(first);
+      window.cancelAnimationFrame(second);
+    };
   }, []);
 
   const handleSelectPlace = (place: EnrichedPlace) => {
@@ -107,16 +116,16 @@ export function MapCanvas() {
   return (
     <div
       data-map-canvas-root
-      className="relative h-full w-full transition-colors duration-700"
+      className="relative h-full w-full touch-none transition-colors duration-700"
       style={{
         backgroundColor: store.isNightMode
           ? OCEAN_HORIZON_NIGHT
           : OCEAN_HORIZON_DAY,
       }}
     >
-      <TaiwanLoadingScreen visible={loadProgress < 100} progress={loadProgress} />
+      <TaiwanLoadingScreen visible={!paintReady || loadProgress < 100} progress={paintReady ? loadProgress : 8} />
 
-      <Canvas
+      {paintReady && <Canvas
         frameloop="demand"
         shadows={{ type: THREE.PCFShadowMap }}
         dpr={[1, 2]}
@@ -258,8 +267,8 @@ export function MapCanvas() {
             />
           </EffectComposer>
         )}
-      </Canvas>
-      <WorldHtmlHost />
+      </Canvas>}
+      {paintReady && <WorldHtmlHost />}
       {store.isCityZoomMapOpen && store.selectedCityId && (
         <CityDestinationHUD
           cityId={store.selectedCityId}

@@ -116,7 +116,7 @@ export function TimelineScrubber() {
             }}
             title={todayStatus.statusTextHe}
             suppressHydrationWarning
-            className="toy-button flex min-h-[44px] min-w-[44px] shrink-0 items-center gap-1 rounded-full bg-amber-400/25 px-2.5 text-[11px] font-extrabold text-amber-950 hover:bg-amber-400/40 dark:bg-amber-400/20 dark:text-amber-200"
+            className="toy-button flex min-h-[44px] min-w-[44px] shrink-0 items-center gap-1 rounded-full bg-amber-400/25 px-2.5 text-xs font-extrabold text-amber-950 hover:bg-amber-400/40 dark:bg-amber-400/20 dark:text-amber-200"
           >
             <Sparkles className="h-3 w-3 shrink-0 text-orange-500 sm:h-3.5 sm:w-3.5" />
             <span className="whitespace-nowrap" suppressHydrationWarning>{todayStatus.chipLabelHe}</span>
@@ -207,7 +207,7 @@ export function TimelineScrubber() {
                       tripActions.setTimelineExpanded(false);
                       tripActions.setTodayCardOpen(true);
                     }}
-                    className="rounded-full bg-orange-500/15 px-2.5 py-0.5 text-[11px] font-bold text-orange-700 dark:text-amber-300"
+                    className="rounded-full bg-orange-500/15 px-2.5 py-0.5 text-xs font-bold text-orange-700 dark:text-amber-300"
                   >
                     כרטיס היום · {todayStatus.statusTextHe}
                   </button>

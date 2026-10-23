@@ -14,6 +14,7 @@ import {
 import { getCityBundle } from "@/lib/data/selectors";
 import { getCityImages, getPlaceImage } from "@/lib/data/placeImages";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
+import { DateRange } from "@/components/ui/bidi";
 import { BottomSheet } from "./BottomSheet";
 import { PhotoCreditPopover } from "./PhotoCreditPopover";
 import {
@@ -47,6 +48,8 @@ export function CityDrawer() {
   if (!bundle) return null;
 
   const { city, attractions, food, hotels, daysHere } = bundle;
+  const visibleTab: DrawerTab =
+    activeTab === "days" && daysHere.length === 0 ? "attractions" : activeTab;
   const cityImages = getCityImages(city.id);
   const isCityOfflineSaved = store.offlineSavedCities.includes(city.id);
 
@@ -100,18 +103,18 @@ export function CityDrawer() {
             {city.nameEn}
           </span>
           {city.onRoute ? (
-            <span className="rounded-full bg-orange-500/15 px-2.5 py-0.5 text-[11px] font-bold text-orange-600 dark:text-orange-300">
+            <span className="rounded-full bg-orange-500/15 px-2.5 py-0.5 text-xs font-bold text-orange-600 dark:text-orange-300">
               {city.days} ימים במסלול
             </span>
           ) : (
-            <span className="rounded-full bg-slate-500/15 px-2.5 py-0.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
+            <span className="rounded-full bg-slate-500/15 px-2.5 py-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">
               {city.optional ? "אופציונלי" : "טיול יום"}
             </span>
           )}
 
           {/* Offline Status & Save City for Offline Button (P1 #7) */}
           {isCityOfflineSaved ? (
-            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-extrabold text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-extrabold text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">
               <Check className="h-3 w-3" />
               <span>זמין אופליין ✓</span>
             </span>
@@ -123,7 +126,7 @@ export function CityDrawer() {
                 e.stopPropagation();
                 void handleSaveCityOffline();
               }}
-              className="inline-flex min-h-[30px] items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800 hover:bg-emerald-500/20 dark:text-emerald-300"
+              className="inline-flex min-h-11 items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 text-xs font-bold text-emerald-800 hover:bg-emerald-500/20 dark:text-emerald-300"
             >
               <Download className="h-3 w-3" />
               <span>
@@ -135,7 +138,14 @@ export function CityDrawer() {
         {city.dates.length > 0 && (
           <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300">
             <Calendar className="h-3.5 w-3.5 text-orange-500" />
-            <span>{city.dates.join(" • ")}</span>
+            <span>
+              {city.dates.map((date, index) => (
+                <span key={date}>
+                  {index > 0 ? " • " : ""}
+                  <DateRange>{date}</DateRange>
+                </span>
+              ))}
+            </span>
           </div>
         )}
       </div>
@@ -208,12 +218,12 @@ export function CityDrawer() {
           </div>
         )}
 
-        <div className="grid grid-cols-4 gap-1">
+        <div className={`grid gap-1 ${daysHere.length > 0 ? "grid-cols-4" : "grid-cols-3"}`}>
           <button
             type="button"
             onClick={() => setActiveTab("attractions")}
             className={`flex min-h-[44px] items-center justify-center gap-1 rounded-xl text-xs font-bold transition-all ${
-              activeTab === "attractions"
+              visibleTab === "attractions"
                 ? "bg-white text-slate-950 shadow-xs dark:bg-slate-800 dark:text-white"
                 : "text-slate-600 hover:text-slate-900 dark:text-slate-300"
             }`}
@@ -226,7 +236,7 @@ export function CityDrawer() {
             type="button"
             onClick={() => setActiveTab("food")}
             className={`flex min-h-[44px] items-center justify-center gap-1 rounded-xl text-xs font-bold transition-all ${
-              activeTab === "food"
+              visibleTab === "food"
                 ? "bg-white text-slate-950 shadow-xs dark:bg-slate-800 dark:text-white"
                 : "text-slate-600 dark:text-slate-300"
             }`}
@@ -239,7 +249,7 @@ export function CityDrawer() {
             type="button"
             onClick={() => setActiveTab("hotels")}
             className={`flex min-h-[44px] items-center justify-center gap-1 rounded-xl text-xs font-bold transition-all ${
-              activeTab === "hotels"
+              visibleTab === "hotels"
                 ? "bg-white text-slate-950 shadow-xs dark:bg-slate-800 dark:text-white"
                 : "text-slate-600 dark:text-slate-300"
             }`}
@@ -248,18 +258,20 @@ export function CityDrawer() {
             <span>מלונות ({hotels.length})</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => setActiveTab("days")}
-            className={`flex min-h-[44px] items-center justify-center gap-1 rounded-xl text-xs font-bold transition-all ${
-              activeTab === "days"
-                ? "bg-white text-slate-950 shadow-xs dark:bg-slate-800 dark:text-white"
-                : "text-slate-600 dark:text-slate-300"
-            }`}
-          >
-            <Calendar className="h-3.5 w-3.5 text-emerald-500" />
-            <span>ימים ({daysHere.length})</span>
-          </button>
+          {daysHere.length > 0 ? (
+            <button
+              type="button"
+              onClick={() => setActiveTab("days")}
+              className={`flex min-h-11 items-center justify-center gap-1 rounded-xl text-xs font-bold transition-all ${
+                visibleTab === "days"
+                  ? "bg-white text-slate-950 shadow-xs dark:bg-slate-800 dark:text-white"
+                  : "text-slate-700 dark:text-slate-200"
+              }`}
+            >
+              <Calendar className="h-3.5 w-3.5 text-emerald-500" />
+              <span>ימים ({daysHere.length})</span>
+            </button>
+          ) : null}
         </div>
 
         <button
@@ -294,7 +306,7 @@ export function CityDrawer() {
             ))}
           </div>
         ) : (
-          <CityDrawerTabsContent activeTab={activeTab} bundle={bundle} />
+          <CityDrawerTabsContent activeTab={visibleTab} bundle={bundle} />
         )}
       </div>
     </BottomSheet>

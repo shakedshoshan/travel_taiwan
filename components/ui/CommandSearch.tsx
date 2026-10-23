@@ -68,8 +68,31 @@ export function CommandSearch() {
         {/* Results List */}
         <div className="max-h-[60vh] divide-y divide-slate-900/5 overflow-y-auto p-2 dark:divide-white/5">
           {searchResults.length === 0 ? (
-            <div className="py-12 text-center text-sm text-slate-500">
-              לא נמצאו תוצאות מתאימות.
+            <div className="px-3 py-8 text-center text-sm text-slate-600 dark:text-slate-300">
+              <p>לא נמצאו תוצאות מתאימות.</p>
+              <p className="mt-3 text-xs font-bold text-slate-800 dark:text-slate-100">
+                נסו לפי קטגוריה
+              </p>
+              <div className="mt-3 flex flex-wrap justify-center gap-2">
+                {[
+                  { label: "ערים", query: "Taipei" },
+                  { label: "קנטינג", query: "Kenting" },
+                  { label: "אי הצב", query: "Guishan" },
+                  { label: "אי קילונג", query: "Keelung Islet" },
+                  { label: "אוכל", query: "שוק" },
+                  { label: "מלונות", query: "מלון" },
+                  { label: "מסלול", query: "אלישאן" },
+                ].map((item) => (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => setQuery(item.query)}
+                    className="flex min-h-11 items-center rounded-full bg-slate-100 px-3 text-xs font-bold text-slate-800 dark:bg-slate-800 dark:text-slate-100"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
             </div>
           ) : (
             searchResults.map((item) => {
@@ -89,12 +112,14 @@ export function CommandSearch() {
                   onClick={() => {
                     tripActions.setSearchOpen(false);
                     if (item.kind === "city") {
-                      tripActions.selectCity(item.cityId);
-                      router.push("/");
-                    } else {
-                      tripActions.selectCity(item.cityId);
-                      router.push(item.href);
+                      if (window.location.pathname === "/") {
+                        tripActions.selectCity(item.cityId);
+                      } else {
+                        router.push(item.href);
+                      }
+                      return;
                     }
+                    router.push(item.href);
                   }}
                   className="flex w-full items-center justify-between gap-3 rounded-2xl p-2.5 text-right transition-colors hover:bg-orange-500/10"
                 >
@@ -112,7 +137,7 @@ export function CommandSearch() {
                       <span className="truncate font-display text-sm font-bold text-slate-900 dark:text-white">
                         {item.titleHe}
                       </span>
-                      <span className="shrink-0 rounded-full bg-slate-900/10 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-white/10 dark:text-amber-300">
+                      <span className="shrink-0 rounded-full bg-slate-900/10 px-2 py-0.5 text-xs font-bold text-slate-800 dark:bg-white/10 dark:text-amber-200">
                         {item.badgeHe}
                       </span>
                     </div>

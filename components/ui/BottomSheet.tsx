@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { SheetSnapPoint } from "@/lib/store/useTripStore";
 
@@ -34,31 +34,6 @@ export function BottomSheet({
   const dragStartY = useRef<number | null>(null);
   const dragStartTime = useRef<number>(0);
   const [dragOffsetPx, setDragOffsetPx] = useState(0);
-  const pushedHistoryRef = useRef(false);
-
-  // Sync with browser History API so mobile Back button closes the sheet
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    if (isOpen && snap !== "closed" && !pushedHistoryRef.current) {
-      window.history.pushState({ taiwanSheetOpen: true }, "");
-      pushedHistoryRef.current = true;
-    } else if ((!isOpen || snap === "closed") && pushedHistoryRef.current) {
-      pushedHistoryRef.current = false;
-    }
-
-    const handlePopState = () => {
-      if (pushedHistoryRef.current) {
-        pushedHistoryRef.current = false;
-        onClose();
-      }
-    };
-
-    window.addEventListener("popstate", handlePopState);
-    return () => {
-      window.removeEventListener("popstate", handlePopState);
-    };
-  }, [isOpen, snap, onClose]);
 
   if (!isOpen || snap === "closed") return null;
 
@@ -165,7 +140,7 @@ export function BottomSheet({
                   type="button"
                   onPointerDown={(e) => e.stopPropagation()}
                   onClick={() => onSnapChange(pt)}
-                  className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-[11px] font-bold transition-colors ${
+                  className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-xs font-bold transition-colors ${
                     snap === pt
                       ? "bg-orange-500 text-white"
                       : "bg-slate-100 text-slate-500 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400"

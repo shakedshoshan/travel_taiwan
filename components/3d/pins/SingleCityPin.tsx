@@ -5,19 +5,20 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { WorldHtml } from "../WorldHtml";
 import { getCityBundle, type EnrichedCity } from "@/lib/data/selectors";
-import { tripActions } from "@/lib/store/useTripStore";
+import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 import { triggerHapticTap } from "@/lib/haptics";
+import { DateRange, LtrText } from "@/components/ui/bidi";
 import type { CityId } from "@/data/types";
 
 /** Fixed world offset so each resting name sits beside its pin. Positive Z is south. */
 const LABEL_NUDGE: Partial<Record<CityId, { x: number; z: number }>> = {
-  taipei: { x: -1.55, z: 3.6 },
-  taichung: { x: -1.05, z: -0.85 },
+  taipei: { x: -1.55, z: 6.1 },
+  taichung: { x: -1.05, z: -2.0 },
   "sun-moon-lake": { x: -2.15, z: -0.15 },
   alishan: { x: 0.2, z: 1.45 },
   tainan: { x: -0.85, z: -0.15 },
   kaohsiung: { x: -1.05, z: -0.2 },
-  hualien: { x: 1.15, z: 0.35 },
+  hualien: { x: 1.15, z: 3.2 },
   taitung: { x: -1.35, z: -0.45 },
   kenting: { x: -0.35, z: -1.4 },
 };
@@ -44,9 +45,23 @@ export function SingleCityPin({
   onSelectCity,
   onlyLabelCityId = null,
 }: SingleCityPinProps) {
+  const store = useTripStore();
   const groupRef = useRef<THREE.Group>(null);
   const ringRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
+  const sheetCovers =
+    store.sheetSnap === "half" ||
+    store.sheetSnap === "full" ||
+    store.isCityZoomMapOpen;
+  const showDetail = (hovered || isSelected) && !sheetCovers;
+  const safeBottomRatio =
+    store.sheetSnap === "full"
+      ? 0.9
+      : store.sheetSnap === "half"
+        ? 0.55
+        : store.sheetSnap === "peek"
+          ? 0.22
+          : 0;
 
   const counts = useMemo(() => {
     const b = getCityBundle(city.id);
@@ -62,12 +77,20 @@ export function SingleCityPin({
   const isOptionalPin = Boolean(city.optional || city.id === "kenting");
   const showPinLabel =
     onlyLabelCityId == null || onlyLabelCityId === city.id;
-  const routeCaption =
+  const routeCaptionLabel =
     city.routeOrder && city.routeOrder.length > 1
       ? `מקטעים ${city.routeOrder.join(", ")}`
       : city.routeOrder && city.routeOrder.length === 1
         ? (city.dates[0] ?? `מקטע ${city.routeOrder[0]}`)
         : null;
+  const routeCaption =
+    city.routeOrder && city.routeOrder.length > 1 ? (
+      <>
+        מקטעים <LtrText>{city.routeOrder.join(", ")}</LtrText>
+      </>
+    ) : city.routeOrder && city.routeOrder.length === 1 ? (
+      <DateRange>{city.dates[0] ?? `מקטע ${city.routeOrder[0]}`}</DateRange>
+    ) : null;
   const labelPriority = isSelected
     ? 100
     : hovered
@@ -245,7 +268,9 @@ export function SingleCityPin({
           ]}
           anchor="bottom"
           screenOffset={[0, -4]}
-          clampToViewport
+          clampToViewport={isSelected || hovered}
+          hideWhenOffscreen={!isSelected && !hovered}
+          safeBottomRatio={safeBottomRatio}
           labelPriority={labelPriority}
           showWhenFar={showWhenFar}
           ariaHidden={onlyLabelCityId != null && onlyLabelCityId !== city.id}
@@ -253,14 +278,14 @@ export function SingleCityPin({
         >
             <div dir="rtl" className="flex flex-col items-center">
               {routeCaption && (hovered || isSelected) && (
-                <span className="pointer-events-none mb-0.5 text-center text-[10px] font-bold leading-none text-slate-950 [text-shadow:0_1px_0_#fff] dark:text-white dark:[text-shadow:0_1px_2px_#020617]">
+                <span className="pointer-events-none mb-0.5 text-center text-xs font-bold leading-none text-slate-950 [text-shadow:0_1px_0_#fff] dark:text-white dark:[text-shadow:0_1px_2px_#020617]">
                   {routeCaption}
                 </span>
               )}
               <button
                 type="button"
                 aria-label={`${city.nameHe} (${city.nameEn})${
-                  routeCaption ? ` – ${routeCaption}` : ""
+                  routeCaptionLabel ? ` – ${routeCaptionLabel}` : ""
                 }${
                   city.onRoute
                     ? ` – ${city.days} ימים במסלול`
@@ -274,7 +299,7 @@ export function SingleCityPin({
                   triggerHapticTap();
                   onSelectCity(city.id);
                 }}
-                className={`relative flex cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold shadow-lg transition-transform after:absolute after:-inset-2 after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                className={`relative flex min-h-11 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full px-3 text-xs font-bold shadow-lg transition-transform after:absolute after:-inset-1 after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                   isSelected
                     ? "scale-105 bg-amber-400 text-slate-950 ring-2 ring-white"
                     : hovered
@@ -291,18 +316,23 @@ export function SingleCityPin({
                 {city.nameHe}
               </button>
 
-              {(hovered || isSelected) && (
-                <div className="mt-1 flex flex-col items-center gap-1 rounded-2xl border border-white/20 bg-slate-950/95 px-2.5 py-1.5 text-[10px] text-white shadow-xl backdrop-blur-md">
+              {showDetail && (
+                <div className="mt-1 flex max-w-[min(280px,calc(100vw-24px))] flex-col items-center gap-1 rounded-2xl border border-white/20 bg-slate-950/95 px-2.5 py-1.5 text-xs text-white shadow-xl backdrop-blur-md">
                   <div className="whitespace-nowrap font-bold text-amber-300">
                     {city.nameHe} ({city.nameEn})
                   </div>
-                  <div className="whitespace-nowrap text-[9.5px] text-slate-200">
-                    {city.onRoute
-                      ? `${city.days} ימים • ${city.dates.join(" | ")}`
-                      : city.note ?? "מחוץ לציר הלינה הראשי • לחצו לפתיחה"}
+                  <div className="text-center text-xs text-slate-200">
+                    {city.onRoute ? (
+                      <>
+                        <LtrText>{city.days}</LtrText> ימים •{" "}
+                        <DateRange>{city.dates.join(" | ")}</DateRange>
+                      </>
+                    ) : (
+                      (city.note ?? "מחוץ לציר הלינה הראשי • לחצו לפתיחה")
+                    )}
                   </div>
                   {counts.total > 0 && (
-                    <div className="flex items-center gap-2 border-t border-white/15 pt-1 text-[9.5px] font-bold">
+                    <div className="flex flex-wrap items-center justify-center gap-2 border-t border-white/15 pt-1 text-xs font-bold">
                       <span>
                         🏨 {counts.hotels} • 🍜 {counts.food} • ★{" "}
                         {counts.attractions}
@@ -314,7 +344,7 @@ export function SingleCityPin({
                           triggerHapticTap();
                           tripActions.enterCityZoomMap(city.id);
                         }}
-                        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-amber-400 px-3 text-[11px] font-black text-slate-950 hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-amber-400 px-3 text-xs font-black text-slate-950 hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                       >
                         זום למפת יעד 3D
                       </button>

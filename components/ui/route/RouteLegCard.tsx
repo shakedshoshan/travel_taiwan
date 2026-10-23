@@ -15,10 +15,8 @@ import {
   Utensils,
 } from "lucide-react";
 import { getCityBundle } from "@/lib/data/selectors";
-import {
-  getCityPrimaryImage,
-  getRouteLegImage,
-} from "@/lib/data/placeImages";
+import type { PlaceImageMeta } from "@/lib/data/placeImages";
+import { DateRange, LtrText } from "@/components/ui/bidi";
 import { PhotoCreditPopover } from "@/components/ui/PhotoCreditPopover";
 import practicalData from "@/data/practical.json";
 import type { CityId, RouteLeg } from "@/data/types";
@@ -30,6 +28,7 @@ interface RouteLegCardProps {
   isActive: boolean;
   onSelectLeg: (order: number, cityId: CityId) => void;
   registerRef: (order: number, el: HTMLElement | null) => void;
+  images: { city: PlaceImageMeta | null; route: PlaceImageMeta | null };
 }
 
 export function RouteLegCard({
@@ -37,14 +36,15 @@ export function RouteLegCard({
   isActive,
   onSelectLeg,
   registerRef,
+  images,
 }: RouteLegCardProps) {
   const bundle = getCityBundle(leg.cityId);
   const topAttractions = bundle.attractions.slice(0, 4);
   const topFood = bundle.food.slice(0, 3);
   const transport =
     practicalData.legTransport[leg.id as keyof LegTransportMap];
-  const routeImg = getRouteLegImage(leg.order, leg.cityId);
-  const cityImg = getCityPrimaryImage(leg.cityId);
+  const routeImg = images.route;
+  const cityImg = images.city;
 
   return (
     <article
@@ -62,34 +62,52 @@ export function RouteLegCard({
       {/* Route Leg & City Photo Banner */}
       <div className="mb-3.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
         <div className="relative h-32 overflow-hidden rounded-2xl bg-slate-900">
-          <Image
-            src={cityImg.src}
-            alt={bundle.city.nameHe}
-            title={cityImg.attribution}
-            fill
-            sizes="(max-width: 640px) 92vw, 440px"
-            className="object-cover"
-          />
+          {cityImg ? (
+            <Image
+              src={cityImg.src}
+              alt={bundle.city.nameHe}
+              title={cityImg.attribution}
+              fill
+              sizes="(max-width: 640px) 92vw, 440px"
+              className="object-cover"
+            />
+          ) : (
+            <div className="flex h-full flex-col items-center justify-center gap-1 bg-orange-500/20 text-orange-100">
+              <MapPin className="h-8 w-8" />
+              <span className="text-xs font-black">עיר</span>
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-          <span className="absolute right-2.5 bottom-1.5 text-[10px] font-bold text-white">
+          <span className="absolute right-2.5 bottom-1.5 text-xs font-bold text-white">
             {bundle.city.nameHe}
           </span>
-          <PhotoCreditPopover image={cityImg} positionClass="bottom-1.5 left-2" />
+          {cityImg && (
+            <PhotoCreditPopover image={cityImg} positionClass="bottom-1.5 left-2" />
+          )}
         </div>
         <div className="relative h-32 overflow-hidden rounded-2xl bg-slate-900">
-          <Image
-            src={routeImg.src}
-            alt={leg.focus}
-            title={routeImg.attribution}
-            fill
-            sizes="(max-width: 640px) 92vw, 440px"
-            className="object-cover"
-          />
+          {routeImg ? (
+            <Image
+              src={routeImg.src}
+              alt={leg.focus}
+              title={routeImg.attribution}
+              fill
+              sizes="(max-width: 640px) 92vw, 440px"
+              className="object-cover"
+            />
+          ) : (
+            <div className="flex h-full flex-col items-center justify-center gap-1 bg-amber-500/20 text-amber-100">
+              <Train className="h-8 w-8" />
+              <span className="text-xs font-black">תחבורה</span>
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-          <span className="absolute right-2.5 bottom-1.5 text-[10px] font-bold text-amber-300">
-            תחבורה ודרך · מקטע {leg.order}
+          <span className="absolute right-2.5 bottom-1.5 text-xs font-bold text-amber-300">
+            תחבורה ודרך · מקטע <LtrText>{leg.order}</LtrText>
           </span>
-          <PhotoCreditPopover image={routeImg} positionClass="bottom-1.5 left-2" />
+          {routeImg && (
+            <PhotoCreditPopover image={routeImg} positionClass="bottom-1.5 left-2" />
+          )}
         </div>
       </div>
 
@@ -112,11 +130,11 @@ export function RouteLegCard({
         <div className="flex items-center gap-1.5">
           <span className="inline-flex items-center gap-1 rounded-full bg-amber-400/25 px-2.5 py-1 text-xs font-extrabold text-amber-900 dark:bg-amber-400/20 dark:text-amber-300">
             <Calendar className="h-3.5 w-3.5" />
-            {leg.dates}
+            <DateRange>{leg.dates}</DateRange>
           </span>
           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-bold text-emerald-800 dark:text-emerald-300">
             <Clock className="h-3.5 w-3.5" />
-            {leg.days} ימים
+            <LtrText>{leg.days}</LtrText> ימים
           </span>
         </div>
       </div>
@@ -171,7 +189,7 @@ export function RouteLegCard({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="inline-flex min-h-[36px] items-center gap-1 rounded-xl bg-emerald-600 px-3 py-1 text-[11px] font-bold text-white shadow-xs"
+              className="inline-flex min-h-11 items-center gap-1 rounded-xl bg-emerald-600 px-3 py-1 text-xs font-bold text-white shadow-xs"
             >
               <span>{transport.bookingLabelHe}</span>
               <ExternalLink className="h-3 w-3" />

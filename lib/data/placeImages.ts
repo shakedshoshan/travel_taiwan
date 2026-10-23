@@ -182,3 +182,50 @@ export function getAllRouteImages(): PlaceImageMeta[] {
 export function getAllImageCredits(): ImageCreditRecord[] {
   return CREDITS;
 }
+
+function takeUnused(
+  candidates: PlaceImageMeta[],
+  used: Set<string>
+): PlaceImageMeta | null {
+  const found = candidates.find((img) => img.src && !used.has(img.src));
+  if (!found) return null;
+  used.add(found.src);
+  return found;
+}
+
+/** First use of a src wins; later rows in the same list get a category icon. */
+export function uniqueImagesForPlaces(
+  places: EnrichedPlace[]
+): Map<string, PlaceImageMeta | null> {
+  const used = new Set<string>();
+  const map = new Map<string, PlaceImageMeta | null>();
+  for (const place of places) {
+    const img = getPlaceImage(place);
+    if (used.has(img.src)) {
+      map.set(place.id, null);
+      continue;
+    }
+    used.add(img.src);
+    map.set(place.id, img);
+  }
+  return map;
+}
+
+export function uniqueRouteLegImages(
+  legs: ReadonlyArray<{ order: number; cityId: CityId }>
+): Map<number, { city: PlaceImageMeta | null; route: PlaceImageMeta | null }> {
+  const used = new Set<string>();
+  const map = new Map<
+    number,
+    { city: PlaceImageMeta | null; route: PlaceImageMeta | null }
+  >();
+  for (const leg of legs) {
+    const city = takeUnused(getCityImages(leg.cityId), used);
+    const candidate = getRouteLegImage(leg.order, leg.cityId);
+    const route =
+      candidate && !used.has(candidate.src) ? candidate : null;
+    if (route) used.add(route.src);
+    map.set(leg.order, { city, route });
+  }
+  return map;
+}

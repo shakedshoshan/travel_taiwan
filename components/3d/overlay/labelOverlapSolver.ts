@@ -32,7 +32,7 @@ function solveLabelVisibility() {
   for (const slot of labelSlots.values()) {
     if (!slot.active) continue;
     slot.hidden = farZoom && !slot.showWhenFar;
-    slot.scale = farZoom ? 0.86 : 1;
+    slot.scale = 1;
     list.push(slot);
   }
 
@@ -47,12 +47,11 @@ function solveLabelVisibility() {
       kept.push(slot);
       continue;
     }
-    if (slot.priority < hit.priority) {
+    if (slot.priority <= hit.priority) {
       slot.hidden = true;
       continue;
     }
-    slot.scale = Math.min(slot.scale, 0.78);
-    hit.scale = Math.min(hit.scale, 0.78);
+    hit.hidden = true;
     kept.push(slot);
   }
 }
@@ -66,6 +65,7 @@ export function queueLabelSolve() {
     for (const [id, slot] of labelSlots) {
       const el = labelElements.get(id);
       if (!el || !slot.active) continue;
+      el.dataset.slot = `${slot.ax.toFixed(0)},${slot.ay.toFixed(0)},p${slot.priority},${slot.hidden ? "h" : "v"}`;
       const decorative = el.dataset.decorative === "1";
       if (slot.hidden) {
         el.hidden = true;

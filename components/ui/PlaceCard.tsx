@@ -10,6 +10,7 @@ import {
   Sparkles,
   BedDouble,
   Gem,
+  Utensils,
 } from "lucide-react";
 import {
   buildGoogleMapsUrl,
@@ -20,7 +21,7 @@ import {
 } from "@/lib/data/selectors";
 import { formatDistanceAndWalk } from "@/lib/data/foodAndPlaceMeta";
 import { lodgingUnitChip } from "@/lib/data/lodgingPrice";
-import { getPlaceImage } from "@/lib/data/placeImages";
+import { getPlaceImage, type PlaceImageMeta } from "@/lib/data/placeImages";
 import { PhotoCreditPopover } from "./PhotoCreditPopover";
 
 interface PlaceCardProps {
@@ -29,6 +30,8 @@ interface PlaceCardProps {
   compact?: boolean;
   /** Hotel cards without their own photo use a tier icon instead. */
   showPhoto?: boolean;
+  /** Pass null to show a category icon instead of a repeated photo. */
+  image?: PlaceImageMeta | null;
 }
 
 const TIER_ICON = {
@@ -42,9 +45,14 @@ export function PlaceCard({
   distanceKm = null,
   compact = false,
   showPhoto = true,
+  image,
 }: PlaceCardProps) {
   const useTierIcon = !showPhoto && place.kind === "hotel";
-  const imageMeta = useTierIcon ? null : getPlaceImage(place);
+  const imageMeta = useTierIcon
+    ? null
+    : image === undefined
+      ? getPlaceImage(place)
+      : image;
   const googleMapsUrl = buildGoogleMapsUrl(place);
   const TierIcon = place.kind === "hotel" ? TIER_ICON[place.tier] : BedDouble;
 
@@ -77,17 +85,30 @@ export function PlaceCard({
         }`}
       >
         <div className="pointer-events-none relative block h-full w-full">
-          {useTierIcon && place.kind === "hotel" ? (
+          {imageMeta == null ? (
             <div
-              className={`flex h-full w-full flex-col items-center justify-center gap-1 ${HOTEL_TIER_META[place.tier].bgClass}`}
+              className={`flex h-full w-full flex-col items-center justify-center gap-1 ${
+                place.kind === "hotel"
+                  ? HOTEL_TIER_META[place.tier].bgClass
+                  : "bg-orange-500/15 text-orange-800 dark:text-orange-200"
+              }`}
             >
-              <TierIcon className="h-8 w-8" />
+              {place.kind === "food" ? (
+                <Utensils className="h-8 w-8" />
+              ) : place.kind === "hotel" ? (
+                <TierIcon className="h-8 w-8" />
+              ) : (
+                <Sparkles className="h-8 w-8" />
+              )}
               <span className="text-xs font-black">
-                {HOTEL_TIER_META[place.tier].labelHe}
+                {place.kind === "hotel"
+                  ? HOTEL_TIER_META[place.tier].labelHe
+                  : place.kind === "food"
+                    ? place.typeHe
+                    : "אטרקציה"}
               </span>
             </div>
           ) : (
-            imageMeta && (
               <Image
                 src={imageMeta.src}
                 alt={
@@ -104,7 +125,6 @@ export function PlaceCard({
                 }
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
-            )
           )}
           {!useTierIcon && (
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
@@ -114,7 +134,7 @@ export function PlaceCard({
           <div className="absolute top-2.5 right-2.5 left-2.5 flex flex-wrap items-center justify-between gap-1.5">
             <div className="flex flex-wrap items-center gap-1">
               {place.kind === "attraction" && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-2.5 py-0.5 text-[10px] font-black text-slate-950 shadow-xs">
+                <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-2.5 py-0.5 text-xs font-black text-slate-950 shadow-xs">
                   {place.isNature ? (
                     <>
                       <Trees className="h-3 w-3" />
@@ -129,30 +149,30 @@ export function PlaceCard({
                 </span>
               )}
               {place.kind === "food" && (
-                <span className="rounded-full bg-rose-500 px-2.5 py-0.5 text-[10px] font-black text-white shadow-xs">
+                <span className="rounded-full bg-rose-500 px-2.5 py-0.5 text-xs font-black text-white shadow-xs">
                   {FOOD_TYPE_META[place.type].labelHe}
                 </span>
               )}
               {place.kind === "hotel" && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-sky-500 px-2.5 py-0.5 text-[10px] font-black text-white shadow-xs">
+                <span className="inline-flex items-center gap-1 rounded-full bg-sky-500 px-2.5 py-0.5 text-xs font-black text-white shadow-xs">
                   <BedDouble className="h-3 w-3" />
                   <span>{HOTEL_TIER_META[place.tier].labelHe}</span>
                 </span>
               )}
 
-              <span className="rounded-full bg-slate-950/80 px-2.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-xs">
+              <span className="rounded-full bg-slate-950/80 px-2.5 py-0.5 text-xs font-bold text-white backdrop-blur-xs">
                 {place.cityNameHe}
               </span>
 
               {typeof distanceKm === "number" && (
-                <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-black text-white shadow-xs">
+                <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-xs font-black text-white shadow-xs">
                   {formatDistanceAndWalk(distanceKm)}
                 </span>
               )}
             </div>
 
             {"importance" in place && (
-              <span className="rounded-full bg-slate-950/80 px-2 py-0.5 text-[10px] font-bold text-amber-400 backdrop-blur-xs">
+              <span className="rounded-full bg-slate-950/80 px-2 py-0.5 text-xs font-bold text-amber-400 backdrop-blur-xs">
                 {"★".repeat(place.importance)}
               </span>
             )}
@@ -169,7 +189,7 @@ export function PlaceCard({
           <div className="min-w-0 flex-1">
             <Link
               href={`/place/${place.id}`}
-              className="block font-display text-base font-black leading-snug text-slate-900 hover:text-orange-600 dark:text-white dark:hover:text-amber-300"
+              className="flex min-h-11 items-center font-display text-base font-black leading-snug text-slate-900 hover:text-orange-600 dark:text-white dark:hover:text-amber-300"
             >
               {place.name}
             </Link>
@@ -192,23 +212,23 @@ export function PlaceCard({
           isUnverified) && (
           <div className="mt-2.5 flex flex-wrap items-center gap-1.5 text-xs">
             {cleanPrice && (
-              <span className="rounded-lg bg-emerald-500/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-emerald-800 dark:text-emerald-300">
+              <span className="rounded-lg bg-emerald-500/15 px-2.5 py-0.5 font-mono text-xs font-bold text-emerald-800 dark:text-emerald-300">
                 {cleanPrice}
               </span>
             )}
             {unitChip && (
-              <span className="rounded-full bg-sky-500/15 px-2.5 py-0.5 text-[10px] font-black text-sky-800 dark:text-sky-200">
+              <span className="rounded-full bg-sky-500/15 px-2.5 py-0.5 text-xs font-black text-sky-800 dark:text-sky-200">
                 {unitChip}
               </span>
             )}
             {place.kind === "food" && place.hours && (
-              <span className="inline-flex items-center gap-1 rounded-lg bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+              <span className="inline-flex items-center gap-1 rounded-lg bg-slate-100 px-2 py-0.5 text-xs text-slate-700 dark:bg-slate-800 dark:text-slate-200">
                 <Clock className="h-3 w-3 text-orange-500" />
                 <span>{place.hours}</span>
               </span>
             )}
             {isUnverified && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:bg-amber-400/20 dark:text-amber-200">
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-xs font-bold text-amber-800 dark:bg-amber-400/20 dark:text-amber-200">
                 <AlertCircle className="h-3 w-3" />
                 <span>לא מאומת</span>
               </span>

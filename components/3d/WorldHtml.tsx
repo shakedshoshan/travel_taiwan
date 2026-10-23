@@ -111,6 +111,10 @@ interface WorldHtmlProps {
   screenOffset?: [number, number];
   /** Clamp projected label inside safe viewport area so labels never clip off-screen */
   clampToViewport?: boolean;
+  /** Hide when the anchor is outside the frustum instead of sliding it to a screen edge. */
+  hideWhenOffscreen?: boolean;
+  /** Extra bottom inset as a fraction of the viewport (open bottom sheet). */
+  safeBottomRatio?: number;
   distanceFactor?: number;
   zIndexRange?: [number, number];
   /** Higher wins. Overlaps hide the lower label; they are never moved apart. */
@@ -133,6 +137,8 @@ export function WorldHtml({
   anchor = "center",
   screenOffset = [0, 0],
   clampToViewport = false,
+  hideWhenOffscreen = false,
+  safeBottomRatio = 0,
   zIndexRange = [20, 0],
   labelPriority,
   showWhenFar = true,
@@ -197,15 +203,43 @@ export function WorldHtml({
     }
 
     tmpVec.project(camera);
-    let x = (tmpVec.x * 0.5 + 0.5) * size.width + screenOffset[0];
-    let y = (-(tmpVec.y * 0.5) + 0.5) * size.height + screenOffset[1];
+    const rawX = (tmpVec.x * 0.5 + 0.5) * size.width;
+    const rawY = (-(tmpVec.y * 0.5) + 0.5) * size.height;
+    const offscreen =
+      hideWhenOffscreen &&
+      (tmpVec.z < -1 ||
+        tmpVec.z > 1 ||
+        rawX < 0 ||
+        rawY < 0 ||
+        rawX > size.width ||
+        rawY > size.height);
+    if (offscreen) {
+      const slot = labelSlots.get(id);
+      if (slot) slot.active = false;
+      if (el.style.opacity !== "0") {
+        el.style.opacity = "0";
+        el.style.pointerEvents = "none";
+      }
+      return;
+    }
+
+    let x = rawX + screenOffset[0];
+    let y = rawY + screenOffset[1];
 
     if (clampToViewport && Number.isFinite(x) && Number.isFinite(y)) {
-      const w = el.offsetWidth || 72;
-      const h = el.offsetHeight || 26;
       const padX = 12;
       const padTop = 104;
-      const padBottom = size.width >= 1024 ? 84 : 132;
+      const sheetBottom = Math.max(0, safeBottomRatio) * size.height;
+      const padBottom = Math.max(
+        size.width >= 1024 ? 84 : 132,
+        sheetBottom + 12
+      );
+      const maxW = Math.max(48, size.width - padX * 2);
+      const inner = el.firstElementChild as HTMLElement | null;
+      if (inner) inner.style.maxWidth = `${maxW}px`;
+
+      const w = Math.min(el.offsetWidth || 72, maxW);
+      const h = el.offsetHeight || 26;
 
       const halfW = anchor === "bottom" || center ? w * 0.5 : 0;
       const minX = padX + halfW;
@@ -219,7 +253,7 @@ export function WorldHtml({
       } else {
         const halfH = center ? h * 0.5 : 0;
         const minY = padTop + halfH;
-        const maxY = Math.max(minY, size.height - padBottom - halfH);
+        const maxY = Math.max(minY, size.height - padBottom - (center ? halfH : h));
         y = Math.min(maxY, Math.max(minY, y));
       }
     }

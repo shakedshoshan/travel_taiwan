@@ -22,6 +22,8 @@ import {
 } from "@/lib/data/foodAndPlaceMeta";
 import { PlaceCard } from "@/components/ui/PlaceCard";
 import { FoodFilterSheet } from "@/components/ui/food/FoodFilterSheet";
+import { BackToTop, CityJumpBar } from "@/components/ui/CityJumpBar";
+import { uniqueImagesForPlaces } from "@/lib/data/placeImages";
 import { useTripStore } from "@/lib/store/useTripStore";
 import type { CityId, FoodType } from "@/data/types";
 
@@ -131,10 +133,22 @@ export default function FoodPage() {
     nearMeCoords,
   ]);
 
+  const foodImages = useMemo(
+    () => uniqueImagesForPlaces(filteredFood),
+    [filteredFood]
+  );
+
   const citiesWithFood = useMemo(() => {
     const set = new Set(allFood.map((f) => f.cityId));
     return cities.filter((c) => set.has(c.id));
   }, [allFood, cities]);
+
+  const jumpItems = useMemo(() => {
+    const present = new Set(filteredFood.map((item) => item.cityId));
+    return citiesWithFood
+      .filter((city) => present.has(city.id))
+      .map((city) => ({ id: `food-${city.id}`, label: city.nameHe }));
+  }, [citiesWithFood, filteredFood]);
 
   const activeFiltersCount =
     (selectedCity !== "all" ? 1 : 0) +
@@ -160,14 +174,14 @@ export default function FoodPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="חפשו מנה, שוק לילה או שם בסינית..."
-              className="w-full bg-transparent text-xs font-medium outline-none"
+              className="min-h-11 w-full bg-transparent text-base font-medium outline-none"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
                 aria-label="נקה חיפוש"
-                className="text-slate-400 hover:text-slate-600"
+                className="flex min-h-11 min-w-11 items-center justify-center text-slate-600 hover:text-slate-900"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -183,7 +197,7 @@ export default function FoodPage() {
             <SlidersHorizontal className="h-4 w-4" />
             <span>סינון</span>
             {activeFiltersCount > 0 && (
-              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[10px] font-black text-white">
+              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-xs font-black text-white">
                 {activeFiltersCount}
               </span>
             )}
@@ -191,11 +205,11 @@ export default function FoodPage() {
         </div>
 
         {/* Single Horizontal Row of Quick Pills */}
-        <div className="fade-edge-scroll no-scrollbar mt-2 flex items-center gap-1.5 overflow-x-auto pl-4">
+        <div className="fade-edge-scroll no-scrollbar mt-2 flex snap-x snap-mandatory items-center gap-1.5 overflow-x-auto pl-4">
           <button
             type="button"
             onClick={() => setViewMode("all")}
-            className={`min-h-[38px] shrink-0 rounded-full px-3 text-xs font-bold whitespace-nowrap ${
+            className={`flex min-h-11 shrink-0 snap-start items-center rounded-full px-3 text-xs font-bold whitespace-nowrap ${
               viewMode === "all"
                 ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950"
                 : "bg-slate-200/70 text-slate-700 dark:bg-slate-800 dark:text-slate-300"
@@ -211,7 +225,7 @@ export default function FoodPage() {
                 viewMode === "cheap-must-eats" ? "all" : "cheap-must-eats"
               )
             }
-            className={`flex min-h-[38px] shrink-0 items-center gap-1 rounded-full px-3 text-xs font-bold whitespace-nowrap ${
+            className={`flex min-h-11 shrink-0 snap-start items-center gap-1 rounded-full px-3 text-xs font-bold whitespace-nowrap ${
               viewMode === "cheap-must-eats"
                 ? "bg-emerald-600 text-white"
                 : "bg-emerald-500/15 text-emerald-800 dark:text-emerald-300"
@@ -224,7 +238,7 @@ export default function FoodPage() {
           <button
             type="button"
             onClick={() => setOnlyOpenNow(!onlyOpenNow)}
-            className={`flex min-h-[38px] shrink-0 items-center gap-1 rounded-full px-3 text-xs font-bold whitespace-nowrap ${
+            className={`flex min-h-11 shrink-0 snap-start items-center gap-1 rounded-full px-3 text-xs font-bold whitespace-nowrap ${
               onlyOpenNow
                 ? "bg-orange-500 text-white"
                 : "bg-orange-500/15 text-orange-800 dark:text-orange-300"
@@ -237,7 +251,7 @@ export default function FoodPage() {
           <button
             type="button"
             onClick={handleToggleNearMe}
-            className={`flex min-h-[38px] shrink-0 items-center gap-1 rounded-full px-3 text-xs font-bold whitespace-nowrap ${
+            className={`flex min-h-11 shrink-0 snap-start items-center gap-1 rounded-full px-3 text-xs font-bold whitespace-nowrap ${
               nearMeCoords
                 ? "bg-sky-600 text-white"
                 : "bg-sky-500/15 text-sky-800 dark:text-sky-300"
@@ -254,6 +268,12 @@ export default function FoodPage() {
           </button>
         </div>
       </div>
+
+      {jumpItems.length > 1 && (
+        <div className="sticky top-[7.5rem] z-20 -mx-3.5 mb-3 bg-background/95 px-3.5 py-1">
+          <CityJumpBar items={jumpItems} />
+        </div>
+      )}
 
       {/* Results Header */}
       <div className="mb-3 flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
@@ -282,7 +302,7 @@ export default function FoodPage() {
 
       {/* Food Cards Grid */}
       <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredFood.map((item) => {
+        {filteredFood.map((item, index) => {
           const distKm = nearMeCoords
             ? computeDistanceKm(
                 nearMeCoords.lat,
@@ -291,9 +311,25 @@ export default function FoodPage() {
                 item.resolvedCoords.lng
               )
             : null;
-          return <PlaceCard key={item.id} place={item} distanceKm={distKm} />;
+          const isCityStart =
+            filteredFood.findIndex((entry) => entry.cityId === item.cityId) ===
+            index;
+          return (
+            <div
+              key={item.id}
+              id={isCityStart ? `food-${item.cityId}` : undefined}
+              className={isCityStart ? "scroll-mt-40" : undefined}
+            >
+              <PlaceCard
+                place={item}
+                distanceKm={distKm}
+                image={foodImages.get(item.id) ?? null}
+              />
+            </div>
+          );
         })}
       </div>
+      <BackToTop />
 
       <FoodFilterSheet
         isOpen={isFilterSheetOpen}

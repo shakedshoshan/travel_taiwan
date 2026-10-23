@@ -101,7 +101,7 @@ export function LayerToggles() {
         >
           <Layers className="h-4 w-4 text-orange-500" />
           <span>שכבות</span>
-          <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-500/15 px-1 text-[10px] font-black text-orange-600 dark:bg-amber-400/20 dark:text-amber-300">
+          <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-500/15 px-1 text-xs font-black text-orange-600 dark:bg-amber-400/20 dark:text-amber-300">
             {activeCount}
           </span>
         </button>

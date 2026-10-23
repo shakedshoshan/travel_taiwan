@@ -8,6 +8,7 @@ import {
   resolveNearMeCoordinates,
 } from "@/lib/data/foodAndPlaceMeta";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
+import { DateRange, LtrText, RtlParen } from "@/components/ui/bidi";
 import type { CityBundle, EnrichedPlace } from "@/lib/data/selectors";
 import type { FoodType, HotelTier } from "@/data/types";
 
@@ -91,7 +92,7 @@ export function CityDrawerTabsContent({
     <button
       type="button"
       onClick={handleToggleNearMeSort}
-      className={`flex min-h-[40px] items-center gap-1 rounded-xl px-2.5 text-xs font-bold transition-colors ${
+      className={`flex min-h-11 items-center gap-1 rounded-xl px-2.5 text-xs font-bold transition-colors ${
         sortByNearMe
           ? "bg-sky-600 text-white"
           : "bg-sky-500/15 text-sky-800 dark:text-sky-300"
@@ -134,7 +135,7 @@ export function CityDrawerTabsContent({
                 key={val}
                 type="button"
                 onClick={() => setNatureFilter(val)}
-                className={`min-h-[40px] rounded-xl px-3 text-xs font-bold ${
+                className={`min-h-11 rounded-xl px-3 text-xs font-bold ${
                   natureFilter === val
                     ? "bg-slate-900 text-white dark:bg-amber-400 dark:text-slate-950"
                     : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-200"
@@ -170,7 +171,7 @@ export function CityDrawerTabsContent({
                   key={val}
                   type="button"
                   onClick={() => setFoodTypeFilter(val)}
-                  className={`min-h-[40px] rounded-xl px-2.5 text-xs font-bold ${
+                  className={`min-h-11 rounded-xl px-2.5 text-xs font-bold ${
                     foodTypeFilter === val
                       ? "bg-slate-900 text-white dark:bg-amber-400 dark:text-slate-950"
                       : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-200"
@@ -221,7 +222,7 @@ export function CityDrawerTabsContent({
                 key={val}
                 type="button"
                 onClick={() => setHotelTierFilter(val)}
-                className={`min-h-[40px] rounded-xl px-2.5 text-xs font-bold ${
+                className={`min-h-11 rounded-xl px-2.5 text-xs font-bold ${
                   hotelTierFilter === val
                     ? "bg-slate-900 text-white dark:bg-amber-400 dark:text-slate-950"
                     : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-200"
@@ -242,8 +243,10 @@ export function CityDrawerTabsContent({
     <div className="space-y-3">
       {legs.length === 0 ? (
         <div className="rounded-2xl bg-slate-100 p-5 text-center text-sm text-slate-600 dark:bg-slate-800 dark:text-slate-200">
-          {city.note ??
-            "עיר זו אינה תחנת לינה ראשית ב-10 מקטעי המסלול, אך ניתן לשלב אותה כטיול יום מערי הבסיס הסמוכות."}
+          {city.optional || city.id === "kenting"
+            ? "עצירה אופציונלית – לא במסלול"
+            : (city.note ??
+              "עיר זו אינה תחנת לינה ראשית ב-10 מקטעי המסלול, אך ניתן לשלב אותה כטיול יום מערי הבסיס הסמוכות.")}
         </div>
       ) : (
         legs.map((leg) => (
@@ -256,14 +259,17 @@ export function CityDrawerTabsContent({
                 מקטע {leg.order}: {leg.focus}
               </span>
               <span className="rounded-full bg-white px-2.5 py-0.5 text-xs font-bold text-slate-900 dark:bg-slate-900 dark:text-amber-300">
-                {leg.dates} ({leg.days} ימים)
+                <DateRange>{leg.dates}</DateRange>{" "}
+                <RtlParen>
+                  (<LtrText>{leg.days}</LtrText> ימים)
+                </RtlParen>
               </span>
             </div>
             <p className="mt-1.5 text-xs font-medium text-slate-800 dark:text-slate-100">
               {leg.anchor}
             </p>
             {leg.notes && (
-              <p className="mt-1 text-[11px] text-amber-800 dark:text-amber-300">
+              <p className="mt-1 text-xs text-amber-800 dark:text-amber-300">
                 הערות: {leg.notes}
               </p>
             )}
@@ -291,7 +297,7 @@ export function CityDrawerTabsContent({
                 <div>
                   יום {d.dayNumber} • {d.dateShort}
                 </div>
-                <div className="text-[10px] opacity-80">
+                <div className="text-xs opacity-80">
                   {d.weekdayHe} ({d.legFocus})
                 </div>
               </button>

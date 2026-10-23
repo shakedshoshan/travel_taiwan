@@ -55,11 +55,11 @@ export function Navbar() {
       <header
         dir="rtl"
         style={{ paddingTop: "max(0.5rem, env(safe-area-inset-top))" }}
-        className={`pointer-events-none fixed top-0 right-0 left-0 z-40 px-2.5 transition-opacity duration-200 md:px-5 ${
+        className={`pointer-events-none fixed top-0 right-0 left-0 z-40 px-2.5 transition-opacity duration-200 max-[420px]:px-2 md:px-5 ${
           hideMapHud ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
-        <div className="glass-panel pointer-events-auto mx-auto flex min-h-12 max-w-7xl flex-wrap items-center justify-between gap-x-2 gap-y-1 rounded-2xl px-2 py-1 shadow-lg md:px-4 lg:flex-nowrap">
+        <div className="glass-panel pointer-events-auto mx-auto flex h-12 max-h-16 max-w-7xl flex-nowrap items-center justify-between gap-x-2 overflow-hidden rounded-2xl px-2 shadow-lg md:px-4">
           <div className="flex min-w-0 shrink items-center gap-2">
             <Link
               href="/"
@@ -69,7 +69,7 @@ export function Navbar() {
               }}
               className="flex min-h-[44px] min-w-0 shrink items-center gap-1.5 px-0.5 text-right"
             >
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-amber-500 to-emerald-500 text-[10px] font-black text-white shadow-sm sm:h-8 sm:w-8 sm:text-xs">
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-amber-500 to-emerald-500 text-xs font-black text-white shadow-sm sm:h-8 sm:w-8 sm:text-xs">
                 TW
               </div>
               <div
@@ -79,16 +79,22 @@ export function Navbar() {
                 <span>טייוואן</span>
                 <span aria-hidden="true">·</span>
                 <bdi dir="ltr">3D</bdi>
-                <span aria-hidden="true">·</span>
-                <bdi dir="ltr">{tripSpan.dateRange}</bdi>
-                <span aria-hidden="true">·</span>
-                <span>{tripSpan.dayCount} ימים</span>
+                <span aria-hidden="true" className="max-[420px]:hidden">
+                  ·
+                </span>
+                <bdi dir="ltr" className="max-[420px]:hidden">
+                  {tripSpan.dateRange}
+                </bdi>
+                <span aria-hidden="true" className="max-[420px]:hidden">
+                  ·
+                </span>
+                <span className="max-[420px]:hidden">{tripSpan.dayCount} ימים</span>
               </div>
             </Link>
 
             <span
               title="נתוני הטיול, המפות והגופנים שמורים וזמינים גם ללא קליטה"
-              className="hidden shrink-0 items-center rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-extrabold text-emerald-800 sm:inline-flex dark:bg-emerald-500/20 dark:text-emerald-300"
+              className="hidden shrink-0 items-center rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-extrabold text-emerald-800 sm:inline-flex dark:bg-emerald-500/20 dark:text-emerald-300"
             >
               זמין אופליין ✓
             </span>
@@ -132,7 +138,7 @@ export function Navbar() {
             >
               <Search className="h-4 w-4 text-orange-500" />
               <span className="hidden md:inline">חיפוש</span>
-              <kbd className="desktop-only-control hidden rounded bg-slate-900/10 px-1.5 py-0.5 font-mono text-[10px] lg:inline-block dark:bg-white/15">
+              <kbd className="desktop-only-control hidden rounded bg-slate-900/10 px-1.5 py-0.5 font-mono text-xs lg:inline-block dark:bg-white/15">
                 ⌘K
               </kbd>
             </button>
@@ -172,7 +178,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex min-h-[44px] min-w-[56px] flex-1 flex-col items-center justify-center gap-0.5 rounded-xl py-1 text-[11px] font-bold transition-colors ${
+                className={`flex min-h-11 min-w-[56px] flex-1 flex-col items-center justify-center gap-0.5 rounded-xl py-1 text-xs font-bold transition-colors ${
                   isActive
                     ? "text-orange-600 dark:text-amber-400"
                     : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
