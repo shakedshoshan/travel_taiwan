@@ -8,6 +8,8 @@ export interface LabelSlot {
   homeOy: number;
   drop: number;
   active: boolean;
+  /** City labels stay on their pins. Island labels move around them. */
+  locked: boolean;
   hasSolve: boolean;
   solvedAx: number;
   solvedAy: number;
@@ -29,88 +31,78 @@ function anchorsMoved(): boolean {
   return false;
 }
 
-function solveLabelOverlaps(viewportHeight: number) {
+function solveLabelOverlaps() {
   const list: LabelSlot[] = [];
   for (const slot of labelSlots.values()) {
     if (!slot.active) continue;
     list.push(slot);
   }
-  const minY = viewportHeight * 0.34;
-  const maxY = viewportHeight * 0.72;
-  const maxDriftX = 72;
-  const maxDriftY = 72;
+  const maxDrift = 96;
   for (const slot of list) {
-    const widthChanged =
-      slot.hasSolve && Math.abs(slot.w - slot.solvedW) > 10;
-    const separatedY =
-      slot.hasSolve && !widthChanged ? slot.oy - slot.homeOy : 0;
-    const separatedX = slot.hasSolve && !widthChanged ? slot.ox : 0;
-    let oy = -18;
-    if (slot.ay + oy > maxY) oy = maxY - slot.ay;
-    if (slot.ay + oy < minY) oy = minY - slot.ay;
-    oy += slot.drop;
-    if (slot.ay + oy > maxY) oy = maxY - slot.ay;
-    slot.homeOy = oy;
-    slot.oy = oy + separatedY;
-    slot.ox = separatedX;
+    if (slot.locked) {
+      slot.ox = 0;
+      slot.oy = 0;
+      slot.homeOy = 0;
+      continue;
+    }
+    const widthChanged = slot.hasSolve && Math.abs(slot.w - slot.solvedW) > 10;
+    if (!slot.hasSolve || widthChanged) {
+      slot.ox = 0;
+      slot.oy = slot.drop;
+    }
+    slot.homeOy = 0;
   }
-  const withinY = (slot: LabelSlot, nextOy: number) => {
-    const y = slot.ay + nextOy;
-    return (
-      y >= minY &&
-      y <= maxY &&
-      nextOy <= slot.homeOy + maxDriftY &&
-      nextOy >= slot.homeOy - 6
-    );
-  };
-  for (let iter = 0; iter < 8; iter++) {
+  for (let iter = 0; iter < 10; iter++) {
     for (let i = 0; i < list.length; i++) {
       for (let j = i + 1; j < list.length; j++) {
         const a = list[i];
         const b = list[j];
+        if (a.locked && b.locked) continue;
         const ax = a.ax + a.ox;
         const ay = a.ay + a.oy;
         const bx = b.ax + b.ox;
         const by = b.ay + b.oy;
         const gapX = (a.w + b.w) * 0.5 + 8 - Math.abs(dx(ax, bx));
-        const gapY = (a.h + b.h) * 0.5 + 6 - Math.abs(dy(ay, by));
-        if (gapX <= 4 || gapY <= 4) continue;
+        const gapY = (a.h + b.h) * 0.5 + 8 - Math.abs(dy(ay, by));
+        if (gapX <= 1 || gapY <= 1) continue;
+        if (a.locked || b.locked) {
+          const free = a.locked ? b : a;
+          const fixed = free === a ? b : a;
+          const fx = fixed.ax + fixed.ox;
+          const fy = fixed.ay + fixed.oy;
+          const px = free.ax + free.ox;
+          const py = free.ay + free.oy;
+          if (gapX < gapY) {
+            free.ox += (px >= fx ? 1 : -1) * gapX;
+          } else {
+            free.oy += (py >= fy ? 1 : -1) * gapY;
+          }
+          continue;
+        }
         const xDir =
           Math.abs(bx - ax) < 4 ? (a.ax <= b.ax ? -1 : 1) : Math.sign(bx - ax);
         const aWould = a.ox - xDir * gapX * 0.5;
         const bWould = b.ox + xDir * gapX * 0.5;
-        const horizontalFits =
-          Math.abs(aWould) <= maxDriftX && Math.abs(bWould) <= maxDriftX;
-        const preferred =
-          a.drop > 0 && b.drop === 0
-            ? a
-            : b.drop > 0 && a.drop === 0
-              ? b
-              : ay >= by
-                ? a
-                : b;
-        const other = preferred === a ? b : a;
-        if (horizontalFits && gapX < gapY) {
+        if (Math.abs(aWould) <= maxDrift && Math.abs(bWould) <= maxDrift && gapX <= gapY) {
           a.ox = aWould;
           b.ox = bWould;
-        } else if (withinY(preferred, preferred.oy + gapY)) {
-          preferred.oy += gapY;
-        } else if (withinY(other, other.oy + gapY)) {
-          other.oy += gapY;
-        } else if (horizontalFits) {
-          a.ox = aWould;
-          b.ox = bWould;
+        } else if (ay >= by) {
+          a.oy += gapY;
+        } else {
+          b.oy += gapY;
         }
       }
     }
     for (const slot of list) {
-      if (slot.ox > maxDriftX) slot.ox = maxDriftX;
-      if (slot.ox < -maxDriftX) slot.ox = -maxDriftX;
-      if (slot.oy > slot.homeOy + maxDriftY) slot.oy = slot.homeOy + maxDriftY;
-      if (slot.oy < slot.homeOy - 6) slot.oy = slot.homeOy - 6;
-      const y = slot.ay + slot.oy;
-      if (y > maxY) slot.oy += maxY - y;
-      if (y < minY) slot.oy += minY - y;
+      if (slot.locked) {
+        slot.ox = 0;
+        slot.oy = 0;
+        continue;
+      }
+      if (slot.ox > maxDrift) slot.ox = maxDrift;
+      if (slot.ox < -maxDrift) slot.ox = -maxDrift;
+      if (slot.oy > maxDrift) slot.oy = maxDrift;
+      if (slot.oy < -maxDrift) slot.oy = -maxDrift;
     }
   }
   for (const slot of list) {
@@ -128,12 +120,12 @@ function dy(ay: number, by: number) {
   return by - ay;
 }
 
-export function queueLabelSolve(viewportHeight: number) {
+export function queueLabelSolve() {
   if (solveQueued) return;
   solveQueued = true;
   queueMicrotask(() => {
     solveQueued = false;
-    if (anchorsMoved()) solveLabelOverlaps(viewportHeight);
+    if (anchorsMoved()) solveLabelOverlaps();
     for (const [id, slot] of labelSlots) {
       const el = labelElements.get(id);
       if (!el || !slot.active) continue;

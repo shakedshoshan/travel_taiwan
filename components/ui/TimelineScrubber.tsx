@@ -55,7 +55,7 @@ export function TimelineScrubber() {
       {!store.isTimelineExpanded && (
         <div
           dir="rtl"
-          className="glass-panel pointer-events-auto mx-auto flex h-16 max-w-xl items-center justify-between gap-1.5 rounded-full px-2.5 shadow-xl"
+          className="glass-panel pointer-events-auto mx-auto flex h-16 max-w-xl items-center justify-between gap-2 rounded-full px-2.5 shadow-xl"
         >
           {/* Play / Pause Traveler Animation along the Route (P1 #10) */}
           <button
@@ -67,7 +67,7 @@ export function TimelineScrubber() {
             title={
               store.isRoutePlaying ? "השהה מסלול" : "נגן אנימציית מטייל במסלול"
             }
-            className={`toy-button flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-black transition-colors sm:h-10 sm:w-10 ${
+            className={`toy-button flex h-11 w-11 min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-full text-xs font-black transition-colors ${
               store.isRoutePlaying
                 ? "bg-amber-400 text-slate-950 shadow-sm"
                 : "bg-orange-500 text-white shadow-sm hover:bg-orange-600"
@@ -114,12 +114,10 @@ export function TimelineScrubber() {
               tripActions.setTodayCardOpen(true);
             }}
             title={todayStatus.statusTextHe}
-            className="toy-button flex min-h-[34px] shrink-0 items-center gap-1 rounded-full bg-amber-400/25 px-2 text-[10px] font-extrabold text-amber-950 hover:bg-amber-400/40 sm:min-h-[38px] sm:px-2.5 sm:text-[11px] dark:bg-amber-400/20 dark:text-amber-200"
+            className="toy-button flex min-h-[44px] min-w-[44px] shrink-0 items-center gap-1 rounded-full bg-amber-400/25 px-2.5 text-[11px] font-extrabold text-amber-950 hover:bg-amber-400/40 dark:bg-amber-400/20 dark:text-amber-200"
           >
             <Sparkles className="h-3 w-3 shrink-0 text-orange-500 sm:h-3.5 sm:w-3.5" />
-            <span className="whitespace-nowrap">
-              {todayStatus.inTrip ? "היום" : todayStatus.statusTextHe}
-            </span>
+            <span className="whitespace-nowrap">{todayStatus.chipLabelHe}</span>
           </button>
 
           {/* Expand Chevron (>=44x44px) */}
@@ -127,7 +125,7 @@ export function TimelineScrubber() {
             type="button"
             onClick={() => tripActions.setTimelineExpanded(true)}
             aria-label="הרחב ציר זמן"
-            className="flex min-h-[40px] min-w-[32px] shrink-0 items-center justify-center rounded-full text-slate-600 hover:bg-slate-900/5 sm:min-h-[44px] sm:min-w-[40px] dark:text-slate-200 dark:hover:bg-white/10"
+            className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-full text-slate-600 hover:bg-slate-900/5 dark:text-slate-200 dark:hover:bg-white/10"
           >
             <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>

@@ -108,6 +108,8 @@ interface WorldHtmlProps {
   distanceFactor?: number;
   zIndexRange?: [number, number];
   avoidOverlap?: boolean;
+  /** When true, the label stays on its anchor and other labels move aside. */
+  overlapLocked?: boolean;
   overlapDrop?: number;
   children: React.ReactNode;
 }
@@ -124,6 +126,7 @@ export function WorldHtml({
   clampToViewport = false,
   zIndexRange = [20, 0],
   avoidOverlap = false,
+  overlapLocked = false,
   overlapDrop = 0,
   children,
 }: WorldHtmlProps) {
@@ -220,6 +223,7 @@ export function WorldHtml({
         homeOy: 0,
         drop: 0,
         active: true,
+        locked: overlapLocked,
         hasSolve: false,
         solvedAx: x,
         solvedAy: y,
@@ -231,9 +235,10 @@ export function WorldHtml({
       slot.h = Math.max(24, el.offsetHeight || 28);
       slot.drop = overlapDrop;
       slot.active = true;
+      slot.locked = overlapLocked;
       labelSlots.set(id, slot);
       labelElements.set(id, el);
-      queueLabelSolve(size.height);
+      queueLabelSolve();
       if (el.style.opacity !== "1") {
         el.style.opacity = "1";
         el.style.pointerEvents = "auto";

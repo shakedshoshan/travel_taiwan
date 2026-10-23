@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { getAuditNotes, getRouteLegs, getTimelineDays } from "@/lib/data/selectors";
 import { MiniTaiwanMap } from "@/components/3d/MiniTaiwanMap";
 import { RouteLegCard } from "@/components/ui/route/RouteLegCard";
+import { OptionalDetourCard } from "@/components/ui/route/OptionalDetourCard";
 import { getTripTodayStatus, TodayCardModal } from "@/components/ui/TodayCardModal";
 import { tripActions } from "@/lib/store/useTripStore";
 import type { CityId } from "@/data/types";
@@ -136,18 +137,20 @@ export default function RoutePage() {
 
         <div className="space-y-5">
           {legs.map((leg) => (
-            <RouteLegCard
-              key={leg.id}
-              leg={leg}
-              isActive={activeLegOrder === leg.order}
-              onSelectLeg={(order, cityId) => {
-                setActiveLegOrder(order);
-                setActiveCityId(cityId);
-              }}
-              registerRef={(order, el) => {
-                if (el) cardRefs.current.set(order, el);
-              }}
-            />
+            <Fragment key={leg.id}>
+              <RouteLegCard
+                leg={leg}
+                isActive={activeLegOrder === leg.order}
+                onSelectLeg={(order, cityId) => {
+                  setActiveLegOrder(order);
+                  setActiveCityId(cityId);
+                }}
+                registerRef={(order, el) => {
+                  if (el) cardRefs.current.set(order, el);
+                }}
+              />
+              {leg.cityId === "kaohsiung" && <OptionalDetourCard />}
+            </Fragment>
           ))}
         </div>
 

@@ -1,13 +1,19 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { lazy, Suspense, useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { latLngToWorld3D } from "@/lib/data/coordinates";
 import { getAllCities, getRouteLegs, getTimelineDays } from "@/lib/data/selectors";
+import { shouldSkipLandmarks } from "@/lib/devicePower";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 import { WorldHtml } from "./WorldHtml";
-import { LandmarkDioramas } from "./delight/LandmarkDioramas";
+
+const LandmarkDioramas = lazy(() =>
+  import("./delight/LandmarkDioramas").then((mod) => ({
+    default: mod.LandmarkDioramas,
+  }))
+);
 
 interface DelightDetailsProps {
   isNightMode: boolean;
@@ -24,6 +30,9 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
   const lighthouseBeamRef = useRef<THREE.Mesh>(null);
   const travelerRef = useRef<THREE.Group>(null);
   const playAccumRef = useRef<number>(0);
+  const landmarksOnRef = useRef(false);
+  const [landmarksOn, setLandmarksOn] = useState(false);
+  const skipLandmarks = shouldSkipLandmarks(store.prefersReducedMotion);
 
   // Key landmark world coordinates
   const landmarks = useMemo(() => {
@@ -113,16 +122,10 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
   useFrame(({ clock, camera }, delta) => {
     const t = clock.getElapsedTime();
 
-    // Scale landmarks smoothly based on camera zoom distance
-    if (landmarksRootRef.current) {
-      const camDist = camera.position.length();
-      // Full detail when zoomed in (camDist <= 22), compact when overview
-      const zoomVisibility = THREE.MathUtils.clamp(
-        (33.0 - camDist) / 11.0,
-        0.55,
-        1.15
-      );
-      landmarksRootRef.current.visible = zoomVisibility > 0.1;
+    const showLandmarks = !skipLandmarks && camera.position.length() < 18;
+    if (showLandmarks !== landmarksOnRef.current) {
+      landmarksOnRef.current = showLandmarks;
+      setLandmarksOn(showLandmarks);
     }
 
     // Traveler route playback animation (P1 #10)
@@ -227,15 +230,19 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
 
   return (
     <group name="delight-details">
-      <LandmarkDioramas
-        isNightMode={isNightMode}
-        landmarks={landmarks}
-        landmarksRootRef={landmarksRootRef}
-        ropewayCarRef={ropewayCarRef}
-        smlBoatRef={smlBoatRef}
-        alishanTrainRef={alishanTrainRef}
-        lighthouseBeamRef={lighthouseBeamRef}
-      />
+      {landmarksOn && (
+        <Suspense fallback={null}>
+          <LandmarkDioramas
+            isNightMode={isNightMode}
+            landmarks={landmarks}
+            landmarksRootRef={landmarksRootRef}
+            ropewayCarRef={ropewayCarRef}
+            smlBoatRef={smlBoatRef}
+            alishanTrainRef={alishanTrainRef}
+            lighthouseBeamRef={lighthouseBeamRef}
+          />
+        </Suspense>
+      )}
 
       {/* Traveler Avatar along the Route on "Play" */}
       {store.isRoutePlaying && (

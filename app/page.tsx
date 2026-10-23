@@ -21,10 +21,15 @@ export default function HomePage() {
       return;
     }
 
-    // "Today" mode (P1 #5): between 6.11 and 8.12.2026 open on today's leg with the "היום" card
     const todayStatus = getTripTodayStatus(params.get("today"));
-    if (todayStatus.inTrip) {
+    if (todayStatus.phase === "during") {
       tripActions.setCurrentDayIndex(todayStatus.dayIndex);
+      tripActions.setTodayCardOpen(true);
+      return;
+    }
+    const seenKey = "tw-today-card-seen";
+    if (!window.sessionStorage.getItem(seenKey)) {
+      window.sessionStorage.setItem(seenKey, "1");
       tripActions.setTodayCardOpen(true);
     }
   }, []);

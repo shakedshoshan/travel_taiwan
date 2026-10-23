@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { LocateFixed, Navigation } from "lucide-react";
 import { getAllCities, getCityById, getTimelineDays } from "@/lib/data/selectors";
 import {
@@ -10,6 +11,7 @@ import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 
 export function MapNavigationPad() {
   const store = useTripStore();
+  const [locationDenied, setLocationDenied] = useState(false);
 
   const hiddenBySheet =
     store.sheetSnap === "half" ||
@@ -19,8 +21,9 @@ export function MapNavigationPad() {
   if (hiddenBySheet) return null;
 
   const handleGeolocationClick = () => {
-    if (store.userCoords) {
+    if (store.userCoords || locationDenied) {
       tripActions.setUserCoords(null);
+      setLocationDenied(false);
       return;
     }
 
@@ -29,6 +32,7 @@ export function MapNavigationPad() {
     const fallbackCity = getCityById(store.selectedCityId ?? currentDay.cityId);
 
     resolveNearMeCoordinates(fallbackCity, (coords) => {
+      setLocationDenied(false);
       tripActions.setUserCoords(coords);
       // Find closest city to fly to / open
       const cities = getAllCities();
@@ -40,6 +44,9 @@ export function MapNavigationPad() {
       if (closestCity) {
         tripActions.selectCity(closestCity.id, "peek");
       }
+    }, () => {
+      tripActions.setUserCoords(null);
+      setLocationDenied(true);
     });
   };
 
@@ -50,14 +57,18 @@ export function MapNavigationPad() {
         type="button"
         onClick={handleGeolocationClick}
         aria-label={
-          store.userCoords
-            ? `קרוב אליי פעיל (${store.userCoords.labelHe}) – לחצו לכיבוי`
-            : "קרוב אליי – הצג מיקום נוכחי על המפה"
+          locationDenied
+            ? "הגישה למיקום נדחתה"
+            : store.userCoords
+              ? `קרוב אליי פעיל (${store.userCoords.labelHe}) – לחצו לכיבוי`
+              : "קרוב אליי – הצג מיקום נוכחי על המפה"
         }
         title={
-          store.userCoords
-            ? `קרוב אליי: ${store.userCoords.labelHe}`
-            : "קרוב אליי (מיקום במפה)"
+          locationDenied
+            ? "הגישה למיקום נדחתה"
+            : store.userCoords
+              ? `קרוב אליי: ${store.userCoords.labelHe}`
+              : "קרוב אליי (מיקום במפה)"
         }
         className={`glass-panel toy-button relative flex min-h-[48px] min-w-[48px] items-center justify-center rounded-2xl shadow-xl transition-colors ${
           store.userCoords
@@ -87,6 +98,11 @@ export function MapNavigationPad() {
       >
         <LocateFixed className="h-5 w-5 text-orange-500" />
       </button>
+      {locationDenied && (
+        <p className="max-w-[10rem] rounded-xl bg-slate-950/90 px-2 py-1 text-[11px] font-bold text-white">
+          הגישה למיקום נדחתה
+        </p>
+      )}
     </div>
   );
 }

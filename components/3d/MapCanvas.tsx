@@ -8,6 +8,7 @@ import { AdaptiveDpr, AdaptiveEvents, Stars } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { TaiwanIsland } from "./TaiwanIsland";
 import { OceanWater } from "./OceanWater";
+import { OCEAN_HORIZON_DAY, OCEAN_HORIZON_NIGHT } from "./island/oceanBuilder";
 import { CityPins } from "./CityPins";
 import { CategoryMarkers } from "./CategoryMarkers";
 import { DelightDetails } from "./DelightDetails";
@@ -100,11 +101,12 @@ export function MapCanvas() {
   return (
     <div
       data-map-canvas-root
-      className={`relative h-full w-full transition-colors duration-700 ${
-        store.isNightMode
-          ? "bg-gradient-to-b from-[#050b16] via-[#0c182e] to-[#0a233c]"
-          : "bg-gradient-to-b from-[#bae6fd] via-[#e0f2fe] to-[#a7f3d0]"
-      }`}
+      className="relative h-full w-full transition-colors duration-700"
+      style={{
+        backgroundColor: store.isNightMode
+          ? OCEAN_HORIZON_NIGHT
+          : OCEAN_HORIZON_DAY,
+      }}
     >
       <TaiwanLoadingScreen visible={!isReady} />
 
@@ -126,13 +128,16 @@ export function MapCanvas() {
         <AdaptiveEvents />
         <StaticShadows isNightMode={store.isNightMode} />
 
-        {/* Sky & Atmosphere */}
+        <color
+          attach="background"
+          args={[store.isNightMode ? OCEAN_HORIZON_NIGHT : OCEAN_HORIZON_DAY]}
+        />
         <fog
           attach="fog"
           args={[
-            store.isNightMode ? "#071120" : "#d8f3fa",
-            22,
-            68,
+            store.isNightMode ? OCEAN_HORIZON_NIGHT : OCEAN_HORIZON_DAY,
+            28,
+            90,
           ]}
         />
 

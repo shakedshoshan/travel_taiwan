@@ -7,7 +7,7 @@ import { easing } from "maath";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import type { CityId } from "@/data/types";
-import { getCityById, getPlaceById } from "@/lib/data/selectors";
+import { getCityById, getPlaceById, getTimelineDays } from "@/lib/data/selectors";
 import { useTripStore } from "@/lib/store/useTripStore";
 import { computeCityMapNodes } from "./CityDestination3DMap";
 import {
@@ -16,6 +16,8 @@ import {
   computeFitIslandPose,
 } from "./camera/cameraMath";
 import { useCameraPointerAndKeys } from "./camera/useCameraPointerAndKeys";
+import { runCameraCommand } from "./camera/runCameraCommand";
+import { poseForRouteDay } from "./camera/routeCameraFollow";
 
 export { computeFitIslandPose };
 
@@ -41,6 +43,7 @@ export function CameraRig({
   const isHighTilt = useRef<boolean>(false);
   const hasInitializedCamera = useRef(false);
   const pressedKeys = useRef<Set<string>>(new Set());
+  const userInteracting = useRef(false);
 
   // Immediately snap camera to fit-to-island pose on first mount
   useEffect(() => {
@@ -88,31 +91,6 @@ export function CameraRig({
     return () =>
       window.removeEventListener("orientationchange", onOrientationChange);
   }, [selectedCityId, focusedPlaceId, store.isCityZoomMapOpen]);
-
-  const panByWorldStep = (stepRight: number, stepForward: number) => {
-    const controls = controlsRef.current;
-    if (!controls) return;
-
-    isTransitioning.current = false;
-
-    const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
-    right.y = 0;
-    if (right.lengthSq() < 1e-5) right.set(1, 0, 0);
-    else right.normalize();
-
-    const forward = new THREE.Vector3(0, 1, 0).cross(right).normalize();
-
-    const moveOffset = new THREE.Vector3()
-      .addScaledVector(right, stepRight)
-      .addScaledVector(forward, stepForward);
-
-    desiredTarget.current.copy(controls.target).add(moveOffset);
-    desiredCamPos.current.copy(camera.position).add(moveOffset);
-    clampTargetToBounds(desiredTarget.current, desiredCamPos.current);
-
-    isTransitioning.current = true;
-    transitionTimer.current = 0.45;
-  };
 
   // Fly to focused place or selected city (with half-sheet camera reframing)
   useEffect(() => {
@@ -186,89 +164,22 @@ export function CameraRig({
     size.height,
   ]);
 
-  // Handle camera commands (including Recenter FAB)
   useEffect(() => {
-    const cmd = store.cameraCommand;
-    if (!cmd || cmd.seq === lastCommandSeq.current) return;
-    lastCommandSeq.current = cmd.seq;
-
-    const controls = controlsRef.current;
-    if (!controls) return;
-
-    const dist = Math.max(3, camera.position.distanceTo(controls.target));
-    const panStep = Math.max(1.4, dist * 0.18);
-
-    switch (cmd.type) {
-      case "pan-north":
-        panByWorldStep(0, panStep);
-        break;
-      case "pan-south":
-        panByWorldStep(0, -panStep);
-        break;
-      case "pan-east":
-        panByWorldStep(panStep, 0);
-        break;
-      case "pan-west":
-        panByWorldStep(-panStep, 0);
-        break;
-      case "rotate-left":
-      case "rotate-right": {
-        isTransitioning.current = false;
-        const offset = camera.position.clone().sub(controls.target);
-        const angle = cmd.type === "rotate-left" ? 0.38 : -0.38;
-        offset.applyAxisAngle(new THREE.Vector3(0, 1, 0), angle);
-        desiredTarget.current.copy(controls.target);
-        desiredCamPos.current.copy(controls.target).add(offset);
-        isTransitioning.current = true;
-        transitionTimer.current = 0.45;
-        break;
-      }
-      case "tilt-toggle": {
-        isHighTilt.current = !isHighTilt.current;
-        const offset = camera.position.clone().sub(controls.target);
-        const radius = offset.length();
-        const spherical = new THREE.Spherical().setFromVector3(offset);
-        spherical.phi = isHighTilt.current ? 1.08 : 0.58;
-        spherical.radius = radius;
-        offset.setFromSpherical(spherical);
-        desiredTarget.current.copy(controls.target);
-        desiredCamPos.current.copy(controls.target).add(offset);
-        isTransitioning.current = true;
-        transitionTimer.current = 0.55;
-        break;
-      }
-      case "zoom-in":
-      case "zoom-out": {
-        const factor = cmd.type === "zoom-in" ? 0.74 : 1.32;
-        const offset = camera.position.clone().sub(controls.target);
-        const nextLen = THREE.MathUtils.clamp(
-          offset.length() * factor,
-          2.6,
-          42
-        );
-        offset.setLength(nextLen);
-        desiredTarget.current.copy(controls.target);
-        desiredCamPos.current.copy(controls.target).add(offset);
-        isTransitioning.current = true;
-        transitionTimer.current = 0.4;
-        break;
-      }
-      case "reset": {
-        if (store.isCityZoomMapOpen) {
-          desiredTarget.current.set(0, 0.25, 0);
-          desiredCamPos.current.set(0, 12.2, 12.8);
-        } else {
-          const fit = computeFitIslandPose(size.width, size.height);
-          desiredTarget.current.copy(fit.target);
-          desiredCamPos.current.copy(fit.position);
-        }
-        isTransitioning.current = true;
-        transitionTimer.current = 0.85;
-        break;
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store.cameraCommand, camera, size.width, size.height]);
+    runCameraCommand({
+      command: store.cameraCommand,
+      lastSeq: lastCommandSeq,
+      controls: controlsRef.current,
+      camera,
+      desiredTarget: desiredTarget.current,
+      desiredCamPos: desiredCamPos.current,
+      isTransitioning,
+      transitionTimer,
+      isHighTilt,
+      isCityZoomMapOpen: store.isCityZoomMapOpen,
+      width: size.width,
+      height: size.height,
+    });
+  }, [store.cameraCommand, store.isCityZoomMapOpen, camera, size.width, size.height]);
 
   useCameraPointerAndKeys({
     gl,
@@ -280,6 +191,7 @@ export function CameraRig({
     isTransitioning,
     transitionTimer,
     pressedKeys,
+    userInteracting,
   });
 
   useFrame((_, delta) => {
@@ -326,6 +238,26 @@ export function CameraRig({
         offset.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotAngle);
         camera.position.copy(controls.target).add(offset);
         controls.update();
+      }
+    }
+
+    if (
+      store.isRoutePlaying &&
+      !userInteracting.current &&
+      !store.isCityZoomMapOpen
+    ) {
+      const day = getTimelineDays()[store.currentDayIndex];
+      const followCity = day ? getCityById(day.cityId) : undefined;
+      if (followCity) {
+        poseForRouteDay(
+          camera,
+          controls.target,
+          followCity,
+          desiredTarget.current,
+          desiredCamPos.current
+        );
+        isTransitioning.current = true;
+        transitionTimer.current = 0.45;
       }
     }
 
@@ -381,7 +313,11 @@ export function CameraRig({
         TWO: THREE.TOUCH.DOLLY_ROTATE,
       }}
       onStart={() => {
+        userInteracting.current = true;
         isTransitioning.current = false;
+      }}
+      onEnd={() => {
+        userInteracting.current = false;
       }}
     />
   );

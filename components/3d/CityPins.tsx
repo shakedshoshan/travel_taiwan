@@ -91,6 +91,7 @@ export function CityPins({
               anchor="bottom"
               screenOffset={[0, -4]}
               clampToViewport
+              avoidOverlap
               zIndexRange={[14, 0]}
             >
               <button
@@ -103,7 +104,7 @@ export function CityPins({
                   triggerHapticTap();
                   onSelectCity(targetCityId);
                 }}
-                className="cursor-pointer select-none max-w-[6.5rem] truncate whitespace-nowrap rounded-full border border-teal-300/60 bg-slate-900/90 px-2 py-0.5 text-[9.5px] font-bold text-teal-100 shadow-sm backdrop-blur-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                className="flex min-h-[44px] min-w-[44px] cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full border border-teal-300/60 bg-slate-900/90 px-3 text-[13px] font-bold text-teal-50 shadow-sm backdrop-blur-xs [text-shadow:0_1px_2px_#020617,0_0_8px_#020617] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               >
                 {isl.nameHe}
               </button>

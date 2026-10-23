@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Sparkles,
   Trees,
@@ -18,6 +19,7 @@ import {
   useTripStore,
   type LayerToggles as LayerTogglesState,
 } from "@/lib/store/useTripStore";
+import { EdgeFadeScroller } from "./EdgeFadeScroller";
 
 const LAYER_CONFIG: ReadonlyArray<{
   key: keyof LayerTogglesState;
@@ -71,6 +73,9 @@ const LAYER_CONFIG: ReadonlyArray<{
 
 export function LayerToggles() {
   const store = useTripStore();
+  const [focusChipId, setFocusChipId] = useState<string | null>(null);
+  const firstActiveId =
+    LAYER_CONFIG.find((item) => store.layerToggles[item.key])?.key ?? null;
 
   const hiddenBySheet =
     store.isCityZoomMapOpen ||
@@ -85,7 +90,7 @@ export function LayerToggles() {
     <>
       <div
         dir="rtl"
-        className="pointer-events-auto flex w-full max-w-full items-center gap-1.5"
+        className="pointer-events-auto flex w-full max-w-full items-center gap-2"
       >
         {/* "שכבות" Sheet Trigger Pill (>=44x44px) */}
         <button
@@ -101,8 +106,7 @@ export function LayerToggles() {
           </span>
         </button>
 
-        {/* Single Horizontally Scrollable Chip Row with Fade-Edge Hint */}
-        <div className="fade-edge-scroll no-scrollbar flex min-w-0 flex-1 items-center gap-1.5 overflow-x-auto py-0.5 pl-4">
+        <EdgeFadeScroller initialChipId={firstActiveId} focusChipId={focusChipId}>
           {LAYER_CONFIG.map((item) => {
             const Icon = item.icon;
             const active = store.layerToggles[item.key];
@@ -110,8 +114,12 @@ export function LayerToggles() {
               <button
                 key={item.key}
                 type="button"
-                onClick={() => tripActions.toggleLayer(item.key)}
-                className={`toy-button flex min-h-[44px] shrink-0 snap-start items-center gap-1.5 rounded-2xl border px-3 text-xs font-bold whitespace-nowrap shadow-sm transition-all ${
+                data-chip-id={item.key}
+                onClick={() => {
+                  tripActions.toggleLayer(item.key);
+                  setFocusChipId(item.key);
+                }}
+                className={`toy-button flex min-h-[44px] min-w-[44px] shrink-0 snap-start items-center gap-1.5 rounded-2xl border px-3 text-xs font-bold whitespace-nowrap shadow-sm transition-all ${
                   active
                     ? `${item.activeClass}`
                     : "border-white/50 bg-white/85 text-slate-600 opacity-85 dark:border-white/10 dark:bg-slate-900/85 dark:text-slate-300"
@@ -122,7 +130,7 @@ export function LayerToggles() {
               </button>
             );
           })}
-        </div>
+        </EdgeFadeScroller>
       </div>
 
       {/* Small Opaque Bottom Sheet for "שכבות" */}

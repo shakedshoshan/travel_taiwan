@@ -6,6 +6,9 @@ import {
 import { latLngToXZ } from "@/lib/data/coordinates";
 import { distanceToPolygonEdge, isPointInPolygon } from "./polygonMath";
 
+export const OCEAN_HORIZON_DAY = "#0b78b8";
+export const OCEAN_HORIZON_NIGHT = "#061529";
+
 export const COAST_MIN = new THREE.Vector2(-15, -19);
 export const COAST_SIZE = new THREE.Vector2(30, 38);
 const SDF_RES = 320;
@@ -168,10 +171,10 @@ export const oceanFragmentShader = /* glsl */ `
 
   float coastDistance(vec2 xz) {
     vec2 uv = (xz - uCoastOrigin) / uCoastSize;
-    if (uv.x < 0.0 || uv.y < 0.0 || uv.x > 1.0 || uv.y > 1.0) {
-      return 12.0;
-    }
-    return texture2D(uCoast, uv).r * 28.0 - 8.0;
+    vec2 clamped = clamp(uv, 0.0, 1.0);
+    float sd = texture2D(uCoast, clamped).r * 28.0 - 8.0;
+    vec2 outside = max(max(-uv, uv - vec2(1.0)), vec2(0.0));
+    return sd + length(outside * uCoastSize);
   }
 
   void main() {
@@ -197,8 +200,8 @@ export const oceanFragmentShader = /* glsl */ `
     waterColor += vec3(1.0) * spec * (0.28 + (1.0 - depthFactor) * 0.15);
 
     vec3 finalColor = mix(waterColor, uFoamColor, shore * 0.82);
-    float alpha = mix(0.9, 0.98, depthFactor);
-    alpha = mix(alpha, 0.96, shore);
-    gl_FragColor = vec4(finalColor, alpha);
+    float horizon = smoothstep(8.0, 18.0, max(sd, 0.0));
+    finalColor = mix(finalColor, uDeepColor, horizon);
+    gl_FragColor = vec4(finalColor, 1.0);
   }
 `;

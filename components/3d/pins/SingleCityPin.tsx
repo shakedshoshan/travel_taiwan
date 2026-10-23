@@ -201,6 +201,8 @@ export function SingleCityPin({
             anchor="bottom"
             screenOffset={[0, -6]}
             clampToViewport
+            avoidOverlap
+            overlapLocked
             zIndexRange={[isSelected || hovered ? 32 : 20, 0]}
           >
             <div dir="rtl" className="flex flex-col items-center">
@@ -219,7 +221,7 @@ export function SingleCityPin({
                   triggerHapticTap();
                   onSelectCity(city.id);
                 }}
-                className={`relative cursor-pointer select-none max-w-[7.5rem] truncate whitespace-nowrap rounded-full px-2.5 py-0.5 text-[11px] font-bold shadow-lg transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                className={`relative flex min-h-[44px] min-w-[44px] cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full px-3 text-[13px] font-bold shadow-lg transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                   isSelected
                     ? "scale-105 bg-amber-400 text-slate-950 ring-2 ring-white"
                     : hovered

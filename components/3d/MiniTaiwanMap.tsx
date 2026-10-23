@@ -5,6 +5,8 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { TaiwanIsland } from "./TaiwanIsland";
 import { OceanWater } from "./OceanWater";
+import { KentingDetourLine } from "./delight/KentingDetourLine";
+import { OCEAN_HORIZON_DAY, OCEAN_HORIZON_NIGHT } from "./island/oceanBuilder";
 import { CityPins } from "./CityPins";
 import { CameraRig } from "./CameraRig";
 import { Map2DFallback } from "./Map2DFallback";
@@ -51,11 +53,12 @@ export function MiniTaiwanMap({
   return (
     <div
       data-map-canvas-root
-      className={`relative h-full w-full overflow-hidden rounded-3xl ${
-        store.isNightMode
-          ? "bg-gradient-to-b from-slate-950 via-slate-900 to-sky-950"
-          : "bg-gradient-to-b from-sky-200 via-cyan-100 to-emerald-100"
-      }`}
+      className="relative h-full w-full overflow-hidden rounded-3xl"
+      style={{
+        backgroundColor: store.isNightMode
+          ? OCEAN_HORIZON_NIGHT
+          : OCEAN_HORIZON_DAY,
+      }}
     >
       <Canvas
         dpr={[1, 1.5]}
@@ -69,7 +72,12 @@ export function MiniTaiwanMap({
 
         <Suspense fallback={null}>
           <TaiwanIsland isNightMode={store.isNightMode} />
+          <color
+            attach="background"
+            args={[store.isNightMode ? OCEAN_HORIZON_NIGHT : OCEAN_HORIZON_DAY]}
+          />
           <OceanWater isNightMode={store.isNightMode} />
+          <KentingDetourLine />
           <CityPins
             selectedCityId={activeCityId}
             activeTimelineCityId={currentDay.cityId}

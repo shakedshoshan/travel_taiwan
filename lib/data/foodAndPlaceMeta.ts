@@ -58,47 +58,49 @@ export function checkIsOpenNow(item: EnrichedFood): boolean {
 
 export function resolveNearMeCoordinates(
   fallbackCity: City,
-  onResolved: (coords: { lat: number; lng: number; labelHe: string }) => void
+  onResolved: (coords: { lat: number; lng: number; labelHe: string }) => void,
+  onDenied?: () => void
 ) {
-  if (typeof navigator !== "undefined" && navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const { latitude, longitude } = pos.coords;
-        const inTaiwan =
-          latitude >= 21.5 &&
-          latitude <= 25.6 &&
-          longitude >= 119.3 &&
-          longitude <= 122.3;
-        if (inTaiwan) {
-          onResolved({
-            lat: latitude,
-            lng: longitude,
-            labelHe: "המיקום שלי כעת",
-          });
-        } else {
-          onResolved({
-            lat: fallbackCity.lat,
-            lng: fallbackCity.lng,
-            labelHe: `מרכז ${fallbackCity.nameHe}`,
-          });
-        }
-      },
-      () => {
-        onResolved({
-          lat: fallbackCity.lat,
-          lng: fallbackCity.lng,
-          labelHe: `מרכז ${fallbackCity.nameHe}`,
-        });
-      },
-      { timeout: 3500 }
-    );
-  } else {
+  const fallbackToCityCenter = () => {
     onResolved({
       lat: fallbackCity.lat,
       lng: fallbackCity.lng,
       labelHe: `מרכז ${fallbackCity.nameHe}`,
     });
+  };
+
+  if (typeof navigator === "undefined" || !navigator.geolocation) {
+    fallbackToCityCenter();
+    return;
   }
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const { latitude, longitude } = pos.coords;
+      const inTaiwan =
+        latitude >= 21.5 &&
+        latitude <= 25.6 &&
+        longitude >= 119.3 &&
+        longitude <= 122.3;
+      if (inTaiwan) {
+        onResolved({
+          lat: latitude,
+          lng: longitude,
+          labelHe: "המיקום שלי כעת",
+        });
+      } else {
+        fallbackToCityCenter();
+      }
+    },
+    (error) => {
+      if (error.code === error.PERMISSION_DENIED) {
+        onDenied?.();
+        return;
+      }
+      fallbackToCityCenter();
+    },
+    { timeout: 3500 }
+  );
 }
 
 export const FOOD_TYPE_META: Record<

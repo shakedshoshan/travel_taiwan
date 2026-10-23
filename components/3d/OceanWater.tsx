@@ -8,6 +8,8 @@ import {
   buildShoreRibbon,
   COAST_MIN,
   COAST_SIZE,
+  OCEAN_HORIZON_DAY,
+  OCEAN_HORIZON_NIGHT,
   oceanFragmentShader,
   oceanVertexShader,
 } from "./island/oceanBuilder";
@@ -18,8 +20,8 @@ interface OceanWaterProps {
 
 const SHALLOW_DAY = new THREE.Color("#4ed4ea");
 const SHALLOW_NIGHT = new THREE.Color("#0e3b5c");
-const DEEP_DAY = new THREE.Color("#0b78b8");
-const DEEP_NIGHT = new THREE.Color("#061529");
+const DEEP_DAY = new THREE.Color(OCEAN_HORIZON_DAY);
+const DEEP_NIGHT = new THREE.Color(OCEAN_HORIZON_NIGHT);
 const FOAM_DAY = new THREE.Color("#f4fbff");
 const FOAM_NIGHT = new THREE.Color("#7dd3fc");
 const scratchShallow = new THREE.Color();
@@ -63,13 +65,13 @@ export function OceanWater({ isNightMode }: OceanWaterProps) {
         position={[0, 0.02, 0]}
         receiveShadow
       >
-        <planeGeometry args={[95, 95, 64, 64]} />
+        <planeGeometry args={[480, 480, 64, 64]} />
         <shaderMaterial
           ref={matRef}
           vertexShader={oceanVertexShader}
           fragmentShader={oceanFragmentShader}
           uniforms={uniforms}
-          transparent
+          fog={false}
         />
       </mesh>
       <mesh geometry={shoreRibbon}>

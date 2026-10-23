@@ -104,6 +104,10 @@ export function getCityPrimaryImage(cityId: CityId): PlaceImageMeta {
   return list[0];
 }
 
+export function hasOwnHotelImage(place: { id: string; kind: string }): boolean {
+  return place.kind === "hotel" && CREDITS_BY_STEM.has(place.id);
+}
+
 export function getPlaceImage(place: EnrichedPlace): PlaceImageMeta {
   const exactRecord = CREDITS_BY_STEM.get(place.id);
   if (exactRecord) {

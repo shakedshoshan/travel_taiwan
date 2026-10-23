@@ -9,6 +9,7 @@ import {
   Trees,
   Sparkles,
   BedDouble,
+  Gem,
 } from "lucide-react";
 import {
   buildGoogleMapsUrl,
@@ -25,15 +26,26 @@ interface PlaceCardProps {
   place: EnrichedPlace;
   distanceKm?: number | null;
   compact?: boolean;
+  /** Hotel cards without their own photo use a tier icon instead. */
+  showPhoto?: boolean;
 }
+
+const TIER_ICON = {
+  cheap: BedDouble,
+  quality: Sparkles,
+  splurge: Gem,
+} as const;
 
 export function PlaceCard({
   place,
   distanceKm = null,
   compact = false,
+  showPhoto = true,
 }: PlaceCardProps) {
-  const imageMeta = getPlaceImage(place);
+  const useTierIcon = !showPhoto && place.kind === "hotel";
+  const imageMeta = useTierIcon ? null : getPlaceImage(place);
   const googleMapsUrl = buildGoogleMapsUrl(place);
+  const TierIcon = place.kind === "hotel" ? TIER_ICON[place.tier] : BedDouble;
 
   const isUnverified =
     (place.kind === "food" &&
@@ -57,23 +69,38 @@ export function PlaceCard({
         }`}
       >
         <Link href={`/place/${place.id}`} className="relative block h-full w-full">
-          <Image
-            src={imageMeta.src}
-            alt={
-              imageMeta.match === "representative"
-                ? `${place.name} (תמונה מייצגת של ${place.cityNameHe})`
-                : place.name
-            }
-            title={imageMeta.attribution}
-            fill
-            sizes={
-              compact
-                ? "(max-width: 640px) 92vw, 320px"
-                : "(max-width: 640px) 94vw, (max-width: 1024px) 46vw, 360px"
-            }
-            className="object-cover transition-transform duration-300 hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+          {useTierIcon && place.kind === "hotel" ? (
+            <div
+              className={`flex h-full w-full flex-col items-center justify-center gap-1 ${HOTEL_TIER_META[place.tier].bgClass}`}
+            >
+              <TierIcon className="h-8 w-8" />
+              <span className="text-xs font-black">
+                {HOTEL_TIER_META[place.tier].labelHe}
+              </span>
+            </div>
+          ) : (
+            imageMeta && (
+              <Image
+                src={imageMeta.src}
+                alt={
+                  imageMeta.match === "representative"
+                    ? `${place.name} (תמונה מייצגת של ${place.cityNameHe})`
+                    : place.name
+                }
+                title={imageMeta.attribution}
+                fill
+                sizes={
+                  compact
+                    ? "(max-width: 640px) 92vw, 320px"
+                    : "(max-width: 640px) 94vw, (max-width: 1024px) 46vw, 360px"
+                }
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            )
+          )}
+          {!useTierIcon && (
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+          )}
 
           {/* Top Badges over Photo */}
           <div className="absolute top-2.5 right-2.5 left-2.5 flex flex-wrap items-center justify-between gap-1.5">
@@ -125,7 +152,7 @@ export function PlaceCard({
         </Link>
 
         {/* "ⓘ" Photo Credit Popover instead of text over the image */}
-        <PhotoCreditPopover image={imageMeta} />
+        {imageMeta && <PhotoCreditPopover image={imageMeta} />}
       </div>
 
       {/* Card Content */}

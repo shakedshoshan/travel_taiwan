@@ -39,6 +39,7 @@ export default function FoodPage() {
     lng: number;
     labelHe: string;
   } | null>(null);
+  const [nearMeDenied, setNearMeDenied] = useState(false);
   const [selectedCity, setSelectedCity] = useState<CityId | "all">("all");
   const [selectedType, setSelectedType] = useState<FoodType | "all">("all");
   const [maxPrice, setMaxPrice] = useState<number>(600);
@@ -46,15 +47,26 @@ export default function FoodPage() {
   const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
 
   const handleToggleNearMe = () => {
-    if (nearMeCoords) {
+    if (nearMeCoords || nearMeDenied) {
       setNearMeCoords(null);
+      setNearMeDenied(false);
       return;
     }
 
     const fallbackCity = getCityById(
       store.selectedCityId ?? currentDay.cityId
     );
-    resolveNearMeCoordinates(fallbackCity, setNearMeCoords);
+    resolveNearMeCoordinates(
+      fallbackCity,
+      (coords) => {
+        setNearMeDenied(false);
+        setNearMeCoords(coords);
+      },
+      () => {
+        setNearMeCoords(null);
+        setNearMeDenied(true);
+      }
+    );
   };
 
   const filteredFood = useMemo(() => {
@@ -233,7 +245,11 @@ export default function FoodPage() {
           >
             <LocateFixed className="h-3.5 w-3.5" />
             <span>
-              {nearMeCoords ? `קרוב אליי (${nearMeCoords.labelHe})` : "קרוב אליי"}
+              {nearMeDenied
+                ? "הגישה למיקום נדחתה"
+                : nearMeCoords
+                  ? `קרוב אליי (${nearMeCoords.labelHe})`
+                  : "קרוב אליי"}
             </span>
           </button>
         </div>
@@ -243,9 +259,11 @@ export default function FoodPage() {
       <div className="mb-3 flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
         <span>
           מציג {filteredFood.length} מקומות אוכל{" "}
-          {nearMeCoords
-            ? `(לפי מרחק מ${nearMeCoords.labelHe})`
-            : "(לפי חשיבות ★)"}
+          {nearMeDenied
+            ? "· הגישה למיקום נדחתה"
+            : nearMeCoords
+              ? `(לפי מרחק מ${nearMeCoords.labelHe})`
+              : "(לפי חשיבות ★)"}
         </span>
         {activeFiltersCount > 0 && (
           <button

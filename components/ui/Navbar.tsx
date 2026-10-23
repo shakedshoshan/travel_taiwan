@@ -13,6 +13,7 @@ import {
   Sun,
   Moon,
 } from "lucide-react";
+import { getTripSpan } from "@/lib/data/tripSpan";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 
 const NAV_LINKS = [
@@ -40,6 +41,8 @@ export function Navbar() {
     );
   }, [store.isNightMode]);
 
+  const tripSpan = getTripSpan();
+
   const hideMapHud =
     pathname === "/" &&
     (store.sheetSnap === "half" ||
@@ -56,24 +59,30 @@ export function Navbar() {
           hideMapHud ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
-        <div className="glass-panel pointer-events-auto mx-auto flex h-12 max-w-7xl items-center justify-between gap-2 rounded-2xl px-2.5 shadow-lg md:px-4">
-          {/* Brand Logo + Exact Header String "טייוואן 3D · 6.11–8.12 · 33 ימים" */}
-          <div className="flex min-w-0 items-center gap-2">
+        <div className="glass-panel pointer-events-auto mx-auto flex h-12 max-w-7xl items-center justify-between gap-2 rounded-2xl px-1.5 shadow-lg md:px-4">
+          <div className="flex min-w-0 shrink items-center gap-2">
             <Link
               href="/"
               onClick={() => {
                 tripActions.selectCity(null);
                 tripActions.setTimelineExpanded(false);
               }}
-              className="flex min-h-[44px] min-w-0 shrink-0 items-center gap-2 px-1 text-right"
+              className="flex min-h-[44px] min-w-0 shrink items-center gap-1.5 px-0.5 text-right"
             >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-amber-500 to-emerald-500 text-xs font-black text-white shadow-sm">
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-amber-500 to-emerald-500 text-[10px] font-black text-white shadow-sm sm:h-8 sm:w-8 sm:text-xs">
                 TW
               </div>
-              <div className="flex items-center gap-1.5 whitespace-nowrap">
-                <span className="font-display text-sm font-black tracking-tight text-slate-900 dark:text-white">
-                  טייוואן 3D · 6.11–8.12 · 33 ימים
-                </span>
+              <div
+                dir="rtl"
+                className="flex items-center gap-1 whitespace-nowrap font-display text-[13px] font-black tracking-tight text-slate-900 sm:text-sm dark:text-white"
+              >
+                <span>טייוואן</span>
+                <span aria-hidden="true">·</span>
+                <bdi dir="ltr">3D</bdi>
+                <span aria-hidden="true">·</span>
+                <bdi dir="ltr">{tripSpan.dateRange}</bdi>
+                <span aria-hidden="true">·</span>
+                <span>{tripSpan.dayCount} ימים</span>
               </div>
             </Link>
 
@@ -114,7 +123,7 @@ export function Navbar() {
           </nav>
 
           {/* Action Buttons: Search and Day/Night */}
-          <div className="flex shrink-0 items-center gap-1">
+          <div className="flex shrink-0 items-center gap-2">
             <button
               type="button"
               onClick={() => tripActions.setSearchOpen(true)}
@@ -152,7 +161,7 @@ export function Navbar() {
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         className="fixed right-0 bottom-0 left-0 z-40 border-t border-slate-900/10 bg-white/95 backdrop-blur-xl lg:hidden dark:border-white/10 dark:bg-slate-950/95"
       >
-        <div className="mx-auto flex h-14 max-w-xl items-center justify-around px-1">
+        <div className="mx-auto flex h-14 max-w-xl items-center gap-2 px-1">
           {NAV_LINKS.map((item) => {
             const Icon = item.icon;
             const isActive =

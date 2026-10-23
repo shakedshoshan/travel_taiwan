@@ -15,7 +15,7 @@ import {
   HOTEL_TIER_META,
   type EnrichedHotel,
 } from "@/lib/data/selectors";
-import { getCityPrimaryImage } from "@/lib/data/placeImages";
+import { getCityPrimaryImage, hasOwnHotelImage } from "@/lib/data/placeImages";
 import { PlaceCard } from "@/components/ui/PlaceCard";
 import { PhotoCreditPopover } from "@/components/ui/PhotoCreditPopover";
 
@@ -251,7 +251,10 @@ export default function HotelsPage() {
                     <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
                     <span>הבחירה הזולה המומלצת ב{city.nameHe}:</span>
                   </div>
-                  <PlaceCard place={bestCheapPick} />
+                  <PlaceCard
+                    place={bestCheapPick}
+                    showPhoto={hasOwnHotelImage(bestCheapPick)}
+                  />
                 </div>
               )}
 
@@ -267,7 +270,12 @@ export default function HotelsPage() {
                   </summary>
                   <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {otherCheap.map((h) => (
-                      <PlaceCard key={h.id} place={h} compact />
+                      <PlaceCard
+                        key={h.id}
+                        place={h}
+                        compact
+                        showPhoto={hasOwnHotelImage(h)}
+                      />
                     ))}
                   </div>
                 </details>
@@ -285,7 +293,12 @@ export default function HotelsPage() {
                   </summary>
                   <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {qualityHotels.map((h) => (
-                      <PlaceCard key={h.id} place={h} compact />
+                      <PlaceCard
+                        key={h.id}
+                        place={h}
+                        compact
+                        showPhoto={hasOwnHotelImage(h)}
+                      />
                     ))}
                   </div>
                 </details>
@@ -303,7 +316,12 @@ export default function HotelsPage() {
                   </summary>
                   <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {splurgeHotels.map((h) => (
-                      <PlaceCard key={h.id} place={h} compact />
+                      <PlaceCard
+                        key={h.id}
+                        place={h}
+                        compact
+                        showPhoto={hasOwnHotelImage(h)}
+                      />
                     ))}
                   </div>
                 </details>

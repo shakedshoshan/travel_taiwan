@@ -16,6 +16,7 @@ interface UseCameraPointerAndKeysOptions {
   isTransitioning: RefObject<boolean>;
   transitionTimer: RefObject<number>;
   pressedKeys: RefObject<Set<string>>;
+  userInteracting?: { current: boolean };
 }
 
 export function useCameraPointerAndKeys({
@@ -28,6 +29,7 @@ export function useCameraPointerAndKeys({
   isTransitioning,
   transitionTimer,
   pressedKeys,
+  userInteracting,
 }: UseCameraPointerAndKeysOptions) {
   useEffect(() => {
     const domEl =
@@ -90,6 +92,7 @@ export function useCameraPointerAndKeys({
       }
 
       isTransitioning.current = false;
+      if (userInteracting) userInteracting.current = true;
 
       // Double-tap / double-click zoom on touch & mouse
       const now = performance.now();
@@ -147,6 +150,7 @@ export function useCameraPointerAndKeys({
     };
 
     const stopDragging = () => {
+      if (userInteracting) userInteracting.current = false;
       if (isDraggingPan) {
         isDraggingPan = false;
         document.body.style.cursor = "auto";
@@ -202,5 +206,6 @@ export function useCameraPointerAndKeys({
     isTransitioning,
     transitionTimer,
     pressedKeys,
+    userInteracting,
   ]);
 }

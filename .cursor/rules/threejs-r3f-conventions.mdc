@@ -18,5 +18,7 @@ alwaysApply: false
    - Use `computeFitIslandPose` on initial mount/resize and `applySheetReframeOffset` when the bottom sheet is snapped to `half` or `peek`.
 4. **Modular 3D Subfolders**:
    - Keep pure geometry/shader builders in `components/3d/island/` (`polygonMath.ts`, `terrainBuilder.ts`, `oceanBuilder.ts`), marker instancing/tooltips in `components/3d/markers/`, city pins in `components/3d/pins/`, landmark dioramas in `components/3d/delight/`, and zoomed-in city diorama views in `components/3d/city-map/`.
-5. **No Route Playback**:
-   - Do not render a route tube, a driving car, or a play button. The map is a static info view.
+5. **Route playback and detours**:
+   - Do not render a solid route tube or a driving car along the full itinerary.
+   - A play control may animate one traveler marker, with the camera following the active day.
+   - Kenting may appear as a single dashed optional branch from Kaohsiung.

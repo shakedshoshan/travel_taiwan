@@ -28,6 +28,7 @@ export function CityDrawerTabsContent({
   const [maxFoodPrice, setMaxFoodPrice] = useState<number>(1000);
   const [hotelTierFilter, setHotelTierFilter] = useState<HotelTier | "all">("all");
   const [sortByNearMe, setSortByNearMe] = useState<boolean>(false);
+  const [nearMeDenied, setNearMeDenied] = useState(false);
 
   const { city, attractions, food, hotels, legs, daysHere } = bundle;
   const activeCoords = store.userCoords ?? {
@@ -45,14 +46,27 @@ export function CityDrawerTabsContent({
     );
 
   const handleToggleNearMeSort = () => {
-    if (sortByNearMe) {
+    if (sortByNearMe || nearMeDenied) {
       setSortByNearMe(false);
+      setNearMeDenied(false);
+      return;
+    }
+    if (!store.userCoords) {
+      resolveNearMeCoordinates(
+        city,
+        (coords) => {
+          setNearMeDenied(false);
+          tripActions.setUserCoords(coords);
+          setSortByNearMe(true);
+        },
+        () => {
+          setSortByNearMe(false);
+          setNearMeDenied(true);
+        }
+      );
       return;
     }
     setSortByNearMe(true);
-    if (!store.userCoords) {
-      resolveNearMeCoordinates(city, (coords) => tripActions.setUserCoords(coords));
-    }
   };
 
   const filteredAttractions = attractions
@@ -84,7 +98,7 @@ export function CityDrawerTabsContent({
       }`}
     >
       <LocateFixed className="h-3.5 w-3.5" />
-      <span>קרוב אליי</span>
+      <span>{nearMeDenied ? "הגישה למיקום נדחתה" : "קרוב אליי"}</span>
     </button>
   );
 

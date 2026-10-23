@@ -23,31 +23,39 @@ import {
   formatDistanceAndWalk,
 } from "@/lib/data/foodAndPlaceMeta";
 import practicalData from "@/data/practical.json";
+import { getTripSpan } from "@/lib/data/tripSpan";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 
 type LegTransportMap = typeof practicalData.legTransport;
 
 export interface TripTodayStatus {
+  phase: "before" | "during" | "after";
   inTrip: boolean;
-  dayIndex: number; // 0..32 when inTrip, else 0
-  daysUntilStart: number; // >0 before 6.11.2026
+  dayIndex: number;
+  daysUntilStart: number;
   statusTextHe: string;
+  chipLabelHe: string;
 }
 
 /**
  * Computes whether today's date (in Taiwan UTC+8, or overridden via ?today=YYYY-MM-DD)
  * falls within 6.11.2026 – 8.12.2026, or how many days remain until the trip starts.
  */
+function isoToUtcMs(iso: string): number {
+  const [y, m, d] = iso.split("-").map(Number);
+  return Date.UTC(y, m - 1, d);
+}
+
 export function getTripTodayStatus(overrideDateStr?: string | null): TripTodayStatus {
-  const startUtcMs = Date.UTC(2026, 10, 6); // 2026-11-06
-  const endUtcMs = Date.UTC(2026, 11, 8); // 2026-12-08
+  const span = getTripSpan();
+  const startUtcMs = isoToUtcMs(span.startIso);
+  const endUtcMs = isoToUtcMs(span.endIso);
+  const lastIndex = Math.max(0, span.dayCount - 1);
 
   let currentMidnightUtcMs: number;
   if (overrideDateStr && /^\d{4}-\d{2}-\d{2}$/.test(overrideDateStr)) {
-    const [y, m, d] = overrideDateStr.split("-").map(Number);
-    currentMidnightUtcMs = Date.UTC(y, m - 1, d);
+    currentMidnightUtcMs = isoToUtcMs(overrideDateStr);
   } else {
-    // Taiwan time (UTC+8)
     const twNow = new Date(Date.now() + 8 * 3600 * 1000);
     currentMidnightUtcMs = Date.UTC(
       twNow.getUTCFullYear(),
@@ -58,14 +66,16 @@ export function getTripTodayStatus(overrideDateStr?: string | null): TripTodaySt
 
   if (currentMidnightUtcMs >= startUtcMs && currentMidnightUtcMs <= endUtcMs) {
     const dayIndex = Math.min(
-      32,
+      lastIndex,
       Math.max(0, Math.round((currentMidnightUtcMs - startUtcMs) / 86400000))
     );
     return {
+      phase: "during",
       inTrip: true,
       dayIndex,
       daysUntilStart: 0,
       statusTextHe: "היום",
+      chipLabelHe: "היום",
     };
   }
 
@@ -75,18 +85,22 @@ export function getTripTodayStatus(overrideDateStr?: string | null): TripTodaySt
       Math.ceil((startUtcMs - currentMidnightUtcMs) / 86400000)
     );
     return {
+      phase: "before",
       inTrip: false,
       dayIndex: 0,
       daysUntilStart,
       statusTextHe: `הטיול מתחיל בעוד ${daysUntilStart} ימים`,
+      chipLabelHe: `עוד ${daysUntilStart} ימים`,
     };
   }
 
   return {
+    phase: "after",
     inTrip: false,
-    dayIndex: 32,
+    dayIndex: lastIndex,
     daysUntilStart: 0,
-    statusTextHe: "הטיול מתחיל בעוד 0 ימים (הסתיים)",
+    statusTextHe: "הטיול הסתיים",
+    chipLabelHe: "סיכום",
   };
 }
 
@@ -167,16 +181,17 @@ export function TodayCardModal() {
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="inline-flex items-center gap-1 rounded-full bg-orange-500 px-2.5 py-0.5 text-xs font-black text-white">
                 <Calendar className="h-3.5 w-3.5" />
-                <span>היום · יום {activeDay.dayNumber}/33</span>
-              </span>
-              {!status.inTrip && (
-                <span className="rounded-full bg-amber-400/25 px-2.5 py-0.5 text-xs font-extrabold text-amber-900 dark:bg-amber-400/20 dark:text-amber-200">
-                  {status.statusTextHe}
+                <span>
+                  {status.phase === "during"
+                    ? `היום · יום ${activeDay.dayNumber}/${days.length}`
+                    : status.chipLabelHe}
                 </span>
-              )}
+              </span>
             </div>
             <h3 className="mt-1 font-display text-lg font-black text-slate-900 dark:text-white">
-              {activeDay.dateShort} ({activeDay.weekdayHe}) · {activeDay.cityNameHe}
+              {status.phase === "during"
+                ? `${activeDay.dateShort} (${activeDay.weekdayHe}) · ${activeDay.cityNameHe}`
+                : status.statusTextHe}
             </h3>
           </div>
 
@@ -184,13 +199,25 @@ export function TodayCardModal() {
             type="button"
             onClick={() => tripActions.setTodayCardOpen(false)}
             aria-label="סגור כרטיס היום"
-            className="flex min-h-[40px] min-w-[40px] items-center justify-center rounded-2xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-200"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-2xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-200"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         <div className="mt-3 space-y-3 text-xs">
+          {status.phase === "before" && (
+            <div className="rounded-2xl bg-amber-400/15 p-3 text-slate-900 dark:text-amber-50">
+              <p className="font-display text-base font-black">{status.statusTextHe}</p>
+              <p className="mt-2 font-extrabold text-orange-700 dark:text-amber-300">
+                המקטע הראשון: {days[0].legFocus} ({days[0].legDates})
+              </p>
+              <p className="mt-1 leading-relaxed">{days[0].legAnchor}</p>
+            </div>
+          )}
+          {status.phase === "after" && <TripRecap />}
+          {status.phase === "during" && (
+          <>
           {/* 1. Today's Plan */}
           <div className="rounded-2xl bg-slate-50 p-3 dark:bg-slate-800/70">
             <div className="flex items-center gap-1.5 font-extrabold text-orange-600 dark:text-amber-300">
@@ -231,7 +258,7 @@ export function TodayCardModal() {
                   href={buildGoogleMapsUrl(tonightHotel)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 rounded-xl bg-sky-600 px-2.5 py-1 text-[11px] font-bold text-white"
+                  className="inline-flex min-h-[44px] min-w-[44px] items-center gap-1 rounded-xl bg-sky-600 px-2.5 text-[11px] font-bold text-white"
                 >
                   <Navigation className="h-3 w-3" />
                   <span>נווט</span>
@@ -252,7 +279,7 @@ export function TodayCardModal() {
                   href={transport.bookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 rounded-xl bg-emerald-600 px-2.5 py-1 text-[11px] font-bold text-white"
+                  className="inline-flex min-h-[44px] min-w-[44px] items-center gap-1 rounded-xl bg-emerald-600 px-2.5 text-[11px] font-bold text-white"
                 >
                   <span>{transport.bookingLabelHe}</span>
                   <ExternalLink className="h-3 w-3" />
@@ -302,7 +329,7 @@ export function TodayCardModal() {
                       href={buildGoogleMapsUrl(food)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="shrink-0 rounded-lg bg-orange-500 px-2.5 py-1 text-[10.5px] font-bold text-white"
+                      className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg bg-orange-500 px-2.5 text-[10.5px] font-bold text-white"
                     >
                       נווט
                     </a>
@@ -311,6 +338,8 @@ export function TodayCardModal() {
               })}
             </div>
           </div>
+          </>
+          )}
 
           <button
             type="button"
@@ -325,6 +354,23 @@ export function TodayCardModal() {
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function TripRecap() {
+  const span = getTripSpan();
+  return (
+    <div className="rounded-2xl bg-slate-50 p-3 dark:bg-slate-800/70">
+      <p className="font-display text-base font-black text-slate-900 dark:text-white">
+        סיכום הטיול
+      </p>
+      <p className="mt-1 font-bold text-slate-700 dark:text-slate-200">
+        {span.dayCount} ימים · {span.legCount} מקטעים · {span.dateRange}
+      </p>
+      <p className="mt-2 leading-relaxed text-slate-800 dark:text-slate-100">
+        {span.routeCityNamesHe.join(" · ")}
+      </p>
     </div>
   );
 }
