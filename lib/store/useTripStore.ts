@@ -4,14 +4,17 @@ import { useSyncExternalStore } from "react";
 import type { CityId } from "@/data/types";
 import { triggerHapticTap } from "@/lib/haptics";
 import {
-  backSheetIfOwned,
-  pushOrReplaceSheet,
+  backOneSheetLevel,
+  exitToOverview,
+  pushCityEntry,
+  pushPlaceEntry,
   type SheetHistorySource,
 } from "./sheetUrl";
 import {
   DEFAULT_STATE,
   STORAGE_KEY,
   type CameraCommandType,
+  type CityCategory,
   type LayerToggles,
   type MapDragMode,
   type SheetSnapPoint,
@@ -21,6 +24,7 @@ import {
 
 export type {
   CameraCommandType,
+  CityCategory,
   LayerToggles,
   MapDragMode,
   SheetSnapPoint,
@@ -115,22 +119,77 @@ export const tripActions = {
 
   selectCity(
     cityId: CityId | null,
-    initialSnap: SheetSnapPoint = "half",
+    initialSnap: SheetSnapPoint = "peek",
     source: SheetHistorySource = "user"
   ) {
     if (cityId && source === "user") triggerHapticTap();
+    if (
+      source === "user" &&
+      cityId &&
+      state.selectedCityId === cityId &&
+      state.focusedPlaceId
+    ) {
+      tripActions.goBack();
+      return;
+    }
+    if (
+      source === "user" &&
+      cityId &&
+      state.selectedCityId === cityId &&
+      !state.focusedPlaceId
+    ) {
+      return;
+    }
     setState((prev) => ({
       selectedCityId: cityId,
       focusedPlaceId: null,
       sheetSnap: cityId === null ? "closed" : initialSnap,
-      isTimelineExpanded: false,
       isLayersSheetOpen: false,
-      isTodayCardOpen: false,
-      isCityZoomMapOpen: cityId === null ? false : prev.isCityZoomMapOpen,
+      cityCategory: prev.selectedCityId === cityId ? prev.cityCategory : "all",
     }));
     if (source !== "user") return;
-    if (cityId) pushOrReplaceSheet(cityId, null);
-    else backSheetIfOwned();
+    if (cityId) pushCityEntry(cityId);
+    else exitToOverview();
+  },
+
+  goBack() {
+    const params =
+      typeof window === "undefined"
+        ? null
+        : new URLSearchParams(window.location.search);
+    const city = params?.get("city");
+    const place = params?.get("place");
+    if (place && city) {
+      setState((prev) => ({
+        selectedCityId: (city as CityId) || prev.selectedCityId,
+        focusedPlaceId: null,
+        sheetSnap: "peek",
+      }));
+    } else {
+      setState({
+        selectedCityId: null,
+        focusedPlaceId: null,
+        sheetSnap: "closed",
+        cityCategory: "all",
+      });
+    }
+    backOneSheetLevel();
+  },
+
+  setCityCategory(cityCategory: CityCategory) {
+    const hadPlace = Boolean(state.focusedPlaceId);
+    setState({
+      cityCategory,
+      focusedPlaceId: null,
+      sheetSnap: state.selectedCityId ? state.sheetSnap : "closed",
+    });
+    if (
+      hadPlace &&
+      typeof window !== "undefined" &&
+      window.history.state?.level === "place"
+    ) {
+      backOneSheetLevel();
+    }
   },
 
   setSheetSnap(sheetSnap: SheetSnapPoint) {
@@ -141,36 +200,8 @@ export const tripActions = {
     }));
   },
 
-  setTimelineExpanded(isTimelineExpanded: boolean) {
-    setState({
-      isTimelineExpanded,
-      isLayersSheetOpen: false,
-      isTodayCardOpen: false,
-    });
-  },
-
   setLayersSheetOpen(isLayersSheetOpen: boolean) {
-    setState({
-      isLayersSheetOpen,
-      isTimelineExpanded: false,
-      isTodayCardOpen: false,
-    });
-  },
-
-  setTodayCardOpen(isTodayCardOpen: boolean) {
-    setState({
-      isTodayCardOpen,
-      isTimelineExpanded: false,
-      isLayersSheetOpen: false,
-    });
-  },
-
-  setRoutePlaying(isRoutePlaying: boolean) {
-    setState({ isRoutePlaying });
-  },
-
-  toggleRoutePlaying() {
-    setState((prev) => ({ isRoutePlaying: !prev.isRoutePlaying }));
+    setState({ isLayersSheetOpen });
   },
 
   setUserCoords(userCoords: UserGeoCoords | null) {
@@ -182,26 +213,6 @@ export const tripActions = {
       if (prev.offlineSavedCities.includes(cityId)) return {};
       return { offlineSavedCities: [...prev.offlineSavedCities, cityId] };
     }, true);
-  },
-
-  enterCityZoomMap(cityId: CityId) {
-    triggerHapticTap();
-    setState({
-      selectedCityId: cityId,
-      focusedPlaceId: null,
-      sheetSnap: "closed",
-      isTimelineExpanded: false,
-      isLayersSheetOpen: false,
-      isTodayCardOpen: false,
-      isCityZoomMapOpen: true,
-    });
-  },
-
-  exitCityZoomMap() {
-    setState({
-      isCityZoomMapOpen: false,
-      focusedPlaceId: null,
-    });
   },
 
   focusPlace(
@@ -216,22 +227,15 @@ export const tripActions = {
       return {
         focusedPlaceId: placeId,
         selectedCityId: nextCityId,
-        sheetSnap:
-          placeId || nextCityId
-            ? prev.sheetSnap === "closed"
-              ? "half"
-              : prev.sheetSnap
-            : "closed",
+        sheetSnap: placeId || nextCityId ? "peek" : "closed",
+        isLayersSheetOpen: false,
       };
     });
     if (source !== "user" || !nextCityId) return;
-    pushOrReplaceSheet(nextCityId, placeId);
-  },
-
-  setCurrentDayIndex(dayIndex: number) {
-    setState({
-      currentDayIndex: Math.max(0, Math.min(32, Math.round(dayIndex))),
-    });
+    if (placeId) pushPlaceEntry(nextCityId, placeId);
+    else if (typeof window !== "undefined" && window.history.state?.level === "place") {
+      backOneSheetLevel();
+    }
   },
 
   setUse2DFallback(use2DFallback: boolean) {

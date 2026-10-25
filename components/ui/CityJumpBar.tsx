@@ -8,10 +8,20 @@ export interface JumpItem {
   meta?: string;
 }
 
-export function CityJumpBar({ items }: { items: JumpItem[] }) {
-  const [activeId, setActiveId] = useState(items[0]?.id ?? "");
+export function CityJumpBar({
+  items,
+  onJump,
+  activeId: controlledActiveId,
+}: {
+  items: JumpItem[];
+  onJump?: (id: string) => void;
+  activeId?: string;
+}) {
+  const [localActiveId, setLocalActiveId] = useState(items[0]?.id ?? "");
+  const activeId = controlledActiveId || localActiveId;
 
   useEffect(() => {
+    if (onJump) return;
     const nodes = items
       .map((item) => document.getElementById(item.id))
       .filter((el): el is HTMLElement => Boolean(el));
@@ -21,13 +31,13 @@ export function CityJumpBar({ items }: { items: JumpItem[] }) {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target.id) setActiveId(visible.target.id);
+        if (visible?.target.id) setLocalActiveId(visible.target.id);
       },
       { rootMargin: "-20% 0px -55% 0px", threshold: [0.1, 0.35, 0.7] }
     );
     nodes.forEach((node) => observer.observe(node));
     return () => observer.disconnect();
-  }, [items]);
+  }, [items, onJump]);
 
   return (
     <div className="fade-edge-scroll no-scrollbar flex snap-x snap-mandatory items-center gap-1.5 overflow-x-auto pl-4">
@@ -37,6 +47,11 @@ export function CityJumpBar({ items }: { items: JumpItem[] }) {
           <a
             key={item.id}
             href={`#${item.id}`}
+            onClick={(event) => {
+              if (!onJump) return;
+              event.preventDefault();
+              onJump(item.id);
+            }}
             className={`flex min-h-11 shrink-0 snap-start items-center gap-1.5 rounded-full px-3.5 text-xs font-extrabold ${
               active
                 ? "bg-orange-500 text-white shadow-xs"

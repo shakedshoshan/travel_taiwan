@@ -12,6 +12,7 @@ export interface LayerToggles {
 
 export type MapDragMode = "pan" | "rotate";
 export type SheetSnapPoint = "closed" | "peek" | "half" | "full";
+export type CityCategory = "all" | "attractions" | "food" | "hotels" | "nature";
 
 export type CameraCommandType =
   | "pan-north"
@@ -40,13 +41,9 @@ export interface TripStoreState {
   selectedCityId: CityId | null;
   focusedPlaceId: string | null;
   sheetSnap: SheetSnapPoint;
-  isTimelineExpanded: boolean;
   isLayersSheetOpen: boolean;
-  isCityZoomMapOpen: boolean;
-  isTodayCardOpen: boolean;
-  isRoutePlaying: boolean;
+  cityCategory: CityCategory;
   userCoords: UserGeoCoords | null;
-  currentDayIndex: number; // 0..32 (6.11 -> 8.12)
   use2DFallback: boolean;
   prefersReducedMotion: boolean;
   isSearchOpen: boolean;
@@ -65,13 +62,9 @@ export const DEFAULT_STATE: TripStoreState = {
   selectedCityId: null,
   focusedPlaceId: null,
   sheetSnap: "closed",
-  isTimelineExpanded: false,
   isLayersSheetOpen: false,
-  isCityZoomMapOpen: false,
-  isTodayCardOpen: false,
-  isRoutePlaying: false,
+  cityCategory: "all",
   userCoords: null,
-  currentDayIndex: 0,
   use2DFallback: false,
   prefersReducedMotion: false,
   isSearchOpen: false,

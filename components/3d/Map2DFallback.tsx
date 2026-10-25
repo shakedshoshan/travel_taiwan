@@ -20,7 +20,7 @@ import {
 
 interface Map2DFallbackProps {
   selectedCityId: CityId | null;
-  currentDay: TimelineDay;
+  currentDay: TimelineDay | null;
   isNightMode: boolean;
   layerToggles: LayerToggles;
   onSelectCity: (cityId: CityId) => void;
@@ -232,7 +232,7 @@ export function Map2DFallback({
         {cities.map((city) => {
           const { x, y } = latLngToSvg(city.lat, city.lng);
           const isSelected = selectedCityId === city.id;
-          const isActive = currentDay.cityId === city.id;
+          const isActive = currentDay?.cityId === city.id;
           return (
             <g
               key={city.id}

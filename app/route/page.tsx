@@ -1,44 +1,23 @@
 "use client";
 
 import { Fragment, useEffect, useRef, useState } from "react";
-import { getAuditNotes, getRouteLegs, getTimelineDays } from "@/lib/data/selectors";
+import { getAuditNotes, getRouteLegs } from "@/lib/data/selectors";
 import { uniqueRouteLegImages } from "@/lib/data/placeImages";
 import { MiniTaiwanMap } from "@/components/3d/MiniTaiwanMap";
 import { RouteLegCard } from "@/components/ui/route/RouteLegCard";
 import { OptionalDetourCard } from "@/components/ui/route/OptionalDetourCard";
-import { getTripTodayStatus, TodayCardModal } from "@/components/ui/TodayCardModal";
 import { DateRange, LtrText, RtlParen } from "@/components/ui/bidi";
 import { BackToTop } from "@/components/ui/CityJumpBar";
-import { tripActions } from "@/lib/store/useTripStore";
 import type { CityId } from "@/data/types";
 
 export default function RoutePage() {
   const legs = getRouteLegs();
   const legImages = uniqueRouteLegImages(legs);
   const auditNotes = getAuditNotes();
-  const todayStatus = getTripTodayStatus(
-    typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search).get("today")
-      : null
-  );
-  const initialDay = todayStatus.inTrip
-    ? getTimelineDays()[todayStatus.dayIndex]
-    : undefined;
 
-  const [activeLegOrder, setActiveLegOrder] = useState<number>(
-    initialDay?.legOrder ?? 1
-  );
-  const [activeCityId, setActiveCityId] = useState<CityId>(
-    initialDay?.cityId ?? legs[0].cityId
-  );
-  const todayBannerText = todayStatus.statusTextHe;
+  const [activeLegOrder, setActiveLegOrder] = useState<number>(1);
+  const [activeCityId, setActiveCityId] = useState<CityId>(legs[0].cityId);
   const cardRefs = useRef<Map<number, HTMLElement>>(new Map());
-
-  useEffect(() => {
-    if (todayStatus.inTrip) {
-      tripActions.setCurrentDayIndex(todayStatus.dayIndex);
-    }
-  }, [todayStatus.inTrip, todayStatus.dayIndex]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -73,7 +52,7 @@ export default function RoutePage() {
       {/* Sticky Top 35vh Mini 3D Map Synced to Scroll */}
       <div
         style={{ top: "calc(3.25rem + env(safe-area-inset-top))" }}
-        className="sticky z-30 border-b border-slate-200/80 bg-background/95 px-2.5 pt-1.5 pb-2 backdrop-blur-md md:px-6 dark:border-slate-800"
+        className="sticky z-40 border-b border-slate-200/80 bg-background px-2.5 pt-1.5 pb-2 md:px-6 dark:border-slate-800"
       >
         <div className="relative h-[35vh] max-h-[340px] min-h-[210px] w-full overflow-hidden rounded-3xl border border-slate-200 shadow-lg dark:border-slate-800">
           <MiniTaiwanMap
@@ -82,7 +61,12 @@ export default function RoutePage() {
           />
           <div className="pointer-events-none absolute right-2.5 bottom-2.5 left-2.5 flex items-center justify-between gap-2 rounded-2xl bg-slate-950/85 px-3 py-1.5 text-xs text-white backdrop-blur-md">
             <div className="truncate font-bold">
-              <span className="text-amber-300">מקטע {activeLeg.order}: </span>
+              <span className="text-amber-300">
+                <bdi dir="rtl">
+                  מקטע <bdi dir="ltr">{activeLeg.order}</bdi>
+                  {": "}
+                </bdi>
+              </span>
               <span>{activeLeg.focus}</span>
             </div>
             <span className="shrink-0 rounded-full bg-orange-500 px-2 py-0.5 text-xs font-black text-white">
@@ -95,7 +79,7 @@ export default function RoutePage() {
         </div>
 
         {/* Quick Leg Jump Pills */}
-        <div className="fade-edge-scroll no-scrollbar mt-2 flex snap-x snap-mandatory items-center gap-1.5 overflow-x-auto pl-4">
+        <div className="fade-edge-scroll no-scrollbar relative z-10 mt-2 flex snap-x snap-mandatory items-center gap-1.5 overflow-x-auto bg-background py-1 pl-4">
           {legs.map((leg) => {
             const isCurrent = leg.order === activeLegOrder;
             return (
@@ -112,37 +96,26 @@ export default function RoutePage() {
                     : "bg-slate-200/80 text-slate-700 dark:bg-slate-800 dark:text-slate-300"
                 }`}
               >
-                <LtrText>{leg.order}.</LtrText> {leg.focus}
+                <bdi dir="rtl">
+                  <bdi dir="ltr">{leg.order}.</bdi> {leg.focus}
+                </bdi>
               </a>
             );
           })}
         </div>
       </div>
 
-      {/* Main Itinerary Content */}
-      <TodayCardModal />
       <div className="px-3.5 pt-16 md:px-6">
-        <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <h1 className="font-display text-2xl font-black tracking-tight text-slate-900 md:text-3xl dark:text-white">
-              המסלול המלא בטייוואן{" "}
-              <RtlParen className="inline-block whitespace-nowrap">
-                (<LtrText>10</LtrText> מקטעים · <LtrText>33</LtrText> ימים)
-              </RtlParen>
-            </h1>
-            <p className="mt-1 text-xs text-slate-700 dark:text-slate-200">
-              <DateRange>6.11 – 8.12.2026</DateRange> • גללו מטה – המפה התלת-ממדית למעלה עוקבת אוטומטית אחרי כל מקטע.
-            </p>
-          </div>
-          {todayBannerText && (
-            <button
-              type="button"
-              onClick={() => tripActions.setTodayCardOpen(true)}
-              className="toy-button rounded-2xl bg-amber-400/25 px-3.5 py-2 text-xs font-extrabold text-amber-950 dark:bg-amber-400/20 dark:text-amber-200"
-            >
-              📅 {todayBannerText} · פתח כרטיס היום
-            </button>
-          )}
+        <div className="mb-5">
+          <h1 className="font-display text-2xl font-black tracking-tight text-slate-900 md:text-3xl dark:text-white">
+            המסלול המלא בטייוואן{" "}
+            <RtlParen className="inline-block whitespace-nowrap">
+              (<LtrText>10</LtrText> מקטעים · <LtrText>33</LtrText> ימים)
+            </RtlParen>
+          </h1>
+          <p className="mt-1 text-xs text-slate-700 dark:text-slate-200">
+            <DateRange>6.11 – 8.12.2026</DateRange> • גללו מטה – המפה התלת-ממדית למעלה עוקבת אוטומטית אחרי כל מקטע.
+          </p>
         </div>
 
         <div className="space-y-5">

@@ -6,7 +6,6 @@ import { WorldHtml } from "../WorldHtml";
 import { buildGoogleMapsUrl } from "@/lib/data/selectors";
 import { getPlaceImage } from "@/lib/data/placeImages";
 import { PhotoCreditPopover } from "@/components/ui/PhotoCreditPopover";
-import { tripActions } from "@/lib/store/useTripStore";
 import type { MarkerEntry } from "./markerConfig";
 
 interface MarkerTooltipCardProps {
@@ -96,37 +95,21 @@ export function MarkerTooltipCard({
           )}
 
         {isFocused && (
-          <div className="mt-2.5 flex flex-col gap-1.5 border-t border-white/15 pt-2">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                tripActions.enterCityZoomMap(activeEntry.place.cityId);
-                tripActions.focusPlace(
-                  activeEntry.place.id,
-                  activeEntry.place.cityId
-                );
-              }}
-              className="min-h-11 w-full rounded-xl bg-amber-400 py-1.5 text-xs font-black text-slate-950 hover:bg-amber-300"
+          <div className="mt-2.5 grid grid-cols-2 gap-1.5 border-t border-white/15 pt-2">
+            <Link
+              href={`/place/${activeEntry.place.id}`}
+              className="flex h-11 items-center justify-center rounded-xl bg-white/10 text-xs font-black text-orange-200"
             >
-              🔍 זום למפת יעד 3D ({activeEntry.place.cityNameHe})
-            </button>
-            <div className="flex items-center justify-between text-xs">
-              <Link
-                href={`/place/${activeEntry.place.id}`}
-                className="font-bold text-orange-400 hover:underline"
-              >
-                לעמוד המקום המלא ←
-              </Link>
-              <a
-                href={buildGoogleMapsUrl(activeEntry.place)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-bold text-emerald-300 hover:text-white"
-              >
-                נווט ↗
-              </a>
-            </div>
+              פרטים
+            </Link>
+            <a
+              href={buildGoogleMapsUrl(activeEntry.place)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-11 items-center justify-center rounded-xl bg-emerald-500 text-xs font-black text-slate-950"
+            >
+              נווט ↗
+            </a>
           </div>
         )}
       </div>

@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import { Sparkles } from "@react-three/drei";
 import * as THREE from "three";
-import { getAllPlaces, type EnrichedPlace } from "@/lib/data/selectors";
+import { placeMatchesCityCategory } from "@/lib/data/cityCategory";
+import { getAllPlaces, getCityById, type EnrichedPlace } from "@/lib/data/selectors";
 import {
   useTripStore,
   type LayerToggles,
@@ -17,6 +18,8 @@ import {
 } from "./markers/markerConfig";
 import { InstancedCategoryGroup } from "./markers/InstancedCategoryGroup";
 import { MarkerTooltipCard } from "./markers/MarkerTooltipCard";
+import { CityClusterController } from "./markers/CityClusterController";
+import { CityOverlayLabels } from "./markers/CityOverlayLabels";
 
 interface CategoryMarkersProps {
   layerToggles: LayerToggles;
@@ -63,7 +66,10 @@ export function CategoryMarkers({
     };
 
     for (const place of allPlaces) {
-      if (!isPlaceVisible(place, layerToggles)) continue;
+      if (selectedCityId) {
+        if (place.cityId !== selectedCityId) continue;
+        if (!placeMatchesCityCategory(place, store.cityCategory)) continue;
+      } else if (!isPlaceVisible(place, layerToggles)) continue;
 
       const { archetype, color, importance } = getArchetypeAndColor(place);
       const importanceScale = 0.55 + importance * 0.16;
@@ -81,7 +87,7 @@ export function CategoryMarkers({
     }
 
     return groups;
-  }, [layerToggles, selectedCityId, focusedPlaceId]);
+  }, [layerToggles, selectedCityId, focusedPlaceId, store.cityCategory]);
 
   const topImportancePlaces = useMemo(() => {
     const list: MarkerEntry[] = [];
@@ -106,8 +112,29 @@ export function CategoryMarkers({
 
   const activeEntry = hoveredEntry ?? focusedEntry;
 
+  const cityPlaces = useMemo(() => {
+    const list: EnrichedPlace[] = [];
+    for (const key of Object.keys(groupedEntries) as MarkerArchetype[]) {
+      for (const entry of groupedEntries[key]) list.push(entry.place);
+    }
+    return list;
+  }, [groupedEntries]);
+
+  const cityCenter = selectedCityId ? getCityById(selectedCityId) : null;
+
   return (
     <group name="category-markers">
+      <CityClusterController places={cityPlaces} enabled={Boolean(selectedCityId)} />
+      {selectedCityId && cityCenter && (
+        <CityOverlayLabels
+          places={cityPlaces}
+          category={store.cityCategory}
+          focusedPlaceId={focusedPlaceId}
+          centerX={cityCenter.worldX}
+          centerZ={cityCenter.worldZ}
+          reducedMotion={store.prefersReducedMotion}
+        />
+      )}
       <InstancedCategoryGroup
         archetype="lantern"
         entries={groupedEntries.lantern}
@@ -116,6 +143,7 @@ export function CategoryMarkers({
         emissiveColor="#ff4522"
         emissiveIntensity={isNightMode ? 2.4 : 0.85}
         selectedCityId={selectedCityId}
+        focusedPlaceId={focusedPlaceId}
         prefersReducedMotion={store.prefersReducedMotion}
         onHover={setHoveredEntry}
         onSelect={onSelectPlace}
@@ -129,6 +157,7 @@ export function CategoryMarkers({
         emissiveColor="#f43f5e"
         emissiveIntensity={isNightMode ? 1.3 : 0.45}
         selectedCityId={selectedCityId}
+        focusedPlaceId={focusedPlaceId}
         prefersReducedMotion={store.prefersReducedMotion}
         onHover={setHoveredEntry}
         onSelect={onSelectPlace}
@@ -142,6 +171,7 @@ export function CategoryMarkers({
         emissiveColor="#38bdf8"
         emissiveIntensity={isNightMode ? 1.2 : 0.4}
         selectedCityId={selectedCityId}
+        focusedPlaceId={focusedPlaceId}
         prefersReducedMotion={store.prefersReducedMotion}
         onHover={setHoveredEntry}
         onSelect={onSelectPlace}
@@ -155,6 +185,7 @@ export function CategoryMarkers({
         emissiveColor="#10b981"
         emissiveIntensity={isNightMode ? 0.9 : 0.35}
         selectedCityId={selectedCityId}
+        focusedPlaceId={focusedPlaceId}
         prefersReducedMotion={store.prefersReducedMotion}
         onHover={setHoveredEntry}
         onSelect={onSelectPlace}
@@ -168,6 +199,7 @@ export function CategoryMarkers({
         emissiveColor="#fbbf24"
         emissiveIntensity={isNightMode ? 1.9 : 0.75}
         selectedCityId={selectedCityId}
+        focusedPlaceId={focusedPlaceId}
         prefersReducedMotion={store.prefersReducedMotion}
         onHover={setHoveredEntry}
         onSelect={onSelectPlace}
@@ -186,7 +218,7 @@ export function CategoryMarkers({
       )}
 
       {/* Hover or Focused Card for any Category Marker */}
-      {activeEntry && (
+      {activeEntry && !selectedCityId && (
         <MarkerTooltipCard
           activeEntry={activeEntry}
           isFocused={focusedEntry?.place.id === activeEntry.place.id}

@@ -236,16 +236,22 @@ export function PlaceCard({
           </div>
         )}
 
-        <div className="relative z-10 mt-3 border-t border-slate-100 pt-2.5 dark:border-slate-800">
+        <div className="relative z-10 mt-3 grid grid-cols-1 gap-2 border-t border-slate-100 pt-2.5 sm:grid-cols-2 dark:border-slate-800">
+          <Link
+            href={`/place/${place.id}`}
+            className="flex min-h-11 items-center justify-center rounded-2xl bg-slate-900 px-3 text-xs font-black text-white dark:bg-white dark:text-slate-950"
+          >
+            לעמוד המקום המלא
+          </Link>
           <a
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(event) => event.stopPropagation()}
-            className="toy-button relative z-10 inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-l from-orange-500 to-amber-500 px-4 text-xs font-black text-white shadow-sm"
+            className="toy-button relative z-10 inline-flex min-h-11 w-full items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-l from-orange-500 to-amber-500 px-4 text-xs font-black text-white shadow-sm"
           >
             <Navigation className="h-4 w-4" />
-            <span>נווט</span>
+            <span>נווט ↗</span>
           </a>
         </div>
       </div>

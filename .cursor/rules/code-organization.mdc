@@ -11,7 +11,7 @@ alwaysApply: true
    - Separate pure math/data/geometry builders (`.ts`) from React/R3F rendering components (`.tsx`).
 2. **Feature Subfolder Structure**:
    - **3D Scene (`components/3d/`)**: Place top-level scene orchestrators in `components/3d/` and decompose sub-parts into `camera/`, `city-map/`, `delight/`, `island/`, `markers/`, `overlay/`, and `pins/`.
-   - **UI (`components/ui/`)**: Keep shared primitives (`Navbar`, `BottomSheet`, `PlaceCard`, `LayerToggles`, `TimelineScrubber`) in `components/ui/` and place feature-specific subcomponents in `drawer/`, `food/`, `info/`, and `route/`.
+   - **UI (`components/ui/`)**: Keep shared primitives (`Navbar`, `BottomSheet`, `PlaceCard`, `LayerToggles`) in `components/ui/` and place feature-specific subcomponents in `drawer/`, `food/`, `info/`, and `route/`. Do not add a trip-day tracking bar.
    - **Data & Store (`lib/data/`, `lib/store/`)**: Keep Zod schemas (`schemas.ts`), coordinate projection (`coordinates.ts`, `taiwanGeo.ts`), data loaders (`loaders.ts`), selectors (`selectors.ts`), search (`search.ts`), metadata (`foodAndPlaceMeta.ts`, `cityTransitGuides.ts`), and image matchers (`placeImages.ts`, `imageMatchers.ts`) in dedicated modules.
 3. **Stable Public Imports**:
    - When splitting a module used across multiple pages, preserve clean barrel re-exports (e.g., `CityDestination3DMap.tsx`, `selectors.ts`, `useTripStore.ts`) so consumer imports stay concise and stable.

@@ -14,16 +14,11 @@ import { OCEAN_HORIZON_DAY, OCEAN_HORIZON_NIGHT } from "./island/oceanBuilder";
 import { CityPins } from "./CityPins";
 import { CategoryMarkers } from "./CategoryMarkers";
 import { DelightDetails } from "./DelightDetails";
-import {
-  CityDestination3DScene,
-  CityDestinationHUD,
-} from "./CityDestination3DMap";
 import { CameraRig } from "./CameraRig";
 import { Map2DFallback } from "./Map2DFallback";
 import { TaiwanLoadingScreen } from "./TaiwanLoadingScreen";
 import { WorldHtmlHost } from "./WorldHtml";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
-import { getTimelineDays } from "@/lib/data/selectors";
 import type { EnrichedPlace } from "@/lib/data/loaders";
 
 /** The sun only moves when day/night changes, so the shadow map can stay frozen. */
@@ -64,14 +59,6 @@ export function MapCanvas() {
   const loadProgress = useLoadProgress();
   const [coarsePointer, setCoarsePointer] = useState(false);
   const [paintReady, setPaintReady] = useState(false);
-  const [showAllCityLabels, setShowAllCityLabels] = useState(true);
-  const [cityCategoryFilter, setCityCategoryFilter] = useState<
-    "all" | "hotel" | "food" | "attraction" | "nature"
-  >("all");
-
-  const timelineDays = getTimelineDays();
-  const currentDay =
-    timelineDays[store.currentDayIndex] ?? timelineDays[0];
 
   useEffect(() => {
     tripActions.hydrate();
@@ -103,7 +90,7 @@ export function MapCanvas() {
       <div className="relative h-full w-full">
         <Map2DFallback
           selectedCityId={store.selectedCityId}
-          currentDay={currentDay}
+          currentDay={null}
           isNightMode={store.isNightMode}
           layerToggles={store.layerToggles}
           onSelectCity={(cityId) => tripActions.selectCity(cityId)}
@@ -224,32 +211,22 @@ export function MapCanvas() {
 
         <Suspense fallback={null}>
           <OceanWater isNightMode={store.isNightMode} />
-          {store.isCityZoomMapOpen && store.selectedCityId ? (
-            <CityDestination3DScene
-              cityId={store.selectedCityId}
-              isNightMode={store.isNightMode}
-              showAllLabels={showAllCityLabels}
-              categoryFilter={cityCategoryFilter}
-            />
-          ) : (
-            <>
-              <TaiwanIsland isNightMode={store.isNightMode} />
-              <CityPins
-                selectedCityId={store.selectedCityId}
-                activeTimelineCityId={currentDay.cityId}
-                isNightMode={store.isNightMode}
-                onSelectCity={(cityId) => tripActions.selectCity(cityId)}
-              />
-              <CategoryMarkers
-                layerToggles={store.layerToggles}
-                isNightMode={store.isNightMode}
-                selectedCityId={store.selectedCityId}
-                focusedPlaceId={store.focusedPlaceId}
-                onSelectPlace={handleSelectPlace}
-              />
-              <DelightDetails isNightMode={store.isNightMode} />
-            </>
-          )}
+          <TaiwanIsland isNightMode={store.isNightMode} />
+          <CityPins
+            selectedCityId={store.selectedCityId}
+            activeTimelineCityId={null}
+            isNightMode={store.isNightMode}
+            hideLabels={Boolean(store.selectedCityId)}
+            onSelectCity={(cityId) => tripActions.selectCity(cityId)}
+          />
+          <CategoryMarkers
+            layerToggles={store.layerToggles}
+            isNightMode={store.isNightMode}
+            selectedCityId={store.selectedCityId}
+            focusedPlaceId={store.focusedPlaceId}
+            onSelectPlace={handleSelectPlace}
+          />
+          <DelightDetails isNightMode={store.isNightMode} />
         </Suspense>
 
         <CameraRig
@@ -269,15 +246,6 @@ export function MapCanvas() {
         )}
       </Canvas>}
       {paintReady && <WorldHtmlHost />}
-      {store.isCityZoomMapOpen && store.selectedCityId && (
-        <CityDestinationHUD
-          cityId={store.selectedCityId}
-          showAllLabels={showAllCityLabels}
-          onToggleAllLabels={() => setShowAllCityLabels((prev) => !prev)}
-          categoryFilter={cityCategoryFilter}
-          onChangeCategoryFilter={setCityCategoryFilter}
-        />
-      )}
     </div>
   );
 }

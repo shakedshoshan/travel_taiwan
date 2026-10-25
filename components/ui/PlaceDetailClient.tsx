@@ -58,7 +58,7 @@ export function PlaceDetailClient({
         <div className="flex items-center gap-2 text-xs font-bold">
           <Link
             href="/"
-            onClick={() => tripActions.selectCity(place.cityId, "half")}
+            onClick={() => tripActions.selectCity(place.cityId, "peek")}
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-2xl bg-white px-3.5 text-slate-800 shadow-xs dark:bg-slate-900 dark:text-slate-200"
           >
             <ArrowRight className="h-4 w-4 text-orange-500" />
@@ -175,7 +175,7 @@ export function PlaceDetailClient({
             </span>
             <Link
               href={`/?city=${place.cityId}`}
-              className="text-xs font-bold text-orange-600 hover:underline dark:text-amber-300"
+              className="inline-flex min-h-11 items-center rounded-xl px-2 text-xs font-bold text-orange-600 hover:underline dark:text-amber-300"
             >
               פתח במפה המלאה ←
             </Link>

@@ -72,7 +72,6 @@ To keep the codebase clean and AI-navigable, **every file is kept small (< 390 l
 ### `/components/ui` — Mobile-First RTL UI Components
 - `Navbar.tsx`: Slim top header (`48px`) + bottom 5-tab navigation bar (`מפה`, `מסלול`, `אוכל`, `מלונות`, `טיפים`).
 - `LayerToggles.tsx`: Horizontally scrollable category filter chips + `"שכבות"` bottom sheet.
-- `TimelineScrubber.tsx`: Collapsed `64px` day pill + expanded 33-day RTL timeline sheet.
 - `BottomSheet.tsx`: Touch-draggable multi-snap bottom sheet (`peek` 20% / `half` 55% / `full` 90%) synced with browser `popstate`.
 - `CityDrawer.tsx` + `/components/ui/drawer/CityDrawerTabsContent.tsx`: City photo strip, 4 tabs (`אטרקציות`, `אוכל`, `מלונות`, `ימים`), and 3D city zoom trigger.
 - `PlaceCard.tsx` & `PlaceDetailClient.tsx`: Reusable place cards and full place detail view.

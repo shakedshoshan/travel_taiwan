@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import {
   Clock,
   LocateFixed,
@@ -11,17 +11,15 @@ import {
 } from "lucide-react";
 import {
   getAllCities,
-  getCityById,
   getFoodItems,
-  getTimelineDays,
 } from "@/lib/data/selectors";
 import {
   checkIsOpenNow,
   computeDistanceKm,
   resolveNearMeCoordinates,
 } from "@/lib/data/foodAndPlaceMeta";
-import { PlaceCard } from "@/components/ui/PlaceCard";
 import { FoodFilterSheet } from "@/components/ui/food/FoodFilterSheet";
+import { FoodResultsList } from "@/components/ui/food/FoodResultsList";
 import { BackToTop, CityJumpBar } from "@/components/ui/CityJumpBar";
 import { uniqueImagesForPlaces } from "@/lib/data/placeImages";
 import { useTripStore } from "@/lib/store/useTripStore";
@@ -31,8 +29,10 @@ export default function FoodPage() {
   const store = useTripStore();
   const allFood = getFoodItems();
   const cities = getAllCities();
-  const days = getTimelineDays();
-  const currentDay = days[store.currentDayIndex] ?? days[0];
+  const nearMeFallback =
+    cities.find((city) => city.id === store.selectedCityId) ??
+    cities.find((city) => city.onRoute) ??
+    cities[0];
 
   const [viewMode, setViewMode] = useState<"all" | "cheap-must-eats">("all");
   const [onlyOpenNow, setOnlyOpenNow] = useState(false);
@@ -47,6 +47,9 @@ export default function FoodPage() {
   const [maxPrice, setMaxPrice] = useState<number>(600);
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
+  const [scrollToId, setScrollToId] = useState<string | null>(null);
+  const [activeJumpId, setActiveJumpId] = useState("");
+  const onActiveJump = useCallback((id: string) => setActiveJumpId(id), []);
 
   const handleToggleNearMe = () => {
     if (nearMeCoords || nearMeDenied) {
@@ -55,11 +58,8 @@ export default function FoodPage() {
       return;
     }
 
-    const fallbackCity = getCityById(
-      store.selectedCityId ?? currentDay.cityId
-    );
     resolveNearMeCoordinates(
-      fallbackCity,
+      nearMeFallback,
       (coords) => {
         setNearMeDenied(false);
         setNearMeCoords(coords);
@@ -271,7 +271,14 @@ export default function FoodPage() {
 
       {jumpItems.length > 1 && (
         <div className="sticky top-[7.5rem] z-20 -mx-3.5 mb-3 bg-background/95 px-3.5 py-1">
-          <CityJumpBar items={jumpItems} />
+          <CityJumpBar
+            items={jumpItems}
+            activeId={activeJumpId}
+            onJump={(id) => {
+              setActiveJumpId(id);
+              setScrollToId(id);
+            }}
+          />
         </div>
       )}
 
@@ -300,35 +307,28 @@ export default function FoodPage() {
         )}
       </div>
 
-      {/* Food Cards Grid */}
-      <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredFood.map((item, index) => {
-          const distKm = nearMeCoords
-            ? computeDistanceKm(
-                nearMeCoords.lat,
-                nearMeCoords.lng,
-                item.resolvedCoords.lat,
-                item.resolvedCoords.lng
-              )
-            : null;
+      <FoodResultsList
+        rows={filteredFood.map((item, index) => {
           const isCityStart =
             filteredFood.findIndex((entry) => entry.cityId === item.cityId) ===
             index;
-          return (
-            <div
-              key={item.id}
-              id={isCityStart ? `food-${item.cityId}` : undefined}
-              className={isCityStart ? "scroll-mt-40" : undefined}
-            >
-              <PlaceCard
-                place={item}
-                distanceKm={distKm}
-                image={foodImages.get(item.id) ?? null}
-              />
-            </div>
-          );
+          return {
+            place: item,
+            distanceKm: nearMeCoords
+              ? computeDistanceKm(
+                  nearMeCoords.lat,
+                  nearMeCoords.lng,
+                  item.resolvedCoords.lat,
+                  item.resolvedCoords.lng
+                )
+              : null,
+            image: foodImages.get(item.id) ?? null,
+            anchorId: isCityStart ? `food-${item.cityId}` : undefined,
+          };
         })}
-      </div>
+        scrollToId={scrollToId}
+        onActiveId={onActiveJump}
+      />
       <BackToTop />
 
       <FoodFilterSheet

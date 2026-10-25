@@ -7,6 +7,7 @@ import type { EnrichedPlace } from "@/lib/data/selectors";
 import { triggerHapticTap } from "@/lib/haptics";
 import type { CityId } from "@/data/types";
 import type { MarkerArchetype, MarkerEntry } from "./markerConfig";
+import { bounceScale, markMarkerBounce, markerFrame } from "./markerFrame";
 
 interface InstancedCategoryGroupProps {
   archetype: MarkerArchetype;
@@ -16,6 +17,7 @@ interface InstancedCategoryGroupProps {
   emissiveColor: string;
   emissiveIntensity: number;
   selectedCityId: CityId | null;
+  focusedPlaceId: string | null;
   prefersReducedMotion: boolean;
   onHover: (entry: MarkerEntry | null) => void;
   onSelect: (place: EnrichedPlace) => void;
@@ -28,6 +30,7 @@ export function InstancedCategoryGroup({
   emissiveColor,
   emissiveIntensity,
   selectedCityId,
+  focusedPlaceId,
   prefersReducedMotion,
   onHover,
   onSelect,
@@ -58,15 +61,18 @@ export function InstancedCategoryGroup({
       if (hitMesh) hitMesh.setMatrixAt(idx, dummy.matrix);
 
       tmpColor.set(entry.color);
+      if (focusedPlaceId && entry.place.id !== focusedPlaceId) {
+        tmpColor.multiplyScalar(0.4);
+      }
       mesh.setColorAt(idx, tmpColor);
     });
 
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     if (hitMesh) hitMesh.instanceMatrix.needsUpdate = true;
-  }, [entries, dummy, tmpColor]);
+  }, [entries, dummy, tmpColor, focusedPlaceId]);
 
-  useFrame(({ clock, camera }) => {
+  useFrame(({ clock, camera, size }) => {
     const mesh = meshRef.current;
     const hitMesh = hitMeshRef.current;
     if (!mesh || entries.length === 0) return;
@@ -91,7 +97,9 @@ export function InstancedCategoryGroup({
           ? Math.max(0.68, zoomDetailFactor)
           : zoomDetailFactor;
 
-      const finalScale = entry.scale * lodScale;
+      const hidden = Boolean(selectedCityId) && markerFrame.hiddenIds.has(entry.place.id);
+      const bounce = bounceScale(entry.place.id, prefersReducedMotion);
+      const finalScale = hidden ? 0 : entry.scale * lodScale * bounce;
       const bob =
         !prefersReducedMotion && entry.importance >= 4 && finalScale > 0.2
           ? Math.sin(t * 2.4 + idx * 0.7) * 0.03
@@ -114,7 +122,16 @@ export function InstancedCategoryGroup({
       mesh.setMatrixAt(idx, dummy.matrix);
 
       if (hitMesh) {
-        dummy.scale.setScalar(finalScale > 0.15 ? Math.max(1.0, finalScale) : 0);
+        const dist = Math.max(0.4, camera.position.distanceTo(dummy.position));
+        const fov = (camera as THREE.PerspectiveCamera).fov ?? 42;
+        const worldPerPx =
+          (2 * dist * Math.tan(THREE.MathUtils.degToRad(fov) / 2)) /
+          Math.max(1, size.height);
+        const hitScale =
+          finalScale > 0.05
+            ? THREE.MathUtils.clamp((44 * worldPerPx) / 0.48, 0.65, 3.2)
+            : 0;
+        dummy.scale.setScalar(hitScale);
         dummy.updateMatrix();
         hitMesh.setMatrixAt(idx, dummy.matrix);
       }
@@ -162,6 +179,7 @@ export function InstancedCategoryGroup({
           e.stopPropagation();
           if (typeof e.instanceId === "number" && entries[e.instanceId]) {
             triggerHapticTap();
+            markMarkerBounce(entries[e.instanceId].place.id);
             onSelect(entries[e.instanceId].place);
           }
         }}

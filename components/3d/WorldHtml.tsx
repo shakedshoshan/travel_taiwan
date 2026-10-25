@@ -123,6 +123,8 @@ interface WorldHtmlProps {
   showWhenFar?: boolean;
   /** Decorative overlay text. The selected city control leaves this false. */
   ariaHidden?: boolean;
+  /** Label is not a hit target. The marker underneath receives the tap. */
+  passive?: boolean;
   children: React.ReactNode;
 }
 
@@ -143,6 +145,7 @@ export function WorldHtml({
   labelPriority,
   showWhenFar = true,
   ariaHidden = false,
+  passive = false,
   children,
 }: WorldHtmlProps) {
   const id = useId();
@@ -263,6 +266,8 @@ export function WorldHtml({
       const slot = labelSlots.get(id) ?? {
         ax: x,
         ay: y,
+        baseAx: x,
+        baseAy: y,
         w: 88,
         h: 28,
         priority: labelPriority,
@@ -271,6 +276,8 @@ export function WorldHtml({
         hidden: false,
         scale: 1,
       };
+      slot.baseAx = x;
+      slot.baseAy = y;
       slot.ax = x;
       slot.ay = y;
       slot.w = Math.max(48, el.offsetWidth || 88);
@@ -281,14 +288,15 @@ export function WorldHtml({
       labelSlots.set(id, slot);
       labelElements.set(id, el);
       el.dataset.decorative = ariaHidden ? "1" : "0";
+      if (passive) el.dataset.passive = "1";
       queueLabelSolve();
       return;
     }
 
     if (el.style.opacity !== "1") {
       el.style.opacity = "1";
-      el.style.pointerEvents = "auto";
     }
+    el.style.pointerEvents = passive ? "none" : "auto";
     el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
   });
 

@@ -17,7 +17,6 @@ interface RunCameraCommandOptions {
   isTransitioning: MutableRef<boolean>;
   transitionTimer: MutableRef<number>;
   isHighTilt: MutableRef<boolean>;
-  isCityZoomMapOpen: boolean;
   width: number;
   height: number;
 }
@@ -58,7 +57,6 @@ export function runCameraCommand({
   isTransitioning,
   transitionTimer,
   isHighTilt,
-  isCityZoomMapOpen,
   width,
   height,
 }: RunCameraCommandOptions) {
@@ -118,10 +116,7 @@ export function runCameraCommand({
       break;
     }
     case "reset": {
-      if (isCityZoomMapOpen) {
-        desiredTarget.set(0, 0.25, 0);
-        desiredCamPos.set(0, 12.2, 12.8);
-      } else {
+      {
         const fit = computeFitIslandPose(width, height);
         desiredTarget.copy(fit.target);
         desiredCamPos.copy(fit.position);

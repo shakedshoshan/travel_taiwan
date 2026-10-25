@@ -1,5 +1,4 @@
-import { TRIP_DATA } from "./loaders";
-import { getAllCities, getTimelineDays } from "./selectors";
+import { getRouteLegs, getTimelineDays } from "./selectors";
 
 export interface TripSpan {
   dayCount: number;
@@ -10,20 +9,25 @@ export interface TripSpan {
   routeCityNamesHe: string[];
 }
 
-/** Day count and date labels derived from route legs and the generated timeline. */
+/** Day count, dates, and route cities derived from the generated timeline. */
 export function getTripSpan(): TripSpan {
   const days = getTimelineDays();
+  const legs = getRouteLegs();
   const first = days[0];
   const last = days[days.length - 1] ?? first;
-  const dayCount = TRIP_DATA.legs.reduce((sum, leg) => sum + leg.days, 0);
+  const routeCityNamesHe: string[] = [];
+  for (const leg of legs) {
+    const name = days.find((day) => day.legId === leg.id)?.cityNameHe;
+    if (name && routeCityNamesHe[routeCityNamesHe.length - 1] !== name) {
+      routeCityNamesHe.push(name);
+    }
+  }
   return {
-    dayCount,
-    legCount: TRIP_DATA.legs.length,
-    dateRange: `${first.dateShort}–${last.dateShort}`,
-    startIso: first.dateIso,
-    endIso: last.dateIso,
-    routeCityNamesHe: getAllCities()
-      .filter((city) => city.onRoute)
-      .map((city) => city.nameHe),
+    dayCount: days.length,
+    legCount: legs.length,
+    dateRange: first && last ? `${first.dateShort}–${last.dateShort}` : "",
+    startIso: first?.dateIso ?? "2026-11-06",
+    endIso: last?.dateIso ?? "2026-12-08",
+    routeCityNamesHe,
   };
 }

@@ -38,7 +38,6 @@ export interface TimelineDay {
   cityId: CityId;
   cityNameHe: string;
   cityNameEn: string;
-  routeProgress: number; // 0..1 normalized progress along the 10-leg route curve
 }
 
 export interface CityBundle {
@@ -71,7 +70,6 @@ export function getTimelineDays(): TimelineDay[] {
 
   const startDate = new Date(Date.UTC(2026, 10, 6)); // Nov 6, 2026
   const legs = TRIP_DATA.legs;
-  const totalDays = legs.reduce((acc, l) => acc + l.days, 0);
 
   const days: TimelineDay[] = [];
   let globalDayIdx = 0;
@@ -86,19 +84,6 @@ export function getTimelineDays(): TimelineDay[] {
       const month = current.getUTCMonth() + 1;
       const year = current.getUTCFullYear();
       const weekdayHe = WEEKDAYS_HE[current.getUTCDay()];
-
-      const legStartFraction = legIdx / Math.max(1, legs.length - 1);
-      const nextLegFraction =
-        Math.min(legs.length - 1, legIdx + 1) / Math.max(1, legs.length - 1);
-      const intraLegFraction = leg.days > 1 ? d / leg.days : 0;
-      const routeProgress =
-        legIdx === legs.length - 1
-          ? 1
-          : Math.min(
-              1,
-              legStartFraction +
-                (nextLegFraction - legStartFraction) * intraLegFraction
-            );
 
       days.push({
         dayIndex: globalDayIdx,
@@ -117,7 +102,6 @@ export function getTimelineDays(): TimelineDay[] {
         cityId: leg.cityId,
         cityNameHe: city.nameHe,
         cityNameEn: city.nameEn,
-        routeProgress: totalDays > 1 ? routeProgress : 0,
       });
 
       globalDayIdx++;

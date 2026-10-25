@@ -43,11 +43,7 @@ export function Navbar() {
 
   const tripSpan = getTripSpan();
 
-  const hideMapHud =
-    pathname === "/" &&
-    (store.sheetSnap === "half" ||
-      store.sheetSnap === "full" ||
-      store.isCityZoomMapOpen);
+  const cityMode = pathname === "/" && Boolean(store.selectedCityId);
 
   return (
     <>
@@ -56,7 +52,7 @@ export function Navbar() {
         dir="rtl"
         style={{ paddingTop: "max(0.5rem, env(safe-area-inset-top))" }}
         className={`pointer-events-none fixed top-0 right-0 left-0 z-40 px-2.5 transition-opacity duration-200 max-[420px]:px-2 md:px-5 ${
-          hideMapHud ? "opacity-0 pointer-events-none" : "opacity-100"
+          cityMode ? "max-lg:hidden" : ""
         }`}
       >
         <div className="glass-panel pointer-events-auto mx-auto flex h-12 max-h-16 max-w-7xl flex-nowrap items-center justify-between gap-x-2 overflow-hidden rounded-2xl px-2 shadow-lg md:px-4">
@@ -65,7 +61,6 @@ export function Navbar() {
               href="/"
               onClick={() => {
                 tripActions.selectCity(null);
-                tripActions.setTimelineExpanded(false);
               }}
               className="flex min-h-[44px] min-w-0 shrink items-center gap-1.5 px-0.5 text-right"
             >
@@ -165,7 +160,9 @@ export function Navbar() {
         dir="rtl"
         aria-label="ניווט ראשי"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-        className="fixed right-0 bottom-0 left-0 z-40 border-t border-slate-900/10 bg-white/95 backdrop-blur-xl lg:hidden dark:border-white/10 dark:bg-slate-950/95"
+        className={`fixed right-0 bottom-0 left-0 z-40 border-t border-slate-900/10 bg-white/95 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95 ${
+          cityMode ? "hidden" : "lg:hidden"
+        }`}
       >
         <div className="mx-auto flex h-14 max-w-xl items-center gap-2 px-1">
           {NAV_LINKS.map((item) => {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { revealChipById, revealChipStart, snapChipRow, syncChipClip } from "./snapChips";
 
 interface EdgeFadeScrollerProps {
   children: ReactNode;
@@ -13,13 +14,13 @@ interface EdgeFadeScrollerProps {
 
 function maskForEdges(fadeRight: boolean, fadeLeft: boolean): string {
   if (fadeRight && fadeLeft) {
-    return "linear-gradient(to left, transparent 0px, #000 20px, #000 calc(100% - 20px), transparent 100%)";
+    return "linear-gradient(to left, transparent 0px, #000 8px, #000 calc(100% - 8px), transparent 100%)";
   }
   if (fadeRight) {
-    return "linear-gradient(to left, transparent 0px, #000 20px, #000 100%)";
+    return "linear-gradient(to left, transparent 0px, #000 8px, #000 100%)";
   }
   if (fadeLeft) {
-    return "linear-gradient(to left, #000 0px, #000 calc(100% - 20px), transparent 100%)";
+    return "linear-gradient(to left, #000 0px, #000 calc(100% - 8px), transparent 100%)";
   }
   return "none";
 }
@@ -32,6 +33,10 @@ export function EdgeFadeScroller({
 }: EdgeFadeScrollerProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [mask, setMask] = useState("none");
+
+  const alignCutChips = useCallback(() => {
+    snapChipRow(scrollerRef.current);
+  }, []);
 
   const updateMask = useCallback(() => {
     const el = scrollerRef.current;
@@ -50,23 +55,34 @@ export function EdgeFadeScroller({
   const scrollChip = useCallback((chipId: string | null) => {
     const el = scrollerRef.current;
     if (!el || !chipId) return;
-    const chip = el.querySelector(`[data-chip-id="${CSS.escape(chipId)}"]`);
-    chip?.scrollIntoView({ inline: "nearest", block: "nearest" });
+    revealChipById(el, chipId);
     requestAnimationFrame(updateMask);
   }, [updateMask]);
 
   useEffect(() => {
-    updateMask();
+    revealChipStart(scrollerRef.current);
+    const later = window.setTimeout(() => revealChipStart(scrollerRef.current), 350);
     const el = scrollerRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", updateMask, { passive: true });
-    const observer = new ResizeObserver(updateMask);
+    if (!el) return () => window.clearTimeout(later);
+    const onScrollEnd = () => {
+      alignCutChips();
+      updateMask();
+    };
+    const onScroll = () => {
+      syncChipClip(el);
+      updateMask();
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    el.addEventListener("scrollend", onScrollEnd);
+    const observer = new ResizeObserver(onScrollEnd);
     observer.observe(el);
     return () => {
-      el.removeEventListener("scroll", updateMask);
+      window.clearTimeout(later);
+      el.removeEventListener("scroll", onScroll);
+      el.removeEventListener("scrollend", onScrollEnd);
       observer.disconnect();
     };
-  }, [updateMask, children]);
+  }, [alignCutChips, updateMask, children]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -84,7 +100,7 @@ export function EdgeFadeScroller({
     <div
       ref={scrollerRef}
       dir="rtl"
-      className="no-scrollbar flex min-w-0 flex-1 snap-x snap-mandatory items-center gap-2 overflow-x-auto py-0.5"
+      className="no-scrollbar flex min-w-0 flex-1 items-center gap-2 overflow-x-auto py-0.5"
       style={{
         maskImage: mask,
         WebkitMaskImage: mask,

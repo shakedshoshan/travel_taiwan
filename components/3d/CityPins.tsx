@@ -15,11 +15,13 @@ import { SingleCityPin } from "./pins/SingleCityPin";
 
 interface CityPinsProps {
   selectedCityId: CityId | null;
-  activeTimelineCityId: CityId;
+  activeTimelineCityId: CityId | null;
   isNightMode: boolean;
   onSelectCity: (cityId: CityId) => void;
   /** Place-page mini map: mount only this city's label. */
   onlyLabelCityId?: CityId | null;
+  /** City mode: the top bar is the only title. */
+  hideLabels?: boolean;
 }
 
 export function CityPins({
@@ -28,6 +30,7 @@ export function CityPins({
   isNightMode,
   onSelectCity,
   onlyLabelCityId = null,
+  hideLabels = false,
 }: CityPinsProps) {
   const store = useTripStore();
   const cities = getAllCities();
@@ -104,11 +107,12 @@ export function CityPins({
           prefersReducedMotion={store.prefersReducedMotion}
           onSelectCity={onSelectCity}
           onlyLabelCityId={onlyLabelCityId}
+          hideLabels={hideLabels}
         />
       ))}
 
       {/* Offshore Island Mini Labels (Penghu, Xiaoliuqiu, Green Island, Orchid Island) */}
-      {onlyLabelCityId == null &&
+      {!hideLabels && onlyLabelCityId == null &&
         offshoreMarkers.map((isl) => (
           <group
             key={isl.id}

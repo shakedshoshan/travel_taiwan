@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { LocateFixed, Navigation } from "lucide-react";
-import { getAllCities, getCityById, getTimelineDays } from "@/lib/data/selectors";
+import { getAllCities } from "@/lib/data/selectors";
 import {
   computeDistanceKm,
   resolveNearMeCoordinates,
@@ -13,12 +13,7 @@ export function MapNavigationPad() {
   const store = useTripStore();
   const [locationDenied, setLocationDenied] = useState(false);
 
-  const hiddenBySheet =
-    store.sheetSnap === "half" ||
-    store.sheetSnap === "full" ||
-    store.isTimelineExpanded;
-
-  if (hiddenBySheet) return null;
+  if (store.selectedCityId) return null;
 
   const handleGeolocationClick = () => {
     if (store.userCoords || locationDenied) {
@@ -27,15 +22,13 @@ export function MapNavigationPad() {
       return;
     }
 
-    const days = getTimelineDays();
-    const currentDay = days[store.currentDayIndex] ?? days[0];
-    const fallbackCity = getCityById(store.selectedCityId ?? currentDay.cityId);
+    const cities = getAllCities();
+    const fallbackCity = cities.find((city) => city.onRoute) ?? cities[0];
 
     resolveNearMeCoordinates(fallbackCity, (coords) => {
       setLocationDenied(false);
       tripActions.setUserCoords(coords);
       // Find closest city to fly to / open
-      const cities = getAllCities();
       const closestCity = [...cities].sort(
         (a, b) =>
           computeDistanceKm(coords.lat, coords.lng, a.lat, a.lng) -

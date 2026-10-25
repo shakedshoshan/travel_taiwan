@@ -77,12 +77,7 @@ export function LayerToggles() {
   const firstActiveId =
     LAYER_CONFIG.find((item) => store.layerToggles[item.key])?.key ?? null;
 
-  const hiddenBySheet =
-    store.isCityZoomMapOpen ||
-    store.sheetSnap === "half" ||
-    store.sheetSnap === "full";
-
-  if (hiddenBySheet) return null;
+  if (store.selectedCityId) return null;
 
   const activeCount = Object.values(store.layerToggles).filter(Boolean).length;
 
@@ -119,7 +114,7 @@ export function LayerToggles() {
                   tripActions.toggleLayer(item.key);
                   setFocusChipId(item.key);
                 }}
-                className={`toy-button flex min-h-[44px] min-w-[44px] shrink-0 snap-start items-center gap-1.5 rounded-2xl border px-3 text-xs font-bold whitespace-nowrap shadow-sm transition-all ${
+                className={`toy-button flex min-h-[44px] min-w-[44px] shrink-0 items-center gap-1.5 rounded-2xl border px-3 text-xs font-bold whitespace-nowrap shadow-sm transition-all ${
                   active
                     ? `${item.activeClass}`
                     : "border-white/50 bg-white/85 text-slate-600 opacity-85 dark:border-white/10 dark:bg-slate-900/85 dark:text-slate-300"

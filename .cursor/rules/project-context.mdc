@@ -13,7 +13,7 @@ Keep all files small (**target < 250 lines, hard cap < 390 lines**) and organize
   - `loaders.ts` & `selectors.ts`: Validated static dataset (`TRIP_DATA`), selectors by city/leg/day/place, `buildGoogleMapsUrl`, and `formatDisplayPriceText`.
   - `search.ts`, `foodAndPlaceMeta.ts`, `placeImages.ts`, `imageMatchers.ts`, `cityTransitGuides.ts`: Modular helpers for search, food/hotel metadata, Haversine distance, Taiwan UTC+8 open-hours check, and Wikimedia Commons image resolution.
 - `/lib/store`:
-  - `tripStoreTypes.ts` & `useTripStore.ts`: Hydration-safe `useSyncExternalStore` + `localStorage` store for display and map session only (`isNightMode`, `selectedCityId`, `focusedPlaceId`, `sheetSnap`, `currentDayIndex`, `layerToggles`). This is an info app: do not add favorites, visited/done tracking, hotel picks, or a personal budget.
+  - `tripStoreTypes.ts` & `useTripStore.ts`: Hydration-safe `useSyncExternalStore` + `localStorage` store for display and map session only (`isNightMode`, `selectedCityId`, `focusedPlaceId`, `sheetSnap`, `layerToggles`). This is an info app: do not add a day-tracking bar, favorites, visited/done tracking, hotel picks, or a personal budget.
 - `/components/3d`:
   - `MapCanvas.tsx` & `MiniTaiwanMap.tsx`: R3F `<Canvas>` wrappers with `<WorldHtmlHost />`.
   - `CameraRig.tsx` + `/components/3d/camera/` (`cameraMath.ts`, `useCameraPointerAndKeys.ts`): Fit-to-island camera pose, half-sheet reframing, pointer pan, double-tap zoom, and keyboard controls.
@@ -25,7 +25,7 @@ Keep all files small (**target < 250 lines, hard cap < 390 lines**) and organize
   - `WorldHtml.tsx` + `/components/3d/overlay/labelOverlapSolver.ts`: React 19 DOM overlay host and 2D overlap solver.
   - `Map2DFallback.tsx`, `TaiwanLoadingScreen.tsx`, `threeCompat.ts`. Do not add a route tube, driving car, or timeline play button.
 - `/components/ui`:
-  - `Navbar.tsx`, `LayerToggles.tsx`, `TimelineScrubber.tsx`, `BottomSheet.tsx`, `PlaceCard.tsx`, `PlaceDetailClient.tsx`, `CommandSearch.tsx`, `MapNavigationPad.tsx`, `PwaRegister.tsx`.
+  - `Navbar.tsx`, `LayerToggles.tsx`, `BottomSheet.tsx`, `PlaceCard.tsx`, `PlaceDetailClient.tsx`, `CommandSearch.tsx`, `MapNavigationPad.tsx`, `PwaRegister.tsx`. Do not add a trip-day tracking bar.
   - Feature subfolders: `/components/ui/drawer/` (`CityDrawerTabsContent.tsx`), `/components/ui/food/` (`FoodFilterSheet.tsx`), `/components/ui/route/` (`RouteLegCard.tsx`), `/components/ui/info/` (`EmergencyAndPhrasesSection.tsx`, `ImageCreditsDetails.tsx`).
 - `/app`: `/` (3D map home), `/route` (10 legs synced with sticky 3D mini-map), `/food` (80 spots + sticky filter bar), `/hotels` (37 hotels with best cheap pick first), `/info` (practical guide, Mandarin audio phrasebook, emergency dialers), `/place/[id]` (SSG for all 264 places).
 

@@ -7,17 +7,21 @@ import { easing } from "maath";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import type { CityId } from "@/data/types";
-import { getCityById, getPlaceById, getTimelineDays } from "@/lib/data/selectors";
+import { placesForCityCategory } from "@/lib/data/cityCategory";
+import { getCityBundle, getCityById, getPlaceById } from "@/lib/data/selectors";
 import { useTripStore } from "@/lib/store/useTripStore";
-import { computeCityMapNodes } from "./CityDestination3DMap";
 import {
-  applySheetReframeOffset,
   clampTargetToBounds,
   computeFitIslandPose,
 } from "./camera/cameraMath";
+import {
+  computeFitCityPose,
+  computePlaceFocusPose,
+  sheetBottomReservePx,
+} from "./camera/fitCityPose";
+import { setCityFit } from "./markers/markerFrame";
 import { useCameraPointerAndKeys } from "./camera/useCameraPointerAndKeys";
 import { runCameraCommand } from "./camera/runCameraCommand";
-import { poseForRouteDay } from "./camera/routeCameraFollow";
 import { markMapActivity } from "./mapActivity";
 
 export { computeFitIslandPose };
@@ -62,7 +66,7 @@ export function CameraRig({
 
   // Re-fit on viewport resize / orientationchange when viewing the whole island
   useEffect(() => {
-    if (selectedCityId || focusedPlaceId || store.isCityZoomMapOpen) return;
+    if (selectedCityId || focusedPlaceId) return;
     const fit = computeFitIslandPose(size.width, size.height);
     desiredTarget.current.copy(fit.target);
     desiredCamPos.current.copy(fit.position);
@@ -73,13 +77,12 @@ export function CameraRig({
     size.height,
     selectedCityId,
     focusedPlaceId,
-    store.isCityZoomMapOpen,
   ]);
 
   // Listen to explicit orientationchange on mobile
   useEffect(() => {
     const onOrientationChange = () => {
-      if (selectedCityId || focusedPlaceId || store.isCityZoomMapOpen) return;
+      if (selectedCityId || focusedPlaceId) return;
       window.setTimeout(() => {
         const fit = computeFitIslandPose(window.innerWidth, window.innerHeight);
         desiredTarget.current.copy(fit.target);
@@ -91,76 +94,66 @@ export function CameraRig({
     window.addEventListener("orientationchange", onOrientationChange);
     return () =>
       window.removeEventListener("orientationchange", onOrientationChange);
-  }, [selectedCityId, focusedPlaceId, store.isCityZoomMapOpen]);
+  }, [selectedCityId, focusedPlaceId]);
 
-  // Fly to focused place or selected city (with half-sheet camera reframing)
+  // Fly to the selected city bounds, padded by the sheet, or to one place.
   useEffect(() => {
-    if (store.isCityZoomMapOpen && selectedCityId) {
-      if (focusedPlaceId) {
-        const nodes = computeCityMapNodes(selectedCityId);
-        const node = nodes.find((n) => n.place.id === focusedPlaceId);
-        if (node) {
-          desiredTarget.current.set(node.x, node.y + 0.35, node.z);
-          desiredCamPos.current.set(node.x - 1.8, node.y + 4.4, node.z + 4.6);
-          isTransitioning.current = true; markMapActivity();
-          transitionTimer.current = 0.95;
-          return;
-        }
-      }
-      desiredTarget.current.set(0, 0.25, 0);
-      desiredCamPos.current.set(0, 12.2, 12.8);
-      isTransitioning.current = true; markMapActivity();
-      transitionTimer.current = 1.05;
-      return;
-    }
-
+    const bottom = sheetBottomReservePx(store.sheetSnap, size.height);
     if (focusedPlaceId) {
       const place = getPlaceById(focusedPlaceId);
       if (place) {
-        const { worldX, worldY, worldZ } = place.resolvedCoords;
-        desiredTarget.current.set(worldX, worldY + 0.2, worldZ);
-        desiredCamPos.current.set(worldX - 1.4, worldY + 5.2, worldZ + 4.8);
-        applySheetReframeOffset(
-          desiredTarget.current,
-          desiredCamPos.current,
-          store.sheetSnap
+        const pose = computePlaceFocusPose(
+          {
+            x: place.resolvedCoords.worldX,
+            y: place.resolvedCoords.worldY,
+            z: place.resolvedCoords.worldZ,
+          },
+          size.width,
+          size.height,
+          bottom
         );
+        desiredTarget.current.copy(pose.target);
+        desiredCamPos.current.copy(pose.position);
         isTransitioning.current = true; markMapActivity();
-        transitionTimer.current = 0.95;
+        transitionTimer.current = store.prefersReducedMotion ? 0 : 0.85;
         return;
       }
     }
 
     if (selectedCityId) {
       const city = getCityById(selectedCityId);
-      if (city) {
-        desiredTarget.current.set(city.worldX, city.worldY + 0.3, city.worldZ);
-        desiredCamPos.current.set(
-          city.worldX - 1.8,
-          city.worldY + 7.2,
-          city.worldZ + 6.4
-        );
-        applySheetReframeOffset(
-          desiredTarget.current,
-          desiredCamPos.current,
-          store.sheetSnap
-        );
-        isTransitioning.current = true; markMapActivity();
-        transitionTimer.current = 0.95;
-        return;
+      const bundle = getCityBundle(selectedCityId);
+      const places = placesForCityCategory(bundle, store.cityCategory);
+      const points = [
+        { x: city.worldX, y: city.worldY, z: city.worldZ },
+        ...places.map((place) => ({
+          x: place.resolvedCoords.worldX,
+          y: place.resolvedCoords.worldY,
+          z: place.resolvedCoords.worldZ,
+        })),
+      ];
+      const pose = computeFitCityPose(points, size.width, size.height, bottom);
+      if (store.sheetSnap === "peek") {
+        setCityFit(pose.distance, pose.target.x, pose.target.y, pose.target.z);
       }
+      desiredTarget.current.copy(pose.target);
+      desiredCamPos.current.copy(pose.position);
+      isTransitioning.current = true; markMapActivity();
+      transitionTimer.current = store.prefersReducedMotion ? 0 : 0.9;
+      return;
     }
 
     const fit = computeFitIslandPose(size.width, size.height);
     desiredTarget.current.copy(fit.target);
     desiredCamPos.current.copy(fit.position);
     isTransitioning.current = true; markMapActivity();
-    transitionTimer.current = 0.9;
+    transitionTimer.current = store.prefersReducedMotion ? 0 : 0.9;
   }, [
     selectedCityId,
     focusedPlaceId,
-    store.isCityZoomMapOpen,
+    store.cityCategory,
     store.sheetSnap,
+    store.prefersReducedMotion,
     size.width,
     size.height,
   ]);
@@ -176,11 +169,10 @@ export function CameraRig({
       isTransitioning,
       transitionTimer,
       isHighTilt,
-      isCityZoomMapOpen: store.isCityZoomMapOpen,
       width: size.width,
       height: size.height,
     });
-  }, [store.cameraCommand, store.isCityZoomMapOpen, camera, size.width, size.height]);
+  }, [store.cameraCommand, camera, size.width, size.height]);
 
   useCameraPointerAndKeys({
     gl,
@@ -249,36 +241,23 @@ export function CameraRig({
       }
     }
 
-    if (
-      store.isRoutePlaying &&
-      !userInteracting.current &&
-      !store.isCityZoomMapOpen
-    ) {
-      const day = getTimelineDays()[store.currentDayIndex];
-      const followCity = day ? getCityById(day.cityId) : undefined;
-      if (followCity) {
-        poseForRouteDay(
-          camera,
-          controls.target,
-          followCity,
-          desiredTarget.current,
-          desiredCamPos.current
-        );
-        isTransitioning.current = true; markMapActivity();
-        transitionTimer.current = 0.45;
-      }
-    }
-
     // 2. Smooth camera fly-to transitions
     if (isTransitioning.current) {
-      const dampTime = store.prefersReducedMotion ? 0.05 : 0.24;
-      easing.damp3(controls.target, desiredTarget.current, dampTime, delta);
-      easing.damp3(camera.position, desiredCamPos.current, dampTime, delta);
-      controls.update();
-
-      transitionTimer.current -= delta;
-      if (transitionTimer.current <= 0) {
+      if (store.prefersReducedMotion) {
+        controls.target.copy(desiredTarget.current);
+        camera.position.copy(desiredCamPos.current);
+        controls.update();
         isTransitioning.current = false;
+      } else {
+        const dampTime = 0.24;
+        easing.damp3(controls.target, desiredTarget.current, dampTime, delta);
+        easing.damp3(camera.position, desiredCamPos.current, dampTime, delta);
+        controls.update();
+
+        transitionTimer.current -= delta;
+        if (transitionTimer.current <= 0) {
+          isTransitioning.current = false;
+        }
       }
     } else {
       clampTargetToBounds(controls.target, camera.position);
@@ -311,7 +290,7 @@ export function CameraRig({
       rotateSpeed={0.85}
       enablePan
       screenSpacePanning={false}
-      minDistance={10}
+      minDistance={selectedCityId ? 3.5 : 10}
       maxDistance={42}
       maxPolarAngle={Math.PI / 2 - 0.22}
       minPolarAngle={0.28}

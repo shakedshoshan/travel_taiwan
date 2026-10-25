@@ -4,10 +4,8 @@ import { lazy, Suspense, useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { latLngToWorld3D } from "@/lib/data/coordinates";
-import { getAllCities, getRouteLegs, getTimelineDays } from "@/lib/data/selectors";
 import { shouldSkipLandmarks } from "@/lib/devicePower";
-import { tripActions, useTripStore } from "@/lib/store/useTripStore";
-import { WorldHtml } from "./WorldHtml";
+import { useTripStore } from "@/lib/store/useTripStore";
 
 const LandmarkDioramas = lazy(() =>
   import("./delight/LandmarkDioramas").then((mod) => ({
@@ -28,8 +26,6 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
   const smlBoatRef = useRef<THREE.Group>(null);
   const alishanTrainRef = useRef<THREE.Group>(null);
   const lighthouseBeamRef = useRef<THREE.Mesh>(null);
-  const travelerRef = useRef<THREE.Group>(null);
-  const playAccumRef = useRef<number>(0);
   const landmarksOnRef = useRef(false);
   const [landmarksOn, setLandmarksOn] = useState(false);
   const skipLandmarks = shouldSkipLandmarks(store.prefersReducedMotion);
@@ -51,18 +47,6 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
       domeOfLight,
       eluanbiLighthouse,
     };
-  }, []);
-
-  // Build smooth 3D curve across the 10 route legs for Traveler "Play" animation
-  const routeCurve = useMemo(() => {
-    const legs = getRouteLegs();
-    const cities = getAllCities();
-    const cityMap = new Map(cities.map((c) => [c.id, c]));
-    const pts = legs.map((leg) => {
-      const c = cityMap.get(leg.cityId) ?? cities[0];
-      return new THREE.Vector3(c.worldX, c.worldY + 0.45, c.worldZ);
-    });
-    return new THREE.CatmullRomCurve3(pts, false, "catmullrom", 0.35);
   }, []);
 
   // Generate sky lanterns (Pingxi/Jiufen + major night market cities)
@@ -116,43 +100,13 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
     });
   }, []);
 
-  const days = getTimelineDays();
-  const currentDay = days[store.currentDayIndex] ?? days[0];
-
-  useFrame(({ clock, camera }, delta) => {
+  useFrame(({ clock, camera }) => {
     const t = clock.getElapsedTime();
 
     const showLandmarks = !skipLandmarks && camera.position.length() < 18;
     if (showLandmarks !== landmarksOnRef.current) {
       landmarksOnRef.current = showLandmarks;
       setLandmarksOn(showLandmarks);
-    }
-
-    // Traveler route playback animation (P1 #10)
-    if (store.isRoutePlaying) {
-      playAccumRef.current += store.prefersReducedMotion ? delta * 4 : delta;
-      if (playAccumRef.current >= 0.45) {
-        playAccumRef.current = 0;
-        const nextIdx = store.currentDayIndex + 1;
-        if (nextIdx >= days.length) {
-          tripActions.setCurrentDayIndex(0);
-          tripActions.setRoutePlaying(false);
-        } else {
-          tripActions.setCurrentDayIndex(nextIdx);
-        }
-      }
-    }
-
-    if (travelerRef.current) {
-      const progress = THREE.MathUtils.clamp(
-        store.currentDayIndex / Math.max(1, days.length - 1),
-        0,
-        1
-      );
-      const pt = routeCurve.getPointAt(progress);
-      const bob = store.prefersReducedMotion ? 0 : Math.sin(t * 5.0) * 0.08;
-      travelerRef.current.position.set(pt.x, pt.y + 0.32 + bob, pt.z);
-      travelerRef.current.rotation.y = store.prefersReducedMotion ? 0 : t * 1.8;
     }
 
     if (store.prefersReducedMotion) return;
@@ -242,44 +196,6 @@ export function DelightDetails({ isNightMode }: DelightDetailsProps) {
             waterOnly={!landmarksOn}
           />
         </Suspense>
-
-      {/* Traveler Avatar along the Route on "Play" */}
-      {store.isRoutePlaying && (
-        <group ref={travelerRef} name="route-traveler-avatar">
-          <mesh position={[0, 0.12, 0]} castShadow>
-            <octahedronGeometry args={[0.2, 1]} />
-            <meshStandardMaterial
-              color="#fde047"
-              emissive="#ff5a36"
-              emissiveIntensity={2.5}
-              roughness={0.15}
-            />
-          </mesh>
-          <mesh position={[0, -0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <ringGeometry args={[0.22, 0.36, 24]} />
-            <meshBasicMaterial
-              color="#fde047"
-              transparent
-              opacity={0.85}
-              side={THREE.DoubleSide}
-            />
-          </mesh>
-          <WorldHtml
-            position={[0, 0.34, 0]}
-            anchor="bottom"
-            screenOffset={[0, -6]}
-            clampToViewport
-            zIndexRange={[36, 0]}
-          >
-            <div
-              dir="rtl"
-              className="pointer-events-none select-none whitespace-nowrap rounded-full border border-white bg-gradient-to-l from-orange-500 to-amber-500 px-2.5 py-0.5 text-xs font-black text-slate-950 shadow-xl"
-            >
-              🎒 יום {currentDay.dayNumber}: {currentDay.cityNameHe}
-            </div>
-          </WorldHtml>
-        </group>
-      )}
 
       {/* Floating Sky Lanterns (Pingxi & Night Markets) */}
       <group ref={lanternsGroupRef} name="sky-lanterns">
