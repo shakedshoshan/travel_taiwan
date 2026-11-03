@@ -8,14 +8,44 @@
       "bookingUrl": "https://www.tymetro.com.tw/",
       "events": [
         {
-          "dateHe": "14.11.2026",
-          "titleHe": "פסטיבל Ultra Taiwan בטייפה",
-          "detailHe": "פארק דאג׳יה (Dajia Riverside Park). לינה בטייפה באותו לילה – לא לקחת רכבת לילה לחואליאן."
+          "dateHe": "13.11.2026 • 18:30",
+          "titleHe": "פתיחת עיר חג המולד של ניו טאיפיי (新北歡樂耶誕城)",
+          "detailHe": "טקס הדלקה ומופע הקרנה על בניין העירייה בבנצ׳יאו (תחנת Banqiao). חינם. האורות דולקים כל ערב 17:30–23:00 עד 27.12."
+        },
+        {
+          "dateHe": "14.11.2026 • 13:30–22:00",
+          "titleHe": "Ultra Taiwan – ליינאפ: Alan Walker, Sebastian Ingrosso, CamelPhat",
+          "detailHe": "פארק דאג׳יה. כרטיס GA מ-NT$4,200 באתר ultrataiwan.com, גיל 18+. לישון בטייפה באותו לילה."
+        },
+        {
+          "dateHe": "14.11–13.12.2026",
+          "titleHe": "עונת פריחת הקנים בשביל צאולינג (草嶺古道芒花季)",
+          "detailHe": "גבעות כסופות מעל הים בגונגליאו. טיול יום מטייפה. חינם."
+        },
+        {
+          "dateHe": "6–8.11.2026",
+          "titleHe": "[אזל] Accusefive (告五人) בטאיפיי ארנה",
+          "detailHe": "להקת אינדי-פופ טייוואנית."
+        },
+        {
+          "dateHe": "13–14.11.2026",
+          "titleHe": "[אזל] Kimura Takuya בטאיפיי",
+          "detailHe": "מרכז המוזיקה הפופולרית של טאיפיי."
+        },
+        {
+          "dateHe": "14–15.11.2026",
+          "titleHe": "[אזל] LE SSERAFIM בטאויואן",
+          "detailHe": "האולם של האוניברסיטה הלאומית לספורט (國立體育大學)."
         }
       ],
       "verified": true,
       "sourceUrls": [
-        "https://www.tymetro.com.tw/"
+        "https://www.tymetro.com.tw/",
+        "https://christmasland.ntpc.gov.tw/event.php",
+        "https://ultrataiwan.com/zh-tw/tickets/2026-zh-tw/",
+        "https://www.taiwan.net.tw/m1.aspx?sNo=0001019",
+        "https://www.arena.taipei/News_Photo.aspx?n=2E1489AFE4B1BEA1&sms=F9A95D3F5A5C2C68",
+        "https://www.businessweekly.com.tw/style/blog/3019879"
       ],
       "tipsHe": [
         "אפשר לשלם באיזי-קארד ישירות בשער.",
@@ -33,12 +63,23 @@
           "dateHe": "15–17.11.2026",
           "titleHe": "עדכון שבילי טארוקו",
           "detailHe": "הגעה עד מרכז המבקרים, מצוקי צ׳ינגשוי וחוף צ׳ישינגטאן (שבילי הקניון הפנימיים סגורים)."
+        },
+        {
+          "dateHe": "14–15.11.2026",
+          "titleHe": "קונצרט העמק בכפר טונגמן (山谷音樂會)",
+          "detailHe": "פסטיבל שבטי עם מוזיקה וטקסים בכפר טונגמן, שיולין. ב-15.11 אפשר לתפוס את היום השני בהגעה לחואליאן."
+        },
+        {
+          "dateHe": "28.11.2026–31.1.2027",
+          "titleHe": "[לא בעיר בתאריך הזה] פסטיבל האורות של אגם לייו (鯉魚潭)",
+          "detailHe": "מיצבי אור סביב האגם, ושייט לילי."
         }
       ],
       "verified": true,
       "sourceUrls": [
         "https://travel.udn.com/travel/story/7934/8824561",
-        "https://www.railway.gov.tw/"
+        "https://www.railway.gov.tw/",
+        "https://ifood.tw/activity/351-2026-q4-events.html"
       ],
       "tipsHe": [
         "כרטיסים נפתחים 28 יום מראש בחצות ונגמרים מהר – להזמין ב-railway.gov.tw או באפליקציית 台鐵e訂通.",
@@ -52,11 +93,18 @@
       "priceHe": "NT$462 בצ׳ה-צ׳יאנג (רכבות איטיות זולות יותר)",
       "bookingLabelHe": "הזמנת רכבת TRA",
       "bookingUrl": "https://www.railway.gov.tw/",
-      "events": [],
+      "events": [
+        {
+          "dateHe": "14–22.11.2026",
+          "titleHe": "תחרות הגלישה הבינלאומית WSL (臺灣國際衝浪公開賽)",
+          "detailHe": "נמל ג׳ינזון (金樽), כשעה מטאיטונג. כניסה חופשית, עם שוק חוף ותחרות סקייט."
+        }
+      ],
       "verified": true,
       "sourceUrls": [
         "https://taiwanhelper.com/railway/price/7000/6000",
-        "https://www.railway.gov.tw/"
+        "https://www.railway.gov.tw/",
+        "https://tour.taitung.gov.tw/zh-tw/event-calendar/details/6293"
       ],
       "tipsHe": [
         "אפשר לעצור בצ׳ישאנג (池上) לאופניים בשדות האורז ולהמשיך ברכבת מאוחרת יותר.",
@@ -69,11 +117,60 @@
       "priceHe": "NT$486 בצ׳ה-צ׳יאנג טאיטונג→קאושיונג | מעבורת לשיאוליוצ׳יו: לא אומת",
       "bookingLabelHe": "הזמנת רכבת TRA",
       "bookingUrl": "https://www.railway.gov.tw/",
-      "events": [],
+      "events": [
+        {
+          "dateHe": "21–22.11.2026 • 19:00",
+          "titleHe": "BTS – ARIRANG בקאושיונג",
+          "detailHe": "אצטדיון World Games. אזל (tixcraft, שמי). צפויים עומס עצום ומחירי מלונות גבוהים מאוד בקאושיונג 19–22.11, אז כדאי להזמין לינה עכשיו."
+        },
+        {
+          "dateHe": "21.11.2026 • 17:00",
+          "titleHe": "הופעה של פנג ג׳יה-הוי בקאושיונג ארנה",
+          "detailHe": "זמרת מנדרינית ותיקה. יש כרטיסים בקואן־הונג (寬宏), NT$800–4,680."
+        },
+        {
+          "dateHe": "12–13.12.2026",
+          "titleHe": "[אחרי הטיסה (אחרי 8.12)] Fire EX (滅火器) בקאושיונג ארנה",
+          "detailHe": "להקת הרוק הטייוואנית. כרטיסים ב-KKTIX, NT$500–3,500."
+        },
+        {
+          "dateHe": "12–13 + 19–20.12.2026",
+          "titleHe": "[אחרי הטיסה (אחרי 8.12)] מסיבת החורף במפרץ דאפנג (大鵬灣暖冬派對)",
+          "detailHe": "פיקניק עם מוזיקה, חוף ושוק בדונגגאנג, פינגטונג."
+        },
+        {
+          "dateHe": "5–6.12.2026",
+          "titleHe": "[לא בעיר בתאריך הזה] Asia Artist Awards (AAA) בקאושיונג",
+          "detailHe": "אצטדיון World Games. כרטיסים ב-tixcraft."
+        },
+        {
+          "dateHe": "27.11.2026 • 20:00",
+          "titleHe": "[לא בעיר בתאריך הזה] JOJI בקאושיונג ארנה",
+          "detailHe": "כרטיסים ב-tixcraft."
+        },
+        {
+          "dateHe": "6.11.2026–3.1.2027",
+          "titleHe": "חג המולד בפינגטונג (屏東聖誕節)",
+          "detailHe": "פארק פינגטונג, האורות 17:30–22:00. בסופי שבוע יש מצעד. קרוב לקאושיונג, כ-25 דקות ברכבת."
+        },
+        {
+          "dateHe": "19–27.12.2026",
+          "titleHe": "[אחרי הטיסה (אחרי 8.12)] פסטיבל חג המולד של קאושיונג",
+          "detailHe": "הפארק המרכזי ומתחם הקניות שסביבו."
+        },
+        {
+          "dateHe": "20.12.2026–1.3.2027",
+          "titleHe": "[אחרי הטיסה (אחרי 8.12)] פסטיבל האמנות של רוח לושאן (落山風藝術季)",
+          "detailHe": "מיצבי ענק על החוף בצ׳צ׳נג, ליד קנטינג."
+        }
+      ],
       "verified": true,
       "sourceUrls": [
         "https://taiwanhelper.com/railway/price/4400/6000",
-        "https://www.railway.gov.tw/"
+        "https://www.railway.gov.tw/",
+        "https://www.livenation.com/event/intl_1675887/bts-world-tour-arirang-in-kaohsiung",
+        "https://www.businessweekly.com.tw/style/blog/3019879",
+        "https://ifood.tw/activity/351-2026-q4-events.html"
       ],
       "tipsHe": [
         "לשבת בצד ימין (כיוון מערב) לנוף האוקיינוס בתחילת הדרך.",
@@ -113,6 +210,11 @@
           "dateHe": "25.11.2026 • יציאה 13:00 / 14:30",
           "titleHe": "אוטובוס הרים 6739 מאלישאן לאגם (חובה הזמנה מראש)",
           "detailHe": "להגיע לתחנה 15 דקות לפני היציאה. אין קו בוקר. לינה באידאשאו (Ita Thao)."
+        },
+        {
+          "dateHe": "18.12.2026–1.1.2027",
+          "titleHe": "[אחרי הטיסה (אחרי 8.12)] פסטיבל כלי הנשיפה הבינלאומי של צ׳יאיי",
+          "detailHe": "מצעדים וקונצרטים בעיר צ׳יאיי."
         }
       ],
       "verified": true,
@@ -121,7 +223,8 @@
         "https://www.taiwanbus.tw/eBUSPage/json/TimeTableAPIByWeek.aspx?RouteId=6739&SearchDate=2026%2F10%2F20",
         "https://en.thsrc.com.tw/ArticleContent/4c3efc1d-e6df-4bfd-97b4-52e89f79ee5c",
         "https://ylbus.fontour.com/en/estimate?route=6739",
-        "https://www.ali-nsa.net/en/traffic/transport"
+        "https://www.ali-nsa.net/en/traffic/transport",
+        "https://ifood.tw/activity/351-2026-q4-events.html"
       ],
       "tipsHe": [
         "אוטובוס 7322 יוצא מתחנת TRA צ׳יאיי ב-06:10, 07:10, 08:10, 08:40, 09:10, 09:40, 10:10, 11:10, 12:10, 14:10.",
@@ -141,11 +244,25 @@
           "dateHe": "27.11.2026 • עד 16:00",
           "titleHe": "יום פארק ג׳יו-דזו והרכבל",
           "detailHe": "שימו לב: הרכבל חזרה לאגם נסגר ב-16:00 בדיוק."
+        },
+        {
+          "dateHe": "כל נובמבר",
+          "titleHe": "אמני רחוב במזחי האגם",
+          "detailHe": "הופעות חינם בסופי שבוע במזחי אידאשאו, שוישה וסואנגואנג, ובכפר צ׳הצ׳נג."
+        },
+        {
+          "dateHe": "12.9–14.11.2026",
+          "titleHe": "[לא בעיר בתאריך הזה] פסטיבל זיקוקים ומוזיקה באגם השמש והירח",
+          "detailHe": "ההופעה האחרונה: 14.11, 18:30–20:30, במרכז המבקרים שיאנגשאן (向山), עם התזמורת NTSO וזיקוקים. חינם, עם הסעות."
         }
       ],
       "verified": false,
       "tipsHe": [
         "מחיר הכרטיס המשולב והשעה המדויקת לסגירת הרכבל לא אומתו – לבדוק באתר nine.com.tw."
+      ],
+      "sourceUrls": [
+        "https://seh.tw/year/2026/%E7%AF%80%E6%85%B6%E6%B4%BB%E5%8B%95",
+        "https://www.taiwan.net.tw/m1.aspx?lid=081725&sNo=0001019"
       ]
     },
     "leg-08": {
@@ -164,13 +281,37 @@
           "dateHe": "28–30.11.2026",
           "titleHe": "פסטיבל ותהלוכת צ׳ינגשאן (Bangka Qingshan Festival)",
           "detailHe": "28.11 סיור לילה בדרום וואנהואה – יציאה 16:00 מצומת צ׳אנגשה/שייואן (יום בחירות). 29.11 צפון וואנהואה: תהלוכה 15:00, האל יוצא 16:00. 30.11 התהלוכה הראשית: 09:00, האל יוצא 11:00. קרונות קישוט: 28.11 ב-19:30, 29.11 ב-19:00."
+        },
+        {
+          "dateHe": "27–29.11.2026 • 11:00–22:00",
+          "titleHe": "שוק חג המולד + גמר אי-ספורט אסייתי בבנצ׳יאו",
+          "detailHe": "כ-100 דוכני אוכל, וגמרי LoL ו-Valorant ב-28–29.11. חינם."
+        },
+        {
+          "dateHe": "28–29.11.2026",
+          "titleHe": "MAMAMOO בטאיפיי ארנה / F✦FOREVER בטאיפיי דום",
+          "detailHe": "שתי הופעות גדולות באותו סופ״ש. רוב הכרטיסים אזלו, לבדוק ב-ibon/tixcraft."
+        },
+        {
+          "dateHe": "22.11.2026 • 17:00",
+          "titleHe": "[לא בעיר בתאריך הזה] טקס פרסי סוס הזהב (金馬獎)",
+          "detailHe": "מרכז המוזיקה הפופולרית של טאיפיי. השטיח האדום ב-17:00, הטקס ב-18:30. אתם בקאושיונג באותו יום."
+        },
+        {
+          "dateHe": "25.11.2026",
+          "titleHe": "[לא בעיר בתאריך הזה] 5 Seconds of Summer בטאיפיי",
+          "detailHe": "מרכז המוזיקה הפופולרית של טאיפיי. אתם באלישאן באותו יום."
         }
       ],
       "verified": true,
       "sourceUrls": [
         "http://www.ntbus.com.tw/hsr6.html",
         "https://en.thsrc.com.tw/ArticleContent/4c3efc1d-e6df-4bfd-97b4-52e89f79ee5c",
-        "https://ntbus.welcometw.com/"
+        "https://ntbus.welcometw.com/",
+        "https://newtaipei.travel/file/4237/",
+        "https://www.arena.taipei/News_Photo.aspx?n=2E1489AFE4B1BEA1&sms=F9A95D3F5A5C2C68",
+        "https://goldenhorse.org.tw/awards/ceremony/info/",
+        "https://www.businessweekly.com.tw/style/blog/3019879"
       ],
       "tipsHe": [
         "האוטובוס יוצא מתחנת מזח שוישה (水社); בשעות עומס מתמלא – להגיע מוקדם.",
@@ -183,10 +324,17 @@
       "priceHe": "NT$700 מושב שמור / NT$675 לא שמור",
       "bookingLabelHe": "הזמנת רכבת מהירה THSR",
       "bookingUrl": "https://en.thsrc.com.tw/",
-      "events": [],
+      "events": [
+        {
+          "dateHe": "14.12.2026–3.1.2027",
+          "titleHe": "[אחרי הטיסה (אחרי 8.12)] קרנבל חג המולד של טאיצ׳ונג",
+          "detailHe": "תחנת הרכבת הישנה, לוצ׳ואן וליוצ׳ואן. מופע מים כל ערב, האורות נדלקים ב-17:30."
+        }
+      ],
       "verified": true,
       "sourceUrls": [
-        "https://en.thsrc.com.tw/ArticleContent/4c3efc1d-e6df-4bfd-97b4-52e89f79ee5c"
+        "https://en.thsrc.com.tw/ArticleContent/4c3efc1d-e6df-4bfd-97b4-52e89f79ee5c",
+        "https://ifood.tw/activity/351-2026-q4-events.html"
       ],
       "tipsHe": [
         "תחנת HSR טאיצ׳ונג (烏日) מחוץ לעיר – משם רכבת TRA מקומית/מטרו למרכז.",
@@ -204,13 +352,91 @@
           "dateHe": "7.12.2026",
           "titleHe": "פארק השעשועים ליופו (או הופעה של Khalid)",
           "detailHe": "יום מלא בליופו ב-7.12, וטיסה חזרה ב-8.12."
+        },
+        {
+          "dateHe": "מ-3.12.2026",
+          "titleHe": "חג המולד בטאיפיי – פארק דאאן (臺北耶誕愛無限)",
+          "detailHe": "תאורת חג וקונצרטים בפארק היער דאאן. חינם, עד 1.1.2027."
+        },
+        {
+          "dateHe": "4–6.12.2026 • 11:00–22:00",
+          "titleHe": "שוק חג המולד הגרמני בבנצ׳יאו",
+          "detailHe": "יין חם, נקניקיות ומאפים גרמניים מול עיריית ניו טאיפיי. חינם."
+        },
+        {
+          "dateHe": "5.12.2026",
+          "titleHe": "רנה ליו (劉若英) בטאיפיי ארנה",
+          "detailHe": "כרטיסים דרך אתר הארנה / מערכת הכרטיסים."
+        },
+        {
+          "dateHe": "7.12.2026 • 19:30",
+          "titleHe": "Khalid בטאיפיי",
+          "detailHe": "כרטיסים ב-tixcraft."
+        },
+        {
+          "dateHe": "8.12.2026 • 20:00",
+          "titleHe": "[אזל] FKJ ב-Zepp New Taipei",
+          "detailHe": "כרטיסים ב-tixcraft."
+        },
+        {
+          "dateHe": "12.12.2026 • 18:00",
+          "titleHe": "[אזל · אחרי הטיסה (אחרי 8.12)] Stray Kids בטאיפיי דום",
+          "detailHe": "סיבוב ההופעות RUN IT."
+        },
+        {
+          "dateHe": "12–13.12.2026 • 18:00–22:00",
+          "titleHe": "[אחרי הטיסה (אחרי 8.12) · לא אומת] קונצרט חג המולד בעיר חג המולד של ניו טאיפיי",
+          "detailHe": "בבנצ׳יאו, חינם. הליינאפ עוד לא פורסם."
+        },
+        {
+          "dateHe": "12–20.12.2026",
+          "titleHe": "[אזל · אחרי הטיסה (אחרי 8.12)] Hebe Tien (田馥甄) בטאיפיי ארנה",
+          "detailHe": "6 הופעות, הכרטיסים בהגרלה לפי שם."
+        },
+        {
+          "dateHe": "19.12.2026",
+          "titleHe": "[אחרי הטיסה (אחרי 8.12)] ריצת ארוחת הבוקר של חג המולד – מרתון טאיפיי",
+          "detailHe": "9 או 3 ק״מ מעיריית טאיפיי."
+        },
+        {
+          "dateHe": "20.12.2026 • 06:30",
+          "titleHe": "[אחרי הטיסה (אחרי 8.12)] מרתון טאיפיי",
+          "detailHe": "מרתון מלא או חצי, מכיכר העירייה. ההרשמה בהגרלה."
+        },
+        {
+          "dateHe": "26–27.12.2026",
+          "titleHe": "[אזל · אחרי הטיסה (אחרי 8.12)] Kenshi Yonezu בטאיפיי דום",
+          "detailHe": "סיבוב ההופעות GHOST."
+        },
+        {
+          "dateHe": "26–27.12.2026",
+          "titleHe": "[אזל · אחרי הטיסה (אחרי 8.12)] Mr.Children בטאיפיי ארנה",
+          "detailHe": "ההרשמה לכרטיסים נסגרה."
+        },
+        {
+          "dateHe": "31.12.2026 • 19:00",
+          "titleHe": "[אחרי הטיסה (אחרי 8.12)] ערב השנה החדשה + זיקוקי טאיפיי 101",
+          "detailHe": "כיכר העירייה של טאיפיי, חינם."
+        },
+        {
+          "dateHe": "6.12.2026",
+          "titleHe": "מצעד הפתיחה של עונת המעיינות החמים ביילאן (冬戀蘭陽)",
+          "detailHe": "ג׳יאושי. טיול יום מטאיפיי, וגם שווקים ב-11–13.12."
         }
       ],
       "verified": true,
       "sourceUrls": [
         "https://en.thsrc.com.tw/ArticleContent/4c3efc1d-e6df-4bfd-97b4-52e89f79ee5c",
         "https://leofoovillage.com.tw/Infos/TrafficGuide/",
-        "https://www.taiwanbus.tw/eBUSPage/json/TimeTableAPIByWeek.aspx?RouteId=5350&SearchDate=2026%2F10%2F15"
+        "https://www.taiwanbus.tw/eBUSPage/json/TimeTableAPIByWeek.aspx?RouteId=5350&SearchDate=2026%2F10%2F15",
+        "https://www.travel.taipei/zh-tw/event-calendar/details/66401",
+        "https://christmasland.ntpc.gov.tw/event.php",
+        "https://www.arena.taipei/News_Photo.aspx?n=2E1489AFE4B1BEA1&sms=F9A95D3F5A5C2C68",
+        "https://www.businessweekly.com.tw/style/blog/3019879",
+        "https://newtaipei.travel/file/4237/",
+        "https://www.sportsnet.org.tw/schedule.php?schedule_year=2026",
+        "https://www.taipeicitymarathon.com/REGULATION202612.php",
+        "https://ifood.tw/activity/351-2026-q4-events.html"
       ],
       "tipsHe": [
         "ליופו: אוטובוס ישיר 5350 (Ya Tong) מטייפה, יציאות בוקר 06:00–11:00.",
@@ -653,6 +879,17 @@
       "sourceUrls": [
         "https://www.pthg.gov.tw/liuchiu/cp.aspx?n=8DE2BED8879F898F&s=627BF485C1E0AC19",
         "https://ferry.tw/time-table/liuqiu"
+      ]
+    },
+    {
+      "id": "bts-kaohsiung-2026-11",
+      "dateHe": "19–22.11.2026",
+      "titleHe": "BTS בקאושיונג – עומס ומחירי לינה גבוהים",
+      "detailHe": "3 הופעות של BTS באצטדיון World Games (19, 21, 22.11) בדיוק כשאתם בקאושיונג. להזמין מלון ורכבות מוקדם ככל האפשר.",
+      "severity": "warning",
+      "verified": true,
+      "sourceUrls": [
+        "https://www.livenation.com/event/intl_1675887/bts-world-tour-arirang-in-kaohsiung"
       ]
     }
   ]
