@@ -2,6 +2,7 @@
 
 import { ArrowRight, Search } from "lucide-react";
 import { getCityById } from "@/lib/data/selectors";
+import { citySheetEmoji } from "@/lib/ui/citySheetDisplay";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
 
 export function CityModeBar() {
@@ -12,30 +13,31 @@ export function CityModeBar() {
   return (
     <header
       dir="rtl"
-      className="pointer-events-none fixed inset-x-0 top-0 z-40 h-14 lg:top-16"
+      style={{ paddingTop: "max(0.25rem, env(safe-area-inset-top))" }}
+      className="pointer-events-none fixed inset-x-0 top-0 z-40 px-2 max-lg:hidden lg:top-16"
     >
-      <div className="pointer-events-auto flex h-14 items-center gap-1 px-2">
+      <div className="glass-panel pointer-events-auto mx-auto flex h-12 max-w-xl items-center gap-1 rounded-2xl px-2 shadow-lg">
         <button
           type="button"
           aria-label="חזרה"
           onClick={() => tripActions.goBack()}
-          className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-slate-900 shadow-md dark:bg-slate-900 dark:text-white"
+          className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white"
         >
           <ArrowRight className="h-5 w-5" />
         </button>
         <div className="min-w-0 flex-1 text-center">
-          <h1 className="truncate text-base leading-5 font-black text-white [text-shadow:0_1px_2px_#0f172a]">
-            {city.nameHe}
-          </h1>
-          <p className="truncate text-[11px] leading-4 font-semibold text-white/90 [text-shadow:0_1px_2px_#0f172a]">
-            {city.nameEn}
+          <p className="text-[10px] font-bold text-orange-600 dark:text-amber-400">
+            {citySheetEmoji(city.id)} {city.nameHe}
           </p>
+          <h1 className="truncate text-sm leading-5 font-black text-slate-900 dark:text-white">
+            {city.nameEn}
+          </h1>
         </div>
         <button
           type="button"
           aria-label="חיפוש"
           onClick={() => tripActions.setSearchOpen(true)}
-          className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-slate-900 shadow-md dark:bg-slate-900 dark:text-white"
+          className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800"
         >
           <Search className="h-5 w-5 text-orange-500" />
         </button>

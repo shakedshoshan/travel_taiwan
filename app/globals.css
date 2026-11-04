@@ -48,6 +48,14 @@ html.sheet-dragging body {
   touch-action: none;
 }
 
+html.sheet-dragging [data-sheet-scroll] {
+  pointer-events: none;
+}
+
+.sheet-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Custom playful scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
