@@ -1,4 +1,4 @@
-const CACHE_NAME = "taiwan-3d-offline-v2";
+const CACHE_NAME = "taiwan-3d-offline-v3";
 
 const PRECACHE_URLS = [
   "/",

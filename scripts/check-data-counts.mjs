@@ -66,6 +66,7 @@ for (const file of [
   "hotels.json",
   "practical.json",
   "overrides.json",
+  "tips.json",
 ]) {
   fs.copyFileSync(
     path.join(root, "data", file),

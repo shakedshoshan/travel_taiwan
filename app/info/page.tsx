@@ -17,6 +17,7 @@ import practicalData from "@/data/practical.json";
 import { getImageByFile } from "@/lib/data/placeImages";
 import { EmergencyAndPhrasesSection } from "@/components/ui/info/EmergencyAndPhrasesSection";
 import { ImageCreditsDetails } from "@/components/ui/info/ImageCreditsDetails";
+import { PreTripTipsGuide } from "@/components/ui/info/PreTripTipsGuide";
 import { PhotoCreditPopover } from "@/components/ui/PhotoCreditPopover";
 
 const TRANSPORT_CARD_IMAGES = [
@@ -40,9 +41,11 @@ export default function InfoPage() {
           טיפים ומידע שימושי לטייוואן
         </h1>
         <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-          התראות עדכניות למסלול, איזי-קארד, סים/eSIM, מזג אוויר בנובמבר, תחבורה, כסף, מספרי חירום ושיחון קולי בסינית.
+          מדריך לפני הנסיעה, התראות למסלול, איזי-קארד, סים/eSIM, מזג אוויר, תחבורה, כסף, מספרי חירום ושיחון קולי.
         </p>
       </div>
+
+      <PreTripTipsGuide />
 
       {/* 1. Real-Time Route & Event Alerts from practical.json (P1 #9) */}
       {alerts.length > 0 && (
