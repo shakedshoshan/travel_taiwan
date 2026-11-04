@@ -79,10 +79,10 @@ export function BottomSheet({
         onPointerDown={onGrabPointerDown}
         className="flex min-h-11 shrink-0 cursor-grab touch-none items-center justify-center active:cursor-grabbing"
       >
-        <button
-          type="button"
-          onClick={handleGrabTap}
-          aria-label={
+          <button
+            type="button"
+            onClick={handleGrabTap}
+            aria-label={
             activeSnap === "peek"
               ? "פתח חלונית למעלה"
               : activeSnap === "half"

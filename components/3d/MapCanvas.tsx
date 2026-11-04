@@ -57,11 +57,16 @@ function checkWebGLAvailable(): boolean {
 export function MapCanvas() {
   const store = useTripStore();
   const loadProgress = useLoadProgress();
+  const e2eMode = process.env.NEXT_PUBLIC_E2E === "1";
   const [coarsePointer, setCoarsePointer] = useState(false);
-  const [paintReady, setPaintReady] = useState(false);
+  const [paintReady, setPaintReady] = useState(e2eMode);
 
   useEffect(() => {
     tripActions.hydrate();
+    if (e2eMode) {
+      tripActions.setUse2DFallback(true);
+      return;
+    }
     const supported = checkWebGLAvailable();
     if (!supported) {
       tripActions.setUse2DFallback(true);
@@ -79,13 +84,13 @@ export function MapCanvas() {
       window.cancelAnimationFrame(first);
       window.cancelAnimationFrame(second);
     };
-  }, []);
+  }, [e2eMode]);
 
   const handleSelectPlace = (place: EnrichedPlace) => {
     tripActions.focusPlace(place.id, place.cityId);
   };
 
-  if (store.use2DFallback) {
+  if (store.use2DFallback || e2eMode) {
     return (
       <div className="relative h-full w-full">
         <Map2DFallback
