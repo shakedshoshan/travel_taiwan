@@ -8,6 +8,7 @@ import { CityCategoryChips } from "./CityCategoryChips";
 import { CityInfoMenu } from "./CityInfoMenu";
 import { CityPlaceList } from "./CityPlaceList";
 import { CityPlacePeekCard } from "./CityPlacePeekCard";
+import { CitySheetCityBanner } from "./CitySheetCityBanner";
 
 export function CityModeSheet() {
   const store = useTripStore();
@@ -23,21 +24,23 @@ export function CityModeSheet() {
   const bundle = getCityBundle(store.selectedCityId);
   const showPlacePeek = Boolean(store.focusedPlaceId) && store.sheetSnap === "peek";
 
-  const header = infoOpen ? null : showPlacePeek ? null : (
-    <CityCategoryChips
-      bundle={bundle}
-      onOpenInfo={() => {
-        setInfoOpen(true);
-        if (store.sheetSnap === "peek") tripActions.setSheetSnap("half");
-      }}
-    />
-  );
+  const header =
+    infoOpen || showPlacePeek ? null : (
+      <CityCategoryChips
+        bundle={bundle}
+        onOpenInfo={() => {
+          setInfoOpen(true);
+          if (store.sheetSnap === "peek") tripActions.setSheetSnap("half");
+        }}
+      />
+    );
 
   return (
     <BottomSheet
       isOpen
       snap={store.sheetSnap === "closed" ? "peek" : store.sheetSnap}
       ariaLabel={bundle.city.nameHe}
+      banner={<CitySheetCityBanner bundle={bundle} />}
       header={header}
       onSnapChange={(snap) => {
         if (snap === "closed") tripActions.goBack();

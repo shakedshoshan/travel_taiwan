@@ -59,7 +59,11 @@ export function CityPlaceList({ bundle }: { bundle: CityBundle }) {
           במפה
         </button>
       </div>
-      <div ref={parentRef} className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
+      <div
+        ref={parentRef}
+        className="sheet-scroll min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-2 pb-2"
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
         {rows.length === 0 ? (
           <p className="px-2 py-6 text-center text-sm font-bold text-slate-500">
             אין מקומות בקטגוריה הזו
