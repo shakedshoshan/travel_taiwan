@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { sheetBottomReservePx as sheetBottomReservePxFromSnap } from "@/lib/ui/bottomSheetSnap";
 import type { SheetSnapPoint } from "@/lib/store/tripStoreTypes";
 
 const scratchCam = new THREE.PerspectiveCamera(42, 1, 0.1, 160);
@@ -14,10 +15,7 @@ export function sheetBottomReservePx(
   snap: SheetSnapPoint,
   viewportHeight: number
 ): number {
-  if (snap === "full") return Math.round(viewportHeight * 0.85);
-  if (snap === "half") return Math.round(viewportHeight * 0.5);
-  if (snap === "peek") return 120;
-  return 0;
+  return sheetBottomReservePxFromSnap(snap, viewportHeight);
 }
 
 export function computeFitCityPose(

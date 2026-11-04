@@ -51,7 +51,8 @@ export function CityCategoryChips({
     <div className="flex items-center gap-1.5 px-2 pb-1">
       <div
         ref={rowRef}
-        className="no-scrollbar flex min-w-0 flex-1 gap-1.5 overflow-x-auto"
+        data-sheet-no-drag
+        className="no-scrollbar flex min-w-0 flex-1 gap-1.5 overflow-x-auto overscroll-x-contain"
       >
         {CHIPS.map((chip) => {
           const selected = active === chip.id;

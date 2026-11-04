@@ -132,15 +132,23 @@ export function LayerToggles() {
       {store.isLayersSheetOpen && (
         <div
           dir="rtl"
-          className="pointer-events-auto fixed inset-0 z-50 flex items-end justify-center bg-slate-950/45 backdrop-blur-xs"
+          data-mobile-sheet
+          className="pointer-events-auto fixed inset-0 z-50 flex items-end justify-center overscroll-none bg-slate-950/45 backdrop-blur-xs"
           onClick={() => tripActions.setLayersSheetOpen(false)}
         >
           <div
             onClick={(e) => e.stopPropagation()}
             style={{ paddingBottom: "calc(1.25rem + env(safe-area-inset-bottom))" }}
-            className="w-full max-w-lg rounded-t-3xl border-t border-slate-200 bg-white p-4 shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+            className="max-h-[min(90dvh,calc(100dvh-3rem))] w-full max-w-lg overflow-y-auto overscroll-y-contain rounded-t-3xl border-t border-slate-200 bg-white p-4 shadow-2xl dark:border-slate-800 dark:bg-slate-900"
           >
-            <div className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-slate-300 dark:bg-slate-700" />
+            <button
+              type="button"
+              aria-label="גרור למטה או הקש לסגירה"
+              onClick={() => tripActions.setLayersSheetOpen(false)}
+              className="mx-auto mb-3 flex min-h-11 w-full items-center justify-center"
+            >
+              <span className="h-1.5 w-12 rounded-full bg-slate-300 dark:bg-slate-700" />
+            </button>
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Layers className="h-5 w-5 text-orange-500" />
