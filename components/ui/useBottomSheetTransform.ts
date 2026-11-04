@@ -184,7 +184,7 @@ export function useBottomSheetTransform({
       stateRef.current.moved = false;
       return;
     }
-    const next = nextSheetSnapOnTap(stateRef.current.snap);
+    const next = nextSheetSnapOnTap(snap);
     if (next === "closed") onClose();
     else onSnapChange(next);
   };

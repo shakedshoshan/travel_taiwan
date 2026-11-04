@@ -10,6 +10,7 @@ import {
   pushPlaceEntry,
   type SheetHistorySource,
 } from "./sheetUrl";
+import { sheetSnapAfterPlaceFocus } from "./sheetSnapForPlace";
 import {
   DEFAULT_STATE,
   STORAGE_KEY,
@@ -227,7 +228,11 @@ export const tripActions = {
       return {
         focusedPlaceId: placeId,
         selectedCityId: nextCityId,
-        sheetSnap: placeId || nextCityId ? "peek" : "closed",
+        sheetSnap: sheetSnapAfterPlaceFocus(
+          placeId,
+          nextCityId,
+          prev.sheetSnap
+        ),
         isLayersSheetOpen: false,
       };
     });
