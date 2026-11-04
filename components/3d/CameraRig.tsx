@@ -277,6 +277,30 @@ export function CameraRig({
           RIGHT: -1 as unknown as THREE.MOUSE,
         };
 
+  useEffect(() => {
+    const blockCanvas = (event: Event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (!target.closest("[data-bottom-sheet], [data-mobile-sheet]")) return;
+      const controls = controlsRef.current;
+      if (controls) controls.enabled = false;
+    };
+
+    const unblockCanvas = () => {
+      const controls = controlsRef.current;
+      if (controls) controls.enabled = true;
+    };
+
+    window.addEventListener("pointerdown", blockCanvas, true);
+    window.addEventListener("pointerup", unblockCanvas, true);
+    window.addEventListener("pointercancel", unblockCanvas, true);
+    return () => {
+      window.removeEventListener("pointerdown", blockCanvas, true);
+      window.removeEventListener("pointerup", unblockCanvas, true);
+      window.removeEventListener("pointercancel", unblockCanvas, true);
+    };
+  }, []);
+
   return (
     <OrbitControls
       ref={controlsRef}

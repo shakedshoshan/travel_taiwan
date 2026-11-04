@@ -33,7 +33,8 @@ export function FoodFilterSheet({
   return (
     <div
       dir="rtl"
-      className="fixed inset-0 z-50 flex items-end justify-center bg-slate-950/45 backdrop-blur-xs"
+      data-mobile-sheet
+      className="fixed inset-0 z-50 flex items-end justify-center overscroll-none bg-slate-950/45 backdrop-blur-xs"
       onClick={onClose}
     >
       <div

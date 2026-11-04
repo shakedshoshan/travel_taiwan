@@ -39,6 +39,13 @@ body {
   color: var(--foreground);
   font-family: var(--font-heebo), var(--font-rubik), sans-serif;
   overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+
+html.sheet-dragging,
+html.sheet-dragging body {
+  overscroll-behavior-y: none;
+  touch-action: none;
 }
 
 /* Custom playful scrollbars */

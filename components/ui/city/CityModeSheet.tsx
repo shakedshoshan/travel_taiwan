@@ -23,11 +23,22 @@ export function CityModeSheet() {
   const bundle = getCityBundle(store.selectedCityId);
   const showPlacePeek = Boolean(store.focusedPlaceId) && store.sheetSnap === "peek";
 
+  const header = infoOpen ? null : showPlacePeek ? null : (
+    <CityCategoryChips
+      bundle={bundle}
+      onOpenInfo={() => {
+        setInfoOpen(true);
+        if (store.sheetSnap === "peek") tripActions.setSheetSnap("half");
+      }}
+    />
+  );
+
   return (
     <BottomSheet
       isOpen
       snap={store.sheetSnap === "closed" ? "peek" : store.sheetSnap}
       ariaLabel={bundle.city.nameHe}
+      header={header}
       onSnapChange={(snap) => {
         if (snap === "closed") tripActions.goBack();
         else tripActions.setSheetSnap(snap);
@@ -38,18 +49,9 @@ export function CityModeSheet() {
         <CityInfoMenu bundle={bundle} onClose={() => setInfoOpen(false)} />
       ) : showPlacePeek && store.focusedPlaceId ? (
         <CityPlacePeekCard placeId={store.focusedPlaceId} />
-      ) : (
-        <>
-          <CityCategoryChips
-            bundle={bundle}
-            onOpenInfo={() => {
-              setInfoOpen(true);
-              if (store.sheetSnap === "peek") tripActions.setSheetSnap("half");
-            }}
-          />
-          {store.sheetSnap !== "peek" && <CityPlaceList bundle={bundle} />}
-        </>
-      )}
+      ) : store.sheetSnap !== "peek" ? (
+        <CityPlaceList bundle={bundle} />
+      ) : null}
     </BottomSheet>
   );
 }
