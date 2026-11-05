@@ -47,6 +47,15 @@ const ROUTES = [
     tapScope: ".app-scroll-page, nav[aria-label='ניווט ראשי']",
   },
   {
+    path: "/events",
+    wait: async (page: import("@playwright/test").Page) => {
+      await expect(page.getByTestId("events-page")).toBeVisible({
+        timeout: 15_000,
+      });
+    },
+    tapScope: ".app-scroll-page, nav[aria-label='ניווט ראשי']",
+  },
+  {
     path: "/philippines",
     wait: async (page: import("@playwright/test").Page) => {
       await expect(page.getByTestId("philippines-page")).toBeVisible({

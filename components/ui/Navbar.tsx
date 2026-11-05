@@ -12,18 +12,19 @@ import {
   Search,
   Sun,
   Moon,
-  Palmtree,
+  Sparkles,
 } from "lucide-react";
 import { getTripSpan } from "@/lib/data/tripSpan";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
+import { CountrySwitcher } from "@/components/ui/CountrySwitcher";
 
 const NAV_LINKS = [
   { href: "/", label: "מפה", icon: MapIcon },
   { href: "/route", label: "מסלול", icon: Route },
+  { href: "/events", label: "אירועים", icon: Sparkles },
   { href: "/food", label: "אוכל", icon: UtensilsCrossed },
   { href: "/hotels", label: "מלונות", icon: BedDouble },
   { href: "/info", label: "טיפים", icon: Lightbulb },
-  { href: "/philippines", label: "פיליפינים", icon: Palmtree },
 ] as const;
 
 export function Navbar() {
@@ -49,7 +50,6 @@ export function Navbar() {
 
   return (
     <>
-      {/* Top Header Bar (with Desktop >=1024px Top Nav instead of Bottom Tab Bar) */}
       <header
         dir="rtl"
         style={{ paddingTop: "max(0.5rem, env(safe-area-inset-top))" }}
@@ -57,7 +57,7 @@ export function Navbar() {
           cityMode ? "max-lg:hidden" : ""
         }`}
       >
-        <div className="glass-panel pointer-events-auto mx-auto flex h-12 max-h-16 max-w-7xl flex-nowrap items-center justify-between gap-x-2 overflow-hidden rounded-2xl px-2 shadow-lg md:px-4">
+        <div className="glass-panel pointer-events-auto mx-auto flex min-h-12 max-w-7xl flex-wrap items-center justify-between gap-x-2 gap-y-1.5 overflow-hidden rounded-2xl px-2 py-1 shadow-lg md:flex-nowrap md:px-4">
           <div className="flex min-w-0 shrink items-center gap-2">
             <Link
               href="/"
@@ -71,7 +71,7 @@ export function Navbar() {
               </div>
               <div
                 dir="rtl"
-                className="flex min-w-0 items-center gap-1 font-display text-xs font-black leading-tight tracking-tight text-slate-900 dark:text-white"
+                className="hidden min-w-0 items-center gap-1 font-display text-xs font-black leading-tight tracking-tight text-slate-900 min-[400px]:flex dark:text-white"
               >
                 <span className="lg:hidden">טייוואן · 3D</span>
                 <span className="hidden lg:inline">טייוואן</span>
@@ -94,15 +94,16 @@ export function Navbar() {
               </div>
             </Link>
 
+            <CountrySwitcher className="shrink-0" />
+
             <span
               title="נתוני הטיול, המפות והגופנים שמורים וזמינים גם ללא קליטה"
-              className="hidden shrink-0 items-center rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-extrabold text-emerald-800 sm:inline-flex dark:bg-emerald-500/20 dark:text-emerald-300"
+              className="hidden shrink-0 items-center rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-extrabold text-emerald-800 md:inline-flex dark:bg-emerald-500/20 dark:text-emerald-300"
             >
               זמין אופליין ✓
             </span>
           </div>
 
-          {/* Desktop >=1024px Top Navigation Links */}
           <nav
             aria-label="ניווט ראשי בדסקטופ"
             className="hidden items-center gap-1 lg:flex"
@@ -130,7 +131,6 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Action Buttons: Search and Day/Night */}
           <div className="flex shrink-0 items-center gap-2">
             <button
               type="button"
@@ -150,7 +150,7 @@ export function Navbar() {
               onClick={() => tripActions.toggleNightMode()}
               aria-label={store.isNightMode ? "עבור למצב יום" : "עבור למצב לילה"}
               title={store.isNightMode ? "עבור למצב יום" : "עבור למצב לילה"}
-              className="toy-button flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl text-slate-700 hover:bg-slate-900/5 dark:text-amber-300 dark:hover:bg-white/10"
+              className="toy-button flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl text-slate-700 hover:bg-slate-900/5 active:scale-[0.97] dark:text-amber-300 dark:hover:bg-white/10"
             >
               {store.isNightMode ? (
                 <Moon className="h-4 w-4" />
@@ -162,7 +162,6 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* Mobile & Tablet (<1024px) Bottom Tab Bar — hidden on Desktop >=1024px */}
       <nav
         dir="rtl"
         aria-label="ניווט ראשי"
@@ -182,7 +181,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex min-h-11 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1.5 text-[10px] font-bold transition-colors duration-[var(--duration-fast)] active:scale-[0.97] sm:text-[11px] ${
+                className={`flex min-h-11 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1 text-[10px] font-bold transition-colors duration-[var(--duration-fast)] active:scale-[0.97] sm:text-[11px] ${
                   isActive
                     ? "bg-[var(--primary-muted)] text-[var(--primary)] dark:text-amber-300"
                     : "text-[var(--muted)] hover:text-[var(--foreground)]"
