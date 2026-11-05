@@ -50,7 +50,7 @@ export function CityModeSheet() {
       isOpen
       snap={store.sheetSnap === "closed" ? "peek" : store.sheetSnap}
       ariaLabel={bundle.city.nameHe}
-      banner={<CitySheetCityBanner bundle={bundle} />}
+      banner={<CitySheetCityBanner bundle={bundle} compact={store.sheetSnap === "peek"} />}
       header={header}
       onSnapChange={handleSnapChange}
       onClose={() => tripActions.goBack()}
@@ -59,8 +59,11 @@ export function CityModeSheet() {
         <CityInfoMenu bundle={bundle} onClose={() => setInfoOpen(false)} />
       ) : (
         <>
-          {focusedPlaceId ? (
-            <CityPlacePeekCard placeId={focusedPlaceId} />
+          {focusedPlaceId && store.sheetSnap !== "full" ? (
+            <CityPlacePeekCard
+              placeId={focusedPlaceId}
+              compact={store.sheetSnap === "half"}
+            />
           ) : null}
           {store.sheetSnap !== "peek" ? (
             <CityPlaceList bundle={bundle} />

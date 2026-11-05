@@ -226,7 +226,7 @@ export function RouteLegCard({
                 key={a.id}
                 href={`/place/${a.id}`}
                 onClick={(e) => e.stopPropagation()}
-                className="rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-bold text-slate-800 hover:border-orange-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                className="inline-flex min-h-11 items-center rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-800 active:scale-[0.98] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
               >
                 {a.name} {"★".repeat(a.importance)}
               </Link>
@@ -246,7 +246,7 @@ export function RouteLegCard({
                   key={f.id}
                   href={`/place/${f.id}`}
                   onClick={(e) => e.stopPropagation()}
-                  className="rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-bold text-slate-800 hover:border-rose-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                  className="inline-flex min-h-11 items-center rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-800 active:scale-[0.98] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
                 >
                   {f.name}
                 </Link>

@@ -67,7 +67,7 @@ export default function HotelsPage() {
       {/* Sticky City Jump Bar */}
       <div
         style={{ top: "calc(3.4rem + env(safe-area-inset-top))" }}
-        className="sticky z-30 -mx-3.5 mb-4 border-b border-slate-200/80 bg-background/95 px-3.5 py-2 backdrop-blur-md md:mx-0 md:rounded-3xl md:border dark:border-slate-800"
+        className="sticky z-30 -mx-3.5 mb-4 hidden border-b border-slate-200/80 bg-background/95 px-3.5 py-2 backdrop-blur-md lg:block md:mx-0 md:rounded-3xl md:border dark:border-slate-800"
       >
         <CityJumpBar
           items={citiesWithHotels.map((city) => ({
@@ -263,7 +263,7 @@ export default function HotelsPage() {
               {/* Additional Cheap Options (Collapsed if more than 1) */}
               {otherCheap.length > 0 && (
                 <details className="group mb-2.5 rounded-2xl border border-slate-200 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-slate-800/40">
-                  <summary className="flex min-h-[40px] cursor-pointer list-none items-center justify-between text-xs font-extrabold text-emerald-800 dark:text-emerald-300">
+                  <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-xs font-extrabold text-emerald-800 dark:text-emerald-300">
                     <span>
                       עוד אפשרויות זולות / הוסטלים ב{city.nameHe} (
                       {otherCheap.length})

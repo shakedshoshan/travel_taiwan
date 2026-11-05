@@ -59,9 +59,9 @@ export function CommandSearch() {
           <button
             type="button"
             onClick={() => tripActions.setSearchOpen(false)}
-            className="rounded-xl bg-slate-900/5 p-1.5 text-slate-500 hover:bg-slate-900/10 dark:bg-white/10 dark:text-slate-300"
+            className="flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-xl bg-slate-900/5 text-slate-500 active:scale-[0.97] dark:bg-white/10 dark:text-slate-300"
           >
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </button>
         </div>
 
@@ -121,7 +121,7 @@ export function CommandSearch() {
                     }
                     router.push(item.href);
                   }}
-                  className="flex w-full items-center justify-between gap-3 rounded-2xl p-2.5 text-right transition-colors hover:bg-orange-500/10"
+                  className="flex min-h-11 w-full items-center justify-between gap-3 rounded-2xl px-3 text-right active:bg-orange-500/10"
                 >
                   <div className="relative h-12 w-16 shrink-0 overflow-hidden rounded-xl bg-slate-900">
                     <Image

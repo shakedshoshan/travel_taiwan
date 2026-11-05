@@ -67,7 +67,7 @@ export function PlaceDetailClient({
           {place.kind === "food" && (
             <Link
               href="/food"
-              className="inline-flex min-h-[44px] items-center rounded-2xl bg-rose-500/15 px-3.5 text-rose-700 dark:text-rose-300"
+              className="hidden min-h-[44px] items-center rounded-2xl bg-rose-500/15 px-3.5 text-rose-700 lg:inline-flex dark:text-rose-300"
             >
               כל האוכל
             </Link>
@@ -75,7 +75,7 @@ export function PlaceDetailClient({
           {place.kind === "hotel" && (
             <Link
               href="/hotels"
-              className="inline-flex min-h-[44px] items-center rounded-2xl bg-sky-500/15 px-3.5 text-sky-700 dark:text-sky-300"
+              className="hidden min-h-[44px] items-center rounded-2xl bg-sky-500/15 px-3.5 text-sky-700 lg:inline-flex dark:text-sky-300"
             >
               כל המלונות
             </Link>

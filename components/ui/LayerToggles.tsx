@@ -29,7 +29,7 @@ const LAYER_CONFIG: ReadonlyArray<{
 }> = [
   {
     key: "attractions",
-    labelHe: "אטרקציות ★",
+    labelHe: "אטרקציות",
     icon: Sparkles,
     activeClass: "bg-amber-400 text-slate-950 border-amber-300",
   },
@@ -101,7 +101,8 @@ export function LayerToggles() {
           </span>
         </button>
 
-        <EdgeFadeScroller initialChipId={firstActiveId} focusChipId={focusChipId}>
+        <div className="hidden min-w-0 flex-1 lg:block">
+          <EdgeFadeScroller initialChipId={firstActiveId} focusChipId={focusChipId}>
           {LAYER_CONFIG.map((item) => {
             const Icon = item.icon;
             const active = store.layerToggles[item.key];
@@ -125,7 +126,8 @@ export function LayerToggles() {
               </button>
             );
           })}
-        </EdgeFadeScroller>
+          </EdgeFadeScroller>
+        </div>
       </div>
 
       {/* Small Opaque Bottom Sheet for "שכבות" */}
@@ -138,7 +140,10 @@ export function LayerToggles() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            style={{ paddingBottom: "calc(1.25rem + env(safe-area-inset-bottom))" }}
+            style={{
+              paddingBottom:
+                "calc(4.5rem + env(safe-area-inset-bottom))",
+            }}
             className="max-h-[min(90dvh,calc(100dvh-3rem))] w-full max-w-lg overflow-y-auto overscroll-y-contain rounded-t-3xl border-t border-slate-200 bg-white p-4 shadow-2xl dark:border-slate-800 dark:bg-slate-900"
           >
             <button

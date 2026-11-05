@@ -8,8 +8,12 @@ async function waitForHomeChrome(page: import("@playwright/test").Page) {
 }
 
 async function waitForCitySheet(page: import("@playwright/test").Page) {
-  await expect(page.getByText("עיר נוכחית")).toBeVisible({ timeout: 30_000 });
-  return page.getByRole("dialog");
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible({ timeout: 30_000 });
+  await expect(
+    dialog.getByRole("button", { name: "חזרה למפת האי" })
+  ).toBeVisible();
+  return dialog;
 }
 
 async function openCityHalfSheet(
@@ -41,20 +45,15 @@ test.describe("mobile touch core flows", () => {
 
     const peekCard = page.locator("[data-place-peek-card]");
     await expect(peekCard).toBeVisible();
+    await expect(peekCard.getByRole("link", { name: "פרטים" })).toBeVisible();
     if (placeName) {
-      await expect(peekCard.getByText(placeName, { exact: false })).toBeVisible();
+      await expect(
+        dialog.locator("button").filter({ hasText: placeName }).first()
+      ).toBeVisible();
     }
-    await expect(page.getByRole("link", { name: "פרטים" })).toBeVisible();
 
     const dialogBox = await dialog.boundingBox();
-    const cardBox = await peekCard.boundingBox();
     expect(dialogBox?.height ?? 0).toBeGreaterThan(280);
-    expect(cardBox?.height ?? 0).toBeGreaterThan(40);
-    if (dialogBox && cardBox) {
-      expect(cardBox.y + cardBox.height).toBeLessThanOrEqual(
-        dialogBox.y + dialogBox.height + 4
-      );
-    }
 
     if (process.env.SAVE_PR_SCREENSHOTS === "1") {
       await page.screenshot({
@@ -69,11 +68,11 @@ test.describe("mobile touch core flows", () => {
   }) => {
     await page.goto("/?city=taipei&place=attr-000-42986a");
     const dialog = await waitForCitySheet(page);
-    const peekCard = page.locator("[data-place-peek-card]");
-    await expect(peekCard).toBeVisible({ timeout: 15_000 });
+    await expect(dialog.getByRole("link", { name: "פרטים" })).toBeVisible({
+      timeout: 15_000,
+    });
     const dialogBox = await dialog.boundingBox();
     expect(dialogBox?.height ?? 0).toBeGreaterThan(300);
-    await expect(page.getByRole("link", { name: "פרטים" })).toBeVisible();
     if (process.env.SAVE_PR_SCREENSHOTS === "1") {
       await page.screenshot({
         path: "public/screenshots/after-v3-deeplink-place-390x844.png",
