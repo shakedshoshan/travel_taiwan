@@ -1,0 +1,156 @@
+[
+  {
+    "id": "manila",
+    "nameHe": "מנילה",
+    "nameEn": "Metro Manila",
+    "lat": 14.5995,
+    "lng": 120.9842,
+    "onRoute": true,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "el-nido",
+    "nameHe": "אל נידו",
+    "nameEn": "El Nido",
+    "lat": 11.1956,
+    "lng": 119.4075,
+    "onRoute": true,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "puerto-princesa",
+    "nameHe": "פוארטו פרינססה",
+    "nameEn": "Puerto Princesa",
+    "lat": 9.7392,
+    "lng": 118.7353,
+    "onRoute": true,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "coron",
+    "nameHe": "קורון",
+    "nameEn": "Coron",
+    "lat": 11.9986,
+    "lng": 120.2043,
+    "onRoute": true,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "boracay",
+    "nameHe": "בוראקאי",
+    "nameEn": "Boracay",
+    "lat": 11.9674,
+    "lng": 121.9248,
+    "onRoute": true,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "kalibo",
+    "nameHe": "קאליבו",
+    "nameEn": "Kalibo",
+    "lat": 11.7072,
+    "lng": 122.364,
+    "onRoute": false,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "cebu-city",
+    "nameHe": "סבו סיטי",
+    "nameEn": "Cebu City",
+    "lat": 10.3157,
+    "lng": 123.8854,
+    "onRoute": true,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "mactan",
+    "nameHe": "מקטן",
+    "nameEn": "Mactan / Lapu-Lapu",
+    "lat": 10.3103,
+    "lng": 123.9494,
+    "onRoute": true,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "moalboal",
+    "nameHe": "מואלבואל",
+    "nameEn": "Moalboal",
+    "lat": 9.9397,
+    "lng": 123.396,
+    "onRoute": true,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "badian",
+    "nameHe": "באדיאן / קאוואסן",
+    "nameEn": "Badian",
+    "lat": 9.8116,
+    "lng": 123.381,
+    "onRoute": true,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "bohol",
+    "nameHe": "בוהול / פאנגלאו",
+    "nameEn": "Bohol",
+    "lat": 9.65,
+    "lng": 123.85,
+    "onRoute": true,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "dumaguete",
+    "nameHe": "דומאגטה",
+    "nameEn": "Dumaguete",
+    "lat": 9.3068,
+    "lng": 123.3054,
+    "onRoute": false,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "siargao",
+    "nameHe": "סיארגאו",
+    "nameEn": "Siargao",
+    "lat": 9.788,
+    "lng": 126.159,
+    "onRoute": false,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  },
+  {
+    "id": "laguna",
+    "nameHe": "לגונה",
+    "nameEn": "Laguna",
+    "lat": 14.28,
+    "lng": 121.1,
+    "onRoute": false,
+    "routeOrder": null,
+    "dates": [],
+    "days": 0
+  }
+]

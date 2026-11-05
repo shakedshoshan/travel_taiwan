@@ -1,0 +1,342 @@
+[
+  {
+    "id": "prac-000-9ab3b1",
+    "topic": "כניסה",
+    "name": "פטור ויזה לישראלים – 59 יום",
+    "description": "דרכון ישראלי: כניסה בלי ויזה עד 59 יום (הסכם דו־צדדי מפורש ב־eVisaPH), לא 30 כמו רוב המדינות",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://evisa.gov.ph/page/policy?l1=Non-Immigrant+Visas&l2=Free+to+enter+the+Philippines+without+Visa"
+  },
+  {
+    "id": "prac-001-2b56fc",
+    "topic": "כניסה",
+    "name": "תוקף דרכון 6 חודשים",
+    "description": "דרכון בתוקף לפחות 6 חודשים מעבר לתקופת השהייה",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://evisa.gov.ph/page/policy?l1=Non-Immigrant+Visas&l2=Free+to+enter+the+Philippines+without+Visa"
+  },
+  {
+    "id": "prac-002-4c5170",
+    "topic": "כניסה",
+    "name": "כרטיס יציאה",
+    "description": "חובה כרטיס חזור/המשך; נבדק בעלייה למטוס ובביקורת",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://lisbonpe.dfa.gov.ph/index.php/consular-section/visa-services/21-day-visa-free-entery"
+  },
+  {
+    "id": "prac-003-96bfe1",
+    "topic": "כניסה",
+    "name": "eTravel",
+    "description": "רישום חינם ב־etravel.gov.ph בלבד, עד 72 שעות לפני הנחיתה; צילום מסך של ה־QR. אתרים שגובים כסף = הונאה",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://etravel.gov.ph/en/frequently-asked-questions"
+  },
+  {
+    "id": "prac-004-b635ce",
+    "topic": "אפליקציות",
+    "name": "Grab",
+    "description": "מוניות/רכב ומשלוחי אוכל במנילה, סבו, בוהול (פחות באיים קטנים). כרטיס בינלאומי עובד לרוב",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://www.grab.com/ph/"
+  },
+  {
+    "id": "prac-005-84ab5e",
+    "topic": "אפליקציות",
+    "name": "GCash GTourist",
+    "description": "ישראל ברשימת המדינות. חשבון תייר ל־30 יום: מספר זר + OTP ברומינג, דרכון לאימות מלא, כרטיס Visa/MC. מופעל רק בתוך הפיליפינים עם Location",
+    "importance": 4,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://help.gcash.com/hc/en-us/articles/53417886058521-How-to-create-a-GTourist-account-on-GCash"
+  },
+  {
+    "id": "prac-006-dc7aaf",
+    "topic": "אפליקציות",
+    "name": "Klook",
+    "description": "הזמנת טורים, העברות ו־eSIM",
+    "importance": 3,
+    "status": "לא אומת",
+    "verified": false,
+    "source": "https://www.klook.com/"
+  },
+  {
+    "id": "prac-007-2eba84",
+    "topic": "אפליקציות",
+    "name": "Waze / Google Maps",
+    "description": "Waze טוב יותר לפקקי מנילה",
+    "importance": 3,
+    "status": "לא אומת",
+    "verified": false,
+    "source": "https://www.tourismphilippines.com.au/facts/travelinfo"
+  },
+  {
+    "id": "prac-008-be67c1",
+    "topic": "כסף",
+    "name": "מזומן לאיים",
+    "description": "אל נידו, קורון וחלקי בוהול – כספומטים מעטים ונגמר בהם כסף בחגים; להוציא ב־PPS/מנילה/סבו",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "/workspace/philippines-attractions-shaked-dec2026-jan2027.xlsx"
+  },
+  {
+    "id": "prac-009-8d3509",
+    "topic": "כסף",
+    "name": "עמלת כספומט + מגבלות",
+    "description": "BDO/BPI/Metrobank מומלצים לכרטיס זר. DOT AU: עד ~₱10,000 למשיכה, עד ~₱50,000/יום. עמלה מקומית נפוצה ₱200–250 (לא רשמי אחיד) + עמלת הבנק שלכם",
+    "importance": 4,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://www.tourismphilippines.com.au/facts/travelinfo"
+  },
+  {
+    "id": "prac-010-d4ad95",
+    "topic": "כסף",
+    "name": "DCC – לסרב להמרה",
+    "description": "בכרטיס/כספומט לבחור חיוב בפסו (לא בשקלים/דולרים של המרה דינמית)",
+    "importance": 4,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://www.tourismphilippines.com.au/facts/travelinfo"
+  },
+  {
+    "id": "prac-011-a420e6",
+    "topic": "כסף",
+    "name": "שער",
+    "description": "PHP 1 = 0.04856 ₪; USD 1 = 3.033 ₪ (שערי הבסיס בקבצי התקציב)",
+    "importance": 3,
+    "status": "אומת",
+    "verified": true,
+    "source": "/workspace/philippines-honeymoon-budget-ILS-dec2026-jan2027.xlsx"
+  },
+  {
+    "id": "prac-012-26568b",
+    "topic": "כסף",
+    "name": "מע״מ 12%",
+    "description": "VAT סטנדרטי 12% נכלל לרוב במחירי מלון/מסעדה. Service charge 10% נפוץ במסעדות – לבדוק בחשבון",
+    "importance": 3,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://www.tourismphilippines.com.au/facts/travelinfo"
+  },
+  {
+    "id": "prac-013-e0e7b4",
+    "topic": "SIM",
+    "name": "רישום SIM חובה (RA 11934)",
+    "description": "תיירים חייבים לרשום SIM/eSIM מקומי עם דרכון, כתובת ומועד יציאה; תוקף SIM תיירים 30 יום",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://lawphil.net/statutes/repacts/ra2022/ra_11934_2022.html"
+  },
+  {
+    "id": "prac-014-e3de93",
+    "topic": "SIM",
+    "name": "Globe Traveler eSIM",
+    "description": "קונים לפני; מופעל בפיליפינים; 30 יום",
+    "importance": 4,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://www.globe.com.ph/blog/traveler-esim-for-tourists"
+  },
+  {
+    "id": "prac-015-e2b650",
+    "topic": "SIM",
+    "name": "Smart Tourist SIM/eSIM",
+    "description": "כפוף לאותם כללים; כיסוי באיים – דיווחים משתנים",
+    "importance": 4,
+    "status": "לא אומת",
+    "verified": false,
+    "source": "https://blog.smart.com.ph/are-tourists-foreign-nationals-required-to-register-their-sim/"
+  },
+  {
+    "id": "prac-016-f8a870",
+    "topic": "SIM",
+    "name": "eSIM בינלאומי (Airalo וכד׳)",
+    "description": "אלטרנטיבה בלי רישום מקומי; מחיר לא נבדק",
+    "importance": 3,
+    "status": "לא אומת",
+    "verified": false,
+    "source": "https://www.globe.com.ph/blog/traveler-esim-for-tourists"
+  },
+  {
+    "id": "prac-017-66c35e",
+    "topic": "תחבורה",
+    "name": "טיסות פנים",
+    "description": "PAL / Cebu Pacific / AirAsia; להזמין מוקדם לחגים. אל נידו – AirSWIFT יקר; חלופה PPS + ואן 5–6ש׳",
+    "importance": 5,
+    "status": "לא אומת",
+    "verified": false,
+    "source": "https://www.cebupacificair.com/"
+  },
+  {
+    "id": "prac-018-882829",
+    "topic": "תחבורה",
+    "name": "מעבורות סבו↔בוהול",
+    "description": "OceanJet ~2 שעות; תעריפים מדווחים מ־ספט׳ 2026: Tourist ~₱960, Business ~₱1,450. ביטולים באזהרת גלים (PCG)",
+    "importance": 4,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://pamasahe.com/routes/cebu-tagbilaran-oceanjet-schedule-fares"
+  },
+  {
+    "id": "prac-019-8ae3c8",
+    "topic": "תחבורה",
+    "name": "מעבורות אל נידו↔קורון",
+    "description": "מעבורות מהירות ~3.5–4.5 שעות לפי מפעיל וים; לבדוק ביום היציאה",
+    "importance": 4,
+    "status": "לא אומת",
+    "verified": false,
+    "source": "https://marina.gov.ph/"
+  },
+  {
+    "id": "prac-020-f62af0",
+    "topic": "תחבורה",
+    "name": "בוראקאי – הגעה ודמי כניסה",
+    "description": "טיסה ל־MPH (קטיקלן) עדיפה. iPass (aklan.gov.ph): טרמינל ₱150/מעבר + סביבה ₱300 לזר + סירה ₱50. סה״כ הגעה ~₱500 + עמלת נוחות מערכת",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://boracay.biz/boracay-fees/"
+  },
+  {
+    "id": "prac-021-4948a2",
+    "topic": "תחבורה",
+    "name": "מנילה – פקקים",
+    "description": "NAIA טרמינלים 1/3; לתכנן 1–2 שעות לכל נסיעה בשעות שיא",
+    "importance": 4,
+    "status": "לא אומת",
+    "verified": false,
+    "source": "https://www.newnaia.com.ph/"
+  },
+  {
+    "id": "prac-022-335f3b",
+    "topic": "תחבורה",
+    "name": "Mactan-Cebu Airport",
+    "description": "בסיס נוח לסבו; ישירות לאירופה/אסיה",
+    "importance": 3,
+    "status": "לא אומת",
+    "verified": false,
+    "source": "https://cebu.travel/"
+  },
+  {
+    "id": "prac-023-0efb2e",
+    "topic": "חיסכון",
+    "name": "להזמין בחגים מוקדם",
+    "description": "22.12–2.1 שיא מחירים ותפוסה; מינימום לילות וגאלות חובה",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "/workspace/philippines-honeymoon-budget-ILS-dec2026-jan2027.xlsx"
+  },
+  {
+    "id": "prac-024-b461f7",
+    "topic": "חיסכון",
+    "name": "טורים משותפים מול פרטיים",
+    "description": "טור משותף זול בהרבה, פרטי שווה לירח דבש",
+    "importance": 3,
+    "status": "לא אומת",
+    "verified": false,
+    "source": "https://elnidotourism.gov.ph/"
+  },
+  {
+    "id": "prac-025-0f0bb2",
+    "topic": "חיסכון",
+    "name": "חבילות הכול כלול",
+    "description": "לבדוק מה כלול באלכוהול – לרוב משקה אחד לערב (לא Plantation Bay)",
+    "importance": 4,
+    "status": "אומת",
+    "verified": true,
+    "source": "/workspace/philippines-honeymoon-budget-ILS-dec2026-jan2027.xlsx"
+  },
+  {
+    "id": "prac-026-f19fd0",
+    "topic": "חיסכון",
+    "name": "החזר VAT לתיירים",
+    "description": "קיימת תוכנית VAT refund – תנאי סף וסניפים לא אומתו בסבב זה; לא לבנות על זה",
+    "importance": 2,
+    "status": "לא אומת",
+    "verified": false,
+    "source": "https://www.bir.gov.ph/"
+  },
+  {
+    "id": "prac-027-67cdbc",
+    "topic": "בטיחות ומזג אוויר",
+    "name": "עונת אמיהאן",
+    "description": "דצמבר–ינואר: יבש יחסית במערב (פאלאוואן, בוראקאי, סבו); מזרח (סיארגאו) גשום. ייתכנו טייפונים מאוחרים בדצמבר",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://www.pagasa.dost.gov.ph/climate/climate-data"
+  },
+  {
+    "id": "prac-028-87922a",
+    "topic": "בטיחות ומזג אוויר",
+    "name": "אזהרות ים",
+    "description": "לעקוב אחרי PAGASA ומשמר החופים; ביטולי סירות ביום רוח",
+    "importance": 4,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://www.facebook.com/coastguardph"
+  },
+  {
+    "id": "prac-029-c22558",
+    "topic": "בטיחות ומזג אוויר",
+    "name": "זיקוקים",
+    "description": "זיקוקים פרטיים אסורים בבוראקאי; פציעות זיקוקים נפוצות בערב ראש השנה",
+    "importance": 3,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://www.bomboradyo.com/14-na-resorts-sa-boracay-lalahok-sa-bonggang-new-years-fireworks-display-sa-boracay"
+  },
+  {
+    "id": "prac-030-88ca8e",
+    "topic": "כללי",
+    "name": "חשמל",
+    "description": "220V / 60Hz; שקעים Type A/B (צפון־אמריקאי) ולעיתים C. מחשבים עם מתאם כפול בדרך כלל בסדר; מיתקנים ללא ממיר ל־110V",
+    "importance": 3,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://www.tourismphilippines.com.au/facts/travelinfo"
+  },
+  {
+    "id": "prac-031-e86323",
+    "topic": "כללי",
+    "name": "טיפים",
+    "description": "טיפ לא חובה אך מקובל. מסעדות: ~10% אם אין service charge בחשבון; אם יש 10% – טיפ נוסף אופציונלי. נהגים: עיגול כלפי מעלה",
+    "importance": 3,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://www.tourismphilippines.com.au/facts/travelinfo"
+  },
+  {
+    "id": "prac-032-60c6f1",
+    "topic": "אגרות",
+    "name": "El Nido ETDF",
+    "description": "₱400 מחוץ לפאלאוואן / ₱200 מתוך פאלאוואן; תקף 5 ימים לכל אתרי התיירות בעיירה. תשלום במזומן ב־ETDF Building (Bagong Bayan) או בתיירות/מפעיל",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://elnidomap.com/en/guides/eco-tourism-development-fee/"
+  },
+  {
+    "id": "prac-033-99e96c",
+    "topic": "אגרות",
+    "name": "Boracay environmental + terminal",
+    "description": "זר: סביבה ₱300 + טרמינל ₱150/מעבר + סירה ₱50. לשלם ב־iPass מראש",
+    "importance": 5,
+    "status": "אומת",
+    "verified": true,
+    "source": "https://boracay.biz/boracay-fees/"
+  }
+]

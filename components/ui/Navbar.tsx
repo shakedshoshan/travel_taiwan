@@ -12,6 +12,7 @@ import {
   Search,
   Sun,
   Moon,
+  Palmtree,
 } from "lucide-react";
 import { getTripSpan } from "@/lib/data/tripSpan";
 import { tripActions, useTripStore } from "@/lib/store/useTripStore";
@@ -22,6 +23,7 @@ const NAV_LINKS = [
   { href: "/food", label: "אוכל", icon: UtensilsCrossed },
   { href: "/hotels", label: "מלונות", icon: BedDouble },
   { href: "/info", label: "טיפים", icon: Lightbulb },
+  { href: "/philippines", label: "פיליפינים", icon: Palmtree },
 ] as const;
 
 export function Navbar() {
@@ -164,7 +166,7 @@ export function Navbar() {
           cityMode ? "hidden" : "lg:hidden"
         }`}
       >
-        <div className="mx-auto flex h-14 max-w-xl items-center gap-2 px-1">
+        <div className="mx-auto flex h-14 max-w-xl items-center gap-0.5 px-0.5">
           {NAV_LINKS.map((item) => {
             const Icon = item.icon;
             const isActive =
@@ -175,7 +177,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex min-h-11 min-w-[56px] flex-1 flex-col items-center justify-center gap-0.5 rounded-xl py-1 text-xs font-bold transition-colors ${
+                className={`flex min-h-11 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1 text-[10px] font-bold transition-colors sm:text-xs ${
                   isActive
                     ? "text-orange-600 dark:text-amber-400"
                     : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"

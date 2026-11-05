@@ -92,6 +92,23 @@ test.describe("mobile touch core flows", () => {
     await expect(page).toHaveURL(/\/route/);
   });
 
+  test("philippines page renders with status badges on mobile", async ({
+    page,
+  }) => {
+    await page.goto("/philippines");
+    await expect(page.getByTestId("philippines-page")).toBeVisible({
+      timeout: 15_000,
+    });
+    await expect(page.getByText("פיליפינים — מדריך הטיול")).toBeVisible();
+    await expect(page.getByTestId("ph-status-verified").first()).toBeVisible();
+    if (process.env.SAVE_PR_SCREENSHOTS === "1") {
+      await page.screenshot({
+        path: "public/screenshots/philippines-mobile-390x844.png",
+        fullPage: true,
+      });
+    }
+  });
+
   test("info tips page renders and back to map works", async ({ page }) => {
     await waitForHomeChrome(page);
     await page.getByRole("link", { name: "טיפים" }).tap();

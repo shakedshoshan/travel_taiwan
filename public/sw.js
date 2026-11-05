@@ -1,4 +1,4 @@
-const CACHE_NAME = "taiwan-3d-offline-v3";
+const CACHE_NAME = "taiwan-3d-offline-v4";
 
 const PRECACHE_URLS = [
   "/",
@@ -6,6 +6,7 @@ const PRECACHE_URLS = [
   "/food",
   "/hotels",
   "/info",
+  "/philippines",
   "/manifest.webmanifest",
   "/icon.svg",
   "/apple-touch-icon.png",
