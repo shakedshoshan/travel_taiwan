@@ -74,3 +74,13 @@ for (const file of [
   );
 }
 
+const phSrcDir = path.join(root, "data", "philippines");
+const phPublicDir = path.join(publicDataDir, "philippines");
+if (fs.existsSync(phSrcDir)) {
+  fs.mkdirSync(phPublicDir, { recursive: true });
+  for (const file of fs.readdirSync(phSrcDir)) {
+    if (!file.endsWith(".json")) continue;
+    fs.copyFileSync(path.join(phSrcDir, file), path.join(phPublicDir, file));
+  }
+}
+
