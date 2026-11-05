@@ -19,7 +19,7 @@ export function CityInfoMenu({
   const offline = useCityOfflineSave(city.id);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto px-3 pb-3">
+    <div className="flex min-h-0 flex-1 flex-col gap-2 px-3 pb-3">
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-black">מידע</h2>
         <button

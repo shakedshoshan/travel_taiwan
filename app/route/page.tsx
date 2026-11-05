@@ -54,12 +54,12 @@ export default function RoutePage() {
         style={{ top: "calc(3.25rem + env(safe-area-inset-top))" }}
         className="sticky z-40 border-b border-slate-200/80 bg-background px-2.5 pt-1.5 pb-2 md:px-6 dark:border-slate-800"
       >
-        <div className="relative h-[35vh] max-h-[340px] min-h-[210px] w-full overflow-hidden rounded-3xl border border-slate-200 shadow-lg dark:border-slate-800">
+        <div className="relative h-[24vh] max-h-[240px] min-h-[160px] w-full overflow-hidden rounded-3xl border border-slate-200 shadow-md md:h-[35vh] md:max-h-[340px] md:min-h-[210px] md:shadow-lg dark:border-slate-800">
           <MiniTaiwanMap
             activeCityId={activeCityId}
             activeLegOrder={activeLegOrder}
           />
-          <div className="pointer-events-none absolute right-2.5 bottom-2.5 left-2.5 flex items-center justify-between gap-2 rounded-2xl bg-slate-950/85 px-3 py-1.5 text-xs text-white backdrop-blur-md">
+          <div className="pointer-events-none absolute inset-x-2.5 bottom-2.5 rounded-2xl bg-slate-950/85 px-3 py-2 text-xs text-white backdrop-blur-md">
             <div className="truncate font-bold">
               <span className="text-amber-300">
                 <bdi dir="rtl">
@@ -69,17 +69,11 @@ export default function RoutePage() {
               </span>
               <span>{activeLeg.focus}</span>
             </div>
-            <span className="shrink-0 rounded-full bg-orange-500 px-2 py-0.5 text-xs font-black text-white">
-              <DateRange>{activeLeg.dates}</DateRange>{" "}
-              <RtlParen>
-                (<LtrText>{activeLeg.days}</LtrText> ימים)
-              </RtlParen>
-            </span>
           </div>
         </div>
 
         {/* Quick Leg Jump Pills */}
-        <div className="fade-edge-scroll no-scrollbar relative z-10 mt-2 flex snap-x snap-mandatory items-center gap-1.5 overflow-x-auto bg-background py-1 pl-4">
+        <div className="fade-edge-scroll no-scrollbar relative z-10 mt-2 flex snap-x snap-mandatory items-center gap-2 overflow-x-auto bg-background py-1 px-3">
           {legs.map((leg) => {
             const isCurrent = leg.order === activeLegOrder;
             return (

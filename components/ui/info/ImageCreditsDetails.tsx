@@ -8,15 +8,10 @@ export function ImageCreditsDetails() {
 
   return (
     <details className="rounded-3xl border border-slate-200 bg-white p-4 shadow-xs md:p-5 dark:border-slate-800 dark:bg-slate-900">
-      <summary className="flex cursor-pointer items-center justify-between text-xs font-extrabold text-slate-700 dark:text-slate-300">
-        <span className="flex items-center gap-2">
-          <Camera className="h-4 w-4 text-orange-500" />
-          <span>
-            קרדיטים ורישיונות תמונות – Wikimedia Commons ({credits.length} תמונות)
-          </span>
-        </span>
-        <span className="text-xs font-semibold text-orange-600 dark:text-amber-300">
-          לחצו לפתיחת הרשימה המלאה
+      <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 text-xs font-extrabold text-slate-700 marker:content-none dark:text-slate-300">
+        <Camera className="h-4 w-4 shrink-0 text-orange-500" />
+        <span>
+          קרדיטים ורישיונות תמונות – Wikimedia Commons ({credits.length} תמונות)
         </span>
       </summary>
       <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">

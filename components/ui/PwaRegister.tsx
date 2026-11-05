@@ -41,6 +41,13 @@ function postPrecache(urls: string[]) {
 
 export function PwaRegister() {
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "auto";
+    }
+  }, []);
+
+  useEffect(() => {
     if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
 
     const sendVisibleAssets = () => postPrecache(collectPrecacheUrls());

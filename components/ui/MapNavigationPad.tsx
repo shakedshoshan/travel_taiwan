@@ -70,11 +70,12 @@ export function MapNavigationPad() {
         }`}
       >
         <Navigation className="h-4 w-4 text-sky-500" />
-        {/* Pulsing Blue Dot Indicator */}
-        <span className="absolute top-2 right-2 flex h-2.5 w-2.5">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-85" />
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-sky-500 ring-1 ring-white" />
-        </span>
+        {store.userCoords ? (
+          <span className="absolute top-2 right-2 flex h-2.5 w-2.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-85" />
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-sky-500 ring-1 ring-white" />
+          </span>
+        ) : null}
       </button>
 
       {/* Recenter Whole Island FAB */}

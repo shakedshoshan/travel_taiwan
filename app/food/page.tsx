@@ -205,7 +205,7 @@ export default function FoodPage() {
         </div>
 
         {/* Single Horizontal Row of Quick Pills */}
-        <div className="fade-edge-scroll no-scrollbar mt-2 flex snap-x snap-mandatory items-center gap-1.5 overflow-x-auto pl-4">
+        <div className="fade-edge-scroll no-scrollbar mt-2 flex snap-x snap-mandatory items-center gap-2 overflow-x-auto px-3">
           <button
             type="button"
             onClick={() => setViewMode("all")}
@@ -270,7 +270,7 @@ export default function FoodPage() {
       </div>
 
       {jumpItems.length > 1 && (
-        <div className="sticky top-[7.5rem] z-20 -mx-3.5 mb-3 bg-background/95 px-3.5 py-1">
+        <div className="sticky top-[7.5rem] z-20 -mx-3.5 mb-3 hidden bg-background/95 px-3.5 py-1 lg:block">
           <CityJumpBar
             items={jumpItems}
             activeId={activeJumpId}
@@ -281,31 +281,6 @@ export default function FoodPage() {
           />
         </div>
       )}
-
-      {/* Results Header */}
-      <div className="mb-3 flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
-        <span>
-          מציג {filteredFood.length} מקומות אוכל{" "}
-          {nearMeDenied
-            ? "· הגישה למיקום נדחתה"
-            : nearMeCoords
-              ? `(לפי מרחק מ${nearMeCoords.labelHe})`
-              : "(לפי חשיבות ★)"}
-        </span>
-        {activeFiltersCount > 0 && (
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedCity("all");
-              setSelectedType("all");
-              setMaxPrice(600);
-            }}
-            className="text-orange-600 underline dark:text-amber-300"
-          >
-            איפוס סינון
-          </button>
-        )}
-      </div>
 
       <FoodResultsList
         rows={filteredFood.map((item, index) => {

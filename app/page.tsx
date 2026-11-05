@@ -46,7 +46,7 @@ export default function HomePage() {
   return (
     <div
       dir="rtl"
-      className="relative h-dvh w-screen overflow-hidden select-none"
+      className="relative h-dvh w-full overflow-hidden select-none"
     >
       {/* Full-bleed 3D Taiwan Map Hero */}
       <MapCanvas />

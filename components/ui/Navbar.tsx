@@ -71,21 +71,26 @@ export function Navbar() {
               </div>
               <div
                 dir="rtl"
-                className="flex flex-wrap items-center gap-1 font-display text-[12px] font-black leading-tight tracking-tight text-slate-900 sm:flex-nowrap sm:text-sm dark:text-white"
+                className="flex min-w-0 items-center gap-1 font-display text-xs font-black leading-tight tracking-tight text-slate-900 dark:text-white"
               >
-                <span>טייוואן</span>
-                <span aria-hidden="true">·</span>
-                <bdi dir="ltr">3D</bdi>
-                <span aria-hidden="true" className="max-[420px]:hidden">
+                <span className="lg:hidden">טייוואן · 3D</span>
+                <span className="hidden lg:inline">טייוואן</span>
+                <span aria-hidden="true" className="hidden lg:inline">
                   ·
                 </span>
-                <bdi dir="ltr" className="max-[420px]:hidden">
+                <bdi dir="ltr" className="hidden lg:inline">
+                  3D
+                </bdi>
+                <span aria-hidden="true" className="hidden xl:inline">
+                  ·
+                </span>
+                <bdi dir="ltr" className="hidden xl:inline">
                   {tripSpan.dateRange}
                 </bdi>
-                <span aria-hidden="true" className="max-[420px]:hidden">
+                <span aria-hidden="true" className="hidden xl:inline">
                   ·
                 </span>
-                <span className="max-[420px]:hidden">{tripSpan.dayCount} ימים</span>
+                <span className="hidden xl:inline">{tripSpan.dayCount} ימים</span>
               </div>
             </Link>
 
@@ -131,7 +136,7 @@ export function Navbar() {
               type="button"
               onClick={() => tripActions.setSearchOpen(true)}
               aria-label="חיפוש מהיר"
-              className="toy-button flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 text-xs font-bold text-slate-700 hover:bg-slate-900/5 dark:text-slate-200 dark:hover:bg-white/10"
+              className="toy-button flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 text-xs font-bold text-slate-700 active:scale-[0.97] dark:text-slate-200 dark:hover:bg-white/10"
             >
               <Search className="h-4 w-4 text-orange-500" />
               <span className="hidden md:inline">חיפוש</span>
@@ -177,7 +182,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex min-h-11 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1 text-[10px] font-bold transition-colors duration-[var(--duration-fast)] sm:text-[11px] ${
+                className={`flex min-h-11 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1.5 text-[10px] font-bold transition-colors duration-[var(--duration-fast)] active:scale-[0.97] sm:text-[11px] ${
                   isActive
                     ? "bg-[var(--primary-muted)] text-[var(--primary)] dark:text-amber-300"
                     : "text-[var(--muted)] hover:text-[var(--foreground)]"

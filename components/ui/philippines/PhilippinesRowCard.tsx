@@ -1,4 +1,3 @@
-import { Star } from "lucide-react";
 import type { PhilippinesListRow } from "@/lib/data/philippines/types";
 import { PhilippinesStatusBadge } from "./PhilippinesStatusBadge";
 import { PhilippinesSourceLink } from "./PhilippinesSourceLink";
@@ -38,8 +37,7 @@ export function PhilippinesRowCard({ row }: { row: PhilippinesListRow }) {
               {row.name}
             </h3>
             <span className="inline-flex items-center gap-0.5 text-[11px] font-bold text-amber-600 dark:text-amber-400">
-              <Star className="h-3 w-3 fill-current" aria-hidden />
-              {row.importance}
+              {row.importance}★
             </span>
           </div>
           <p className="mt-0.5 text-xs font-semibold text-slate-500 dark:text-slate-400">

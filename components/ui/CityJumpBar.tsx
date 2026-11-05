@@ -40,7 +40,7 @@ export function CityJumpBar({
   }, [items, onJump]);
 
   return (
-    <div className="fade-edge-scroll no-scrollbar flex snap-x snap-mandatory items-center gap-1.5 overflow-x-auto pl-4">
+    <div className="fade-edge-scroll no-scrollbar flex snap-x snap-mandatory items-center gap-2 overflow-x-auto px-3">
       {items.map((item) => {
         const active = item.id === activeId;
         return (
@@ -52,7 +52,7 @@ export function CityJumpBar({
               event.preventDefault();
               onJump(item.id);
             }}
-            className={`flex min-h-11 shrink-0 snap-start items-center gap-1.5 rounded-full px-3.5 text-xs font-extrabold ${
+            className={`flex min-h-11 shrink-0 snap-start items-center gap-2 rounded-full px-3.5 text-xs font-extrabold active:scale-[0.98] ${
               active
                 ? "bg-orange-500 text-white shadow-xs"
                 : "bg-white text-slate-800 shadow-xs hover:bg-orange-500 hover:text-white dark:bg-slate-900 dark:text-slate-100"
@@ -90,8 +90,8 @@ export function BackToTop() {
         ).matches;
         window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
       }}
-      className="fixed left-3 z-30 flex min-h-11 min-w-11 items-center justify-center rounded-full bg-slate-900 px-3 text-xs font-black text-white shadow-lg dark:bg-amber-400 dark:text-slate-950"
-      style={{ bottom: "calc(4.75rem + env(safe-area-inset-bottom))" }}
+      className="fixed right-3 z-30 flex min-h-11 min-w-11 items-center justify-center rounded-full bg-slate-900 px-3 text-xs font-black text-white shadow-lg active:scale-[0.97] dark:bg-amber-400 dark:text-slate-950"
+      style={{ bottom: "calc(5.25rem + env(safe-area-inset-bottom))" }}
     >
       למעלה
     </button>

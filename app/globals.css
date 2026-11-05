@@ -78,7 +78,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-heebo), var(--font-rubik), sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
   overscroll-behavior-y: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -183,17 +183,14 @@ nextjs-portal {
 
 .toy-button {
   transition:
-    transform var(--duration-fast) var(--ease-spring),
+    transform 80ms var(--ease-out-soft),
     box-shadow var(--duration-fast) var(--ease-out-soft),
     background-color var(--duration-fast) var(--ease-out-soft);
 }
 
-.toy-button:hover {
-  transform: translateY(-1px);
-}
-
 .toy-button:active {
-  transform: translateY(1px) scale(0.98);
+  transform: translateY(0) scale(0.97);
+  opacity: 0.94;
 }
 
 .skeleton-shimmer {

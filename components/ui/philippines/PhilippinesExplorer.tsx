@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search, X, Palmtree } from "lucide-react";
+import { Search, X } from "lucide-react";
 import {
   countPhilippinesByCategory,
   getPhilippinesRowsForCategory,
@@ -79,17 +79,12 @@ export function PhilippinesExplorer() {
       className="app-scroll-page mx-auto max-w-6xl px-3.5 md:px-6"
       data-testid="philippines-page"
     >
-      <div className="mb-4 overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-teal-500/10 via-sky-500/10 to-amber-500/10 p-4 shadow-xs dark:border-slate-800 dark:from-teal-900/30 dark:via-slate-900 dark:to-amber-900/20">
-        <div className="flex items-center gap-2 text-xs font-extrabold text-teal-700 dark:text-teal-300">
-          <Palmtree className="h-4 w-4" aria-hidden />
-          <span>דצמ׳ 2026 – ינו׳ 2027 · 165 נקודות · מקורות עם סטטוס אימות</span>
-        </div>
-        <h1 className="mt-1 font-display text-2xl font-black text-slate-900 dark:text-white">
+      <div className="mb-4 overflow-hidden rounded-3xl border border-slate-200 bg-[var(--surface)] p-4 shadow-xs dark:border-slate-800">
+        <h1 className="font-display text-2xl font-black text-slate-900 dark:text-white">
           פיליפינים — מדריך הטיול
         </h1>
         <p className="mt-1 text-sm font-medium text-slate-600 dark:text-slate-400">
-          רשימה מסודרת לפי עיר/אי וקטגוריה. שורות טבע מודגשות בירוק. כל פריט
-          מציג סטטוס וקישור למקור.
+          רשימה לפי עיר וקטגוריה · סטטוס אימות ומקור לכל פריט
         </p>
       </div>
 
@@ -118,7 +113,7 @@ export function PhilippinesExplorer() {
           )}
         </div>
 
-        <div className="fade-edge-scroll no-scrollbar mt-2 flex snap-x snap-mandatory items-center gap-1.5 overflow-x-auto pl-4">
+        <div className="fade-edge-scroll no-scrollbar mt-2 flex snap-x snap-mandatory items-center gap-2 overflow-x-auto px-3">
           {PHILIPPINES_CATEGORIES.map((cat) => {
             const active = cat.id === category;
             const count = counts[cat.id];
@@ -147,7 +142,7 @@ export function PhilippinesExplorer() {
       </div>
 
       {jumpItems.length > 1 && (
-        <div className="sticky top-[10.5rem] z-20 -mx-3.5 mb-3 bg-background/95 px-3.5 py-1 md:top-[11rem]">
+        <div className="sticky top-[10.5rem] z-20 -mx-3.5 mb-3 hidden bg-background/95 px-3.5 py-1 lg:block md:top-[11rem]">
           <CityJumpBar
             items={jumpItems}
             activeId={activeJumpId}
@@ -159,11 +154,11 @@ export function PhilippinesExplorer() {
         </div>
       )}
 
-      <div className="mb-3 text-xs font-bold text-slate-600 dark:text-slate-400">
-        {categoryMeta.emoji} {categoryMeta.labelHe} · מציג {filteredRows.length}{" "}
-        פריטים
-        {searchQuery ? ` (סינון: "${searchQuery.trim()}")` : ""}
-      </div>
+      {searchQuery ? (
+        <p className="mb-3 text-xs font-bold text-slate-600 dark:text-slate-400">
+          {filteredRows.length} תוצאות · {categoryMeta.labelHe}
+        </p>
+      ) : null}
 
       <div className="space-y-4">
         {grouped.map((group) => {
