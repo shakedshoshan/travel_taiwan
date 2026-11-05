@@ -28,7 +28,7 @@ export function PhilippinesRowCard({ row }: { row: PhilippinesListRow }) {
       className={`rounded-2xl border p-3.5 shadow-xs transition-colors ${
         nature
           ? "border-emerald-400/50 bg-gradient-to-br from-emerald-50/90 to-green-50/40 dark:border-emerald-500/35 dark:from-emerald-950/40 dark:to-slate-900/80"
-          : "border-slate-200/90 bg-white dark:border-slate-800 dark:bg-slate-900/90"
+          : "border-[color:var(--border)] bg-[var(--surface)] dark:bg-slate-900/90"
       }`}
     >
       <div className="flex flex-wrap items-start justify-between gap-2">

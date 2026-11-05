@@ -51,7 +51,7 @@ export function PlaceDetailClient({
   return (
     <div
       dir="rtl"
-      className="mx-auto max-w-4xl px-3.5 pt-16 pb-24 md:px-6 md:pt-20"
+      className="app-scroll-page mx-auto max-w-4xl px-3.5 md:px-6"
     >
       {/* Top Back Navigation */}
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">

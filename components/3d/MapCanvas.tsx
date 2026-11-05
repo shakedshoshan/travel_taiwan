@@ -120,7 +120,7 @@ export function MapCanvas() {
       {paintReady && <Canvas
         frameloop="demand"
         shadows={{ type: THREE.PCFShadowMap }}
-        dpr={[1, 2]}
+        dpr={coarsePointer ? [1, 1.35] : [1, 2]}
         camera={{ position: [-4.5, 19.5, 16.5], fov: 42, near: 0.1, far: 160 }}
         gl={{
           antialias: true,

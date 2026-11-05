@@ -76,7 +76,7 @@ export function PhilippinesExplorer() {
   return (
     <div
       dir="rtl"
-      className="mx-auto max-w-6xl px-3.5 pt-16 pb-24 md:px-6 md:pt-20"
+      className="app-scroll-page mx-auto max-w-6xl px-3.5 md:px-6"
       data-testid="philippines-page"
     >
       <div className="mb-4 overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-teal-500/10 via-sky-500/10 to-amber-500/10 p-4 shadow-xs dark:border-slate-800 dark:from-teal-900/30 dark:via-slate-900 dark:to-amber-900/20">

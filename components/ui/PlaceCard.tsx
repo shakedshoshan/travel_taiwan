@@ -71,7 +71,7 @@ export function PlaceCard({
   return (
     <article
       dir="rtl"
-      className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-sm transition-all hover:border-orange-400/60 dark:border-slate-800 dark:bg-slate-900"
+      className="relative overflow-hidden rounded-3xl border border-[color:var(--border)] bg-[var(--surface)] shadow-sm transition-[transform,border-color,box-shadow] duration-[var(--duration-fast)] active:scale-[0.995] dark:border-[color:var(--border-strong)]"
     >
       <Link
         href={`/place/${place.id}`}

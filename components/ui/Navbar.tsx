@@ -114,7 +114,7 @@ export function Navbar() {
                   href={item.href}
                   className={`flex min-h-11 items-center gap-1.5 rounded-xl px-3 text-xs font-extrabold transition-colors ${
                     isActive
-                      ? "bg-orange-500 text-white shadow-xs"
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-xs"
                       : "text-slate-700 hover:bg-slate-900/5 hover:text-slate-950 dark:text-slate-200 dark:hover:bg-white/10"
                   }`}
                 >
@@ -162,7 +162,7 @@ export function Navbar() {
         dir="rtl"
         aria-label="ניווט ראשי"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-        className={`fixed right-0 bottom-0 left-0 z-40 border-t border-slate-900/10 bg-white/95 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95 ${
+        className={`fixed right-0 bottom-0 left-0 z-40 border-t border-[color:var(--border)] bg-[var(--map-chrome-bg)] backdrop-blur-xl ${
           cityMode ? "hidden" : "lg:hidden"
         }`}
       >
@@ -177,10 +177,10 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex min-h-11 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1 text-[10px] font-bold transition-colors sm:text-xs ${
+                className={`flex min-h-11 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1 text-[10px] font-bold transition-colors duration-[var(--duration-fast)] sm:text-[11px] ${
                   isActive
-                    ? "text-orange-600 dark:text-amber-400"
-                    : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+                    ? "bg-[var(--primary-muted)] text-[var(--primary)] dark:text-amber-300"
+                    : "text-[var(--muted)] hover:text-[var(--foreground)]"
                 }`}
               >
                 <Icon

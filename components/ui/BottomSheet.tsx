@@ -72,7 +72,7 @@ export function BottomSheet({
         paddingBottom: "env(safe-area-inset-bottom)",
         willChange: "transform",
       }}
-      className="pointer-events-auto fixed right-0 left-0 z-50 mx-auto flex w-full max-w-xl flex-col overflow-hidden rounded-t-3xl border-t border-slate-200 bg-white text-slate-900 shadow-[0_-12px_40px_rgba(15,23,42,0.22)] dark:border-slate-800 dark:bg-slate-950 dark:text-white"
+      className="pointer-events-auto fixed right-0 left-0 z-50 mx-auto flex w-full max-w-xl flex-col overflow-hidden rounded-t-[1.75rem] border-t border-[color:var(--border-strong)] bg-[var(--surface)] text-[var(--foreground)] shadow-[0_-16px_48px_rgba(15,23,42,0.18)] dark:shadow-[0_-16px_48px_rgba(0,0,0,0.45)]"
     >
       <div
         data-sheet-grab
@@ -91,7 +91,7 @@ export function BottomSheet({
           }
           className="flex min-h-11 w-full items-center justify-center"
         >
-          <span className="h-1.5 w-12 rounded-full bg-slate-300 dark:bg-slate-600" />
+          <span className="h-1.5 w-14 rounded-full bg-[color:var(--border-strong)]" />
         </button>
       </div>
 

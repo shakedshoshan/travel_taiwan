@@ -25,6 +25,15 @@ export function runSpring(
   onComplete?: () => void,
   options?: SpringOptions
 ): () => void {
+  if (
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    onFrame(to);
+    onComplete?.();
+    return () => {};
+  }
+
   const cfg = { ...DEFAULTS, ...options };
   let value = from;
   let velocity = 0;

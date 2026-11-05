@@ -15,6 +15,7 @@ export default defineConfig({
     baseURL,
     trace: "on-first-retry",
     screenshot: "only-on-failure",
+    hasTouch: true,
   },
   webServer: {
     command: `npm run build && npm run start -- -p ${PORT}`,
@@ -27,6 +28,20 @@ export default defineConfig({
     },
   },
   projects: [
+    {
+      name: "iphone-13",
+      use: {
+        browserName: "chromium",
+        ...devices["iPhone 13"],
+      },
+    },
+    {
+      name: "pixel-7",
+      use: {
+        browserName: "chromium",
+        ...devices["Pixel 7"],
+      },
+    },
     {
       name: "mobile-390x844",
       use: {

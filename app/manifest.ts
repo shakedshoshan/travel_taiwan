@@ -12,7 +12,7 @@ export default function manifest(): MetadataRoute.Manifest {
     dir: "rtl",
     lang: "he",
     background_color: "#0a101d",
-    theme_color: "#ff5a36",
+    theme_color: "#e85a2c",
     icons: [
       {
         src: "/icon.svg",

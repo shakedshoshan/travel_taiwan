@@ -48,7 +48,7 @@ export default function RoutePage() {
   const activeLeg = legs.find((l) => l.order === activeLegOrder) ?? legs[0];
 
   return (
-    <div dir="rtl" className="mx-auto max-w-5xl pb-24">
+    <div dir="rtl" className="app-scroll-page mx-auto max-w-5xl">
       {/* Sticky Top 35vh Mini 3D Map Synced to Scroll */}
       <div
         style={{ top: "calc(3.25rem + env(safe-area-inset-top))" }}
@@ -105,7 +105,7 @@ export default function RoutePage() {
         </div>
       </div>
 
-      <div className="px-3.5 pt-16 md:px-6">
+      <div className="px-3.5 md:px-6">
         <div className="mb-5">
           <h1 className="font-display text-2xl font-black tracking-tight text-slate-900 md:text-3xl dark:text-white">
             המסלול המלא בטייוואן{" "}
