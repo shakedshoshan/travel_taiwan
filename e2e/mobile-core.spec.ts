@@ -134,4 +134,26 @@ test.describe("mobile touch core flows", () => {
       page.getByRole("button", { name: "פתח הגדרות שכבות מפה" })
     ).toBeVisible();
   });
+
+  test("scroll pages use safe-area layout shell", async ({ page }) => {
+    await page.goto("/info");
+    const shell = page.locator(".app-scroll-page").first();
+    await expect(shell).toBeVisible({ timeout: 15_000 });
+    const paddingTop = await shell.evaluate(
+      (el) => parseFloat(getComputedStyle(el).paddingTop)
+    );
+    expect(paddingTop).toBeGreaterThanOrEqual(48);
+  });
+
+  test("scrollable list pages keep bottom nav reachable", async ({ page }) => {
+    await page.goto("/food");
+    await expect(page.getByPlaceholder("חפשו מנה, שוק לילה או שם בסינית...")).toBeVisible({
+      timeout: 15_000,
+    });
+    const nav = page.getByRole("link", { name: "מפה" });
+    await nav.scrollIntoViewIfNeeded();
+    await expect(nav).toBeVisible();
+    const box = await nav.boundingBox();
+    expect(box?.height ?? 0).toBeGreaterThanOrEqual(40);
+  });
 });

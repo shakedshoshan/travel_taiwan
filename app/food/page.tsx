@@ -158,7 +158,7 @@ export default function FoodPage() {
   return (
     <div
       dir="rtl"
-      className="mx-auto max-w-6xl px-3.5 pt-16 pb-24 md:px-6 md:pt-20"
+      className="app-scroll-page mx-auto max-w-6xl px-3.5 md:px-6"
     >
       {/* Compact Sticky Search + Filter Bar */}
       <div

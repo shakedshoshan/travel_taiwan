@@ -62,7 +62,7 @@ export default function HotelsPage() {
   return (
     <div
       dir="rtl"
-      className="mx-auto max-w-5xl px-3.5 pt-16 pb-24 md:px-6 md:pt-20"
+      className="app-scroll-page mx-auto max-w-5xl px-3.5 md:px-6"
     >
       {/* Sticky City Jump Bar */}
       <div

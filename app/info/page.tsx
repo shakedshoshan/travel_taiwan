@@ -33,10 +33,10 @@ export default function InfoPage() {
   return (
     <div
       dir="rtl"
-      className="mx-auto max-w-4xl space-y-5 px-3.5 pt-16 pb-24 md:px-6 md:pt-20"
+      className="app-scroll-page mx-auto max-w-4xl space-y-5 px-3.5 md:px-6"
     >
       {/* Header */}
-      <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-xs md:p-6 dark:border-slate-800 dark:bg-slate-900">
+      <div className="surface-card rounded-3xl p-4 md:p-6">
         <h1 className="font-display text-2xl font-black text-slate-900 md:text-3xl dark:text-white">
           טיפים ומידע שימושי לטייוואן
         </h1>

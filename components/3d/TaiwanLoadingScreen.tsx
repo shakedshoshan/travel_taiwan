@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { TRIP_DATA } from "@/lib/data/loaders";
 
 interface TaiwanLoadingScreenProps {
@@ -12,6 +12,8 @@ export function TaiwanLoadingScreen({
   visible,
   progress = 0,
 }: TaiwanLoadingScreenProps) {
+  const reduceMotion = useReducedMotion();
+
   if (!visible) return null;
 
   const blocks = [
@@ -27,46 +29,59 @@ export function TaiwanLoadingScreen({
       dir="rtl"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.55 }}
+      transition={{ duration: reduceMotion ? 0.01 : 0.55 }}
       className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-sky-950 via-slate-900 to-emerald-950 text-white"
     >
-      {/* Animated assembling 3D-style island blocks */}
       <div
         aria-hidden="true"
         className="relative flex h-56 w-56 items-center justify-center"
       >
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-2 rounded-full border-2 border-dashed border-cyan-400/35"
-        />
+        {!reduceMotion ? (
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-2 rounded-full border-2 border-dashed border-cyan-400/35"
+          />
+        ) : (
+          <div className="absolute inset-6 rounded-full border-2 border-dashed border-cyan-400/35" />
+        )}
 
         <div className="relative flex flex-col items-center gap-1.5">
-          {blocks.map((b, i) => (
-            <motion.div
-              key={b.label}
-              initial={{ opacity: 0, scale: 0.3, y: b.y * 1.8, rotateX: 55 }}
-              animate={{
-                opacity: 1,
-                scale: [0.85, 1.04, 1],
-                y: 0,
-                rotateX: 0,
-              }}
-              transition={{
-                delay: b.delay,
-                duration: 0.65,
-                repeat: Infinity,
-                repeatType: "reverse",
-                repeatDelay: 0.9,
-              }}
-              style={{
-                width: `${110 - Math.abs(i - 2) * 22}px`,
-              }}
-              className={`h-7 rounded-2xl ${b.color} flex items-center justify-center border border-white/50 text-[10px] font-bold text-slate-950 shadow-lg`}
-            >
-              {b.label}
-            </motion.div>
-          ))}
+          {blocks.map((b, i) =>
+            reduceMotion ? (
+              <div
+                key={b.label}
+                style={{ width: `${110 - Math.abs(i - 2) * 22}px` }}
+                className={`h-7 rounded-2xl ${b.color} skeleton-shimmer flex items-center justify-center border border-white/50 text-[10px] font-bold text-slate-950`}
+              >
+                {b.label}
+              </div>
+            ) : (
+              <motion.div
+                key={b.label}
+                initial={{ opacity: 0, scale: 0.3, y: b.y * 1.8, rotateX: 55 }}
+                animate={{
+                  opacity: 1,
+                  scale: [0.85, 1.04, 1],
+                  y: 0,
+                  rotateX: 0,
+                }}
+                transition={{
+                  delay: b.delay,
+                  duration: 0.65,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  repeatDelay: 0.9,
+                }}
+                style={{
+                  width: `${110 - Math.abs(i - 2) * 22}px`,
+                }}
+                className={`h-7 rounded-2xl ${b.color} flex items-center justify-center border border-white/50 text-[10px] font-bold text-slate-950 shadow-lg`}
+              >
+                {b.label}
+              </motion.div>
+            )
+          )}
         </div>
       </div>
 
