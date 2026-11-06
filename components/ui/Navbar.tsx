@@ -9,6 +9,7 @@ import {
   UtensilsCrossed,
   BedDouble,
   Lightbulb,
+  Table2,
   Search,
   Sun,
   Moon,
@@ -24,6 +25,7 @@ const NAV_LINKS = [
   { href: "/events", label: "אירועים", icon: Sparkles },
   { href: "/food", label: "אוכל", icon: UtensilsCrossed },
   { href: "/hotels", label: "מלונות", icon: BedDouble },
+  { href: "/live-guide", label: "מדריך", icon: Table2 },
   { href: "/info", label: "טיפים", icon: Lightbulb },
 ] as const;
 

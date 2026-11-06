@@ -1,0 +1,4787 @@
+{
+  "purpose": "מאגר עבודה פנימי למדריך יומי: לבחור לפי מיקום, סוג פעילות, מזג אוויר וזמן; מזרחניק קודם כשיש התאמה דומה.",
+  "priorityMeaning": {
+    "5": "חובה או בחירה מפורשת של Shaked",
+    "3": "מומלץ כשקרוב ומתאים",
+    "1": "רק בעניין מיוחד, מזג אוויר מתאים או זמן פנוי"
+  },
+  "updated": "2026-11-06T21:51:00+02:00",
+  "entries": [
+    {
+      "area": "טאיפיי",
+      "name": "Raohe Night Market",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "Raohe Night Market – השוק הלילי הכי מוכר בטאיפיי, גדול, עמוס וכיפי, עם וייב מקומי חזק והמון אוכל רחוב.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Ningxia Night Market",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "Ningxia Night Market – שוק אוכל בלבד, קטן יותר אבל נחשב לאחד הטובים בעיר, עם אוכל רחוב ברמה גבוהה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Nanjichang Night Market",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "Nanjichang Night Market – שוק לילה מקומי בדרום מערב טאיפיי, פחות תיירותי, עם אוכל מצוין ומחירים זולים. הרבה טאיוואנים באים לפה בשביל “הדבר האמיתי”.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Longshan Temple",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "Longshan Temple – המקדש הבודהיסטי הכי מפורסם בטאיפיי, מלא בפסלים, מנחות ועיטורים יפים. לגמרי חוויה של רוחניות מקומית.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Confucius Temple",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "Confucius Temple – מקדש שקט ושלו שמכניס לאווירה של תרבות קונפוציוס והחינוך הקלאסי הסיני.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Chiang Kai-shek Memorial Hall",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "Chiang Kai-shek Memorial Hall – מבנה ענק ואייקוני בלב פארק פתוח, אחד הסמלים הכי מוכרים של העיר.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Taipei 101",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "Sun Yat-sen Memorial Hall – אתר מרכזי שמוקדש לאבי האומה, עם תצוגות מתחלפות, אזור פתוח ונוף יפה לכיוון טאיפיי 101.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "National Palace Museum",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "National Palace Museum – מוזיאון ענק ומרשים עם אוסף מטורף של אמנות סינית עתיקה. גם אם אתם לא בקטע של היסטוריה, זו עצירה ששווה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "MOCA (Museum of Contemporary Art)",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "MOCA (Museum of Contemporary Art) – מוזיאון אמנות עכשווית עם תערוכות מתחלפות, עיצוב מגניב ואמנים מטאיוואן ומהעולם.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "National Taiwan Museum",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "National Taiwan Museum – המוזיאון הוותיק בטאיפיי, ליד פארק 228, עם תערוכות על ההיסטוריה, התרבות והטבע של טאיוואן.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Ximending",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "*Ximending – רובע קניות וצעירים ססגוני. אופנה, גרפיטי, אוכל רחוב, ברים בערב, הופעות רחוב ואווירה תוססת.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Zhongxiao Dunhua",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "*Zhongxiao Dunhua – אזור קניות יותר יוקרתי: מותגים, בוטיקים מעוצבים, בתי קפה שיקיים ומלא סטייל.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Dihua Street",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "*Dihua Street – רחוב בלב שכונה מסורתית עם דוכנים, חנויות תבלינים ומזכרות, ואווירה סינית של פעם.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Yinhe Cave (Yinhe Waterfall)",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "*Yinhe Cave (Yinhe Waterfall) – מפל קטן עם מקדש נסתר בתוך מערה. פנינת טבע שקטה עם אווירה מיסטית. מגיעים באוטובוס מטאיפיי ואז הליכה קלה יחסית של בערך חצי שעה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Wulai & Wulai Falls",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "*Wulai & Wulai Falls – כפר הררי מדרום לטאיפיי עם מפלי וולאי הגבוהים, מעיינות חמים, תרבות שבט האטאייל (Atayal) ורכבת קטנה וחמודה באזור.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Taipei 101",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "טאיפי 101 הוא הסמל של העיר- מגדל ענק בגובה 508 מטר (אחד הבניינים הגבוהים בעולם) . יש תצפית בקומה 89 (ומדי פעם פתוחה גם קומה 101). וכדאי לעלות לקראת שקיעה. על מנת לראות את טאיפיי 101 אפשר לעשות כמה טיולי יום קצרים הכוללים טיפוס לכמה פסגות במרכז העיר דוגמאת מסלול Xiangshan.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Daan Forest Park",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "*Daan Forest Park – הריאה הירוקה של טאיפיי: אגם קטן, שבילי הליכה, פיקניקים והמון שקט באמצע העיר.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "2/28 Peace Park",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "2/28 Peace Park – פארק היסטורי עם אנדרטה לנפגעי אירועי 28 בפברואר, אזור רגוע בלב העיר ליד מוזיאונים ומבנים היסטוריים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Huashan 1914 Creative Park",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "*Huashan 1914 Creative Park – מתחם תרבותי מעוצב שהיה פעם מפעל בירה מתקופת השלטון היפני, והיום הוא שילוב של גלריות, חנויות מיוחדות, בתי קפה, הופעות ותערוכות.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Botanical Gardens",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "*Botanical Gardens – גנים בוטניים נעימים עם אגם קטן, שבילים שקטים ועצים טרופיים, קפיצה טובה לבריחה קצרה מהעיר.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Yangmingshan National Park",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "Yangmingshan National Park – פארק לאומי מפורסם עם נופים הרריים, מעיינות חמים, פריחת דובדבן באביב ובריכות גופרית רותחות.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Jiufen + Golden Falls",
+      "types": [
+        "טבע וטיול",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "Jiufen + Golden Falls – עיירה הררית קסומה עם סמטאות צרות, בתי תה ונוף לילי מואר בפנסים סיניים. ליד העיירה נמצא המפל המוזהב, שהצבע שלו מגיע ממינרלים באזור.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Shifen & Pingxi",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "Shifen & Pingxi – טיול כפרי מחוץ לטאיפיי: שחרור פנסי נייר ומפלי שיפן המרשימים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Teapot Mountain",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "Teapot Mountain – הר יפה בצפון טאיוואן ואחד המסלולים הפופולריים באזור, קרוב לג׳יופן ולמפל המוזהב.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "Taichung Park",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "Taichung Park הוא הפארק העירוני הוותיק של טאיצ'ונג, עם אגם קטן, גשרונים, בית תה יפני ומרחב ירוק באמצע העיר.גם Calligraphy Greenway היא רצועה ירוקה ארוכה שמחברת בין מוזיאון הטבע, מוזיאון האמנות ו־Civic Square. לאורך הדרך תמצאו פסלים, בתי קפה, חנויות מעצבים ואווירה יצירתית. בלילות פסטיבל הג'אז זה הלב של האירוע .",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "Calligraphy Greenway",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "Taichung Park הוא הפארק העירוני הוותיק של טאיצ'ונג, עם אגם קטן, גשרונים, בית תה יפני ומרחב ירוק באמצע העיר.גם Calligraphy Greenway היא רצועה ירוקה ארוכה שמחברת בין מוזיאון הטבע, מוזיאון האמנות ו־Civic Square. לאורך הדרך תמצאו פסלים, בתי קפה, חנויות מעצבים ואווירה יצירתית. בלילות פסטיבל הג'אז זה הלב של האירוע .",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "Dakeng Scenic Area",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "הוא אזור ההררי הקרוב ביותר לטאיצ'ונג, עם 10 שבילי הליכה בדרגות קושי שונות ותצפיות מטורפות לעיר.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "Taichung Second Market",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "שוק ותיק מקורה, עם מסדרונות צרים ודוכני אוכל מקומיים: מרקי נודלס, אורז חזיר, דים סאם ועוד. מקום מושלם לפתוח בו בוקר \"מקומי\" בטאיצ'ונג.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "National Museum of Natural Science",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "מוזיאונים כמו: National Museum of Natural Science,",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "National Taiwan Museum of Fine Arts",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "National Taiwan Museum of Fine Arts",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "Rainbow Village",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "ריינבואו וילג׳ היא שכונה צבאית לשעבר שצבועה מקיר לקיר בציורים צבעוניים. קטנה אבל מאוד אינסטגרמית, שנג׳י ניו וילג׳ הוא מתחם מגניב של בתים יפניים לשעבר שהפכו לחנויות מעצבים, גלריות, בתי קפה ודוכני אוכל קטן.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "Shenji New Village",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "ריינבואו וילג׳ היא שכונה צבאית לשעבר שצבועה מקיר לקיר בציורים צבעוניים. קטנה אבל מאוד אינסטגרמית, שנג׳י ניו וילג׳ הוא מתחם מגניב של בתים יפניים לשעבר שהפכו לחנויות מעצבים, גלריות, בתי קפה ודוכני אוכל קטן.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "Miyahara",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "בניין רטרו ליד תחנת הרכבת שהפך לחנות קינוחים מפורסמת: גלידות, שוקולדים, עוגיות וקינוחים ארוזים בסטייל. האדריכלות והתורים משוגעים, אז קחו בחשבון זמן.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "Zhongshe Flower Market",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "שדות פרחים צבעוניים צפונית לטאיצ'ונג, עם מיצבים לצילום, ערסלים, פסנתרים ותפאורות שונות. מתאים מאוד למי שאוהב \"צילום באינסטגרם\" ושוטטות רומנטית בין הפרחים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "Gaomei Wetlands",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "שקיעות מטורפות בין טורבינות רוח ענקיות, לוח עץ ארוך שמוביל החוצה אל המים ואפשרות ללכת יחפים בבוץ בשפל. מקום סופר פוטוגני, אבל תלוי מאוד במזג האוויר ובגובה הגאות.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "Xinshe Castle",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "טירה אירופאית ליד טאיצ׳ונג, עם אגם קטן, גשרים ותצפיות פוטוגניות ברמות. אחלה קפיצה לכמה שעות של שיטוט רגוע וצילומים, במיוחד ביום מעונן או אחרי גשם כשהכול מרגיש קצת כמו אגדות.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאינאן",
+      "name": "Wusheng Night Market -",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/tainan/",
+      "note": "Wusheng Night Market - שוק לילה גדול ומקומי יותר, ועוד שווקים כמו Dadong Night Market ו- Xiaobei Night Market.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאינאן",
+      "name": "Chihkan Tower (Fort Provintia)",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/tainan/",
+      "note": "Chihkan Tower (Fort Provintia) הוא מבצר הולנדי מהמאה ה־17 שהפך למתחם מקדשים סיני, במיוחד יפה בשעות הערב כשהוא מואר. בנוסף שווה לבקר גם ב- Tainan Confucius Temple - מקדש קונפוציוס הראשון בטאיוואן ובית הספר הציבורי הראשון באי, עם אווירה שקטה ואלגנטית.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאינאן",
+      "name": "National Museum of Taiwan History -",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/tainan/",
+      "note": "National Museum of Taiwan History - מוזיאון שמספר את הסיפור של טאיוואן: עמים ילידיים, תקופה הולנדית ויפנית ועד המדינה המודרנית.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאינאן",
+      "name": "Anping Tree House",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/tainan/",
+      "note": "אחד המקומות הכי מיוחדים בטאינאן. זהו מחסן ישן של חברת מסחר יפנית שנבלע לגמרי בתוך שורשי עצי בניאן עצומים. שבילי מתכת ותצפיות קטנות עוברים בין הענפים, הקירות והגג הקורס.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Pier-2",
+      "types": [
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "זה הלב של גאושיונג בערב: מחסני הנמל של Pier-2 שהפכו למתחם אמנות ענק עם פסלים, גרפיטי, גלריות ובתי קפה, ובמרחק קצר משם הטיילת של Love River וה־Kaohsiung Music Center עם מבנים אולטרה־מודרניים, גשרים מוארים, ברים ושייט קצר. בגדול מגיעים לשקיעה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Kaohsiung Music Center",
+      "types": [
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "זה הלב של גאושיונג בערב: מחסני הנמל של Pier-2 שהפכו למתחם אמנות ענק עם פסלים, גרפיטי, גלריות ובתי קפה, ובמרחק קצר משם הטיילת של Love River וה־Kaohsiung Music Center עם מבנים אולטרה־מודרניים, גשרים מוארים, ברים ושייט קצר. בגדול מגיעים לשקיעה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Love River",
+      "types": [
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "זה הלב של גאושיונג בערב: מחסני הנמל של Pier-2 שהפכו למתחם אמנות ענק עם פסלים, גרפיטי, גלריות ובתי קפה, ובמרחק קצר משם הטיילת של Love River וה־Kaohsiung Music Center עם מבנים אולטרה־מודרניים, גשרים מוארים, ברים ושייט קצר. בגדול מגיעים לשקיעה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Cihou Fort",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "מעבורת קצרה מ־Gushan מביאה אתכם לאי צר עם חוף שחור, טיילת, רכיבה באופניים, Cihou Fort, מגדלור, כנסייה ישנה וגלריות. בערב אפשר לשבת על חוף הים עם בירה ולראות שקיעה על האוקיינוס.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Cijin Island",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "מעבורת קצרה מ־Gushan מביאה אתכם לאי צר עם חוף שחור, טיילת, רכיבה באופניים, Cihou Fort, מגדלור, כנסייה ישנה וגלריות. בערב אפשר לשבת על חוף הים עם בירה ולראות שקיעה על האוקיינוס.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Spring & Autumn Pavilions",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "אגם מלא במקדשים, פגודות וגשרי דרקון, כולל פגודות הדרקון והטיגריס, Spring & Autumn Pavilions ועוד. שווה במיוחד לקראת שקיעה. חשוב לדעת: חלק מהמבנים, כולל הפגודות, היו בשיפוצים תקופה ארוכה, אז כדאי לבדוק עדכונים לפני שמגיעים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Lotus Lake",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "אגם מלא במקדשים, פגודות וגשרי דרקון, כולל פגודות הדרקון והטיגריס, Spring & Autumn Pavilions ועוד. שווה במיוחד לקראת שקיעה. חשוב לדעת: חלק מהמבנים, כולל הפגודות, היו בשיפוצים תקופה ארוכה, אז כדאי לבדוק עדכונים לפני שמגיעים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Dragon & Tiger Pagodas",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "אגם מלא במקדשים, פגודות וגשרי דרקון, כולל פגודות הדרקון והטיגריס, Spring & Autumn Pavilions ועוד. שווה במיוחד לקראת שקיעה. חשוב לדעת: חלק מהמבנים, כולל הפגודות, היו בשיפוצים תקופה ארוכה, אז כדאי לבדוק עדכונים לפני שמגיעים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Fo Guang Shan Buddha Museum & Monastery",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "קומפלקס בודהיסטי ענק מחוץ לעיר, עם פסל בודהה עצום, שדרת סטופות, מוזיאון ותערוכות על בודהיזם. אחד המקומות הכי מרשימים בטאיוואן, גם מבחינת רוחניות וגם אינסטגרמי בטירוף.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Ruifeng Night Market",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "Ruifeng Night Market",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Liuhe Night Market",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "Liuhe Night Market",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Xin Juejiang",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "Xin Juejiang ואזורי קניות אחרים",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Kaohsiung Museum of Fine Arts",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "Kaohsiung Museum of Fine Arts",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Kaohsiung Museum of History",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "Kaohsiung Museum of History",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "WeiWu Mi Mi Village",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "זה האזור בגאושיונג שבו פשוט הולכים בין סמטאות וכל הבניינים סביבכם מכוסים בציורי קיר ענקיים של סטריט־ארט. זה יושב ליד Weiwuying (קו ה־MRT הכתום, תחנה O10), קרוב גם ל־Weiwuying National Kaohsiung Center for the Arts. הכניסה חופשית (פתוח כל הזמן), ובערב חלק מהקירות מוארים אז זה מקבל וייב ממש אחר.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "Liuqiu",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "אי קטן ויפהפה, ממוקם ליד החוף הדרומי של טאיוואן, וההגעה אליו היא דרך מעבורת מ־Donggang (כ-30 דקות). זה מקום נהדר למי שמחפש שלווה, חופים יפים ומים צלולים לשנורקלינג. על האי תוכלו למצוא תצפיות מרהיבות, שבילי הליכה, ומגדלור מפורסם. תוסיפו לזה את צבי הים שמגיעים לאזור, אם אתם בקטע של חוף רגוע ומלא חיים, Liuqiu זה המקום!",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "הואליאן",
+      "name": "Mugua River Gorge",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/hualien/",
+      "note": "נהר מהמם עם פלגי מים צלולים בצבע תכלת, בריכות שכשוך טבעיות ומפלים. לא כל האיזור פתוח תמיד אבל הנהר נגיש כל הזמן!",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "הואליאן",
+      "name": "Sixty Stone Mountain",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/hualien/",
+      "note": "גבעת שדות השושנים הכתומות המפורסמת של מחוז הואליאן, ליד העיירה Fuli בעמק ה־East Rift. בקיץ המאוחר/סתיו המוקדם (בערך אמצע אוגוסט עד אמצע ספטמבר) כל המדרונות נצבעים בפריחה כתומה של Daylilies. יש לאורך הרכס נקודות תצפית, דוכנים חקלאיים קטנים ואוכל מקומי על בסיס השושן (מרקים, מוקפצים ואפילו גלידה). מחוץ לעונת הפריחה עדיין שווה להגיע בשביל הנופים לעמק וההליכות הקצרות בין הטרסות.",
+      "status": "תלוי עונה, מזג אוויר או הפעלת סיורים; לבדוק לפני הבחירה"
+    },
+    {
+      "area": "אילאן",
+      "name": "Jiaoxi Hot Springs",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/yilan/",
+      "note": "אחת האטרקציות המרכזיות של אילן. ג'יאוסי הוא אזור עם עשרות בתי מרחץ, מלונות עם אמבטיות גופרית פרטיות ופארקים ציבוריים עם אמבטיות רגליים חינמיות. מי שאוהב מעיינות חמים - בואו לפה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "אילאן",
+      "name": "National Center for Traditional Arts",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/yilan/",
+      "note": "כפר אומנים מקסים שמשחזר תרבות מסורתית עם סדנאות, חנויות קטנות, מופעים ודוכני אוכל מקומי.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "אילאן",
+      "name": "Caoling Historic Trail",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/yilan/",
+      "note": "שביל הליכה ציורי ומרשים החוצה את ההרים שבין מחוז אילן (Yilan) למחוז ניו טאיפיי (New Taipei), באזור החוף הצפון-מזרחי של טאיוואן. זהו שביל היסטורי בן כ-8 ק\"מ, ולאורך המסלול תיהנו מנופים מרהיבים של ים פתוח מצד אחד, ויערות הרריים מצד שני.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "אילאן",
+      "name": "Turtle Island",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/yilan/",
+      "note": "אי הצב, או Guishan Island, הוא אי געשי קטן בצורת צב, הממוקם כ-10 ק\"מ מהחוף של Yilan ונראה בקלות מהעיר עצמה. האי אינו מיושב, ונחשב לאתר טבע מוגן שאפשר לטייל בו בסיורי יום. האי הוא אחד האיים היפים ביותר בטאיוואן עם מצוקים, ים כחול, ומגוון להקות דולפינים שניתן לראות בדרך אל האי. ניתן להזמין סיורים אל האי דרך Klook.",
+      "status": "תלוי עונה, מזג אוויר או הפעלת סיורים; לבדוק לפני הבחירה"
+    },
+    {
+      "area": "אילאן",
+      "name": "Dongshan Mr. Brown Avenue",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/yilan/",
+      "note": "איזור עם מלאאא שדות אורז מהממים!",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "אילאן",
+      "name": "Dongao Bay",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/yilan/",
+      "note": "מפרץ מדהים ביופיו עם חוף שחור ומצוקי הרים מסביב. אחת הנקודות הכי יפות באילן!",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "אילאן",
+      "name": "Toucheng",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/yilan/",
+      "note": "טאוצ׳נג היא אחת העיירות המרכזיות בצפון מחוז אילן, ונחשבת לשער הכניסה לאזור – בזכות קרבתה לטאיפיי ותחנת הרכבת המרכזית שבה. העיירה שוכנת בין רכסי הרים לים הפתוח, ומציעה שילוב בין תרבות מסורתית, גלישה, חופים מהממים, שווקים קטנים, ואתרי טבע יפים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "אילאן",
+      "name": "Xinliao Waterfall",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/yilan/",
+      "note": "זהו אחד המסלולים הפופולריים והנגישים ביותר באזור, שמתאים כמעט לכולם. השביל עובר לאורך נחל צלול בלב יער גשם, עם גשרוני עץ, צמחייה, פרפרים ולעיתים גם קופים בטבע. בסוף המסלול מחכה לכם המפל עצמו - מפל יפייפה שגובהו כ-30 מטרים, עם בריכה טבעית קטנה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "Luye Highland",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taitung/",
+      "note": "רמה ירוקה מעל העמק, עם נוף של שדות אורז והרים מסביב, המקום לראות את הכדורים הפורחים בפסטיבל, מצנחי רחיפה ומסלולי אופניים. גם בלי הפסטיבל זה מקום מדהים לזריחות ושקיעות.",
+      "status": "תלוי עונה, מזג אוויר או הפעלת סיורים; לבדוק לפני הבחירה"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "Chishang",
+      "types": [
+        "אוכל ושווקים",
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taitung/",
+      "note": "כפר מפורסם עם שדות אורז אינסופיים ושביל אופניים שעובר ביניהם, הידוע בתור Brown Boulevard. משכירים אופניים ופשוט נוסעים בין השדות.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "Guanshan",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taitung/",
+      "note": "עיירה קטנה בעמק עם מסלול אופניים מעגלי סביב העיירה ושדות האורז, נופים של כפר טאיוואני אותנטי קלאסי.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "Zhiben Hot Springs",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taitung/",
+      "note": "אזור של מעיינות חמים טבעיים ומלונות ספא בתוך עמק ירוק.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "Jiaming Lake",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taitung/",
+      "note": "הדובדבן שבקצפת למיטיבי לכת - אגם אלפיני בגובה 3,310 מטר עם מי טורקיז צלולים. ההגעה דורשת טרק מאתגר של 3-4 ימים, כושר טוב ופרמיטים כניסה מראש. המאמץ משתלם בענק - הנוף למעלה נחשב לאחד היפים בטאיוואן.",
+      "status": "לוגיסטיקה כבדה; לא להציע כתוספת ספונטנית"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "Green Island",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taitung/",
+      "note": "האי הירוק נמצא מול החופים המזרחייים של טאיוואן, והוא מקום אידיאלי לשנורקלינג וצלילה עם שוניות אלמוגים יפות. אפשר לחוות את הטבע הטרופי באי עם מעיינות חמים, מסלולי הליכה ונופים עוצרי נשימה. הכפרים המקומיים והתרבות האותנטית של תושבי האי הופכים את החוויה למיוחדת. הגעה לאי באמצעות מעבורת מTaitung (כ-1.5 שעות) או טיסות פנים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "Orchid Island",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taitung/",
+      "note": "אי טרופי בדרום-מזרח טאיוואן, מפורסם בחופי הים היפים שלו ובתרבות המקומית של שבט ה-Yami. תוכלו למצוא כאן חופים לבנים, מים צלולים ומסלולי הליכה מעולים. אפשר להגיע מ-Taitung במעבורת (כ-1.5 שעות).",
+      "status": "לוגיסטיקה כבדה; לא להציע כתוספת ספונטנית"
+    },
+    {
+      "area": "קנטינג והנגצ׳ון",
+      "name": "Kenting Baishawan",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kenting-hengchun/",
+      "note": "Kenting Baishawan – חוף לבן ושקט, מים רגועים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קנטינג והנגצ׳ון",
+      "name": "Nanwan (South Bay)",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kenting-hengchun/",
+      "note": "Nanwan (South Bay) – החוף הכי פופולרי באזור, עם אווירה חיה ופעילויות מים כמו ג׳ט סקי, בננה, סאפ ועוד.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קנטינג והנגצ׳ון",
+      "name": "Kenting Main Beach",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kenting-hengchun/",
+      "note": "Kenting Main Beach – חוף מרכזי וצמוד לעיירה, נוח לקפיצה מהירה לים ולשילוב עם שוק הלילה והמסעדות.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קנטינג והנגצ׳ון",
+      "name": "Xiaowan",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kenting-hengchun/",
+      "note": "Xiaowan – מפרץ קטן יותר ליד המרכז, בדרך כלל יותר רגוע ונעים לרביצה ושקיעה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קנטינג והנגצ׳ון",
+      "name": "Eluanbi Lighthouse",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kenting-hengchun/",
+      "note": "Eluanbi Lighthouse – מגדלור לבן בקצה הדרומי של טאיוואן, ממש בנקודה הכי דרומית במדינה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קנטינג והנגצ׳ון",
+      "name": "Longpan Park",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kenting-hengchun/",
+      "note": "Longpan Park – מצוקים פתוחים מול הים, ובשקיעה זה אחד הלוקיישנים הכי מרשימים באזור.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קנטינג והנגצ׳ון",
+      "name": "Guanshan Sunset View",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kenting-hengchun/",
+      "note": "Guanshan Sunset View – תצפית מערבית קרובה להנגצ׳ון, נחשבת לאחד המקומות הכי יפים לראות מהם שקיעה על הים והמפרצים של קנטינג.",
+      "status": "סגור זמנית לפי האימות האחרון; למצוא תחליף לשקיעה"
+    },
+    {
+      "area": "קנטינג והנגצ׳ון",
+      "name": "Jialeshui",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kenting-hengchun/",
+      "note": "מצידו המזרחי של חצי האי מחכה לכם ג'יאלשואי, אזור חוף עם סלעי ענק מפוסלים על ידי הים והרוח. בתוך ה־Jialeshui Scenic Area יש שביל אבן של בערך 2.5 ק\"מ שמתחיל מהכניסה ומוביל עד ל־\"מפל הר וים\" - מפל נדיר שנשפך מצוק ישירות לים, עם נוף משוגע של מצוקים, גלי ענק וכחול בעיניים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קנטינג והנגצ׳ון",
+      "name": "Cikong Waterfalls",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kenting-hengchun/",
+      "note": "אם בא לכם קצת אדרנלין בתוך הירוק, זה המקום. מדובר בסדרה של שבעה מפלים ובריכות טבעיות שחבויים בתוך הג'ונגל. הטיפוס למעלה דורש קצת מאמץ (ולפעמים להיעזר בחבלים שתלויים שם), אבל הטבילה במים הקרירים והנוף מלמעלה שווים את כל הזיעה. מקום מושלם לברוח אליו מהחום של הצהריים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קנטינג והנגצ׳ון",
+      "name": "Southernmost Point",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kenting-hengchun/",
+      "note": "הליכה קצרה ופוטוגנית על שביל דק בתוך צמחייה טרופית תוביל אתכם לסימון הגיאוגרפי המדויק של קצה האי. זה המקום הקלאסי של \"הגעתי לקצה של טאיוואן\", כשמולכם רק ים כחול ונוף פתוח שמזכיר כמה האי הזה מיוחד.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "ג׳יופן והצפון",
+      "name": "Mount Keelung Trail",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/jioufen/",
+      "note": "מסלול הליכה קצר ופופולרי באזור ג׳יופן שמוביל לפסגת הר קילונג (基隆山), ממנה נשקף נוף פנורמי מרהיב על קו החוף הצפוני של טאיוואן, כולל Golden Waterfall, ים סין ויישובי ההרים באזור.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "ג׳יופן והצפון",
+      "name": "Golden Waterfall",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/jioufen/",
+      "note": "מפל ייחודי בצבעים זהובים כתוצאה ממינרלים בקרקע. קרוב מאוד לג'יופן ונגיש ברכב או מונית.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "סאן מון לייק",
+      "name": "Wenwu Temple 文武廟",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/sun-moon-lake/",
+      "note": "המקדש האייקוני בצדו הצפוני של האגם. מקדש יפהפה עם אריות משמר וגרמי מדרגות ענקיים לתצפית על האגם.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "סאן מון לייק",
+      "name": "Ci’en Pagoda 慈恩塔",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/sun-moon-lake/",
+      "note": "פגודה מרשימה על רכס מיוער מעל האגם. הליכה של ~20–30 דק’ ביער, תצפית 360° מהקומה העליונה. אחד הנופים האייקוניים באיזור.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "סאן מון לייק",
+      "name": "Shuishe Lakeside Trail",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/sun-moon-lake/",
+      "note": "למי שרוצה לטייל ברגל, אפשר לעשות את אחד המסלולים הבאים: Maolan Mountain Trail, Shuishe Lakeside Trail ועוד שבילים מסומנים ונוחים לאורך החוף.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "אלישאן",
+      "name": "Alishan Forest Railway",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/alishan/",
+      "note": "גם אם לא עשיתם את הקטע הארוך מג'יאיי, שווה מאוד לעשות נסיעה קצרה בתוך ההרים ברכבת היער האדומה. הנסיעה איטית, המסילה צרה והתחושה היא שאתם חוזרים בזמן.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "אלישאן",
+      "name": "Fenqihu Old Street",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/alishan/",
+      "note": "כפר ישן על ההר עם רחוב עתיק, מאפיות, חנויות צ'וקולוקים וקופסאות בנטו.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טארוקו",
+      "name": "Tunnel of Nine Turns",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taroko-national-park/",
+      "note": "שביל חצוב בסלע שצופה על התהום. נחשב לאחד הקטעים הכי מרשימים בנסיעה בשמורה.",
+      "status": "סגור או מוגבל בעדכונים האחרונים; להציע רק לאחר בדיקת פתיחה רשמית"
+    },
+    {
+      "area": "טארוקו",
+      "name": "Changchun Shrine) Eternal Spring Shrine)",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taroko-national-park/",
+      "note": "מקדש קטן ומרשים שנבנה לזכר פועלי הדרך שנספו בבניית ה־Central Cross-Island Highway. מפל “המעיין הנצחי” זורם תחתיו כל השנה, ויש שביל קצר לנקודות תצפית מעולות לצילום. עצירה קלאסית לפתוח איתה את הביקור בשמורה.",
+      "status": "סגור או מוגבל בעדכונים האחרונים; להציע רק לאחר בדיקת פתיחה רשמית"
+    },
+    {
+      "area": "טארוקו",
+      "name": "Xiangde Temple",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taroko-national-park/",
+      "note": "מתחם מקדשים רגוע מעל עיירת Tianxiang, עם פגודה מרשימה וגבוהה מאוד. זה המקום לעלות לנשום אוויר הרים, לשמוע פעמונים ברקע ולקבל תצפית שקטה על העמק.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טארוקו",
+      "name": "Wenshan Trail",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taroko-national-park/",
+      "note": "שביל קצר לאורך הנהר לאזור המעיינות החמים ההיסטורי ונשאן. מצב הגישה משתנה לא פעם בגלל בטיחות/שיטפונות, אז חשוב לבדוק עדכונים לפני שמגיעים. כשפתוח, זה טיול קליל עם גשרים קטנים, קירות קראסט ונקודות לשבת ליד המים.",
+      "status": "סגור או מוגבל בעדכונים האחרונים; להציע רק לאחר בדיקת פתיחה רשמית"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Elephant Mountain / Xiangshan",
+      "types": [
+        "טבע וטיול",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מחקר והעדפות Shaked",
+      "note": "טיפוס קצר לתצפית האייקונית על טאיפיי 101; מתאים לקראת שקיעה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Qingshan Temple",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 5,
+      "source": "מחקר והעדפות Shaked",
+      "note": "מקדש חובה לפי בחירת Shaked; לשלב עם Wanhua ולא עם עוד מקדשים.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "E7PLAY",
+      "types": [
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מחקר והעדפות Shaked",
+      "note": "אטרקציית משחקים ובילוי ליום גשום או ערב אורבני.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Taipei Zoo",
+      "types": [
+        "אטרקציות"
+      ],
+      "priority": 4,
+      "source": "מחקר והעדפות Shaked",
+      "note": "אטרקציה חיה ומהנה, מתאימה ליום נינוח יותר.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קילונג",
+      "name": "Keelung Miaokou Night Market",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מחקר והעדפות Shaked",
+      "note": "שוק לילה מפורסם ואהוב; יעד ערב מרכזי באזור.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "צפון טאיוואן",
+      "name": "Yehliu Geopark",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מחקר והעדפות Shaked",
+      "note": "תצורות סלע מפורסמות על החוף; אתר חובה במסלול.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "Fengchia Night Market",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מחקר והעדפות Shaked",
+      "note": "שוק הלילה המפורסם והאהוב בטאיצ׳ונג.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאינאן",
+      "name": "Guohua Street",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 5,
+      "source": "מחקר והעדפות Shaked",
+      "note": "רחוב אוכל מרכזי; לבנות סביבו יום קליל של אכילה ושוטטות.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאינאן",
+      "name": "סעודת בקר ומרק בקר בבוקר",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 5,
+      "source": "מחקר והעדפות Shaked",
+      "note": "חוויית הבוקר המקומית שסומנה כחובה; לבדוק שעות פתיחה מוקדמות.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "אלישאן",
+      "name": "Alishan National Forest Recreation Area",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מחקר והעדפות Shaked",
+      "note": "יער אלישאן והמסלולים המפורסמים; אתר חובה במסלול.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "סאן מון לייק",
+      "name": "Formosan Aboriginal Culture Village + רכבל האגם",
+      "types": [
+        "אטרקציות",
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מחקר והעדפות Shaked",
+      "note": "חובה: פארק השעשועים והרכבל לסאן מון לייק, עם לינה באזור.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "הסינצ׳ו",
+      "name": "Leofoo Village Theme Park",
+      "types": [
+        "אטרקציות"
+      ],
+      "priority": 4,
+      "source": "מחקר והעדפות Shaked",
+      "note": "פארק שעשועים שמוקם בסוף המסלול לפני הטיסה בתכנון הקודם.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "E-DA Theme Park",
+      "types": [
+        "אטרקציות"
+      ],
+      "priority": 4,
+      "source": "מחקר והעדפות Shaked",
+      "note": "פארק שעשועים שמופיע ברשימת השמירות של Shaked; לשלב רק אם יש יום פנוי.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "הצפון המזרחי",
+      "name": "Bitoujiao Trail",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מחקר והעדפות Shaked",
+      "note": "מסלול חוף פוטוגני שהופיע ברשימת השמירות; לבדוק גשם ורוח.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "Sanxiantai",
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מחקר והעדפות Shaked",
+      "note": "נשמר במסלול למרות סגירת הגשר בבדיקות הקודמות; לא להבטיח כניסה לגשר.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "טאיפיי",
+      "name": "Pokemon Center Taipei",
+      "types": [
+        "אטרקציות",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מחקר והעדפות Shaked",
+      "note": "עצירה קצרה וכיפית לשילוב ביום עירוני; לבדוק שעות ומיקום נוכחי.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "area": "ניו טייפה, ג׳יופן",
+      "name": "ג׳יופן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-000-42986a",
+      "appType": "attractions",
+      "note": "אחרי שיפן, לשקיעה ולאורות. לפני 10:00 או אחרי 17:00 אם בלי שיפן.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה",
+      "name": "הר הפיל",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-001-810bd9",
+      "appType": "attractions",
+      "note": "המדרגות המפורסמות מעל 101. שקיעה או לילה בהיר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה",
+      "name": "טייפה 101",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-002-84d728",
+      "appType": "attractions",
+      "note": "הנוף למעלה. שעה, לא הקניון. אחד הסמלים של העיר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "ניו טייפה, ואנלי",
+      "name": "יהליו",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-003-313e83",
+      "appType": "attractions",
+      "note": "סלעי המכסה המפורסמים. הכף חשוף למונסון, עדיף יום יבש ושקט.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, וואנהואה",
+      "name": "סיור צ׳ינגשאן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-004-cbd9bf",
+      "appType": "attractions",
+      "note": "סיורי לילה 28–29.11, תהלוכה ב-30.11. האירוע של הטיול.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "ניו טייפה / יילאן",
+      "name": "שביל צאולינג",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-005-887c67",
+      "appType": "attractions",
+      "note": "הטיול הצפוני ששווה יום. דשא כסף במעבר, 1–30.11. עדיף באמצע השבוע.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה",
+      "name": "שוק ראוהה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-006-de7ef8",
+      "appType": "attractions",
+      "note": "שוק הלילה של טייפה. מרק צלעות כן. לחמניית הפלפל כאן כבר לא החזקה.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, פארק דאג׳יה",
+      "name": "Ultra Taiwan",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-008-7e1e8f",
+      "appType": "attractions",
+      "note": "מסיבת אלקטרוניק. 14.11, 18+. הליינאפ לא פורסם. לבחור אחד באותו יום.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, ארנה",
+      "name": "אקיוזפייב",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-009-1d204a",
+      "appType": "attractions",
+      "note": "פופ מקומי. 7–8.11 ב-19:30. אותו סוף שבוע כמו ואגבונד.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה",
+      "name": "בית ההר והים",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-010-a43ce1",
+      "appType": "attractions",
+      "note": "ארוחת ערב טאיוואנית בבית מ-1930. כוכב מישלן. להזמין מראש.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, וונשאן",
+      "name": "גן החיות",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-011-d9ca3b",
+      "appType": "attractions",
+      "note": "גן החיות הגדול. בנובמבר החיות פחות ישנוניות. לחבר לרכבל.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, ג׳ונגשאן",
+      "name": "החלקה אורורה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-012-e1a1f2",
+      "appType": "attractions",
+      "note": "החלקה על קרח בקניון NOKE. המחיר כולל נעליים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, נאן ג׳יצ׳אנג",
+      "name": "וו וואנג זאי ג׳י",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-013-684419",
+      "appType": "attractions",
+      "note": "המנה להיכנס איתה לשוק. ביב 2026. שעות סגירה לא אחידות, לבדוק לפני.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, וואנהואה",
+      "name": "לונגשאן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-014-adb104",
+      "appType": "attractions",
+      "note": "המקדש המפורסם. מגיעים בערב, בדרך לצ׳ינגשאן.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, הואה-ין",
+      "name": "לחמניית פו-יואן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-015-ed141a",
+      "appType": "attractions",
+      "note": "פחם ליד תחנת הרכבת. שלישי–שבת 12:00–18:00. עסיסית יותר מראוהה.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "ניו טייפה, פינגשי",
+      "name": "מפל שיפן",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-016-5018ba",
+      "appType": "attractions",
+      "note": "המפל בבוקר, בלי עששיות. אחר כך ג׳יופן לשקיעה. נעילה ב-17:00.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה",
+      "name": "סוס הזהב",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-017-4a9543",
+      "appType": "attractions",
+      "note": "הקרנות 6–22.11. שטיח אדום 22.11 ב-17:00. כרטיס לטקס לא נמכר לקהל.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, שיניי",
+      "name": "פוקימון סנטר",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-018-98391c",
+      "appType": "attractions",
+      "note": "חנות המשחק המפורסמת ב-A11 ליד 101. פנימי.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, יאנגמינגשאן",
+      "name": "צ׳ינגטיינגאנג",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-019-f0c791",
+      "appType": "attractions",
+      "note": "דשא כסף ותאואים. רק בבוקר בהיר, בחצי הראשון של נובמבר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, שיניי",
+      "name": "קאי שי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-020-35999d",
+      "appType": "attractions",
+      "note": "שולחן אורז חזיר מבושל. ביב חדש 2026. לא רשת ולא מלון.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, וונשאן",
+      "name": "רכבל מאוקונג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-021-ea0454",
+      "appType": "attractions",
+      "note": "הרכבל מעל גן החיות אל גבעות התה. נוף ערב על העיר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, ג׳ונגג׳נג",
+      "name": "שוק נאן ג׳יצ׳אנג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-022-cf1582",
+      "appType": "attractions",
+      "note": "שוק סמטה מקומי, לא ראוהה. כל יום 17:00–00:00.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה",
+      "name": "שוק נינגשיה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-023-bea041",
+      "appType": "attractions",
+      "note": "שוק הלילה המפורסם של דאדאוצ׳נג. שקט יותר מראוהה, עדיין שווה.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, הארנה",
+      "name": "Roller186",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-024-c182f1",
+      "appType": "attractions",
+      "note": "החלקה פנימית בלילה. גיבוי אם יורד גשם.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "ניו טייפה, ג׳יופן",
+      "name": "בית התה ג׳יופן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-025-392183",
+      "appType": "attractions",
+      "note": "בית התה הישן. לשתות, לא רק לצלם את א-מיי.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, בייטו",
+      "name": "בריכות ספרינג סיטי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-026-b9b752",
+      "appType": "attractions",
+      "note": "הטבילה החיה בעיר, בריכות בבגד ים. לא המוזיאון.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, ג׳ונגשאן",
+      "name": "גלגל מיראמר",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-027-70cee7",
+      "appType": "attractions",
+      "note": "גלגל על הגג, כ-17 דקות. לאול לפני, האתר היה חסום.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, וואנהואה",
+      "name": "הבית האדום שימן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-028-22b65e",
+      "appType": "attractions",
+      "note": "גיבוי גשם בשימן. סדנאות ותה בפנים, ברים בערב בכיכר הדרומית.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, שילה",
+      "name": "הנסיך הקטן VR",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-029-f61cff",
+      "appType": "attractions",
+      "note": "גיבוי גשם פנימי במוזיאון המדע. עד אפריל 2027. לא ארקייד.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, וואנהואה",
+      "name": "טומס וורלד שימן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-030-f9ac5c",
+      "appType": "attractions",
+      "note": "ארקייד אסימונים בשימן. לא רק מכונות פרסים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "ניו טייפה, וולאי",
+      "name": "מפל וולאי",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-031-0ce03b",
+      "appType": "attractions",
+      "note": "הכפר והמפל המפורסמים. בנובמבר שם לרוב רטוב. לא טיול ארוך.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "ניו טייפה, פוגסינג",
+      "name": "סקייווק שיאוולאי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-032-d9beb6",
+      "appType": "attractions",
+      "note": "גשר זכוכית פתוח. סגור שלישי. 08:00–17:00. בריכת הקיץ סגורה אחרי ספטמבר.",
+      "hours": null,
+      "status": "גשר זכוכית פתוח. סגור שלישי. 08:00–17:00. בריכת הקיץ סגורה אחרי ספטמבר."
+    },
+    {
+      "area": "ניו טייפה, ואנלי",
+      "name": "סרטן ואנלי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-033-6866fe",
+      "appType": "attractions",
+      "note": "א-ג׳יה, סירות משלו ליד יהליו. עונת סרטן בנובמבר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, בייטו",
+      "name": "עמק תרמי",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-034-7fd613",
+      "appType": "attractions",
+      "note": "העמק המפורסם, קיטור מול העיניים. הבריכה הציבורית סגורה.",
+      "hours": null,
+      "status": "העמק המפורסם, קיטור מול העיניים. הבריכה הציבורית סגורה."
+    },
+    {
+      "area": "ניו טייפה, רויפאנג",
+      "name": "שביל ביטואו",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-035-f3d2ea",
+      "appType": "attractions",
+      "note": "קו הרכס כן, כ-3.5 ק״מ. המגדלור סגור. ברוח חזקה לוותר.",
+      "hours": null,
+      "status": "קו הרכס כן, כ-3.5 ק״מ. המגדלור סגור. ברוח חזקה לוותר."
+    },
+    {
+      "area": "טייפה, TICC",
+      "name": "Khalid",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-036-566966",
+      "appType": "attractions",
+      "note": "הופעה 7.12 ב-19:30. אותו יום כמו ליופו, רק אם מוותרים על הפארק.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "ניו טייפה, דאנשוי",
+      "name": "נמל הדייגים דאנשוי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-037-c99703",
+      "appType": "attractions",
+      "note": "רק אם רגוע. באמצע נובמבר הרוח חזקה. לא ערב שלם על המזח.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה, צפון הזרם",
+      "name": "5 Seconds of Summer",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 1,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-038-18bc96",
+      "appType": "attractions",
+      "note": "הופעה 25.11. מתנגש עם אלישאן והאגם.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קילונג",
+      "name": "מיאוקואו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-039-2d241a",
+      "appType": "attractions",
+      "note": "שוק פירות הים המפורסם מול המקדש.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קילונג",
+      "name": "מגדל קילונג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-040-28a679",
+      "appType": "attractions",
+      "note": "מסדרון אוויר ונוף נמל בלילה. 09:00–21:00. נפתח מחדש באוגוסט 2026.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קילונג",
+      "name": "פארק השלום",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-041-fe7cdb",
+      "appType": "attractions",
+      "note": "חוף סלעים בתשלום. נובמבר–אפריל 08:00–18:00. בריכת הילדים סגורה בחורף.",
+      "hours": null,
+      "status": "חוף סלעים בתשלום. נובמבר–אפריל 08:00–18:00. בריכת הילדים סגורה בחורף."
+    },
+    {
+      "area": "קילונג",
+      "name": "בתים צבעוניים ג׳נגבין",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-042-8a4487",
+      "appType": "attractions",
+      "note": "רציף צבעוני חינם. לא הליכה ממיאוקואו, אוטובוס קצר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קילונג, מיאוקואו",
+      "name": "מרק סרטן וו ג׳י",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-043-374752",
+      "appType": "attractions",
+      "note": "דוכן 5. אורז שמן עם סרטן. 11:00–01:30.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קילונג",
+      "name": "רגל חזיר ג׳י ג׳יה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-044-f175ff",
+      "appType": "attractions",
+      "note": "ישיבה מעל רחוב אייסי. לא רשת.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "יילאן, לואו-דונג",
+      "name": "שוק לואו-דונג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-045-d80acc",
+      "appType": "attractions",
+      "note": "שוק הלילה של יילאן. כל יום 15:00–00:00. להגיע אחרי 17:30.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "יילאן, ג׳יאושי",
+      "name": "בריכות ג׳יאושי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-046-13ef74",
+      "appType": "attractions",
+      "note": "בריכות מעיין ציבוריות, לא מלון. שישי–רביעי. סגור חמישי לניקוי.",
+      "hours": null,
+      "status": "בריכות מעיין ציבוריות, לא מלון. שישי–רביעי. סגור חמישי לניקוי."
+    },
+    {
+      "area": "יילאן, ג׳יאושי",
+      "name": "פארק טאנג-ווייגואו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-047-0dd785",
+      "appType": "attractions",
+      "note": "הטבלת רגליים המפורסמת ברחוב. חינם. לא אמבטיה מלאה.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "יילאן",
+      "name": "שוק דונגמן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-048-f828e8",
+      "appType": "attractions",
+      "note": "שוק לילה קטן ליד התחנה. לא לואו-דונג. בערך 17:00–00:00.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיואן",
+      "name": "שוק ג׳ונגלי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-049-e0baaf",
+      "appType": "attractions",
+      "note": "שוק הלילה של העיר, רחוב שין-מינג. כל יום 17:00–01:00. גם משחקים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיואן",
+      "name": "Fireball",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-050-a8155b",
+      "appType": "attractions",
+      "note": "פסטיבל רוק. 14–15.11. אותו יום כמו אולטרה ו-GBIYUK.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיואן, לינקאו",
+      "name": "לה סרפים",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-051-0e7ba8",
+      "appType": "attractions",
+      "note": "14–15.11 ב-18:00. לא בעיר טייפה. אותו סוף שבוע כמו אולטרה.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיואן, דאשי",
+      "name": "רחוב דאשי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-052-3952e6",
+      "appType": "attractions",
+      "note": "רחוב אוכל ביום, טופו מיובש. לא שוק לילה. רוב החנויות נסגרות בערב.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "שינג׳ו, גואנשי",
+      "name": "Leofoo",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-053-176868",
+      "appType": "attractions",
+      "note": "פארק השעשועים היחיד. יום שלם. בלי פארק המים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "שינג׳ו, ביג סיטי",
+      "name": "דאלוגה עיר גדולה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-054-8259b1",
+      "appType": "attractions",
+      "note": "באולינג וכלובי חבטות בקומה 8. גיבוי גשם.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "שינג׳ו",
+      "name": "רחוב מקדש העיר",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-055-0eb040",
+      "appType": "attractions",
+      "note": "רחוב האוכל מול המקדש. אורז ברווז וחטיפים. לא שוק סגור.",
+      "hours": null,
+      "status": "רחוב האוכל מול המקדש. אורז ברווז וחטיפים. לא שוק סגור."
+    },
+    {
+      "area": "שינג׳ו, גואנשי",
+      "name": "יער מאוודו",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-056-e1deb1",
+      "appType": "attractions",
+      "note": "מפל ויער ארז ליד ליופו. לא תה.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "מיאולי, דאהו",
+      "name": "חוות תותים ליו-הה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-057-fb730d",
+      "appType": "attractions",
+      "note": "קטיף תותים על מסילות. העונה מנובמבר. איכות טובה בנובמבר–דצמבר. להתקשר לפני על הפרי.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "מיאולי",
+      "name": "שוק יינגצאי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-058-4f031e",
+      "appType": "attractions",
+      "note": "שוק הלילה של העיר. רביעי, שישי–ראשון 17:00–23:00. ליד התותים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג, ליד התחנה",
+      "name": "דאלוגה החדש",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-059-aa37a7",
+      "appType": "attractions",
+      "note": "באולינג, כלובי חבטות והחלקה באותו קניון.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "שוק פנגצ׳יה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-060-3c1496",
+      "appType": "attractions",
+      "note": "שוק הלילה המפורסם. להגיע סביב 17:30 באמצע השבוע.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג, צ׳ינגשוי",
+      "name": "גאומיי",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-061-838fd1",
+      "appType": "attractions",
+      "note": "ביצה וטורבינות בשקיעה. לבדוק גאות.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "דונג מו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-062-5d077b",
+      "appType": "attractions",
+      "note": "ברווז טרי ואטריות שום. הביב החדש של טאיצ׳ונג ב-2026.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "השוק השני",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-063-962245",
+      "appType": "attractions",
+      "note": "שוק הבוקר המקומי, לא פנגצ׳יה. הדוכנים נגמרים בצהריים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "רחוב יי-ג׳ונג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-064-d4fcd2",
+      "appType": "attractions",
+      "note": "רחוב האוכל של הסטודנטים, ליד פנגצ׳יה אבל לא אותו מקום. ערב.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "אורז חזיר לילה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-065-f68f6c",
+      "appType": "attractions",
+      "note": "ישיבה אחרי פנגצ׳יה. 17:00–02:00.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג, חופינג",
+      "name": "חוות פושושאן",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-066-7cdb4f",
+      "appType": "attractions",
+      "note": "מייפל וחווה בגובה. לא חהואנשאן. בערך עד סוף נובמבר. כרטיס עד 16:30.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "לאן-פאלי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-067-d3b1a6",
+      "appType": "attractions",
+      "note": "היפ הופ ודוכני אוכל. 7–8.11. הליינאפ לא סגור.",
+      "hours": null,
+      "status": "היפ הופ ודוכני אוכל. 7–8.11. הליינאפ לא סגור."
+    },
+    {
+      "area": "טאיצ׳ונג, פנגצ׳יה",
+      "name": "נקניקיית גואן-ג׳ה-לין",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-068-c6c81b",
+      "appType": "attractions",
+      "note": "החטיף אחרי השוק. נקניקייה במעי גס.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "שואל",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-069-2f0e06",
+      "appType": "attractions",
+      "note": "מטבח ביתי עונתי. מנות ליחיד.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "ג׳אנגהואה, לוקאנג",
+      "name": "וואנג וואנג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-070-dcd12f",
+      "appType": "attractions",
+      "note": "מרק האטריות המפורסם מאז 1930. לא תור הבאנים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "ג׳אנגהואה",
+      "name": "שוק ג׳ינגצ׳נג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-071-80574f",
+      "appType": "attractions",
+      "note": "שוק הלילה הגדול בעיר. רביעי–ראשון בערך 18:00–01:00. לא רק לוקאנג.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "ג׳אנגהואה",
+      "name": "מוסך המניפה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-072-e66d72",
+      "appType": "attractions",
+      "note": "מוסך הרכבות היחיד שעדיין עובד. סגור שני. חול רק אחה״צ.",
+      "hours": null,
+      "status": "מוסך הרכבות היחיד שעדיין עובד. סגור שני. חול רק אחה״צ."
+    },
+    {
+      "area": "ג׳אנגהואה, לוקאנג",
+      "name": "רחוב לוקאנג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-073-938b0c",
+      "appType": "attractions",
+      "note": "רחוב האוכל בדרך. לא מקדשים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "נאנטואו, יוצ׳ה",
+      "name": "אגם הירח והשמש",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-074-85cae9",
+      "appType": "attractions",
+      "note": "חובה. לילות באידאשאו מ-25.11 בערב. סירה, אופניים לשיאנגשאן, רכבל.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "נאנטואו, יוצ׳ה",
+      "name": "כפר התרבות ג׳יו-דזו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-075-0f3ad4",
+      "appType": "attractions",
+      "note": "כרטיס מבוגר 1100 כולל רכבל. קנייה באותו יום באידאשאו או בכניסה. עד 15:00.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "נאנטואו",
+      "name": "סירת האגם",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-076-3467dd",
+      "appType": "attractions",
+      "note": "סיבוב האגם. בערך 09:00–17:00, כל 15–20 דקות. מים–שיינגוואנג–אידאשאו.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "נאנטואו, אידאשאו",
+      "name": "רכבל האגם",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-077-536769",
+      "appType": "attractions",
+      "note": "מחבר את הכפר לג׳יו-דזו. חול 10:30–16:00. סגור לתחזוקה ב-4–5.11 וב-2.12, לא בימים שלנו.",
+      "hours": null,
+      "status": "מחבר את הכפר לג׳יו-דזו. חול 10:30–16:00. סגור לתחזוקה ב-4–5.11 וב-2.12, לא בימים שלנו."
+    },
+    {
+      "area": "נאנטואו, אגם הירח והשמש",
+      "name": "אופניים שיאנגשאן",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-078-42727f",
+      "appType": "attractions",
+      "note": "קטע שטוח כ-3.4 ק״מ כולל שביל על המים. השכרה מול המרכז, בערך 09:00–18:00.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "נאנטואו, אגם הירח והשמש",
+      "name": "אידאשאו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-079-5426f5",
+      "appType": "attractions",
+      "note": "לינה. הליכה שטוחה כ-0.9 ק״מ לרכבל. לא מים-שה.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "נאנטואו, רן-איי",
+      "name": "יער אאוואנדה",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-080-742d21",
+      "appType": "attractions",
+      "note": "מייפל בנובמבר–ינואר, לא טיפוס. חלק מהשבילים סגורים.",
+      "hours": null,
+      "status": "מייפל בנובמבר–ינואר, לא טיפוס. חלק מהשבילים סגורים."
+    },
+    {
+      "area": "נאנטואו, אידאשאו",
+      "name": "לוסו-אן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-081-20dc1d",
+      "appType": "attractions",
+      "note": "מסעדת שאו. 11:30–14:30 ו-17:30–20:30. ארוחת הערב הבטוחה בכפר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "צ׳יאיי, אלישאן",
+      "name": "יער אלישאן",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-082-f02b43",
+      "appType": "attractions",
+      "note": "בוקר 25.11. אחיות האגם ושביל 2 פתוחים. שביל 1 סגור עד 2027. ירידה 6739 ב-13:00 או 14:30.",
+      "hours": null,
+      "status": "בוקר 25.11. אחיות האגם ושביל 2 פתוחים. שביל 1 סגור עד 2027. ירידה 6739 ב-13:00 או 14:30."
+    },
+    {
+      "area": "צ׳יאיי",
+      "name": "שוק התרבות",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-083-1a4ba8",
+      "appType": "attractions",
+      "note": "שוק הלילה של העיר, לא אלישאן. הולכי רגל מ-19:00, בסוף שבוע מ-18:00.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "צ׳יאיי, דונגשי",
+      "name": "ביצת אאוגו",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-084-eac3aa",
+      "appType": "attractions",
+      "note": "ציפורי חורף, נובמבר–מרץ. שביל ואופניים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "צ׳יאיי, שאנמיי",
+      "name": "דאנאייגו",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-085-6a194c",
+      "appType": "attractions",
+      "note": "עמק הדגים של הצואו. 08:00–17:00, סגור רביעי. לא הפארק עצמו.",
+      "hours": null,
+      "status": "עמק הדגים של הצואו. 08:00–17:00, סגור רביעי. לא הפארק עצמו."
+    },
+    {
+      "area": "צ׳יאיי, פאנלו",
+      "name": "שביל אר-יאנפינג",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-086-197b29",
+      "appType": "attractions",
+      "note": "שביל עננים ושקיעה על כביש 18. הכביש למעלה איטי, השביל פתוח.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "צ׳יאיי",
+      "name": "באולינג גואן-וואנג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-087-4a53d3",
+      "appType": "attractions",
+      "note": "באולינג בעיר. גיבוי גשם ליד שוק התרבות.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "צ׳יאיי, מיישאן",
+      "name": "גשר העננים טאיפינג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-088-fc4197",
+      "appType": "attractions",
+      "note": "גשר התצפית הגבוה. בחורף עננים. סגור רביעי.",
+      "hours": null,
+      "status": "גשר התצפית הגבוה. בחורף עננים. סגור רביעי."
+    },
+    {
+      "area": "צ׳יאיי, טסואו",
+      "name": "מוני אלישאן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-089-5f073b",
+      "appType": "attractions",
+      "note": "מוזיקה ילידית ואוכל. 14–15.11. רק אם לא עושים פסטיבל בעיר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "צ׳יאיי",
+      "name": "רחוב פנצ׳יהו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-090-a3a131",
+      "appType": "attractions",
+      "note": "אוכל ותחנה בדרך לאלישאן.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאינאן",
+      "name": "מרק בקר בבוקר",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-091-9c2755",
+      "appType": "attractions",
+      "note": "שאנג האו צ׳ה. נפתח ב-4:00, נגמר לפני 11. סגור שלישי.",
+      "hours": null,
+      "status": "שאנג האו צ׳ה. נפתח ב-4:00, נגמר לפני 11. סגור שלישי."
+    },
+    {
+      "area": "טאינאן",
+      "name": "רחוב גואואה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-092-d5381b",
+      "appType": "attractions",
+      "note": "רחוב האוכל. עוגת אורז יי ויי פין, דיונון יה ג׳יה, קרח יואן זאי הוי.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאינאן",
+      "name": "ברווז במבוק ג׳ו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-093-de094a",
+      "appType": "attractions",
+      "note": "ברווז עם ירק חורף כבוש, 80 שנה. לא עוד מרק בקר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאינאן",
+      "name": "ג׳אן ג׳י",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-094-e1257c",
+      "appType": "attractions",
+      "note": "שולחן דג שמתחלף כל יום. שלישי–שבת.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאינאן",
+      "name": "דאלוגה ג׳ונגהואה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-095-5aa96b",
+      "appType": "attractions",
+      "note": "כלובי חבטות וארקייד ליד שוק וושנג. פתוח 24 שעות.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאינאן, אנפינג",
+      "name": "מבצר אנפינג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-096-d03c0a",
+      "appType": "attractions",
+      "note": "המבצר המפורסם. לא לאכול ברחוב הממתקים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאינאן, אנאן",
+      "name": "מסתור הכפיות",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-097-1cafdb",
+      "appType": "attractions",
+      "note": "כפיות שחורות פנים, אוקטובר–מרץ. הביתן סגור. תצפית, לא אירוע.",
+      "hours": null,
+      "status": "כפיות שחורות פנים, אוקטובר–מרץ. הביתן סגור. תצפית, לא אירוע."
+    },
+    {
+      "area": "טאינאן",
+      "name": "באולינג יי-שין",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-098-9ab422",
+      "appType": "attractions",
+      "note": "באולינג בעיר, לא כלובי החבטות. 09:00–02:00. משחק יכול לסגור מסלולים.",
+      "hours": null,
+      "status": "באולינג בעיר, לא כלובי החבטות. 09:00–02:00. משחק יכול לסגור מסלולים."
+    },
+    {
+      "area": "טאינאן",
+      "name": "דו שאו יוה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-099-a956c1",
+      "appType": "attractions",
+      "note": "אטריות הדנזאי המפורסמות ליד מגדל צ׳יקאן.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאינאן, אנפינג",
+      "name": "ואגבונד",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-100-c1944b",
+      "appType": "attractions",
+      "note": "פסטיבל מוזיקה על הדשא. 7–8.11. אוכל את סוף השבוע הראשון.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאינאן, דאניי",
+      "name": "טקס הלילה של טושה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-101-fe593d",
+      "appType": "attractions",
+      "note": "ריקוד מעגל מאוחר של הסיראיה. לילה של 22.11. קשה להגיע.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאינאן, יוגוואנג",
+      "name": "יו דאו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-102-224aa2",
+      "appType": "attractions",
+      "note": "הכוכב הראשון של טאינאן ב-2026. להזמין.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאינאן",
+      "name": "מרק בקר א-צון",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-103-48b083",
+      "appType": "attractions",
+      "note": "ארוחת בוקר בעיר העתיקה. נגמר כשהבשר נגמר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאינאן, גואואה",
+      "name": "מרק בקר יונגלה",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-104-2d78d7",
+      "appType": "attractions",
+      "note": "על הרחוב עצמו. 00:30–12:00, סגור שלישי.",
+      "hours": null,
+      "status": "על הרחוב עצמו. 00:30–12:00, סגור שלישי."
+    },
+    {
+      "area": "טאינאן",
+      "name": "שוק הגן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-105-631cc5",
+      "appType": "attractions",
+      "note": "שוק הלילה הגדול. חמישי עד ראשון, גם שישי. נסגר בגשם.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג, לינגיה",
+      "name": "E7PLAY סאנדואו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-106-87ed96",
+      "appType": "attractions",
+      "note": "אותו כרטיס חופשי. באולינג, קריוקי וארקייד. 08:30–02:30.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג, צ׳יינג׳ין",
+      "name": "אורז בשר צ׳יינג׳ין",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-107-bdfb85",
+      "appType": "attractions",
+      "note": "ארוחת בוקר. בערך 07:15–17:30. סגור ראשון. ביב.",
+      "hours": null,
+      "status": "ארוחת בוקר. בערך 07:15–17:30. סגור ראשון. ביב."
+    },
+    {
+      "area": "קאושיונג, לינגיה",
+      "name": "באגלאנג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-108-e825c3",
+      "appType": "attractions",
+      "note": "איזאקאיה אמיס קטנה. לאול לפני, השעות ישנות.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "גשר דאגאנג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-109-0a0353",
+      "appType": "attractions",
+      "note": "גשר מסתובב ליד פיר 2. מופע ב-15:00, ובשישי–ראשון גם ב-19:00.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "ג׳יג׳ין",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-110-53d721",
+      "appType": "attractions",
+      "note": "האי מול העיר. מעבורת קצרה וארוחת ים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "כיפת האור",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-111-927a05",
+      "appType": "attractions",
+      "note": "כיפת הזכוכית בתחנת מיילידאו. חינם, כ-20 דקות. בלי מופע אורות מובטח.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "פיר 2 והאמסן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-112-e2e92d",
+      "appType": "attractions",
+      "note": "הנמל הישן המפורסם. הליכה, לא מוזיאון.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג, מאולין",
+      "name": "פרפרי מאולין",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-113-0f53c5",
+      "appType": "attractions",
+      "note": "עונת הגעה מנובמבר, השיא בינואר. תאריכי הפסטיבל עוד לא פורסמו.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג, לינגיה",
+      "name": "שוק לינגיה דזה-צ׳יאנג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-114-873946",
+      "appType": "attractions",
+      "note": "הלילה החלופי כשרויפנג סגור. כל יום 17:00–01:00.",
+      "hours": null,
+      "status": "הלילה החלופי כשרויפנג סגור. כל יום 17:00–01:00."
+    },
+    {
+      "area": "קאושיונג",
+      "name": "שוק רויפנג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-115-5749e0",
+      "appType": "attractions",
+      "note": "שוק הלילה של המקומיים. סגור שני ורביעי. לא ליוחה.",
+      "hours": null,
+      "status": "שוק הלילה של המקומיים. סגור שני ורביעי. לא ליוחה."
+    },
+    {
+      "area": "קאושיונג, האצטדיון",
+      "name": "AAA",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-116-e1faff",
+      "appType": "attractions",
+      "note": "5–6.12. שטיח אדום 15:00, טקס 17:00. הליינאפ לא סגור.",
+      "hours": null,
+      "status": "5–6.12. שטיח אדום 15:00, טקס 17:00. הליינאפ לא סגור."
+    },
+    {
+      "area": "קאושיונג, האצטדיון",
+      "name": "BTS",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-117-e66b8a",
+      "appType": "attractions",
+      "note": "19, 21 ו-22.11. רק עם כרטיס על השם. אין הופעה ב-20.11.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג, דזואינג",
+      "name": "אורז ברווז ג׳נג-דזונג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-118-2bfbb7",
+      "appType": "attractions",
+      "note": "ברווז ליד רויפנג. לאכול אחה״צ.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "האבו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-119-f9e595",
+      "appType": "attractions",
+      "note": "בישול עשבי תיבול. כוכב חדש ב-2026. יקר, להזמין.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג, דרים מול",
+      "name": "פארק ג׳ק",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-120-77d8c0",
+      "appType": "attractions",
+      "note": "קארטינג חשמלי בתוך הקניון. השעות לא מפורסמות, לבדוק לפני.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "קאושיונג, הארנה",
+      "name": "Joji",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-121-62a259",
+      "appType": "attractions",
+      "note": "הופעה 27.11 בערב. רק אם יש כרטיס.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "פינגטונג, דונגגאנג",
+      "name": "שוק דונגגאנג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-122-ac2c0f",
+      "appType": "attractions",
+      "note": "שוק הדגים הגדול. סביבות 11:00–20:00. שלישי ראשון בחודש סגור לניקוי. טוב אחרי קאושיונג.",
+      "hours": null,
+      "status": "שוק הדגים הגדול. סביבות 11:00–20:00. שלישי ראשון בחודש סגור לניקוי. טוב אחרי קאושיונג."
+    },
+    {
+      "area": "פינגטונג, ליוצ׳יו",
+      "name": "שיאוליוצ׳יו",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-123-1b7c97",
+      "appType": "attractions",
+      "note": "האי היחיד שעדיין הגיוני בנובמבר. לבדוק את הסירה מדונגגאנג יום לפני.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "פינגטונג, ווטאי",
+      "name": "בית הספר לבישול שן-שאן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-124-711dd8",
+      "appType": "attractions",
+      "note": "בישול רוקאי אחרי ליקוט. רק בהזמנה. אין לוח לנובמבר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "חואליאן",
+      "name": "טארוקו",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-125-c86842",
+      "appType": "attractions",
+      "note": "הקניון המפורסם. אוטובוס עד המבקרים בלבד. שבילים סגורים. כביש 8 בחלונות שחרור.",
+      "hours": null,
+      "status": "הקניון המפורסם. אוטובוס עד המבקרים בלבד. שבילים סגורים. כביש 8 בחלונות שחרור."
+    },
+    {
+      "area": "חואליאן",
+      "name": "צוק צ׳ינגשוי",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-126-74f8ee",
+      "appType": "attractions",
+      "note": "הצוק המפורסם. שביל צ׳ונגדה עד הפלטפורמה השנייה. הווידה סגור.",
+      "hours": null,
+      "status": "הצוק המפורסם. שביל צ׳ונגדה עד הפלטפורמה השנייה. הווידה סגור."
+    },
+    {
+      "area": "חואליאן, ליד התחנה",
+      "name": "דאלוגה חואליאן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-127-a2ea0e",
+      "appType": "attractions",
+      "note": "באולינג זוהר וכלובי חבטות. אמצע השבוע נפתח ב-13:00.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "חואליאן",
+      "name": "מומינג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-128-165fc7",
+      "appType": "attractions",
+      "note": "שולחן שף אמיס ליד צ׳ישינגטאן. רק בהזמנה.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "חואליאן",
+      "name": "צ׳ישינגטאן",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-129-053f94",
+      "appType": "attractions",
+      "note": "החוף המפורסם מול האי. לא רחצה. חצי יום עם הצוק.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "חואליאן",
+      "name": "שוק דונגדאמן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-130-6b692d",
+      "appType": "attractions",
+      "note": "לאכול ברחוב הילידי. אורז במבוק ונקניק.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "חואליאן, פנגבין",
+      "name": "שיטיפינג",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-131-6ce39f",
+      "appType": "attractions",
+      "note": "משטחי האלמוג על החוף. פתוח כל היום. לא רחצה.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "חואליאן, טונגמן",
+      "name": "GBIYUK",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-132-b7c5a3",
+      "appType": "attractions",
+      "note": "פסטיבל העמק. 14.11 13:00–21:00, 15.11 08:00–17:00. חינם.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "חואליאן, גואנגפו",
+      "name": "ארדה-טאי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-133-3194fc",
+      "appType": "attractions",
+      "note": "תפריט אמיס בלי תפריט. רק אם עוברים בגואנגפו.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "חואליאן, ג׳יצי",
+      "name": "הר דאשיבי",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-134-d6e017",
+      "appType": "attractions",
+      "note": "מדרגות קצרות מעל החוף, כשעה. לא רחצה.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "חואליאן, דאטונג",
+      "name": "שביל צ׳יינליין",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-135-4e0497",
+      "appType": "attractions",
+      "note": "רכס ילידי שנפתח בפברואר 2026. טיול אמיתי לים.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "חואליאן",
+      "name": "תה אדום מיאוקואו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-136-5f697e",
+      "appType": "attractions",
+      "note": "ארוחת בוקר. תה ועוגות ביצה. בערך 06:00–22:00. סגור רביעי.",
+      "hours": null,
+      "status": "ארוחת בוקר. תה ועוגות ביצה. בערך 06:00–22:00. סגור רביעי."
+    },
+    {
+      "area": "חואליאן, לייו",
+      "name": "פסטיבל האור לייו",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-137-00cd94",
+      "appType": "attractions",
+      "note": "אורות 28.11–31.1, 18:00–22:00. מתחיל כשכבר בצפון לצ׳ינגשאן.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיטונג, דונגהה",
+      "name": "דולאן",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-138-fd36dc",
+      "appType": "attractions",
+      "note": "החוף והסוכר המפורסמים. שביל ההר עדיין סגור.",
+      "hours": null,
+      "status": "החוף והסוכר המפורסמים. שביל ההר עדיין סגור."
+    },
+    {
+      "area": "טאיטונג, צ׳נגגונג",
+      "name": "סאנשיאנטאי",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-139-efe451",
+      "appType": "attractions",
+      "note": "הגשר המפורסם סגור עד סוף 2027. נשאר מבט מהחוף אם כבר עוברים.",
+      "hours": null,
+      "status": "הגשר המפורסם סגור עד סוף 2027. נשאר מבט מהחוף אם כבר עוברים."
+    },
+    {
+      "area": "טאיטונג",
+      "name": "צ׳ישאנג",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-140-de6eac",
+      "appType": "attractions",
+      "note": "מישור האורז וקירות ההר. רחוב מר בראון. הנוף נשאר גם אחרי הקציר.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיטונג, ביינאן",
+      "name": "באדלנד ליג׳י",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-141-51cea3",
+      "appType": "attractions",
+      "note": "אדמת בוץ וגשר קצר. רק ביום יבש.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיטונג, ביינאן",
+      "name": "יער ג׳הבן",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-142-531fd6",
+      "appType": "attractions",
+      "note": "הליכת צל בין עצי פיקוס. 07:30–17:00.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיטונג, דונגהה",
+      "name": "לואו פרשר",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-143-7a57fc",
+      "appType": "attractions",
+      "note": "בישול עונתי בבית גלישה. סגור רביעי.",
+      "hours": null,
+      "status": "בישול עונתי בבית גלישה. סגור רביעי."
+    },
+    {
+      "area": "טאיטונג",
+      "name": "שוק סיוויי",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-144-99b109",
+      "appType": "attractions",
+      "note": "שוק הלילה האמיתי בעיר. רק ביום ראשון.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "שיאו יהליו",
+      "nameZh": null,
+      "types": [
+        "טבע וטיול"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-145-8081da",
+      "appType": "attractions",
+      "note": "שביל הסלעים הקצר על כביש 11. לא סיבה לחצות את האי.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "טומס וורלד טאיטונג",
+      "nameZh": null,
+      "types": [
+        "אטרקציות ובילוי"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "attr-146-d0c472",
+      "appType": "attractions",
+      "note": "ארקייד בעיר אם הגשם ביטל את החוף. לא אולם כמו E7.",
+      "hours": null,
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה"
+    },
+    {
+      "area": "טייפה",
+      "name": "ראוהה 饒河夜市",
+      "nameZh": "饒河夜市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-000-4451e5",
+      "appType": "food",
+      "note": "לחמניית פלפל 胡椒餅 שנאפית בטאבון ליד מקדש סונגשאן היא הסמל של השוק, ויש לה תור קבוע. גם צלעות חזיר במרק צמחי מרפא 藥燉排骨 מומלצות לערב קריר.",
+      "hours": "כל ערב",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "נינגשיה 寧夏夜市",
+      "nameZh": "寧夏夜市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-001-6f4aff",
+      "appType": "food",
+      "note": "שוק קטן וממוקד באוכל: ביצת צדפות 蚵仔煎 וכדורי טארו מטוגנים עם ביצה ובשר 芋餅 הם הסיבה לבוא. כדאי להגיע מוקדם בערב לפני העומס.",
+      "hours": "כל ערב",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "נאן ג׳יצ׳אנג 南機場夜市",
+      "nameZh": "南機場夜市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-002-3afe80",
+      "appType": "food",
+      "note": "שוק שכונתי של מקומיים, בלי תיירים כמעט: חטיפים זולים, דמפלינגס ומרקים. טוב לערב רגוע וזול.",
+      "hours": "כל ערב, לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "פו-יואן פלפל 福元胡椒餅",
+      "nameZh": "福元胡椒餅",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-003-36b1e1",
+      "appType": "food",
+      "note": "לחמניית פלפל 胡椒餅 עם בשר חזיר ובצל ירוק, נאפית בטאבון חרס ויוצאת פריכה ומעט חריפה. היזהרו, המרק בפנים רותח.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "קאי-שי 開囍",
+      "nameZh": "開囍",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-004-0cd0db",
+      "appType": "food",
+      "note": "מסעדה ביתית טייוואנית: בשר מבושל ברוטב סויה וצלע חזיר מטוגנת 排骨, במנות פשוטות ומדויקות. טוב לארוחה מלאה עם כמה מנות לחלוקה.",
+      "hours": "חדש 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "הואנג-ג׳י לו-רואו 黃記魯肉飯",
+      "nameZh": "黃記魯肉飯",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-005-becd2c",
+      "appType": "food",
+      "note": "אורז עם חזיר מבושל קצוץ 魯肉飯, המנה הלאומית, ברוטב עשיר. אפשר להוסיף ירקות וביצה מבושלת.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "דאצ׳יאו-טואו מי-גאו 大橋頭老牌筒仔米糕",
+      "nameZh": "大橋頭老牌筒仔米糕",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-006-ef783b",
+      "appType": "food",
+      "note": "אורז דביק מאודה בצינור במבוק 筒仔米糕 עם בשר ופטריות, מוגש הפוך עם רוטב מתקתק. מנה ותיקה וזולה.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "ג׳ונג-ג׳יה שנג-ג׳יאן 鍾家原上海生煎包",
+      "nameZh": "鍾家原上海生煎包",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-007-679430",
+      "appType": "food",
+      "note": "באנים מטוגנים מלמטה 生煎包 בסגנון שנגחאי, פריכים בתחתית ועסיסיים בפנים. נגסו קטן קודם, כי המרק חם מאוד.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "שיונג-ג׳י 雄記蔥抓餅",
+      "nameZh": "雄記蔥抓餅",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-008-e21f68",
+      "appType": "food",
+      "note": "פנקייק בצל ירוק \"נמשך\" 蔥抓餅 שכבתי ופריך, אפשר עם ביצה, גבינה או בזיליקום. נשנוש זול ומהיר, לרוב יש תור.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "יואן-פאנג גואה-באו 源芳刈包",
+      "nameZh": "源芳刈包",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-009-ce67e9",
+      "appType": "food",
+      "note": "גואה-באו 刈包: לחמנייה רכה עם חזיר מבושל, כרוב כבוש ואבקת בוטנים. אפשר לבקש את החזיר שמן או רזה.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "מאי-מיאן יאן-זאי 賣麵炎仔",
+      "nameZh": "賣麵炎仔",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-010-43e101",
+      "appType": "food",
+      "note": "מרק פשוט ובשר חזיר חתוך 切仔麵 ו\"חלקים\" מבושלים, מסעדה ותיקה בוואנהואה. מזמינים כמה מנות קטנות לשולחן.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "טיאנשיה סאנג׳ואה 天下三絕",
+      "nameZh": "天下三絕",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-011-3b1709",
+      "appType": "food",
+      "note": "נודלס בקר 牛肉麵 במרק עשיר, עם נתחי בקר רכים. מנה קלאסית ומשביעה.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "לאו-שאנדונג 老山東牛肉家常麵店",
+      "nameZh": "老山東牛肉家常麵店",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-012-f13ba3",
+      "appType": "food",
+      "note": "נודלס בקר ביתיים 牛肉麵 עם אטריות עבודת יד, מקום קטן ופשוט. אפשר לבחור מרק צלול או מרק מתובל.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "יו-יו 1969 有有1969",
+      "nameZh": "有有",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-013-7a4993",
+      "appType": "food",
+      "note": "מקום מודרני-מקומי שמגיש מנות טייוואניות קלאסיות, כמו אורז חזיר מבושל, בגרסה מוקפדת. טוב לארוחה נוחה.",
+      "hours": "חדש 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "דינג טאי פונג שינאי 鼎泰豐信義",
+      "nameZh": "鼎泰豐信義",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-014-693cb3",
+      "appType": "food",
+      "note": "שיאו-לונג-באו 小籠包, כופתאות מרק עם 18 קפלים, וגם אורז מטוגן ושרימפס. יקר יחסית לרשימה; הירשמו לתור דרך מספר והסתובבו בינתיים.",
+      "hours": "מישלן 2026. תור ארוך",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "שואנג-יואה 雙月食品",
+      "nameZh": "雙月食品",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-015-a4a5b0",
+      "appType": "food",
+      "note": "מרק עוף 雞湯 ואורז עם תוספות, מקום ביתי ופשוט. ארוחה חמה וזולה.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "שוק דונגמן 東門市場",
+      "nameZh": "東門市場",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-016-8a14f1",
+      "appType": "food",
+      "note": "שוק בוקר ליד דונגמן: דמפלינגס, לחמניות ומאפים טייוואניים. הגיעו בבוקר, כי הדוכנים נסגרים בצהריים.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "פוהאנג חלב סויה 阜杭豆漿",
+      "nameZh": "阜杭豆漿",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-017-edd37a",
+      "appType": "food",
+      "note": "ארוחת בוקר טייוואנית קלאסית: חלב סויה 豆漿 ושאובינג 燒餅 עם ביצה ומקל מטוגן. התור ארוך מאוד; הגיעו מוקדם ככל האפשר.",
+      "hours": "סגור שני. תור",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טייפה",
+      "name": "לאו-פאי ג׳ינג׳י (וואנהואה) 華西街小吃",
+      "nameZh": "華西街小吃",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-018-987976",
+      "appType": "food",
+      "note": "רחוב אוכל ותיק ליד מקדש לונגשאן: מרק דגים, ממתקים וחטיפים מקומיים. מתאים לשלב עם ביקור בלונגשאן בערב.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "ניו טייפה",
+      "name": "רחוב ג׳יופן 九份老街",
+      "nameZh": "九份老街",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-019-05edcf",
+      "appType": "food",
+      "note": "כדורי טארו 芋圓 עם קרח או במרק חם, ועוגות אורז אדום. אפשר לאכול עם נוף על ההרים והים.",
+      "hours": "כל יום, עד שקיעה",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "ניו טייפה",
+      "name": "בי-טאן צ׳יאו-טואו 碧潭橋頭鵝肉",
+      "nameZh": "碧潭橋頭鵝肉",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-020-b80572",
+      "appType": "food",
+      "note": "אווז מעושן 鵝肉 רך ואורז או אטריות לצד, ליד גשר ביטאן. כדאי להזמין חצי מנת אווז לחלוקה.",
+      "hours": "חדש 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "ניו טייפה",
+      "name": "בה-יה 北鴨鴨肉羹",
+      "nameZh": "北鴨鴨肉羹",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-021-0364cf",
+      "appType": "food",
+      "note": "מרק ברווז סמיך 鴨肉羹 עם אטריות. מקום ותיק ופשוט, ארוחה זולה.",
+      "hours": "חדש 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "ניו טייפה",
+      "name": "רחוב רויפאנג ליד התחנה 瑞芳美食廣場",
+      "nameZh": "瑞芳美食廣場",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-022-ac995f",
+      "appType": "food",
+      "note": "חטיפים זולים ליד תחנת רויפאנג לפני העלייה לג׳יופן. אוכל טוב ופחות עמוס מג׳יופן עצמה.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קילונג",
+      "name": "מיאוקואו 基隆廟口",
+      "nameZh": "基隆廟口",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-023-a31b00",
+      "appType": "food",
+      "note": "שוק הלילה המפורסם של קילונג: מרק נאה-ביאן 鼎邊趖, ספרינג רול טרי 潤餅 וקרח גרוס. נסו גם כריך \"תזונתי\" 營養三明治 המטוגן.",
+      "hours": "כל יום",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קילונג",
+      "name": "וו-ג׳י אורז שמן סרטן 吳記螃蟹羹",
+      "nameZh": "吳記螃蟹羹",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-024-6489ac",
+      "appType": "food",
+      "note": "מרק סרטן 螃蟹羹 ואורז שמן עם סרטן. מנה של פירות ים, יקרה יחסית לשוק.",
+      "hours": "בתוך מיאוקואו. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קילונג",
+      "name": "ג׳י-ג׳יה רגל חזיר 紀家豬腳",
+      "nameZh": "紀家豬腳",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-025-66136b",
+      "appType": "food",
+      "note": "רגל חזיר מבושלת 豬腳, רכה ודביקה, עם אורז. מנה משביעה ומקומית.",
+      "hours": "בתוך מיאוקואו. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קילונג",
+      "name": "שוק כן-ג׳י 崁仔頂魚市",
+      "nameZh": "崁仔頂魚市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-026-914b32",
+      "appType": "food",
+      "note": "שוק דגים סיטונאי שפועל בלילה (בערך 2:00–6:00), מכירות פומביות ודגים טריים. חוויה יותר מאוכל; הגיעו בערך ב־3:00.",
+      "hours": "לילי בלבד",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קילונג",
+      "name": "בתי סשימי שוק רן-איי 仁愛市場",
+      "nameZh": "仁愛市場",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-027-8fcbfc",
+      "appType": "food",
+      "note": "סושי וסשימי טריים וזולים בקומה השנייה של שוק רן-איי. מקום של מקומיים, לא של תיירים.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "חואליאן",
+      "name": "דונגדאמן 東大門夜市",
+      "nameZh": "東大門夜市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-028-d08633",
+      "appType": "food",
+      "note": "שוק לילה גדול עם אזור אוכל אינדיגני: נקניק חזיר בר, אורז במבוק ובשר על האש. מקום טוב להכיר את המטבח של הילידים.",
+      "hours": "כל ערב",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "חואליאן",
+      "name": "מיאוקואו תה שחור 廟口紅茶",
+      "nameZh": "廟口紅茶",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-029-1f6767",
+      "appType": "food",
+      "note": "תה שחור מקומי 紅茶 וטוסט עם ביצה. עצירה זולה לבוקר או לאחר הצהריים.",
+      "hours": "בוקר. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "חואליאן",
+      "name": "גונג-ג׳נג באוזה 公正包子",
+      "nameZh": "公正包子",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-030-3b8c5d",
+      "appType": "food",
+      "note": "כופתאות קטנות 小籠包 ודמפלינגס מאודים, פתוח עד שעות מאוחרות. מקום אהוב על מקומיים וזול מאוד.",
+      "hours": "כמעט 24/7. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "חואליאן",
+      "name": "ביאן-שי וונטון 液香扁食",
+      "nameZh": "液香扁食",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-031-68ab21",
+      "appType": "food",
+      "note": "מרק וונטון 扁食 בלבד, בלי תפריט, עם וונטונים דקים ומרק צלול. מגיעים ומזמינים פשוט \"קערה\".",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "חואליאן",
+      "name": "פנקייק בצל עם ביצה 炸蛋蔥油餅",
+      "nameZh": "炸蛋蔥油餅",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-032-c70a80",
+      "appType": "food",
+      "note": "פנקייק בצל ירוק מטוגן בשמן עמוק עם ביצה רכה בפנים 炸蛋蔥油餅. בקשו את הביצה רכה, ויש תור.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "שוק לילה טיה-הואה/סיווי 四維夜市",
+      "nameZh": "四維夜市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-033-eeddce",
+      "appType": "food",
+      "note": "שוק לילה מקומי בטאיטונג עם חטיפים, אוכל אינדיגני ופירות. מתאים לערב קליל.",
+      "hours": "ראשון בלבד",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "לין-ג׳יה טופו 林家臭豆腐",
+      "nameZh": "林家臭豆腐",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-034-e7982a",
+      "appType": "food",
+      "note": "טופו מסריח 臭豆腐 מטוגן, עם כרוב כבוש. פריך בחוץ ורך בפנים.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "באודה-ג׳י באנ-שאו 寶桑湯圓",
+      "nameZh": "寶桑湯圓",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-035-c81521",
+      "appType": "food",
+      "note": "כדורי אורז 湯圓 במרק מתוק או מלוח. קינוח חם וזול.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיטונג",
+      "name": "צ׳יה-שאנג ביאן-דאנג 池上便當",
+      "nameZh": "池上便當",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-036-4ac4c1",
+      "appType": "food",
+      "note": "קופסת אורז 便當 עם אורז צ׳ישאנג המפורסם, בשר וירקות. מתאים כארוחה ברכבת.",
+      "hours": "יום",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "רויפנג 瑞豐夜市",
+      "nameZh": "瑞豐夜市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-037-257eaa",
+      "appType": "food",
+      "note": "שוק הלילה הגדול של קאושיונג, מקומי יותר מליוהה: סטייק, חטיפים מטוגנים ומשחקים. מגיעים רעבים.",
+      "hours": "סגור שני ורביעי",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "שוק ליניה זה-צ׳יאנג 苓雅自強夜市",
+      "nameZh": "苓雅自強夜市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-038-b582f5",
+      "appType": "food",
+      "note": "שוק לילה מקומי חלופי לימים שרויפנג סגור. חטיפים זולים ופחות תיירים.",
+      "hours": "לבדוק",
+      "status": "שוק לילה מקומי חלופי לימים שרויפנג סגור. חטיפים זולים ופחות תיירים."
+    },
+    {
+      "area": "קאושיונג",
+      "name": "צ׳ון-לאן גואה-באו 春蘭割包",
+      "nameZh": "春蘭割包",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-039-f4df33",
+      "appType": "food",
+      "note": "גואה-באו 刈包 עם חזיר מבושל ומרק לצד, מקום ותיק. מנה קלה וזולה.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "באי-גאנג צאי מי-גאו 北港蔡三代筒仔米糕",
+      "nameZh": "北港蔡三代筒仔米糕",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-040-9145ae",
+      "appType": "food",
+      "note": "אורז דביק בצינור 筒仔米糕 עם רוטב, ליד יאנצ׳נג. אפשר להוסיף מרק לצד.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "צאי-זונג לי 菜粽李",
+      "nameZh": "菜粽李",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-041-ce0868",
+      "appType": "food",
+      "note": "זונגזי צמחוני 菜粽, אורז דביק בעלה במבוק עם בוטנים, מוגש עם אבקת בוטנים ורוטב. ארוחת בוקר; נגמר מוקדם.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "הואו-ג׳י ברווז 侯記鴨肉飯",
+      "nameZh": "侯記鴨肉飯",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-042-36e989",
+      "appType": "food",
+      "note": "אורז ברווז 鴨肉飯 עם רוטב, ופרוסות ברווז לצד. מנה פשוטה וזולה.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "ג׳נג-זונג אורז ברווז 鄭老牌鴨肉飯",
+      "nameZh": "鄭老牌鴨肉飯",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-043-45112e",
+      "appType": "food",
+      "note": "אורז ברווז 鴨肉飯 ומרק ברווז, מקום ותיק של מקומיים ביאנצ׳נג. זול מאוד.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "שיו-מינג לב חזיר 秀明豬心冬粉",
+      "nameZh": "秀明豬心冬粉",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-044-a2c39f",
+      "appType": "food",
+      "note": "אטריות שעועית 冬粉 במרק עם לב חזיר 豬心 עדין. מנה מקומית מיוחדת; גם מי שלא אוהב איברים מופתע לטובה.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "יאנג באו-באו 楊寶寶蒸餃",
+      "nameZh": "楊寶寶蒸餃",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-045-6cc349",
+      "appType": "food",
+      "note": "כופתאות אדים 蒸餃 עסיסיות, בעבודת יד. מזמינים כמה מנות לשולחן.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "קאושיונג",
+      "name": "צ׳יאנג׳ין אורז חזיר 前金肉燥飯",
+      "nameZh": "前金肉燥飯",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-046-171392",
+      "appType": "food",
+      "note": "אורז עם חזיר מבושל 肉燥飯 ומרקים קטנים לצד. ארוחה זולה וקלאסית.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "שוק הגן 花園夜市",
+      "nameZh": "花園夜市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-047-b9df3f",
+      "appType": "food",
+      "note": "שוק הלילה הגדול של טאינאן, פועל רק בחלק מימי השבוע. שווה לבדוק ימים לפני; יש כאן מכל הסוגים.",
+      "hours": "חמישי–ראשון. בגשם סגור",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "רחוב גואוהואה 國華街",
+      "nameZh": "國華街",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-048-d5eaf4",
+      "appType": "food",
+      "note": "רחוב אוכל של מקומיים: מרקים, רולי שרימפ, ספרינג רול ומאפים. טוב לטיול אכילה של כמה עצירות.",
+      "hours": "יום",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "יי-ווי-פין 一味品",
+      "nameZh": "一味品",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-049-ea7056",
+      "appType": "food",
+      "note": "דג חלב 虱目魚, הדג המזוהה עם טאינאן, במרק או בדייסה. מנת בוקר מקומית.",
+      "hours": "מישלן 2026. בוקר",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "יה-ג׳יה שיאו-ג׳ואן 葉家小卷米粉",
+      "nameZh": "葉家小卷米粉",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-050-395b48",
+      "appType": "food",
+      "note": "אטריות אורז עם דיונון קטן 小卷米粉 במרק צלול. מנה קלה וטרייה.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "באבין יואן-זאי-הוי 八寶彬圓仔惠",
+      "nameZh": "八寶彬圓仔惠",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-051-c8dc0d",
+      "appType": "food",
+      "note": "כדורי אורז מתוקים 圓仔 עם קרח, שעועית אדומה ומרכיבים מתוקים. קינוח מקומי.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "שאנג-האו-צ׳ה מרק בקר 尚好吃牛肉湯",
+      "nameZh": "尚好吃牛肉湯",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-052-fdddf4",
+      "appType": "food",
+      "note": "מרק בקר טרי 牛肉湯: בשר נא נשפך עליו מרק רותח, והבשר מתבשל בקערה. מנת בוקר אייקונית; הגיעו מוקדם.",
+      "hours": "סגור שלישי",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "שי-לואו-דיאן מרק בקר 西羅殿牛肉湯",
+      "nameZh": "西羅殿牛肉湯",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-053-0b0c64",
+      "appType": "food",
+      "note": "מרק בקר 牛肉湯 עם בקר טרי, וגם אורז לצד. מקום מוכר עם תור.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "אה-צון מרק בקר 阿村牛肉湯",
+      "nameZh": "阿村牛肉湯",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-054-e51f25",
+      "appType": "food",
+      "note": "מרק בקר 牛肉湯 בשעות הלילה והבוקר המוקדם. מקום של מקומיים.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "ג׳ו-ג׳י ברווז 竹記冬菜鴨",
+      "nameZh": "竹記冬菜鴨",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-055-d4c217",
+      "appType": "food",
+      "note": "ברווז מעושן 鴨 עם כרוב כבוש 冬菜 ואטריות. מנה מיוחדת לטאינאן.",
+      "hours": "חדש 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "ג׳אן-ג׳י 詹記",
+      "nameZh": "詹記",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-056-4fe904",
+      "appType": "food",
+      "note": "מרק דגים 魚羹 ומנות קטנות מסורתיות. מקום ותיק ופשוט.",
+      "hours": "חדש 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "שיאו-גונג-יואן דאנזאי 小公園擔仔麵",
+      "nameZh": "小公園擔仔麵",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-057-294114",
+      "appType": "food",
+      "note": "אטריות דאנזאי 擔仔麵: קערה קטנה עם שרימפס ובשר קצוץ. מזמינים יחד עם מנות קטנות.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "דו שיאו יואה 度小月",
+      "nameZh": "度小月",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-058-28ef40",
+      "appType": "food",
+      "note": "המקום המקורי של דאנזאי מיאן 擔仔麵, קערה קטנה עם שרימפס ובשר. מעט תיירותי ויקר יחסית לגודל המנה.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "אה-שינג מרק דג 阿星鹹粥",
+      "nameZh": "阿星鹹粥",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-059-f73e36",
+      "appType": "food",
+      "note": "דייסת דג 鹹粥 עם דג חלב, צדפות ובצל מטוגן. מנת בוקר; נסגר בצהריים.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "הואנג-ג׳יה שרימפ רול 黃家蝦捲",
+      "nameZh": "黃家蝦捲",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-060-a409b1",
+      "appType": "food",
+      "note": "רולי שרימפ מטוגנים 蝦捲, פריכים מבחוץ ועסיסיים מבפנים. אפשר לשלב עם מרק לצד.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאינאן",
+      "name": "שיאן-ג׳נג באו-וואן 鮮蒸蝦仁肉圓",
+      "nameZh": "鮮蒸蝦仁肉圓",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-061-babe98",
+      "appType": "food",
+      "note": "באוואן 肉圓 מאודה ממולא שרימפס ובשר, עם רוטב מתוק. בטאינאן מאדים אותו במקום לטגן.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "צ׳יאיי",
+      "name": "שוק הלילה וונהואה 文化路夜市",
+      "nameZh": "文化路夜市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-062-1ad41a",
+      "appType": "food",
+      "note": "שוק לילה עם אורז תרנגול הודו 雞肉飯, המנה המזוהה עם צ׳יאיי. מקום טוב לשלב חטיפים.",
+      "hours": "כל ערב",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "צ׳יאיי",
+      "name": "פן-צ׳י-הוו ביאן-דאנג 奮起湖便當",
+      "nameZh": "奮起湖便當",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-063-6f7dec",
+      "appType": "food",
+      "note": "קופסת אורז 便當 של פנצ׳יהו עם בשר, ביצה וירקות, בדרך לאלישן. אוכלים ברחוב הישן של הכפר.",
+      "hours": "יום",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "צ׳יאיי",
+      "name": "גואו-ג׳י פואה 郭家雞肉飯",
+      "nameZh": "郭家雞肉飯",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-064-cc95fa",
+      "appType": "food",
+      "note": "אורז תרנגול הודו 雞肉飯 עם רוטב ובצל מטוגן. מקום של מקומיים וזול מאוד.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "צ׳יאיי",
+      "name": "לין צ׳ונג-מינג ראש דג 林聰明沙鍋魚頭",
+      "nameZh": "林聰明沙鍋魚頭",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-065-fe4247",
+      "appType": "food",
+      "note": "סיר ראש דג 沙鍋魚頭 עם מרק מתקתק וירקות. מנה מיוחדת לצ׳יאיי; יש תור.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "אגם השמש",
+      "name": "לוסו-אן באידאשאו 伊達邵",
+      "nameZh": "伊達邵",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-066-4bd988",
+      "appType": "food",
+      "note": "רחוב אוכל באיטה טאו עם אוכל אינדיגני של שבט הצאו: נקניק חזיר בר ובשר על האש. מתאים לערב ליד האגם.",
+      "hours": "כל ערב",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "אגם השמש",
+      "name": "ביצי תה של אישה זקנה 阿婆茶葉蛋",
+      "nameZh": "阿婆茶葉蛋",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 2,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-067-863653",
+      "appType": "food",
+      "note": "ביצי תה 茶葉蛋 שבושלו עם פטריות ועלי תה, בשואנשאן. נשנוש קלאסי ליד האגם.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "פנגצ׳יה 逢甲夜市",
+      "nameZh": "逢甲夜市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 5,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-068-bc5e07",
+      "appType": "food",
+      "note": "שוק הלילה הגדול בטאיצ׳ונג: חטיפים חדשים, בשר על האש ומשקאות. מגיעים רעבים.",
+      "hours": "כל ערב",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "יי-ג׳ונג 一中街",
+      "nameZh": "一中街",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-069-fc248e",
+      "appType": "food",
+      "note": "רחוב סטודנטים עם חטיפים זולים ומשקאות בועות. טוב לערב קליל.",
+      "hours": "כל ערב",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "השוק השני 第二市場",
+      "nameZh": "第二市場",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-070-f1c4a1",
+      "appType": "food",
+      "note": "שוק בוקר ותיק עם מאפים, צנון 蘿蔔糕 ומרקים. מגיעים בבוקר.",
+      "hours": "בוקר. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "דונג-מו 東沐。食在",
+      "nameZh": "東沐",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-071-49b250",
+      "appType": "food",
+      "note": "אטריות עם ברווז 鴨 במרק או יבשות. מנה מוקפדת וזולה.",
+      "hours": "חדש 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "יה-ג׳יאן-בו 夜間部爌肉飯",
+      "nameZh": "夜間部爌肉飯",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-072-3df8b6",
+      "appType": "food",
+      "note": "אורז עם חזיר שמן מבושל 爌肉飯, פתוח בלילה. ארוחה מאוחרת זולה.",
+      "hours": "מישלן 2026. לילה",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "טאיצ׳ונג באוואן 台中肉員",
+      "nameZh": "台中肉員",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-073-4dd969",
+      "appType": "food",
+      "note": "באוואן 肉圓 של טאיצ׳ונג, בצק שקוף ממולא בשר עם רוטב. מנה קלאסית.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "אה-קון מיאן 阿坤麵",
+      "nameZh": "阿坤麵",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-074-ac6f66",
+      "appType": "food",
+      "note": "אטריות יבשות 乾麵 עם רוטב ומרק לצד. ארוחה פשוטה וזולה.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאיצ׳ונג",
+      "name": "פנג-ג׳י אווז 鳳記鵝肉老店",
+      "nameZh": "鳳記鵝肉老店",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-075-9c4030",
+      "appType": "food",
+      "note": "אווז מבושל 鵝肉 עם רוטב, ואטריות או אורז לצד. מזמינים לחלוקה.",
+      "hours": "מישלן 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "לוקאנג",
+      "name": "וואנג וואנג ורמיצ׳לי 王罔麵線糊",
+      "nameZh": "王罔麵線糊",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-076-07a8dd",
+      "appType": "food",
+      "note": "דייסת אטריות דקות 麵線糊 עם בשר ופירות ים. מנת בוקר מקומית.",
+      "hours": "לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "שינג׳ו",
+      "name": "רחוב מקדש העיר 城隍廟",
+      "nameZh": "城隍廟",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 4,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-077-74357e",
+      "appType": "food",
+      "note": "רחוב אוכל ליד מקדש העיר: אטריות אורז 炒米粉 ובאוואן. שילוב טוב למנות קטנות.",
+      "hours": "כל יום",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "שינג׳ו",
+      "name": "יי-גה צ׳ואי-פן 一哥炊粉",
+      "nameZh": "一哥炊粉",
+      "types": [
+        "אוכל ושווקים"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-078-f37115",
+      "appType": "food",
+      "note": "אטריות אורז 炊粉 של שינג׳ו במרק או מוקפצות. מנה מקומית זולה.",
+      "hours": "חדש 2026. לבדוק",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    },
+    {
+      "area": "טאויואן",
+      "name": "שוק הלילה ג׳ונגלי 中壢夜市",
+      "nameZh": "中壢夜市",
+      "types": [
+        "אוכל ושווקים",
+        "ערב ובילוי"
+      ],
+      "priority": 3,
+      "source": "מאגר האפליקציה המקורי",
+      "appId": "food-079-18d799",
+      "appType": "food",
+      "note": "שוק לילה גדול בג׳ונגלי, טוב לפני ליופו: חטיפים מגוונים ומנות של מהגרים מדרום-מזרח אסיה.",
+      "hours": "כל ערב",
+      "status": "מידע מהאפליקציה; לבדוק שעות, אירועים או סגירות לפני יציאה; המחיר לא אומת"
+    }
+  ],
+  "appBaseSnapshot": {
+    "attractionsCount": 147,
+    "foodCount": 80,
+    "note": "כל שורות האפליקציה נטענו למאגר; כפילויות שמות אוחדו, מידע מזרחניק נשמר בנפרד ומקבל עדיפות."
+  },
+  "routeFile": "/workspace/taiwan-data/route.json",
+  "status": "ready for daily guiding from 2026-11-11"
+}

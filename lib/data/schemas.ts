@@ -169,3 +169,45 @@ export const PlaceOverrideSchema = z.object({
 export const OverridesRecordSchema = z.record(z.string(), PlaceOverrideSchema);
 export type PlaceOverride = z.infer<typeof PlaceOverrideSchema>;
 
+/** Combined internal travel guide (built from `scripts/build-live-guide.mjs`) */
+export const LiveGuideEntrySchema = z.object({
+  id: z.string().min(1),
+  area: z.string().min(1),
+  name: z.string().min(1),
+  nameZh: z.string().nullable().optional(),
+  types: z.array(z.string().min(1)).min(1),
+  priority: z.number().int().min(1).max(5),
+  source: z.string().min(1),
+  sourceUrl: z.string().url().nullable().optional(),
+  note: z.string().nullable().optional(),
+  hours: z.string().nullable().optional(),
+  status: z.string().nullable().optional(),
+  appId: z.string().nullable().optional(),
+  appType: z.string().nullable().optional(),
+});
+
+export const LiveGuideFileSchema = z.object({
+  builtAt: z.string(),
+  sourceFile: z.string(),
+  originalEntryCount: z.number().int().nonnegative(),
+  excludedCount: z.number().int().nonnegative(),
+  excluded: z.array(
+    z.object({
+      index: z.number().int().nonnegative(),
+      name: z.string().optional(),
+      reason: z.string(),
+    })
+  ),
+  purpose: z.string().nullable().optional(),
+  priorityMeaning: z
+    .record(z.string(), z.string())
+    .optional()
+    .nullable(),
+  updated: z.string().optional().nullable(),
+  disclaimerHe: z.string().optional(),
+  routeHighlightsHe: z.string().optional(),
+  entries: z.array(LiveGuideEntrySchema),
+});
+
+export type LiveGuideEntryValidated = z.infer<typeof LiveGuideEntrySchema>;
+
