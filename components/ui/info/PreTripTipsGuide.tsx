@@ -17,6 +17,14 @@ import tipsData from "@/data/tips.json";
 
 type TipsSection = (typeof tipsData.sections)[number];
 
+/** Row in `tips.json` sections that use `items` */
+type TipsRowItem = {
+  textHe: string;
+  unverified?: boolean;
+  tagHe?: string;
+  sourceUrl?: string;
+};
+
 const SECTION_ICONS: Record<string, LucideIcon> = {
   entry: Plane,
   money: Banknote,
@@ -103,9 +111,8 @@ function SectionBody({ section }: { section: TipsSection }) {
 
       {items && items.length > 0 ? (
         <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-200">
-          {items.map((item, i) => {
-            const tagHe = "tagHe" in item ? item.tagHe : undefined;
-            const sourceUrl = "sourceUrl" in item ? item.sourceUrl : undefined;
+          {(items as TipsRowItem[]).map((item, i) => {
+            const { tagHe, sourceUrl } = item;
             return (
               <li key={i} className="flex flex-wrap items-start gap-2 leading-relaxed">
                 <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" />

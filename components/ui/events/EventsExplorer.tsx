@@ -23,6 +23,8 @@ export function EventsExplorer() {
   const [storedCountry, setStoredCountry] = useState<TripCountry | null>(null);
 
   useEffect(() => {
+    // Read localStorage after mount so the first paint matches SSR (null), then hydrate choice.
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional: avoid hydration mismatch
     setStoredCountry(readStoredCountry());
   }, [pathname]);
 
