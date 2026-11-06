@@ -59,6 +59,12 @@ test.describe("ux-v5 screenshot capture", () => {
     ).toBeVisible({ timeout: 15_000 });
     await shot("info");
 
+    await page.goto("/live-guide");
+    await expect(
+      page.getByRole("heading", { name: "מדריך משולב — המלצות" })
+    ).toBeVisible({ timeout: 15_000 });
+    await shot("live-guide");
+
     await page.goto("/philippines");
     await expect(page.getByTestId("philippines-page")).toBeVisible({
       timeout: 15_000,

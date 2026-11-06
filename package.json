@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/check-data-counts.mjs",
+    "prebuild": "node scripts/build-live-guide.mjs && node scripts/check-data-counts.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --experimental-strip-types --test lib/data/googleMapsUrl.test.ts lib/store/sheetSnapForPlace.test.ts",
+    "test": "node --experimental-strip-types --test lib/data/googleMapsUrl.test.ts lib/data/liveGuideFilter.test.ts lib/store/sheetSnapForPlace.test.ts",
     "test:maps": "node --experimental-strip-types --test lib/data/googleMapsUrl.test.ts",
     "test:e2e": "playwright test"
   },

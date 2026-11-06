@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   AlertTriangle,
   AppWindow,
@@ -44,6 +45,21 @@ export default function InfoPage() {
           מדריך לפני הנסיעה, התראות למסלול, איזי-קארד, סים/eSIM, מזג אוויר, תחבורה, כסף, מספרי חירום ושיחון קולי.
         </p>
       </div>
+
+      <section className="surface-card rounded-3xl p-4 md:p-5" aria-label="קישור למדריך המשולב">
+        <h2 className="font-display text-base font-black text-slate-900 dark:text-white">
+          מדריך המלצות משולב
+        </h2>
+        <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+          טבלת כל ההמלצות הפנימיות (מזרחניק + מאגר האפליקציה) עם חיפוש וסינון.
+        </p>
+        <Link
+          href="/live-guide"
+          className="mt-3 inline-flex min-h-11 items-center rounded-2xl bg-[var(--primary)] px-4 text-sm font-extrabold text-[var(--primary-foreground)] shadow-xs transition active:scale-[0.98]"
+        >
+          לטבלת המדריך המשולב
+        </Link>
+      </section>
 
       <PreTripTipsGuide />
 
