@@ -1,8 +1,9 @@
 /**
  * Builds `data/live-guide.json` from `data/sources/taiwan-live-guide-index.src.json`.
- * Excludes exhibition-focused museums (English "Museum" in name; Hebrew "מוזיאון" in name)
- * with an exception for Fo Guang Shan, Liyu Lake name/area hits, and trims the dataset
- * for in-app use (no hotel-specific rows; source file has none as dedicated rows).
+ * Excludes only:
+ * - Liyu Lake (name/area/nameZh/note patterns)
+ * - Standalone exhibitions: Hebrew תערוכה/תערוכות or English "exhibition(s)" in `name` only
+ *   (museums stay; quiet museums are handled via priority in the source, not excluded here).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -20,23 +21,23 @@ function hashId(parts) {
     .slice(0, 12);
 }
 
-function excludeForExhibitionsOrLiyu(entry) {
+function excludeStandaloneExhibitionOrLiyu(entry) {
   const name = String(entry.name ?? "");
   const area = String(entry.area ?? "");
   const nameZh = String(entry.nameZh ?? "");
   const note = String(entry.note ?? "");
+  const blob = `${name} ${area} ${nameZh} ${note}`;
 
-  if (/\bliyulake\b|\bliyu lake\b|鲤鱼潭/i.test(`${name} ${area} ${nameZh} ${note}`)) {
+  if (/\bliyulake\b|\bliyu lake\b|鲤鱼潭/i.test(blob)) {
     return "liyu_lake";
   }
-  if (/fo guang shan/i.test(name)) {
-    return null;
+  // Standalone exhibition rows: title is about an exhibition, not a full venue/museum
+  const nameTrim = name.trim();
+  if (/^exhibitions?\b/i.test(nameTrim)) {
+    return "exhibition_en_name";
   }
-  if (/\bmuseum\b/i.test(name)) {
-    return "museum_en_name";
-  }
-  if (/מוזיאון/.test(name)) {
-    return "museum_he_name";
+  if (/^תערוכ(ה|ות)\b/u.test(nameTrim)) {
+    return "exhibition_he_name";
   }
   return null;
 }
@@ -53,7 +54,7 @@ function main() {
 
   for (let i = 0; i < originalEntries.length; i++) {
     const e = originalEntries[i];
-    const reason = excludeForExhibitionsOrLiyu(e);
+    const reason = excludeStandaloneExhibitionOrLiyu(e);
     if (reason) {
       excluded.push({ index: i, name: e.name, reason });
       continue;

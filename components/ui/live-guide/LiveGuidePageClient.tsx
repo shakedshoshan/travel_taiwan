@@ -50,8 +50,8 @@ export function LiveGuidePageClient({
         </p>
         {excludedCount > 0 ? (
           <p className="mt-2 text-[11px] text-slate-500 dark:text-slate-400">
-            הוסרו מהרשימה {excludedCount} רשומות (תערוכות/מוזיאונים בשם, לפי העדפת
-            Shaked).
+            הוסרו מהרשימה {excludedCount} רשומות (אגם ליה או תערוכה עצמאית בשם
+            בלבד — לפי העדפת Shaked).
           </p>
         ) : null}
       </div>

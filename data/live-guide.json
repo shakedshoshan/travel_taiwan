@@ -1,50 +1,9 @@
 {
-  "builtAt": "2026-11-06T20:03:15.210Z",
+  "builtAt": "2026-11-06T20:09:37.626Z",
   "sourceFile": "data/sources/taiwan-live-guide-index.src.json",
   "originalEntryCount": 336,
-  "excludedCount": 8,
-  "excluded": [
-    {
-      "index": 7,
-      "name": "National Palace Museum",
-      "reason": "museum_en_name"
-    },
-    {
-      "index": 8,
-      "name": "MOCA (Museum of Contemporary Art)",
-      "reason": "museum_en_name"
-    },
-    {
-      "index": 9,
-      "name": "National Taiwan Museum",
-      "reason": "museum_en_name"
-    },
-    {
-      "index": 28,
-      "name": "National Museum of Natural Science",
-      "reason": "museum_en_name"
-    },
-    {
-      "index": 29,
-      "name": "National Taiwan Museum of Fine Arts",
-      "reason": "museum_en_name"
-    },
-    {
-      "index": 38,
-      "name": "National Museum of Taiwan History -",
-      "reason": "museum_en_name"
-    },
-    {
-      "index": 52,
-      "name": "Kaohsiung Museum of Fine Arts",
-      "reason": "museum_en_name"
-    },
-    {
-      "index": 53,
-      "name": "Kaohsiung Museum of History",
-      "reason": "museum_en_name"
-    }
-  ],
+  "excludedCount": 0,
+  "excluded": [],
   "purpose": "מאגר עבודה פנימי למדריך יומי: לבחור לפי מיקום, סוג פעילות, מזג אוויר וזמן; מזרחניק קודם כשיש התאמה דומה.",
   "priorityMeaning": {
     "1": "רק בעניין מיוחד, מזג אוויר מתאים או זמן פנוי",
@@ -147,6 +106,45 @@
       "source": "מזרחניק",
       "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
       "note": "Sun Yat-sen Memorial Hall – אתר מרכזי שמוקדש לאבי האומה, עם תצוגות מתחלפות, אזור פתוח ונוף יפה לכיוון טאיפיי 101.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "id": "041ff9e0d684",
+      "area": "טאיפיי",
+      "name": "National Palace Museum",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "National Palace Museum – מוזיאון ענק ומרשים עם אוסף מטורף של אמנות סינית עתיקה. גם אם אתם לא בקטע של היסטוריה, זו עצירה ששווה.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "id": "da0c857df72f",
+      "area": "טאיפיי",
+      "name": "MOCA (Museum of Contemporary Art)",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "MOCA (Museum of Contemporary Art) – מוזיאון אמנות עכשווית עם תערוכות מתחלפות, עיצוב מגניב ואמנים מטאיוואן ומהעולם.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "id": "ebbceb5b3aef",
+      "area": "טאיפיי",
+      "name": "National Taiwan Museum",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+      "note": "National Taiwan Museum – המוזיאון הוותיק בטאיפיי, ליד פארק 228, עם תערוכות על ההיסטוריה, התרבות והטבע של טאיוואן.",
       "status": "לבדוק שעות ותנאים לפני יציאה"
     },
     {
@@ -388,6 +386,32 @@
       "status": "לבדוק שעות ותנאים לפני יציאה"
     },
     {
+      "id": "61b33d7d932d",
+      "area": "טאיצ׳ונג",
+      "name": "National Museum of Natural Science",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "מוזיאונים כמו: National Museum of Natural Science,",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "id": "dc072a6955c8",
+      "area": "טאיצ׳ונג",
+      "name": "National Taiwan Museum of Fine Arts",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/taichung/",
+      "note": "National Taiwan Museum of Fine Arts",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
       "id": "74fc60c07be4",
       "area": "טאיצ׳ונג",
       "name": "Rainbow Village",
@@ -491,6 +515,19 @@
       "source": "מזרחניק",
       "sourceUrl": "https://mizrahnik.co.il/destination/tainan/",
       "note": "Chihkan Tower (Fort Provintia) הוא מבצר הולנדי מהמאה ה־17 שהפך למתחם מקדשים סיני, במיוחד יפה בשעות הערב כשהוא מואר. בנוסף שווה לבקר גם ב- Tainan Confucius Temple - מקדש קונפוציוס הראשון בטאיוואן ובית הספר הציבורי הראשון באי, עם אווירה שקטה ואלגנטית.",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "id": "684678df5484",
+      "area": "טאינאן",
+      "name": "National Museum of Taiwan History -",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/tainan/",
+      "note": "National Museum of Taiwan History - מוזיאון שמספר את הסיפור של טאיוואן: עמים ילידיים, תקופה הולנדית ויפנית ועד המדינה המודרנית.",
       "status": "לבדוק שעות ותנאים לפני יציאה"
     },
     {
@@ -663,6 +700,32 @@
       "source": "מזרחניק",
       "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
       "note": "Xin Juejiang ואזורי קניות אחרים",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "id": "32e4d668289c",
+      "area": "קאושיונג",
+      "name": "Kaohsiung Museum of Fine Arts",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "Kaohsiung Museum of Fine Arts",
+      "status": "לבדוק שעות ותנאים לפני יציאה"
+    },
+    {
+      "id": "19a329439ad3",
+      "area": "קאושיונג",
+      "name": "Kaohsiung Museum of History",
+      "types": [
+        "תרבות ואתרים מיוחדים"
+      ],
+      "priority": 1,
+      "source": "מזרחניק",
+      "sourceUrl": "https://mizrahnik.co.il/destination/kaohsiung/",
+      "note": "Kaohsiung Museum of History",
       "status": "לבדוק שעות ותנאים לפני יציאה"
     },
     {

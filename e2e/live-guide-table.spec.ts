@@ -12,16 +12,16 @@ test.describe("live guide combined table (mobile)", () => {
     page,
   }) => {
     const count = page.getByTestId("live-guide-count");
-    await expect(count).toContainText("מציג 328 מתוך 328");
+    await expect(count).toContainText("מציג 336 מתוך 336");
 
     await page.getByTestId("live-guide-source").selectOption("mizrahnik");
-    await expect(count).toContainText("מציג 86");
+    await expect(count).toContainText("מציג 94");
 
     const visibleRows = page
       .getByTestId("live-guide-row")
       .filter({ visible: true });
     await expect(visibleRows.first()).toBeVisible();
-    await expect(visibleRows).toHaveCount(86);
+    await expect(visibleRows).toHaveCount(94);
 
     const sampleTag = page.getByText("מזרחניק").first();
     await expect(sampleTag).toBeVisible();
@@ -32,10 +32,10 @@ test.describe("live guide combined table (mobile)", () => {
   }) => {
     await page.getByTestId("live-guide-status").selectOption("closed_limited");
     const count = page.getByTestId("live-guide-count");
-    await expect(count).not.toContainText("מציג 0 מתוך 328");
+    await expect(count).not.toContainText("מציג 0 מתוך 336");
 
     await page.getByRole("button", { name: "איפוס מסננים" }).click();
-    await expect(count).toContainText("מציג 328 מתוך 328");
+    await expect(count).toContainText("מציג 336 מתוך 336");
   });
 
   test("free-text search can reach empty state then reset", async ({
@@ -44,12 +44,12 @@ test.describe("live guide combined table (mobile)", () => {
     await page.getByTestId("live-guide-search").fill("zzzznomatchzzzz");
     await expect(page.getByTestId("live-guide-empty")).toBeVisible();
     await expect(page.getByTestId("live-guide-count")).toContainText(
-      "מציג 0 מתוך 328"
+      "מציג 0 מתוך 336"
     );
 
     await page.getByRole("button", { name: "איפוס מסננים" }).click();
     await expect(page.getByTestId("live-guide-count")).toContainText(
-      "מציג 328 מתוך 328"
+      "מציג 336 מתוך 336"
     );
   });
 });
