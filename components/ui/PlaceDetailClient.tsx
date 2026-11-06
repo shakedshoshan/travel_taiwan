@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   AlertCircle,
   ArrowRight,
+  BookOpen,
   Clock,
   Navigation,
   Sparkles,
@@ -133,6 +134,18 @@ export function PlaceDetailClient({
                 </span>
               )}
 
+              {place.mizrahnikTagHe && place.mizrahnikSourceUrl && (
+                <a
+                  href={place.mizrahnikSourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 rounded-full bg-violet-600 px-2.5 py-0.5 text-xs font-black text-white"
+                >
+                  <BookOpen className="h-3.5 w-3.5" />
+                  <span>{place.mizrahnikTagHe}</span>
+                </a>
+              )}
+
               <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold backdrop-blur-xs">
                 {place.cityNameHe}
               </span>
@@ -252,6 +265,23 @@ export function PlaceDetailClient({
                   </div>
                 </div>
               )}
+            </div>
+          )}
+
+          {place.mizrahnikTagHe && place.mizrahnikSourceUrl && (
+            <div className="rounded-2xl border border-violet-500/30 bg-violet-500/10 p-4 dark:border-violet-500/25 dark:bg-violet-500/5">
+              <div className="mb-1 flex items-center gap-2 text-xs font-black text-violet-800 dark:text-violet-200">
+                <BookOpen className="h-4 w-4" />
+                <span>המלצת מזרחניק</span>
+              </div>
+              <a
+                href={place.mizrahnikSourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-bold text-violet-700 underline decoration-violet-400/60 underline-offset-2 dark:text-violet-300"
+              >
+                פתח את עמוד המקור במזרחניק ↗
+              </a>
             </div>
           )}
 

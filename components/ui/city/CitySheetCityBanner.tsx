@@ -30,11 +30,9 @@ export function CitySheetCityBanner({
           <ArrowRight className="h-5 w-5" />
         </button>
         <div className="min-w-0 flex-1 text-right">
-          {!compact ? (
-            <p className="text-[10px] font-extrabold tracking-wide text-orange-600 uppercase dark:text-amber-400">
-              עיר נוכחית
-            </p>
-          ) : null}
+          <p className="text-[10px] font-extrabold tracking-wide text-orange-600 uppercase dark:text-amber-400">
+            עיר נוכחית
+          </p>
           <h2 className="truncate font-display text-lg leading-6 font-black text-slate-900 dark:text-white">
             <span aria-hidden="true" className="me-1.5">
               {emoji}

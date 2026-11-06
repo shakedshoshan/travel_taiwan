@@ -11,6 +11,7 @@ import {
   BedDouble,
   Gem,
   Utensils,
+  BookOpen,
 } from "lucide-react";
 import {
   buildGoogleMapsUrl,
@@ -160,6 +161,19 @@ export function PlaceCard({
                 </span>
               )}
 
+              {place.mizrahnikTagHe && place.mizrahnikSourceUrl && (
+                <a
+                  href={place.mizrahnikSourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="pointer-events-auto z-20 inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-1 rounded-full bg-violet-600 px-2.5 py-1.5 text-xs font-black text-white shadow-xs"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <BookOpen className="h-3.5 w-3.5" />
+                  <span>{place.mizrahnikTagHe}</span>
+                </a>
+              )}
+
               <span className="rounded-full bg-slate-950/80 px-2.5 py-0.5 text-xs font-bold text-white backdrop-blur-xs">
                 {place.cityNameHe}
               </span>
@@ -233,6 +247,21 @@ export function PlaceCard({
                 <span>לא מאומת</span>
               </span>
             )}
+          </div>
+        )}
+
+        {place.mizrahnikTagHe && place.mizrahnikSourceUrl && (
+          <div className="relative z-10 mt-2">
+            <a
+              href={place.mizrahnikSourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl border border-violet-400/40 bg-violet-500/10 px-3 text-sm font-black text-violet-800 underline decoration-violet-500/60 underline-offset-2 dark:text-violet-200"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <BookOpen className="h-4 w-4 shrink-0" />
+              <span>מקור מזרחניק</span>
+            </a>
           </div>
         )}
 
