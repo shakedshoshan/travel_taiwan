@@ -1,0 +1,182 @@
+[
+  {
+    "id": "mzn-hub-overview",
+    "nameHe": "טאיוואן — סקירה כללית (מזרחניק)",
+    "nameEn": "Taiwan overview (Mizrahnik)",
+    "lat": 23.62,
+    "lng": 120.98,
+    "sourceUrl": "https://mizrahnik.co.il/taiwan/",
+    "matchedPlaceId": null,
+    "notesHe": "אי עם מודרניות וטבע; בירה טאיפיי; טארוקו כדוגמה לשמורת טבע."
+  },
+  {
+    "id": "mzn-visa-90-form",
+    "nameHe": "כניסה: פטור 90 יום וטופס לפני ההגעה",
+    "nameEn": "Visa-exempt 90 days + pre-arrival form",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-visa/",
+    "matchedPlaceId": null,
+    "notesHe": "ישראלים: Visa-Exempt 90 יום; למלא טופס כניסה החל מ-7 ימים לפני ההגעה באתר ההגירה (אפשר גם QR בשדה)."
+  },
+  {
+    "id": "mzn-weather-window",
+    "nameHe": "מזג אוויר: חלון מומלץ וטייפונים",
+    "nameEn": "Best seasons & typhoon season",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-weather/",
+    "matchedPlaceId": null,
+    "notesHe": "המלצה: אביב (מרץ–מאי) וסתיו (אוקטובר–נובמבר). טייפונים בדרך כלל יולי–ספטמבר; לעקוב אחרי הוראות מקומיות."
+  },
+  {
+    "id": "mzn-flights-no-direct",
+    "nameHe": "טיסות: אין ישיר מישראל, שדות TPE/KHH/RMQ",
+    "nameEn": "Flights: no direct from Israel; airports",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-flights/",
+    "matchedPlaceId": null,
+    "notesHe": "קונקשן נפוץ דרך דובאי/הונג קונג/תאילנד וכו׳; שלושה שדות בינלאומיים עיקריים: Taoyuan (TPE), Kaohsiung (KHH), Taichung (RMQ)."
+  },
+  {
+    "id": "mzn-flights-exit-ticket",
+    "nameHe": "טיסות: עלולים לבקש הוכחת יציאה מהמדינה",
+    "nameEn": "Onward ticket requirement",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-flights/",
+    "matchedPlaceId": null,
+    "notesHe": "מזרחניק מדגישים להתכונן מראש אם מבקשים כרטיס המשך; הסבר על כללי Proof of onward travel במדריך."
+  },
+  {
+    "id": "mzn-money-ntd-atm",
+    "nameHe": "כסף: NT$ ומשיכה בכספומט (Chunghwa Post וכו׳)",
+    "nameEn": "NTD cash & ATMs",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-money/",
+    "matchedPlaceId": null,
+    "notesHe": "מזומן חשוב לשווקים ודוכנים; דוכן המרה בנתב״ג / Fly Money; כספומטים ב-7-Eleven, FamilyMart — Chunghwa Post ועד 30,000 NT$ למשיכה (לפי המדריך)."
+  },
+  {
+    "id": "mzn-sim-chunghwa",
+    "nameHe": "סים: Chunghwa מומלץ לכיסוי כפרי",
+    "nameEn": "Chunghwa Telecom SIM for rural coverage",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-sim/",
+    "matchedPlaceId": null,
+    "notesHe": "שלוש רשתות עיקריות; חבילות תיירים לעיתים גלישה בלי מספר מקומי; eSIM דרך ספקים בינלאומיים."
+  },
+  {
+    "id": "mzn-transport-easycard",
+    "nameHe": "EasyCard / iPASS — רב-קו תחבורה",
+    "nameEn": "EasyCard & iPASS",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-transportation/",
+    "matchedPlaceId": null,
+    "notesHe": "רכישה וטעינה בשדה, MRT וחנויות נוחות; הצמדה בכניסה ויציאה באוטובוס."
+  },
+  {
+    "id": "mzn-transport-thsr-no-easycard-purchase",
+    "nameHe": "THSR: כרטיס נפרד (לא רוכשים עם EasyCard)",
+    "nameEn": "THSR ticketing vs EasyCard",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-transportation/",
+    "matchedPlaceId": null,
+    "notesHe": "רכבת מהירה מערבית; לרכוש כרטיס בנפרד (מזומן/אשראי), לא דרך טעינת EasyCard."
+  },
+  {
+    "id": "mzn-transport-hsr-usage",
+    "nameHe": "THSR: מחצית האי המערבי מהר",
+    "nameEn": "THSR west coast trunk",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-transportation/",
+    "matchedPlaceId": null,
+    "notesHe": "טאיפיי–קאושיונג בפחות משעתיים; כדאי להזמין מראש בעונה עמוסה."
+  },
+  {
+    "id": "mzn-transport-tra",
+    "nameHe": "TRA: רכבת רגילה סביב האי",
+    "nameEn": "TRA intercity trains",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-transportation/",
+    "matchedPlaceId": null,
+    "notesHe": "קו מזרחי ואזורים הרריים; הזמנה מראש מומלץ בחגים/סופ״ש."
+  },
+  {
+    "id": "mzn-transport-domestic-flights-niche",
+    "nameHe": "טיסות פנים: נקודתיות (הואליאן, טאיטונג, איים)",
+    "nameEn": "Domestic flights — niche use",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-transportation/",
+    "matchedPlaceId": null,
+    "notesHe": "רלוונטי בעיקר להואליאן/טאיטונג ואיים Green/Orchid לפי המדריך."
+  },
+  {
+    "id": "mzn-planning-amir",
+    "nameHe": "תכנון אישי עם אמיר בן כהן (שירות)",
+    "nameEn": "Personal planning service (Amir Ben Cohen)",
+    "lat": null,
+    "lng": null,
+    "sourceUrl": "https://mizrahnik.co.il/plan-taiwan/",
+    "matchedPlaceId": null,
+    "notesHe": "מסלול PDF, ליווי וואטסאפ; הדגשה על הזמנות מראש ברכבות/מלונות בעונות שיא."
+  },
+  {
+    "id": "mzn-taipei-easycard-youbike",
+    "nameHe": "טאיפיי: MRT + EasyCard + YouBike",
+    "nameEn": "Taipei transit tips",
+    "lat": 25.0478,
+    "lng": 121.517,
+    "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+    "matchedPlaceId": null,
+    "notesHe": "מטרו נוח; EasyCard חובה; YouBike מקושר לכרטיס; שאטלים לאזורי יום-טיול."
+  },
+  {
+    "id": "mzn-taipei-jiufen",
+    "nameHe": "ג׳יופן (יום מטאיפיי) — מזרחניק",
+    "nameEn": "Jiufen day trip",
+    "lat": 25.1097,
+    "lng": 121.8452,
+    "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+    "matchedPlaceId": "attr-000-42986a",
+    "notesHe": "מומלץ כטיול יום מהעיר; קואורדינטות מתוך פריט האטרקציה הקיים באפליקציה."
+  },
+  {
+    "id": "mzn-taipei-101",
+    "nameHe": "טייפה 101 — מזרחניק",
+    "nameEn": "Taipei 101",
+    "lat": 25.0339639,
+    "lng": 121.5644722,
+    "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+    "matchedPlaceId": "attr-002-84d728",
+    "notesHe": "סמל העיר; תצפית; קשור לטיפ על שקיעה מהר הפיל באפליקציה."
+  },
+  {
+    "id": "mzn-taipei-raohe",
+    "nameHe": "שוק ראוהה — מזרחניק",
+    "nameEn": "Raohe Night Market",
+    "lat": 25.050426,
+    "lng": 121.577645,
+    "sourceUrl": "https://mizrahnik.co.il/destination/taipei/",
+    "matchedPlaceId": "attr-006-de7ef8",
+    "notesHe": "אחד השווקים הבולטים לפי עמוד היעד; קואורדינטות מפריט קיים."
+  },
+  {
+    "id": "mzn-nature-taroko",
+    "nameHe": "שמורת טארוקו — הקשר במדריך מזג אוויר",
+    "nameEn": "Taroko (weather context)",
+    "lat": 24.1586,
+    "lng": 121.6219,
+    "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-weather/",
+    "matchedPlaceId": "attr-125-c86842",
+    "notesHe": "המזרח/טארוקו במדריך: נעים רוב השנה; קיץ לח וטייפונים. קואורדינטות מפריט הטארוקו הקיים (מרכז מבקרים)."
+  }
+]
