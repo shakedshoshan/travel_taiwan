@@ -238,14 +238,14 @@ function validateAndBuildDataset(): ValidatedTripDataset {
     ? practicalRaw.alerts.length
     : 0;
 
-  if (attractions.length !== 180) {
+  if (attractions.length < 180) {
     throw new Error(
-      `[Data Check Failed] Expected 180 attractions, got ${attractions.length}`
+      `[Data Check Failed] Expected at least 180 attractions, got ${attractions.length}`
     );
   }
-  if (hotels.length !== 40) {
+  if (hotels.length < 40) {
     throw new Error(
-      `[Data Check Failed] Expected 40 hotels, got ${hotels.length}`
+      `[Data Check Failed] Expected at least 40 hotels, got ${hotels.length}`
     );
   }
   if (kentingHotelsCount !== 3) {

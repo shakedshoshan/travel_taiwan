@@ -47,6 +47,8 @@ export const LocatedSchema = z.object({
   coordSource: z.enum(["openstreetmap", "knowledge"]).optional(),
   source: z.string().nullable().optional(),
   temporarilyClosed: z.boolean().optional(),
+  mizrahnikTagHe: z.string().nullable().optional(),
+  mizrahnikSourceUrl: z.string().url().nullable().optional(),
   // Optional overrides so exact geocoded coordinates can be added per item later
   exactLat: z.number().min(21).max(26).optional(),
   exactLng: z.number().min(119).max(123).optional(),
