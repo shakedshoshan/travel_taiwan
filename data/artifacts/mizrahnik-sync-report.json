@@ -1,0 +1,14 @@
+{
+  "taggedAttractions": 26,
+  "taggedFood": 1,
+  "taggedHotels": 4,
+  "addedAttractions": 63,
+  "addedFood": 4,
+  "addedHotels": 28,
+  "skipped": [],
+  "totals": {
+    "attractions": 243,
+    "food": 93,
+    "hotels": 68
+  }
+}
