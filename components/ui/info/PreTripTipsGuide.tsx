@@ -3,6 +3,7 @@
 import {
   AppWindow,
   Banknote,
+  BookOpen,
   ChevronDown,
   ExternalLink,
   Globe,
@@ -16,6 +17,14 @@ import tipsData from "@/data/tips.json";
 
 type TipsSection = (typeof tipsData.sections)[number];
 
+/** Row in `tips.json` sections that use `items` */
+type TipsRowItem = {
+  textHe: string;
+  unverified?: boolean;
+  tagHe?: string;
+  sourceUrl?: string;
+};
+
 const SECTION_ICONS: Record<string, LucideIcon> = {
   entry: Plane,
   money: Banknote,
@@ -23,12 +32,21 @@ const SECTION_ICONS: Record<string, LucideIcon> = {
   transport: Train,
   apps: AppWindow,
   general: ShieldAlert,
+  mizrahnik: BookOpen,
 };
 
 function UnverifiedBadge() {
   return (
     <span className="shrink-0 rounded-full bg-amber-500/20 px-2 py-0.5 text-[10px] font-black text-amber-900 dark:bg-amber-400/25 dark:text-amber-100">
       לא אומת
+    </span>
+  );
+}
+
+function SourceTagBadge({ tagHe }: { tagHe: string }) {
+  return (
+    <span className="shrink-0 rounded-full bg-violet-500/20 px-2 py-0.5 text-[10px] font-black text-violet-900 dark:bg-violet-400/25 dark:text-violet-100">
+      {tagHe}
     </span>
   );
 }
@@ -93,15 +111,30 @@ function SectionBody({ section }: { section: TipsSection }) {
 
       {items && items.length > 0 ? (
         <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-200">
-          {items.map((item, i) => (
-            <li key={i} className="flex items-start gap-2 leading-relaxed">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" />
-              <span className="min-w-0 flex-1">{item.textHe}</span>
-              {"unverified" in item && item.unverified ? (
-                <UnverifiedBadge />
-              ) : null}
-            </li>
-          ))}
+          {(items as TipsRowItem[]).map((item, i) => {
+            const { tagHe, sourceUrl } = item;
+            return (
+              <li key={i} className="flex flex-wrap items-start gap-2 leading-relaxed">
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" />
+                <span className="min-w-0 flex-1">{item.textHe}</span>
+                {tagHe ? <SourceTagBadge tagHe={tagHe} /> : null}
+                {sourceUrl ? (
+                  <a
+                    href={sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 shrink-0 items-center gap-1 font-bold text-sky-800 underline hover:text-orange-700 dark:text-sky-200"
+                  >
+                    <span>מקור</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                ) : null}
+                {"unverified" in item && item.unverified ? (
+                  <UnverifiedBadge />
+                ) : null}
+              </li>
+            );
+          })}
         </ul>
       ) : null}
 

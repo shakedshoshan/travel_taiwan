@@ -1,7 +1,7 @@
 {
   "titleHe": "מדריך לפני הנסיעה",
   "subtitleHe": "צ׳ק-ליסט קצר ומעשי לפני הנחיתה בטייוואן — כניסה, כסף, סים, תחבורה, אפליקציות וכללי התנהגות.",
-  "updatedHe": "נובמבר 2025",
+  "updatedHe": "נובמבר 2026",
   "sections": [
     {
       "id": "entry",
@@ -179,6 +179,137 @@
           ["אמבולנס / כיבוי", "119"]
         ]
       }
+    },
+    {
+      "id": "mizrahnik",
+      "titleHe": "מדריך מזרחניק — המלצות עם מקור מדויק",
+      "introHe": "נקודות שנלקחו מהדף הראשי של טאיוואן במזרחניק ומהמדריכים המקושרים אליו. אין כאן סוכני טיסות או ביטוח; רק מידע מעשי. לכל פריט תג \"מזרחניק\" וקישור לעמוד המקור.",
+      "items": [
+        {
+          "textHe": "חלון נוח לטיול: אביב (מרץ–מאי) וסתיו (אוקטובר–נובמבר); בקיץ טייפונים ולחות; בחורף צפון מעונן ורטוב ודרום נעים יותר.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/taiwan/"
+        },
+        {
+          "textHe": "דוגמה ליעד טבע מרכזי: פארק טארוקו (קניון וצוקים) — חשוב להתאים ציפיות למזג האוויר ולעקוב אחרי סגירות שבילים.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/taiwan/"
+        },
+        {
+          "textHe": "כניסה: אזרחי ישראל בפטור מויזה עד 90 יום (Visa-Exempt) — חובה למלא טופס כניסה טרם ההגעה; ניתן גם במכונים בשדה (QR).",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-visa/"
+        },
+        {
+          "textHe": "שהיית תייר בפטור אי אפשר להאריך מעבר ל־90 יום.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-visa/"
+        },
+        {
+          "textHe": "מזג אוויר משתנה לפי אזור: ג׳יופן גשום גם כשבשאר האי יבש; החוף המזרחי (הואליאן/טארוקו) נעים רוב השנה אבל בקיץ יש חשש לטייפונים; קנטינג בחורף יבשה ושמשית; טאיצ׳ונג יציב יחסית.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-weather/"
+        },
+        {
+          "textHe": "עונת טייפונים בדרך כלל יולי–ספטמבר — בזמן סופה לעקוב אחרי הוראות מקומיים ולא לסמוך על טיולי טבע כרגיל.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-weather/"
+        },
+        {
+          "textHe": "בהרים (למשל אלישאן) טמפרטורות יורדות עם הגובה; בחורף שלג ביושאן ולעיתים נדירות באלישאן; בקיץ עונה רטובה יותר.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-weather/"
+        },
+        {
+          "textHe": "אין טיסה ישירה מישראל לטאיוואן — רוב המטיילים מגיעים בקונקשן; שדות בינלאומיים מרכזיים: טאויואן (TPE), קאושיונג (KHH), טאיצ׳ונג (RMQ).",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-flights/"
+        },
+        {
+          "textHe": "בכניסה לטאיוואן לעיתים דורשים הוכחת יציאה מהמדינה — כדאי להכין מראש (מזרחניק מפרטים במדריך הטיסות).",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-flights/"
+        },
+        {
+          "textHe": "מטבע מקומי NT$ — דוכנים ושווקים לרוב מזומן בלבד; כספומטים נפוצים ב־7-Eleven, FamilyMart וברשת הדואר (Chunghwa Post), לעיתים משיכה גבוהה למשיכה אחת.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-money/"
+        },
+        {
+          "textHe": "אי אפשר להמיר שקל לדולר טאיוואני בטאיוואן — להזמין מראש לנתב״ג או להסתמך על משיכה/המרה ממטבע בינלאומי (לפי המדריך).",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-money/"
+        },
+        {
+          "textHe": "שלוש רשתות עיקריות: Chunghwa Telecom, Taiwan Mobile, Far EasTone — לתיירים חבילות דומות; Chunghwa מודגש לכיסוי באזורים כפריים. רבים מהסימים לתיירים: גלישה בלי מספר מקומי.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-sim/"
+        },
+        {
+          "textHe": "רכישת סים: דוכנים בשדה או חנויות רשמיות של החברות בערים.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-sim/"
+        },
+        {
+          "textHe": "EasyCard מול iPASS — שניהם רב־שימוש; ממליצים EasyCard. באוטובוס: לקרוע בכניסה וביציאה. בקניות ובחנויות נוחות אפשר לשלם בכרטיס.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-transportation/"
+        },
+        {
+          "textHe": "רכבת מהירה THSR — כרטיס נרכש בנפרד (לא באמצעות טעינת EasyCard); קו מערבי מהיר. רכבת TRA — קו רחב; להזמין מראש בסופ״ש/חגים.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-transportation/"
+        },
+        {
+          "textHe": "טיסות פנים קיימות נקודתית (למשל הואליאן, טאיטונג, איים) — ברוב הטיולים המערבי THSR/TRA מספיקים.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/guide/taiwan-transportation/"
+        },
+        {
+          "textHe": "טאיפיי: MRT + EasyCard + YouBike; ממרכז העיר רכבת Airport MRT משדה טאויואן ל־Taipei Main Station (בערך 40 דק׳); שאטלים ואוטובוסים לימי טיול מחוץ לעיר.",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/destination/taipei/"
+        },
+        {
+          "textHe": "תכנון מסלול: חשוב להזמין מראש רכבות בעונה עמוסה ומלונות בשיא; אפשרות ליווי ותכנון אישי עם מתכנן מטעם מזרחניק (עמוד נפרד).",
+          "tagHe": "מזרחניק",
+          "sourceUrl": "https://mizrahnik.co.il/plan-taiwan/"
+        }
+      ],
+      "links": [
+        {
+          "labelHe": "מזרחניק — טאיוואן (דף ראשי)",
+          "url": "https://mizrahnik.co.il/taiwan/"
+        },
+        {
+          "labelHe": "מדריך ויזה",
+          "url": "https://mizrahnik.co.il/guide/taiwan-visa/"
+        },
+        {
+          "labelHe": "מדריך מזג אוויר",
+          "url": "https://mizrahnik.co.il/guide/taiwan-weather/"
+        },
+        {
+          "labelHe": "מדריך טיסות",
+          "url": "https://mizrahnik.co.il/guide/taiwan-flights/"
+        },
+        {
+          "labelHe": "מדריך כסף",
+          "url": "https://mizrahnik.co.il/guide/taiwan-money/"
+        },
+        {
+          "labelHe": "מדריך סים",
+          "url": "https://mizrahnik.co.il/guide/taiwan-sim/"
+        },
+        {
+          "labelHe": "מדריך תחבורה",
+          "url": "https://mizrahnik.co.il/guide/taiwan-transportation/"
+        },
+        {
+          "labelHe": "יעד טאיפיי",
+          "url": "https://mizrahnik.co.il/destination/taipei/"
+        }
+      ]
     }
   ]
 }
